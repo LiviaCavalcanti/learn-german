@@ -1,0 +1,240 @@
+{
+  "courseTitle": "A2 German 15-Day Intensive",
+  "phase1": {
+    "title": "Core Structures & Daily Life",
+    "days": [
+      {
+        "day": 1,
+        "grammar": {
+          "topic": "Sentence Structure & The Big Three Verbs",
+          "rules": [
+            "In standard main clauses (Hauptsatz), the conjugated verb must sit in Position #2.",
+            "If a time or place adverb starts the sentence, inversion occurs: the subject moves directly after the verb."
+          ],
+          "verbs": {
+            "sein": ["bin", "bist", "ist", "sind", "seid", "sind"],
+            "haben": ["habe", "hast", "hat", "haben", "habt", "haben"],
+            "werden": ["werde", "wirst", "wird", "werden", "werdet", "werden"]
+          }
+        },
+        "vocabulary": [
+          {"word": "r Alltag", "meaning": "daily routine / everyday life"},
+          {"word": "e Zeit", "meaning": "time"},
+          {"word": "s Ziel", "meaning": "goal / destination"},
+          {"word": "heute", "meaning": "today"},
+          {"word": "jetzt", "meaning": "now"},
+          {"word": "bereit", "meaning": "ready"},
+          {"word": "müde", "meaning": "tired"},
+          {"word": "wichtig", "meaning": "important"},
+          {"word": "machen", "meaning": "to do / make"},
+          {"word": "arbeiten", "meaning": "to work"},
+          {"word": "lernen", "meaning": "to learn / study"},
+          {"word": "sprechen", "meaning": "to speak"},
+          {"word": "viel", "meaning": "much / a lot"},
+          {"word": "zusammen", "meaning": "together"},
+          {"word": "auf Deutsch", "meaning": "in German"}
+        ]
+      },
+      {
+        "day": 2,
+        "grammar": {
+          "topic": "Modal Verbs & Akkusativ Case",
+          "rules": [
+            "Modal verbs take Position #2. The main action verb is kicked to the absolute end of the sentence in its infinitive form.",
+            "Akkusativ marks the direct object. Only masculine articles change: der/ein becomes den/einen. Feminine and neuter stay unchanged."
+          ],
+          "modals": {
+            "können": ["kann", "kannst", "kann", "können", "könnt", "können"],
+            "müssen": ["muss", "musst", "muss", "müssen", "müsst", "müssen"],
+            "wollen": ["will", "willst", "will", "wollen", "wollt", "wollen"]
+          }
+        },
+        "vocabulary": [
+          {"word": "r Kaffee", "meaning": "coffee"},
+          {"word": "r Schlüssel", "meaning": "key"},
+          {"word": "r Laptop", "meaning": "laptop"},
+          {"word": "e Hilfe", "meaning": "help / assistance"},
+          {"word": "e E-Mail", "meaning": "email"},
+          {"word": "s Dokument", "meaning": "document"},
+          {"word": "s Auto", "meaning": "car"},
+          {"word": "brauchen", "meaning": "to need"},
+          {"word": "suchen", "meaning": "to search / look for"},
+          {"word": "finden", "meaning": "to find"},
+          {"word": "trinken", "meaning": "to drink"},
+          {"word": "essen", "meaning": "to eat"},
+          {"word": "verstehen", "meaning": "to understand"},
+          {"word": "kein / keine", "meaning": "no / none"},
+          {"word": "etwas", "meaning": "something / some"}
+        ]
+      },
+      {
+        "day": 3,
+        "grammar": {
+          "topic": "Dativ Case & Two-Way Prepositions",
+          "rules": [
+            "Dativ signifies static locations, positions, or indirect object recipients.",
+            "Articles transform entirely: masculine/neuter become dem/einem, feminine becomes der/einer, plurals become den (+n added to noun).",
+            "Two-way prepositions (in, auf, an, neben, vor) take Dativ when indicating a stationary location with no movement from point A to B."
+          ]
+        },
+        "vocabulary": [
+          {"word": "s Büro", "meaning": "office"},
+          {"word": "r Tisch", "meaning": "table"},
+          {"word": "r Bahnhof", "meaning": "train station"},
+          {"word": "e Küche", "meaning": "kitchen"},
+          {"word": "e Straße", "meaning": "street"},
+          {"word": "r Kollege", "meaning": "colleague (male)"},
+          {"word": "e Kollegin", "meaning": "colleague (female)"},
+          {"word": "links", "meaning": "left"},
+          {"word": "rechts", "meaning": "right"},
+          {"word": "geradeaus", "meaning": "straight ahead"},
+          {"word": "hier", "meaning": "here"},
+          {"word": "da / dort", "meaning": "there"},
+          {"word": "sein", "meaning": "to be"},
+          {"word": "liegen", "meaning": "to lie horizontally"},
+          {"word": "stehen", "meaning": "to stand vertically"}
+        ]
+      },
+      {
+        "day": 4,
+        "grammar": {
+          "topic": "The Perfekt Tense",
+          "rules": [
+            "Conversational past tense requires an auxiliary verb sandwich: Subject + Auxiliary (haben/sein) + Mid-section + Past Participle at the absolute end.",
+            "Use 'sein' for changes of location or state. Use 'haben' for everything else."
+          ]
+        },
+        "vocabulary": [
+          {"word": "gearbeitet", "meaning": "worked (arbeiten)"},
+          {"word": "gelernt", "meaning": "learned / studied (lernen)"},
+          {"word": "gesprochen", "meaning": "spoken (sprechen)"},
+          {"word": "getrunken", "meaning": "drunk (trinken)"},
+          {"word": "gegessen", "meaning": "eaten (essen)"},
+          {"word": "verstanden", "meaning": "understood (verstehen)"},
+          {"word": "gemacht", "meaning": "done / made (machen)"},
+          {"word": "gesucht", "meaning": "looked for (suchen)"},
+          {"word": "gefunden", "meaning": "found (finden)"},
+          {"word": "gekauft", "meaning": "bought (kaufen)"},
+          {"word": "gespielte", "meaning": "played (spielen)"},
+          {"word": "gefahren", "meaning": "driven / gone (fahren - uses sein)"},
+          {"word": "gekommen", "meaning": "come (kommen - uses sein)"},
+          {"word": "gewesen", "meaning": "been (sein - uses sein)"},
+          {"word": "gestern", "meaning": "yesterday"}
+        ]
+      },
+      {
+        "day": 5,
+        "grammar": {
+          "topic": "Reflexive Verbs & Phase 1 Wrap-up",
+          "rules": [
+            "Reflexive actions require a reflexive pronoun matching the subject.",
+            "Reflexive pronouns (mich, dich, sich, uns, euch, sich) settle immediately after the conjugated verb in position #2 or after inverted subjects."
+          ]
+        },
+        "vocabulary": [
+          {"word": "sich beeilen", "meaning": "to hurry"},
+          {"word": "sich treffen", "meaning": "to meet up"},
+          {"word": "sich freuen auf", "meaning": "to look forward to"},
+          {"word": "sich entspannen", "meaning": "to relax"},
+          {"word": "sich ärgern", "meaning": "to get annoyed"},
+          {"word": "duschen", "meaning": "to shower"},
+          {"word": "frühstücken", "meaning": "to eat breakfast"},
+          {"word": "e Mittagspause", "meaning": "lunch break"},
+          {"word": "r Feierabend", "meaning": "end of the work day"},
+          {"word": "früh", "meaning": "early"},
+          {"word": "spät", "meaning": "late"},
+          {"word": "manchmal", "meaning": "sometimes"},
+          {"word": "morgen", "meaning": "tomorrow"},
+          {"word": "pünktlich", "meaning": "punctual"},
+          {"word": "stressig", "meaning": "stressful"}
+        ]
+      }
+    ]
+  },
+  "phase2": {
+    "title": "Connecting Thoughts & Professional Life",
+    "days": [
+      {
+        "day": 6,
+        "grammar": {
+          "topic": "Subordinate Clauses (Nebensätze)",
+          "rules": [
+            "Subordinating connectors (weil, dass, wenn) kick the conjugated verb to the absolute end of the clause.",
+            "If the subordinate clause contains an auxiliary/modal combination, the conjugated helper element follows the participle/infinitive at the very end."
+          ]
+        },
+        "vocabulary": [
+          {"word": "weil", "meaning": "because"},
+          {"word": "dass", "meaning": "that"},
+          {"word": "wenn", "meaning": "if / when"},
+          {"word": "glauben", "meaning": "to believe / think"},
+          {"word": "finden", "meaning": "to find / think (opinion)"},
+          {"word": "wissen", "meaning": "to know a fact"},
+          {"word": "denken", "meaning": "to think"},
+          {"word": "hoffen", "meaning": "to hope"},
+          {"word": "sicher", "meaning": "sure / certain"},
+          {"word": "glücklich", "meaning": "happy"},
+          {"word": "schade", "meaning": "a pity / a shame"},
+          {"word": "r Grund", "meaning": "reason"},
+          {"word": "e Meinung", "meaning": "opinion"},
+          {"word": "wahr", "meaning": "true"},
+          {"word": "vielleicht", "meaning": "maybe / perhaps"}
+        ]
+      },
+      {
+        "day": 7,
+        "grammar": {
+          "topic": "The Imperativ (Workplace Instructions)",
+          "rules": [
+            "Formal commands use the format: Infinitive Verb + Sie (e.g., Prüfen Sie!).",
+            "Team/Plural informal commands use the 'ihr' verb form minus the pronoun (e.g., Schickt!).",
+            "Singular informal commands strip the '-st' ending and drop the 'du' pronoun (e.g., Mach!)."
+          ]
+        },
+        "vocabulary": [
+          {"word": "e Besprechung", "meaning": "meeting"},
+          {"word": "e Aufgabe", "meaning": "task / assignment"},
+          {"word": "s Projekt", "meaning": "project"},
+          {"word": "r Bericht", "meaning": "report"},
+          {"word": "e Daten", "meaning": "data (plural)"},
+          {"word": "e Grafik", "meaning": "graph / visual chart"},
+          {"word": "prüfen", "meaning": "to check / verify"},
+          {"word": "schicken / senden", "meaning": "to send"},
+          {"word": "speichern", "meaning": "to save (file)"},
+          {"word": "lösen", "meaning": "to solve"},
+          {"word": "zeigen", "meaning": "to show"},
+          {"word": "erklären", "meaning": "to explain"},
+          {"word": "fertig", "meaning": "finished / done"},
+          {"word": "geplanned", "meaning": "planned"},
+          {"word": "nächst-", "meaning": "next"}
+        ]
+      }
+    ],
+    "specializedModules": {
+      "techAndDevelopment": {
+        "title": "Computer, Local Environments & AI Tech Talk",
+        "vocabulary": [
+          {"word": "e Entwicklungsumgebung", "meaning": "development environment / localhost"},
+          {"word": "e Datenbank", "meaning": "database"},
+          {"word": "r Zugriff", "meaning": "access / permissions"},
+          {"word": "e Fehlermeldung", "meaning": "error message"},
+          {"word": "r Quellcode / r Code", "meaning": "source code / code"},
+          {"word": "s Repository / e Codebasis", "meaning": "repository / codebase"},
+          {"word": "ausführen", "meaning": "to execute / run a script"},
+          {"word": "einrichten", "meaning": "to set up / configure an environment"},
+          {"word": "beheben", "meaning": "to fix / resolve a bug"},
+          {"word": "abfragen", "meaning": "to query data or models"},
+          {"word": "herunterladen", "meaning": "to download"},
+          {"word": "hochladen", "meaning": "to upload"},
+          {"word": "lokal", "meaning": "local / self-hosted"},
+          {"word": "sicher", "meaning": "secure / safe"},
+          {"word": "erfolgreich", "meaning": "successful"}
+        ]
+      }
+    }
+  },
+  "structuralSyntaxMatrix": {
+    "order": ["POSITION 1", "POSITION 2 (CONJUGATED VERB)", "REFLEXIVE PRONOUN", "TIME (TEMPORAL)", "OBJECT/PLACE (LOKAL)", "VERB BRACKET END"],
+    "notes": "Time adverbs strictly precede location variables (TE-KA-MO-LO rule)."
+  }
+}

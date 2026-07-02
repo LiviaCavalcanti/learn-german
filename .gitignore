@@ -1,0 +1,19 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+backend/.venv/
+*.egg-info/
+
+# Data / secrets
+/data/
+.env
+
+# Node / frontend
+node_modules/
+frontend/dist/
+frontend/.vite/
+
+# OS / editor
+.DS_Store
+Thumbs.db

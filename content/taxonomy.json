@@ -1,0 +1,72 @@
+{
+  "version": 1,
+  "title": "German A1–B2 taxonomy backbone",
+  "note": "Lightweight CEFR level + grammar-topic reference used to tag generated/imported content. The full day-by-day course wires in later (Phase 6).",
+  "levels": [
+    { "code": "A1", "title": "Foundations", "descriptor": "Understands and uses familiar everyday expressions and very basic phrases." },
+    { "code": "A2", "title": "Everyday Fluency", "descriptor": "Communicates in simple routine tasks on familiar matters." },
+    { "code": "B1", "title": "Independent User", "descriptor": "Deals with most situations while travelling; describes experiences, opinions, plans." },
+    { "code": "B2", "title": "Upper-Intermediate", "descriptor": "Interacts with fluency and spontaneity; produces clear, detailed text on many subjects." }
+  ],
+  "conventions": {
+    "articleShorthand": { "r": "der", "e": "die", "s": "das" },
+    "exerciseTypes": ["fill-in-blank", "conjugation", "translation", "multiple-choice", "reorder", "reading", "interpretation", "writing"]
+  },
+  "structuralSyntaxMatrix": {
+    "order": ["POSITION 1", "POSITION 2 (CONJUGATED VERB)", "REFLEXIVE PRONOUN", "TIME (TEMPORAL)", "OBJECT/PLACE (LOKAL)", "VERB BRACKET END"],
+    "notes": "Time adverbs strictly precede location variables (TE-KA-MO-LO rule)."
+  },
+  "grammarTopics": [
+    { "code": "a1.sein-haben", "cefr": "A1", "title": "sein & haben", "description": "Present tense of the two core verbs sein and haben." },
+    { "code": "a1.present-regular", "cefr": "A1", "title": "Present tense (regular verbs)", "description": "Regular verb conjugation and personal pronouns." },
+    { "code": "a1.articles-nominative", "cefr": "A1", "title": "Articles (Nominative)", "description": "Definite/indefinite articles and noun gender in the nominative." },
+    { "code": "a1.questions", "cefr": "A1", "title": "Questions & word order", "description": "W-questions, yes/no questions, verb in position 2." },
+    { "code": "a1.accusative", "cefr": "A1", "title": "Accusative case", "description": "Direct objects; masculine der/ein to den/einen." },
+    { "code": "a1.negation", "cefr": "A1", "title": "Negation (nicht / kein)", "description": "Difference between nicht and kein." },
+    { "code": "a1.possessives", "cefr": "A1", "title": "Possessive articles", "description": "mein, dein, sein, ihr, unser, euer." },
+    { "code": "a1.plurals-numbers", "cefr": "A1", "title": "Plurals & numbers", "description": "Noun plural formation and cardinal numbers." },
+    { "code": "a1.modals", "cefr": "A1", "title": "Modal verbs", "description": "können, müssen, wollen, möchten; infinitive at the end." },
+    { "code": "a1.separable-verbs", "cefr": "A1", "title": "Separable verbs", "description": "Separable-prefix verbs in main clauses." },
+    { "code": "a1.imperative-basic", "cefr": "A1", "title": "Imperative (basics)", "description": "Simple commands and requests." },
+    { "code": "a1.prepositions-basic", "cefr": "A1", "title": "Prepositions (basic) & es gibt", "description": "Common time/place prepositions and es gibt." },
+    { "code": "a1.perfekt-intro", "cefr": "A1", "title": "Perfekt (introduction)", "description": "haben + past participle." },
+
+    { "code": "a2.sein-haben-werden", "cefr": "A2", "title": "sein / haben / werden", "description": "The three auxiliary/core verbs and position-2 word order." },
+    { "code": "a2.modals-accusative", "cefr": "A2", "title": "Modals & Accusative", "description": "Modal verbs with accusative objects." },
+    { "code": "a2.dative", "cefr": "A2", "title": "Dative case", "description": "Indirect objects and static location; article changes." },
+    { "code": "a2.two-way-prepositions", "cefr": "A2", "title": "Two-way prepositions", "description": "Wechselpräpositionen: dative (location) vs accusative (direction)." },
+    { "code": "a2.pronouns-akk-dat", "cefr": "A2", "title": "Pronouns (Akk/Dat)", "description": "Personal pronouns in accusative and dative; dative verbs." },
+    { "code": "a2.perfekt", "cefr": "A2", "title": "Perfekt (full)", "description": "haben/sein + participle; sein for change of location/state." },
+    { "code": "a2.praeteritum-basic", "cefr": "A2", "title": "Präteritum (sein/haben/modals)", "description": "Simple past of core and modal verbs." },
+    { "code": "a2.reflexive", "cefr": "A2", "title": "Reflexive verbs", "description": "Reflexive pronouns and their position." },
+    { "code": "a2.comparatives", "cefr": "A2", "title": "Comparative & superlative", "description": "Comparison of adjectives and adverbs." },
+    { "code": "a2.subordinate-basic", "cefr": "A2", "title": "Subordinate clauses (weil/dass/wenn)", "description": "Verb-final subordinate clauses." },
+    { "code": "a2.imperative-workplace", "cefr": "A2", "title": "Imperative (formal/workplace)", "description": "Sie-, ihr-, and du-imperatives." },
+    { "code": "a2.konjunktiv2-politeness", "cefr": "A2", "title": "Konjunktiv II (politeness)", "description": "würde, könnte, hätte, wäre for polite requests." },
+    { "code": "a2.adjective-endings-intro", "cefr": "A2", "title": "Adjective endings (introduction)", "description": "Basic attributive adjective declension." },
+
+    { "code": "b1.adjective-declension", "cefr": "B1", "title": "Adjective declension (all cases)", "description": "Endings after definite, indefinite, and zero articles." },
+    { "code": "b1.genitive", "cefr": "B1", "title": "Genitive case", "description": "Possession and genitive prepositions." },
+    { "code": "b1.n-declension", "cefr": "B1", "title": "n-Deklination", "description": "Weak masculine nouns taking -(e)n." },
+    { "code": "b1.relative-clauses", "cefr": "B1", "title": "Relative clauses", "description": "Relative pronouns across cases and with prepositions." },
+    { "code": "b1.infinitive-zu", "cefr": "B1", "title": "Infinitive clauses (zu + Infinitiv)", "description": "zu-infinitives; um…zu vs damit." },
+    { "code": "b1.temporal-clauses", "cefr": "B1", "title": "Temporal clauses", "description": "als, wenn, während, bevor, nachdem, seit." },
+    { "code": "b1.praeteritum", "cefr": "B1", "title": "Präteritum (narrative)", "description": "Full simple past for narration." },
+    { "code": "b1.plusquamperfekt", "cefr": "B1", "title": "Plusquamperfekt", "description": "Past perfect and tense sequencing." },
+    { "code": "b1.connectors", "cefr": "B1", "title": "Connectors", "description": "deshalb, trotzdem, obwohl, sondern." },
+    { "code": "b1.konjunktiv2", "cefr": "B1", "title": "Konjunktiv II (full)", "description": "Wishes, hypotheticals, past Konjunktiv II." },
+    { "code": "b1.passive", "cefr": "B1", "title": "Passive (Präsens/Präteritum)", "description": "werden-passive; passive with modals." },
+    { "code": "b1.futur1", "cefr": "B1", "title": "Futur I", "description": "werden + infinitive; verbs with prepositions (wo(r)-/da(r)-)." },
+
+    { "code": "b2.passive-advanced", "cefr": "B2", "title": "Passive (all tenses) & Zustandspassiv", "description": "Full passive system, sein-passive, alternatives." },
+    { "code": "b2.participles-adjectives", "cefr": "B2", "title": "Participles as adjectives", "description": "Partizip I & II as attributes; extended participle constructions." },
+    { "code": "b2.konjunktiv1", "cefr": "B2", "title": "Konjunktiv I (reported speech)", "description": "Indirect speech across tenses." },
+    { "code": "b2.subjective-modals", "cefr": "B2", "title": "Subjective modal verbs", "description": "sollen/wollen/müssen for hearsay and probability." },
+    { "code": "b2.nominalization", "cefr": "B2", "title": "Nominalization ↔ Verbalization", "description": "Converting between nominal and verbal style." },
+    { "code": "b2.word-formation", "cefr": "B2", "title": "Word formation", "description": "Prefixes, suffixes, compounds." },
+    { "code": "b2.genitive-prepositions", "cefr": "B2", "title": "Genitive prepositions", "description": "trotz, während, wegen, aufgrund, (an)statt." },
+    { "code": "b2.funktionsverbgefuege", "cefr": "B2", "title": "Funktionsverbgefüge", "description": "Light-verb constructions." },
+    { "code": "b2.two-part-connectors", "cefr": "B2", "title": "Two-part connectors", "description": "je…desto, sowohl…als auch, entweder…oder, weder…noch." },
+    { "code": "b2.cohesion-register", "cefr": "B2", "title": "Cohesion & register", "description": "Text cohesion, formal vs informal register, idioms." }
+  ]
+}
