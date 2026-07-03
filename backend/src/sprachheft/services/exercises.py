@@ -4,8 +4,8 @@ from __future__ import annotations
 
 from sqlmodel import Session, select
 
-from sprachheft.models import Exercise, ExerciseVariant
-from sprachheft.schemas import ExerciseRead
+from sprachheft.models import AnswerAttempt, Exercise, ExerciseVariant, ReviewLog, SRState
+from sprachheft.schemas import ExerciseRead, ExerciseUpdate
 
 
 def list_exercises(
@@ -62,3 +62,55 @@ def list_exercises_read(
         read.variant_position = position
         reads.append(read)
     return reads
+
+
+def update_exercise(
+    session: Session, exercise_id: int, data: ExerciseUpdate
+) -> Exercise | None:
+    """Update an exercise's instructions and/or answer key (partial)."""
+    exercise = session.get(Exercise, exercise_id)
+    if exercise is None:
+        return None
+    fields = data.model_dump(exclude_unset=True)
+    if fields.get("instructions") is not None:
+        exercise.instructions = fields["instructions"]
+    if fields.get("answer_key") is not None:
+        exercise.answer_key = fields["answer_key"]
+    session.add(exercise)
+    session.commit()
+    session.refresh(exercise)
+    return exercise
+
+
+def delete_exercise_items(session: Session, ids: list[int]) -> int:
+    """Delete exercises and their SR state, review logs, saved attempts, and
+    variant links."""
+    deleted = 0
+    for exercise_id in dict.fromkeys(ids):
+        exercise = session.get(Exercise, exercise_id)
+        if exercise is None:
+            continue
+        states = session.exec(
+            select(SRState).where(
+                SRState.item_type == "exercise", SRState.item_id == exercise_id
+            )
+        ).all()
+        for state in states:
+            logs = session.exec(
+                select(ReviewLog).where(ReviewLog.srstate_id == state.id)
+            ).all()
+            for log in logs:
+                session.delete(log)
+            session.delete(state)
+        for attempt in session.exec(
+            select(AnswerAttempt).where(AnswerAttempt.exercise_id == exercise_id)
+        ).all():
+            session.delete(attempt)
+        for link in session.exec(
+            select(ExerciseVariant).where(ExerciseVariant.exercise_id == exercise_id)
+        ).all():
+            session.delete(link)
+        session.delete(exercise)
+        deleted += 1
+    session.commit()
+    return deleted

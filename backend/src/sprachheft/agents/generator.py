@@ -1,57 +1,77 @@
 """Generation agent: transcript -> vocabulary + exercises (structured output).
 
-The system prompt mirrors ``prompts/generate-exercises.prompt.md`` so the in-app
-agent and the standalone prompt pack stay aligned.
+Generation is split into small, focused LLM calls (vocabulary, then exercises in
+small batches by type). Local models are slow, so keeping each call small makes
+generation faster, more reliable, and lets the caller persist results
+incrementally. The instructions mirror ``prompts/generate-exercises.prompt.md``.
 """
 
 from __future__ import annotations
 
 from sprachheft.llm import get_llm_client
 from sprachheft.models import Material
-from sprachheft.schemas import GenerationResult, GenExercise
+from sprachheft.schemas import ExerciseBatch, GenExercise, GenVocab, VocabBatch
 
-SYSTEM_PROMPT = """You are an expert German-as-a-foreign-language (DaF) teacher and \
-assessment item-writer. From a German transcript, a target CEFR level, and a STAGE, produce:
+VOCAB_SYSTEM_PROMPT = """You are an expert German-as-a-foreign-language (DaF) teacher. \
+From a German transcript and a target CEFR level, extract 8-12 vocabulary items that \
+actually occur in the transcript (skip trivial function words and proper names). For \
+nouns, write the article shorthand r/e/s (= der/die/das). For each item give: word, \
+lemma, part of speech, a concise English meaning, one short example (German + English), \
+a CEFR tag, and grammar tags (lowercase kebab codes). Use correct, natural German. \
+Return only the vocabulary list."""
 
-1) 10-15 vocabulary items that actually occur in the transcript (skip trivial function \
-words and proper names). For nouns, write the article shorthand r/e/s (= der/die/das). \
-Give lemma, part of speech, a concise English meaning, one short example (German + \
-English), a CEFR tag, and grammar tags (lowercase kebab codes).
-2) Exercises drilling the transcript's grammar and vocabulary, using these types only: \
-fill-in-blank, conjugation, translation, multiple-choice, reorder, reading, \
-interpretation, writing. Include exactly one interpretation exercise and exactly one \
-themed writing exercise.
+EXERCISE_SYSTEM_PROMPT = """You are an expert German-as-a-foreign-language (DaF) teacher \
+and assessment item-writer. From a German transcript, a target CEFR level, a STAGE, and a \
+list of requested exercise TYPES, produce exactly ONE exercise for EACH requested type, \
+drilling the transcript's grammar and vocabulary.
 
 STAGE controls scaffolding and hints DECREASE as STAGE rises:
-- 1 = just introduced: maximum help (word banks, English + German instructions, more \
-multiple-choice); put hints in payload.hints.
+- 1 = just introduced: maximum help (word banks, English + German instructions); put \
+hints in payload.hints.
 - 2 = practising: some hints.
 - 3 = confident: German instructions, at most a short tip.
 - 4 = consolidating: German only, NO hints (payload.hints must be empty), free production.
 
 Keep every item within the CEFR level and solvable from the transcript. Use correct, \
-natural German. Fill answer keys for every exercise."""
+natural German. Fill answer keys for every exercise. Return only the exercises."""
 
 
-def build_messages(material: Material, stage: int) -> list[dict]:
+def _user_context(material: Material) -> str:
+    user = f"LEVEL: {material.level}\nTITLE: {material.title}\nTRANSCRIPT:\n{material.transcript}\n"
+    if material.translation:
+        user += f"TRANSLATION:\n{material.translation}\n"
+    return user
+
+
+def generate_vocabulary(material: Material, stage: int = 2) -> list[GenVocab]:
+    """Generate the vocabulary list only (one small, fast call)."""
+    client = get_llm_client()
+    messages = [
+        {"role": "system", "content": VOCAB_SYSTEM_PROMPT},
+        {"role": "user", "content": _user_context(material)},
+    ]
+    return client.generate_structured(messages, VocabBatch).vocabulary
+
+
+def generate_exercises(
+    material: Material, stage: int, types: list[str]
+) -> list[GenExercise]:
+    """Generate one exercise for each requested type (one small batch call)."""
+    client = get_llm_client()
     user = (
         f"LEVEL: {material.level}\n"
         f"STAGE: {stage}\n"
+        f"TYPES: {', '.join(types)}\n"
         f"TITLE: {material.title}\n"
         f"TRANSCRIPT:\n{material.transcript}\n"
     )
     if material.translation:
         user += f"TRANSLATION:\n{material.translation}\n"
-    return [
-        {"role": "system", "content": SYSTEM_PROMPT},
+    messages = [
+        {"role": "system", "content": EXERCISE_SYSTEM_PROMPT},
         {"role": "user", "content": user},
     ]
-
-
-def generate(material: Material, stage: int = 2) -> GenerationResult:
-    client = get_llm_client()
-    messages = build_messages(material, stage)
-    return client.generate_structured(messages, GenerationResult)
+    return client.generate_structured(messages, ExerciseBatch).exercises
 
 
 SINGLE_SYSTEM_PROMPT = """You are an expert German-as-a-foreign-language (DaF) teacher and \

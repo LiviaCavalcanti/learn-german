@@ -10,6 +10,7 @@ from pathlib import Path
 
 from sprachheft.config import get_settings
 from sprachheft.dictionary.lemmatize import candidates
+from sprachheft.phonetics import to_ipa
 
 
 @dataclass
@@ -86,7 +87,7 @@ class DictionaryService:
                 DictEntry(
                     headword=row["headword"],
                     pos=row["pos"],
-                    ipa=row["ipa"],
+                    ipa=row["ipa"] or to_ipa(row["headword"]),
                     translations=json.loads(row["translations"]) if row["translations"] else [],
                     senses=json.loads(row["senses"]) if row["senses"] else [],
                 )

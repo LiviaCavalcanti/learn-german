@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { api } from '../lib/api'
 import type { DictLookup } from '../lib/types'
 import { Badge, Button, Spinner } from './ui'
+import { SpeakButton } from './SpeakButton'
 
 export function DictionaryPopover({
   word,
@@ -62,7 +63,10 @@ export function DictionaryPopover({
       onMouseLeave={onLeave}
     >
       <div className="flex items-baseline justify-between gap-2">
-        <div className="font-serif text-lg">{word}</div>
+        <div className="flex items-baseline gap-1">
+          <span className="font-serif text-lg">{word}</span>
+          <SpeakButton text={word} className="self-center" />
+        </div>
         {data?.lemma && data.lemma.toLowerCase() !== word.toLowerCase() && (
           <Badge>→ {data.lemma}</Badge>
         )}
@@ -74,7 +78,12 @@ export function DictionaryPopover({
         </div>
       ) : entry ? (
         <div className="mt-1 space-y-1.5">
-          {entry.pos && <div className="text-xs text-muted">{entry.pos}</div>}
+          {(entry.pos || entry.ipa) && (
+            <div className="flex items-center gap-2 text-xs text-muted">
+              {entry.pos && <span>{entry.pos}</span>}
+              {entry.ipa && <span className="font-mono">{entry.ipa}</span>}
+            </div>
+          )}
           <div className="text-sm">{entry.translations.slice(0, 6).join(', ')}</div>
           {entry.senses?.[0] && (
             <div className="line-clamp-3 text-xs text-muted">{entry.senses[0]}</div>

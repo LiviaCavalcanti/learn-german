@@ -21,6 +21,7 @@ from sprachheft.schemas import (
     GenVocab,
     VocabComposeIn,
     VocabItemCreate,
+    VocabItemUpdate,
 )
 
 
@@ -213,6 +214,34 @@ def compose_material(session: Session, data: VocabComposeIn) -> dict:
     )
     counts = persist_result(session, material, result, source="generated")
     return {"material_id": material.id, "title": material.title, **counts}
+
+
+def update_vocab(
+    session: Session, vocab_id: int, data: VocabItemUpdate
+) -> VocabItem | None:
+    """Apply a partial update. Drops the (now stale) embedding when the word,
+    meaning, or example changes so a later reindex regenerates it."""
+    item = session.get(VocabItem, vocab_id)
+    if item is None:
+        return None
+
+    fields = data.model_dump(exclude_unset=True)
+    content_changed = False
+    for key, value in fields.items():
+        if value is None:
+            continue
+        if key in ("word", "meaning_en", "example_de") and getattr(item, key) != value:
+            content_changed = True
+        setattr(item, key, value)
+
+    session.add(item)
+    if content_changed:
+        embedding = session.get(VocabEmbedding, vocab_id)
+        if embedding is not None:
+            session.delete(embedding)
+    session.commit()
+    session.refresh(item)
+    return item
 
 
 def delete_vocab_items(session: Session, ids: list[int]) -> int:

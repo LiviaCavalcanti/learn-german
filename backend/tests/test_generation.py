@@ -107,3 +107,51 @@ def test_variant_missing_exercise_returns_404():
     with TestClient(app) as client:
         resp = client.post("/exercises/999999/variant", params={"stage": 2})
         assert resp.status_code == 404
+
+
+def test_generate_sections_persist_incrementally():
+    with TestClient(app) as client:
+        payload = {
+            "title": "Staged",
+            "media_type": "text",
+            "level": "A2",
+            "transcript": "Heute arbeite ich im Büro und trinke Kaffee mit der Kollegin.",
+        }
+        material_id = client.post("/materials", json=payload).json()["id"]
+
+        # Vocabulary section first (fast, saved on its own).
+        vocab_resp = client.post(
+            f"/materials/{material_id}/generate", params={"section": "vocab", "stage": 2}
+        )
+        assert vocab_resp.status_code == 200, vocab_resp.text
+        vbody = vocab_resp.json()
+        assert vbody["vocab_added"] >= 1
+        batches = vbody["exercise_batches"]
+        assert batches >= 1
+        assert len(client.get("/vocab", params={"material_id": material_id}).json()) >= 1
+        # No exercises yet — only the vocab step ran.
+        assert client.get("/exercises", params={"material_id": material_id}).json() == []
+
+        # Each exercise batch persists on its own.
+        total = 0
+        for b in range(batches):
+            r = client.post(
+                f"/materials/{material_id}/generate",
+                params={"section": "exercises", "batch": b, "stage": 2},
+            )
+            assert r.status_code == 200, r.text
+            total += r.json()["exercises_added"]
+        assert total >= 1
+        stored = client.get("/exercises", params={"material_id": material_id}).json()
+        assert len(stored) == total
+
+
+def test_generate_exercises_batch_out_of_range_422():
+    with TestClient(app) as client:
+        payload = {"title": "Range", "level": "A2", "transcript": "Ich lerne Deutsch."}
+        material_id = client.post("/materials", json=payload).json()["id"]
+        resp = client.post(
+            f"/materials/{material_id}/generate",
+            params={"section": "exercises", "batch": 99, "stage": 2},
+        )
+        assert resp.status_code == 422

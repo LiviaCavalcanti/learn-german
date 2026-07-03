@@ -12,20 +12,62 @@ const PERSONS: { key: keyof ConjugationForms; label: string }[] = [
   { key: 'sie_Sie', label: 'sie/Sie' },
 ]
 
+const SEEN_KEY = 'sprachheft.conjugation.seen'
+
+function loadSeen(): string[] {
+  try {
+    const parsed = JSON.parse(localStorage.getItem(SEEN_KEY) || '[]')
+    return Array.isArray(parsed) ? parsed.filter((v) => typeof v === 'string') : []
+  } catch {
+    return []
+  }
+}
+
+function saveSeen(verbs: string[]) {
+  try {
+    localStorage.setItem(SEEN_KEY, JSON.stringify(verbs))
+  } catch {
+    /* ignore storage errors */
+  }
+}
+
 export default function Conjugation() {
   const [verb, setVerb] = useState('')
   const [table, setTable] = useState<ConjugationTable | null>(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [seen, setSeen] = useState<string[]>(loadSeen)
+  const [vocabStatus, setVocabStatus] = useState<'added' | 'exists' | null>(null)
 
-  async function lookup(e?: FormEvent) {
-    e?.preventDefault()
-    const q = verb.trim()
+  async function run(input: string) {
+    const q = input.trim()
     if (!q) return
     setLoading(true)
     setError(null)
+    setVocabStatus(null)
     try {
-      setTable(await api.conjugate(q))
+      const result = await api.conjugate(q)
+      setTable(result)
+      setVerb(result.infinitive)
+      setSeen((prev) => {
+        const next = [
+          result.infinitive,
+          ...prev.filter((v) => v.toLowerCase() !== result.infinitive.toLowerCase()),
+        ].slice(0, 40)
+        saveSeen(next)
+        return next
+      })
+      try {
+        const saved = await api.addVerb({
+          infinitive: result.infinitive,
+          english: result.english,
+          partizip_ii: result.partizip_ii,
+          auxiliary: result.auxiliary,
+        })
+        setVocabStatus(saved.created ? 'added' : 'exists')
+      } catch {
+        setVocabStatus(null)
+      }
     } catch {
       setError('Could not conjugate that verb. Check the spelling and try again.')
       setTable(null)
@@ -34,17 +76,28 @@ export default function Conjugation() {
     }
   }
 
+  function onSubmit(e: FormEvent) {
+    e.preventDefault()
+    run(verb)
+  }
+
+  function clearSeen() {
+    setSeen([])
+    saveSeen([])
+  }
+
   return (
     <div className="space-y-6">
       <header>
         <h1 className="text-3xl">Verb conjugation</h1>
         <p className="text-muted">
-          Type a German verb in any form — conjugated or not — to see its full table.
+          Type a German verb in any form — conjugated or not — to see its full table. New verbs
+          are added to your vocabulary.
         </p>
       </header>
 
       <Card className="p-4">
-        <form className="flex flex-wrap items-center gap-2" onSubmit={lookup}>
+        <form className="flex flex-wrap items-center gap-2" onSubmit={onSubmit}>
           <Input
             className="max-w-xs"
             value={verb}
@@ -57,8 +110,40 @@ export default function Conjugation() {
         </form>
       </Card>
 
+      {seen.length > 0 && (
+        <Card className="p-4">
+          <div className="mb-2 flex items-center justify-between">
+            <div className="text-xs font-medium uppercase tracking-wide text-muted">Seen verbs</div>
+            <button type="button" onClick={clearSeen} className="text-xs text-muted hover:text-ink">
+              Clear
+            </button>
+          </div>
+          <div className="flex flex-wrap gap-2">
+            {seen.map((v) => (
+              <button
+                key={v}
+                type="button"
+                onClick={() => run(v)}
+                className="rounded-full border border-line bg-paper px-3 py-1 text-sm hover:bg-accent-soft"
+              >
+                {v}
+              </button>
+            ))}
+          </div>
+        </Card>
+      )}
+
       {error && <Card className="p-4 text-sm text-danger">{error}</Card>}
-      {table && !loading && <ConjugationResult table={table} />}
+      {table && !loading && (
+        <div className="space-y-3">
+          {vocabStatus && (
+            <div className={vocabStatus === 'added' ? 'text-sm text-success' : 'text-sm text-muted'}>
+              {vocabStatus === 'added' ? 'Added to your vocabulary.' : 'Already in your vocabulary.'}
+            </div>
+          )}
+          <ConjugationResult table={table} />
+        </div>
+      )}
     </div>
   )
 }

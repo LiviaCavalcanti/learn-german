@@ -4,6 +4,7 @@ import { api } from '../../lib/api'
 import type { AnswerFeedback, Exercise, Material, VocabItem } from '../../lib/types'
 import { Badge, Button, Card, Input, Select, Spinner, Textarea, cx } from '../../components/ui'
 import { TokenizedText } from '../../components/TokenizedText'
+import { SpeakButton } from '../../components/SpeakButton'
 
 const GRADABLE = ['fill-in-blank', 'conjugation', 'translation', 'multiple-choice', 'reorder']
 
@@ -61,13 +62,33 @@ export default function MaterialDetail() {
     setGenNote(null)
     setGenError(null)
     try {
-      const res = await api.generate(materialId, stage)
-      const [v, ex] = await Promise.all([api.vocab(materialId), api.exercises(materialId)])
-      setVocab(v)
-      setExercises(ex)
+      // Staged + incremental: vocabulary first (fast), then exercises in small
+      // batches, persisting and refreshing after each so nothing is lost and the
+      // user sees progress even on a slow local model.
+      setGenNote('Generating vocabulary…')
+      const v = await api.generateSection(materialId, stage, 'vocab')
+      setVocab(await api.vocab(materialId))
+
+      const batches = v.exercise_batches ?? 3
+      const failed: number[] = []
+      let exTotal = 0
+      for (let b = 0; b < batches; b++) {
+        setGenNote(`Generating exercises… (${b + 1}/${batches})`)
+        try {
+          const r = await api.generateSection(materialId, stage, 'exercises', b)
+          exTotal += r.exercises_added ?? 0
+          setExercises(await api.exercises(materialId))
+        } catch {
+          failed.push(b + 1)
+        }
+      }
+      const words = v.vocab_added ?? 0
+      const suffix = failed.length
+        ? ` · ${failed.length} batch${failed.length === 1 ? '' : 'es'} failed — click Generate again to fill in the rest`
+        : ''
       setGenNote(
-        `Saved · ${res.exercises_added} exercise${res.exercises_added === 1 ? '' : 's'} and ` +
-          `${res.vocab_added} new word${res.vocab_added === 1 ? '' : 's'}.`,
+        `Saved · ${exTotal} exercise${exTotal === 1 ? '' : 's'} and ` +
+          `${words} new word${words === 1 ? '' : 's'}.${suffix}`,
       )
     } catch (e) {
       setGenError(
@@ -168,7 +189,8 @@ export default function MaterialDetail() {
         <div>
           <div className="font-medium">Generate study material</div>
           <div className="text-sm text-muted">
-            Saved to this material so you can revisit it anytime. Each generation adds a new set.
+            Saved as it's generated — vocabulary first, then exercises in batches. On a local
+            model this can take a minute or two; results appear as they're ready.
           </div>
         </div>
         <div className="flex items-center gap-2">
@@ -184,7 +206,11 @@ export default function MaterialDetail() {
           </Button>
         </div>
       </Card>
-      {genNote && <div className="-mt-2 text-sm text-success">{genNote}</div>}
+      {genNote && (
+        <div className={cx('-mt-2 text-sm', generating ? 'text-muted' : 'text-success')}>
+          {generating && <Spinner />} {genNote}
+        </div>
+      )}
       {genError && <div className="-mt-2 text-sm text-danger">{genError}</div>}
 
       {vocab.length > 0 && (
@@ -194,9 +220,13 @@ export default function MaterialDetail() {
             {vocab.map((v) => (
               <Card key={v.id} className="p-3">
                 <div className="flex items-baseline justify-between">
-                  <span className="font-serif">{v.word}</span>
+                  <div className="flex items-baseline gap-1">
+                    <span className="font-serif">{v.word}</span>
+                    <SpeakButton text={v.word} className="self-center" />
+                  </div>
                   {v.cefr && <Badge>{v.cefr}</Badge>}
                 </div>
+                {v.ipa && <div className="font-mono text-xs text-muted">{v.ipa}</div>}
                 <div className="text-sm text-muted">{v.meaning_en}</div>
                 {v.example_de && <div className="mt-1 text-xs italic text-muted">{v.example_de}</div>}
               </Card>

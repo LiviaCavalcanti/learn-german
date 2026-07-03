@@ -35,6 +35,7 @@ export interface VocabItem {
   example_en: string | null
   grammar_tags: string[]
   created_at: string
+  ipa?: string | null
 }
 
 export interface Exercise {
@@ -87,6 +88,20 @@ export interface ReviewQueueItem {
   due: string
   reps: number
   lapses: number
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  item: any
+}
+
+export interface ReviewCard {
+  srstate_id: number
+  item_type: 'vocab' | 'exercise'
+  item_id: number
+  due: string
+  reps: number
+  lapses: number
+  state: string
+  last_review: string | null
+  is_due: boolean
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   item: any
 }
@@ -174,4 +189,9 @@ export interface ConjugationTable {
   futur1: ConjugationForms
   konjunktiv2: ConjugationForms
   imperative: ImperativeForms
+}
+
+export interface VerbVocabResult {
+  created: boolean
+  item: VocabItem
 }

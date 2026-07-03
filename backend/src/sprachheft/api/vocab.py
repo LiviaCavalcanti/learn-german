@@ -14,6 +14,7 @@ from sprachheft.schemas import (
     VocabDeleteResult,
     VocabItemCreate,
     VocabItemRead,
+    VocabItemUpdate,
 )
 from sprachheft.services import vocab as svc
 
@@ -28,6 +29,14 @@ def create_vocab(data: VocabItemCreate, session: SessionDep):
 @router.post("/delete", response_model=VocabDeleteResult)
 def delete_vocab(data: VocabDeleteIn, session: SessionDep):
     return {"deleted": svc.delete_vocab_items(session, data.ids)}
+
+
+@router.patch("/{vocab_id}", response_model=VocabItemRead)
+def update_vocab(vocab_id: int, data: VocabItemUpdate, session: SessionDep):
+    item = svc.update_vocab(session, vocab_id, data)
+    if item is None:
+        raise HTTPException(status_code=404, detail="Vocab item not found")
+    return item
 
 
 @router.post("/verb", response_model=VerbVocabResult)

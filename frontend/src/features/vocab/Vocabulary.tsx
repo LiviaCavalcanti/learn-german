@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { api } from '../../lib/api'
 import type { VocabItem } from '../../lib/types'
 import { Badge, Button, Card, Field, Input, Select, Spinner, cx } from '../../components/ui'
+import { SpeakButton } from '../../components/SpeakButton'
 
 type GroupBy = 'topic' | 'date'
 type SortBy = 'recent' | 'oldest' | 'az' | 'za' | 'level'
@@ -16,6 +17,7 @@ type WordEntry = {
   meaning_en: string
   cefr: string | null
   example_de: string | null
+  ipa: string | null
   grammar_tags: string[]
   created_at: string
 }
@@ -47,6 +49,7 @@ function dedupe(words: VocabItem[]): WordEntry[] {
         meaning_en: v.meaning_en,
         cefr: v.cefr,
         example_de: v.example_de,
+        ipa: v.ipa ?? null,
         grammar_tags: [...(v.grammar_tags || [])],
         created_at: v.created_at,
       })
@@ -449,9 +452,11 @@ export default function Vocabulary() {
                       <div className="min-w-0">
                         <div className="flex items-baseline gap-2">
                           <span className="font-serif">{v.word}</span>
+                          <SpeakButton text={v.word} className="self-center" />
                           {v.cefr && <Badge>{v.cefr}</Badge>}
                           {v.ids.length > 1 && <Badge>×{v.ids.length}</Badge>}
                         </div>
+                        {v.ipa && <div className="font-mono text-xs text-muted">{v.ipa}</div>}
                         <div className="text-sm text-muted">{v.meaning_en}</div>
                         {v.example_de && (
                           <div className="mt-1 text-xs italic text-muted">{v.example_de}</div>

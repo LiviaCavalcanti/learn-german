@@ -43,13 +43,16 @@ def create_app() -> FastAPI:
     settings = get_settings()
     app = FastAPI(title=settings.app_name, version=__version__, lifespan=lifespan)
 
-    app.add_middleware(
-        CORSMiddleware,
-        allow_origins=settings.cors_origins,
-        allow_credentials=True,
-        allow_methods=["*"],
-        allow_headers=["*"],
-    )
+    cors_kwargs: dict = {
+        "allow_credentials": True,
+        "allow_methods": ["*"],
+        "allow_headers": ["*"],
+    }
+    if settings.cors_allow_all:
+        cors_kwargs["allow_origin_regex"] = ".*"
+    else:
+        cors_kwargs["allow_origins"] = settings.cors_origins
+    app.add_middleware(CORSMiddleware, **cors_kwargs)
 
     @app.get("/health", tags=["meta"])
     def health() -> dict:

@@ -11,6 +11,7 @@ class LiteLLMClient:
         self._api_base = settings.llm_api_base
         self._api_key = settings.llm_api_key
         self._temperature = settings.llm_temperature
+        self._timeout = settings.llm_timeout
 
     def generate_structured(self, messages: list[dict], response_model, **kwargs):
         import instructor
@@ -38,6 +39,7 @@ class LiteLLMClient:
             response_model=response_model,
             temperature=self._temperature,
             max_retries=2,
+            timeout=self._timeout,
             **extra,
             **kwargs,
         )

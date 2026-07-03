@@ -1,23 +1,35 @@
-"""Generation orchestration: run the agent and persist results."""
+"""Generation orchestration: run the agent and persist results.
+
+Generation is done in small, incremental sections (vocabulary, then exercises in
+batches) so that partial results are saved even when a slow local model times out
+on a later step, and the UI can show progress.
+"""
 
 from __future__ import annotations
 
+from collections.abc import Iterable
+
 from sqlmodel import Session, select
 
-from sprachheft.agents.generator import generate, generate_one
+from sprachheft.agents.generator import (
+    generate_exercises,
+    generate_one,
+    generate_vocabulary,
+)
 from sprachheft.models import Exercise, ExerciseVariant, Material, SRState, VocabItem
-from sprachheft.schemas import GenerationResult
+from sprachheft.schemas import GenerationResult, GenExercise, GenVocab
+
+# Exercises are generated a few types at a time; each batch is one small LLM call.
+EXERCISE_BATCHES: list[list[str]] = [
+    ["fill-in-blank", "multiple-choice", "translation"],
+    ["conjugation", "reorder"],
+    ["reading", "interpretation", "writing"],
+]
 
 
-def persist_result(
-    session: Session,
-    material: Material,
-    result: GenerationResult,
-    *,
-    source: str = "generated",
-) -> dict:
-    vocab_added = 0
-    for gv in result.vocabulary:
+def _persist_vocab(session: Session, material: Material, vocab: Iterable[GenVocab]) -> int:
+    added = 0
+    for gv in vocab:
         lemma = (gv.lemma or gv.word).strip()
         if not lemma:
             continue
@@ -43,10 +55,19 @@ def persist_result(
         session.add(item)
         session.flush()
         session.add(SRState(item_type="vocab", item_id=item.id))
-        vocab_added += 1
+        added += 1
+    return added
 
-    exercises_added = 0
-    for ge in result.exercises:
+
+def _persist_exercises(
+    session: Session,
+    material: Material,
+    exercises: Iterable[GenExercise],
+    *,
+    source: str = "generated",
+) -> int:
+    added = 0
+    for ge in exercises:
         exercise = Exercise(
             material_id=material.id,
             source=source,
@@ -60,8 +81,19 @@ def persist_result(
         session.add(exercise)
         session.flush()
         session.add(SRState(item_type="exercise", item_id=exercise.id))
-        exercises_added += 1
+        added += 1
+    return added
 
+
+def persist_result(
+    session: Session,
+    material: Material,
+    result: GenerationResult,
+    *,
+    source: str = "generated",
+) -> dict:
+    vocab_added = _persist_vocab(session, material, result.vocabulary)
+    exercises_added = _persist_exercises(session, material, result.exercises, source=source)
     session.commit()
     return {
         "themes": result.themes,
@@ -70,9 +102,54 @@ def persist_result(
     }
 
 
+def generate_vocab_section(session: Session, material: Material, stage: int = 2) -> dict:
+    """Generate + persist only the vocabulary (fast first step)."""
+    vocab = generate_vocabulary(material, stage)
+    added = _persist_vocab(session, material, vocab)
+    session.commit()
+    return {"vocab_added": added, "exercise_batches": len(EXERCISE_BATCHES)}
+
+
+def generate_exercises_section(
+    session: Session, material: Material, stage: int, batch: int
+) -> dict:
+    """Generate + persist one batch of exercises (a few types)."""
+    if not 0 <= batch < len(EXERCISE_BATCHES):
+        raise IndexError(f"batch must be 0..{len(EXERCISE_BATCHES) - 1}")
+    exercises = generate_exercises(material, stage, EXERCISE_BATCHES[batch])
+    added = _persist_exercises(session, material, exercises)
+    session.commit()
+    return {
+        "exercises_added": added,
+        "batch": batch,
+        "exercise_batches": len(EXERCISE_BATCHES),
+    }
+
+
 def generate_for_material(session: Session, material: Material, *, stage: int = 2) -> dict:
-    result = generate(material, stage)
-    return persist_result(session, material, result, source="generated")
+    """Full staged generation; tolerant of per-step failures (partial results persist)."""
+    errors: list[str] = []
+    vocab_added = 0
+    try:
+        vocab_added = generate_vocab_section(session, material, stage)["vocab_added"]
+    except Exception as exc:  # noqa: BLE001 — one slow step must not lose the rest
+        errors.append(f"vocabulary: {exc}")
+
+    exercises_added = 0
+    for index in range(len(EXERCISE_BATCHES)):
+        try:
+            exercises_added += generate_exercises_section(session, material, stage, index)[
+                "exercises_added"
+            ]
+        except Exception as exc:  # noqa: BLE001
+            errors.append(f"exercises[{index}]: {exc}")
+
+    return {
+        "vocab_added": vocab_added,
+        "exercises_added": exercises_added,
+        "exercise_batches": len(EXERCISE_BATCHES),
+        "errors": errors,
+    }
 
 
 def group_id_for(session: Session, exercise: Exercise) -> int:

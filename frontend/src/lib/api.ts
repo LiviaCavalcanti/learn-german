@@ -9,12 +9,21 @@ import type {
   Material,
   MaterialSummary,
   Rating,
+  ReviewCard,
   ReviewQueueItem,
   ReviewStats,
+  VerbVocabResult,
   VocabItem,
 } from './types'
 
-const BASE = (import.meta.env.VITE_API_BASE as string) || 'http://127.0.0.1:8000'
+// When VITE_API_BASE isn't set, talk to the backend on the same host the page was
+// loaded from (port 8000). This works locally *and* from a phone that opened the app
+// via a LAN / Tailscale IP, without hard-coding any address.
+const BASE =
+  (import.meta.env.VITE_API_BASE as string) ||
+  (typeof window !== 'undefined'
+    ? `${window.location.protocol}//${window.location.hostname}:8000`
+    : 'http://127.0.0.1:8000')
 
 async function req<T>(path: string, opts: RequestInit = {}): Promise<T> {
   const resp = await fetch(BASE + path, {
@@ -52,6 +61,20 @@ export const api = {
       `/materials/${id}/generate?stage=${stage}`,
       { method: 'POST' },
     ),
+  generateSection: (
+    id: number,
+    stage: number,
+    section: 'vocab' | 'exercises',
+    batch = 0,
+  ) =>
+    req<{
+      vocab_added?: number
+      exercises_added?: number
+      exercise_batches?: number
+      batch?: number
+    }>(`/materials/${id}/generate?section=${section}&batch=${batch}&stage=${stage}`, {
+      method: 'POST',
+    }),
 
   rewriteMaterial: (id: number, body: { instructions?: string; target_lines?: number }) =>
     req<Material>(`/materials/${id}/rewrite`, { method: 'POST', body: JSON.stringify(body) }),
@@ -94,6 +117,14 @@ export const api = {
   conjugate: (verb: string) =>
     req<ConjugationTable>(`/conjugation?verb=${encodeURIComponent(verb)}`),
 
+  addVerb: (body: {
+    infinitive: string
+    english?: string
+    partizip_ii?: string
+    auxiliary?: string
+    cefr?: string | null
+  }) => req<VerbVocabResult>('/vocab/verb', { method: 'POST', body: JSON.stringify(body) }),
+
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   practiceAnswer: (body: { exercise_id: number; responses: string[]; rating?: Rating }) =>
     req<any>('/practice/answer', { method: 'POST', body: JSON.stringify(body) }),
@@ -111,6 +142,30 @@ export const api = {
       method: 'POST',
       body: JSON.stringify(body),
     }),
+  reviewCards: (params: { item_type?: string; limit?: number } = {}) => {
+    const q = new URLSearchParams()
+    if (params.item_type) q.set('item_type', params.item_type)
+    q.set('limit', String(params.limit ?? 500))
+    return req<ReviewCard[]>(`/review/cards?${q.toString()}`)
+  },
+  reviewRemoveCards: (srstate_ids: number[]) =>
+    req<{ removed: number }>('/review/cards/remove', {
+      method: 'POST',
+      body: JSON.stringify({ srstate_ids }),
+    }),
+  reviewDeleteCards: (srstate_ids: number[]) =>
+    req<{ deleted: number }>('/review/cards/delete', {
+      method: 'POST',
+      body: JSON.stringify({ srstate_ids }),
+    }),
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  updateVocab: (id: number, data: Record<string, any>) =>
+    req<VocabItem>(`/vocab/${id}`, { method: 'PATCH', body: JSON.stringify(data) }),
+  updateExercise: (
+    id: number,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    data: { instructions?: string; answer_key?: any },
+  ) => req<Exercise>(`/exercises/${id}`, { method: 'PATCH', body: JSON.stringify(data) }),
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   importJson: (data: any) =>

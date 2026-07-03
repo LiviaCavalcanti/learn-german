@@ -5,7 +5,7 @@ from __future__ import annotations
 from datetime import datetime
 from typing import Literal
 
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, Field, computed_field
 
 Level = Literal["A1", "A2", "B1", "B2"]
 MediaType = Literal["video", "podcast", "text"]
@@ -74,6 +74,14 @@ class VocabItemRead(BaseModel):
     grammar_tags: list[str]
     created_at: datetime
 
+    @computed_field
+    @property
+    def ipa(self) -> str | None:
+        """IPA pronunciation of the word (computed; needs the phonetics extra)."""
+        from sprachheft.phonetics import to_ipa
+
+        return to_ipa(self.word)
+
 
 class VocabItemCreate(BaseModel):
     word: str
@@ -85,6 +93,19 @@ class VocabItemCreate(BaseModel):
     example_en: str | None = None
     grammar_tags: list[str] = []
     material_id: int | None = None
+
+
+class VocabItemUpdate(BaseModel):
+    """Partial update of a vocabulary item (only provided fields are changed)."""
+
+    word: str | None = None
+    lemma: str | None = None
+    pos: str | None = None
+    meaning_en: str | None = None
+    cefr: str | None = None
+    example_de: str | None = None
+    example_en: str | None = None
+    grammar_tags: list[str] | None = None
 
 
 class VocabComposeIn(BaseModel):
@@ -144,6 +165,13 @@ class ExerciseRead(BaseModel):
     # group_id defaults to its own id and variant_position to 0.
     group_id: int | None = None
     variant_position: int = 0
+
+
+class ExerciseUpdate(BaseModel):
+    """Partial update of an exercise's instructions and/or answer key."""
+
+    instructions: str | None = None
+    answer_key: dict | None = None
 
 
 class AnswerAttemptRead(BaseModel):
@@ -215,6 +243,18 @@ class GenerationResult(BaseModel):
     exercises: list[GenExercise] = []
 
 
+class VocabBatch(BaseModel):
+    """Structured output for a vocabulary-only generation call."""
+
+    vocabulary: list[GenVocab] = []
+
+
+class ExerciseBatch(BaseModel):
+    """Structured output for an exercise-batch generation call (a few types)."""
+
+    exercises: list[GenExercise] = []
+
+
 class ComposedText(BaseModel):
     """A practice text plus exercises composed from a set of learned words."""
 
@@ -259,6 +299,12 @@ class GradeIn(BaseModel):
     item_id: int
     rating: Rating
     session_id: int | None = None
+
+
+class ReviewCardsIn(BaseModel):
+    """Target review cards by their SR-state ids (bulk-capable)."""
+
+    srstate_ids: list[int] = []
 
 
 # --- Imports -----------------------------------------------------------------

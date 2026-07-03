@@ -58,12 +58,21 @@ def generate_material(
     material_id: int,
     session: SessionDep,
     stage: int = Query(2, ge=1, le=4),
+    section: str | None = Query(None, pattern="^(vocab|exercises)$"),
+    batch: int = Query(0, ge=0),
 ):
     material = svc.get_material(session, material_id)
     if not material:
         raise HTTPException(status_code=404, detail="Material not found")
     from sprachheft.services import generation
 
+    if section == "vocab":
+        return generation.generate_vocab_section(session, material, stage)
+    if section == "exercises":
+        try:
+            return generation.generate_exercises_section(session, material, stage, batch)
+        except IndexError as exc:
+            raise HTTPException(status_code=422, detail=str(exc)) from exc
     return generation.generate_for_material(session, material, stage=stage)
 
 

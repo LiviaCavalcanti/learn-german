@@ -100,6 +100,86 @@ def get_review_queue(session: Session, *, limit: int = 20) -> list[dict]:
     return queue
 
 
+def list_cards(
+    session: Session,
+    *,
+    item_type: str | None = None,
+    limit: int = 500,
+    offset: int = 0,
+) -> list[dict]:
+    """List all review cards (not just those due) for the manage view."""
+    now = utcnow()
+    stmt = select(SRState)
+    if item_type in ("vocab", "exercise"):
+        stmt = stmt.where(SRState.item_type == item_type)
+    stmt = stmt.order_by(SRState.due).offset(offset).limit(limit)
+
+    cards: list[dict] = []
+    for state in session.exec(stmt).all():
+        item = _serialize_item(session, state)
+        if item is None:
+            continue
+        cards.append(
+            {
+                "srstate_id": state.id,
+                "item_type": state.item_type,
+                "item_id": state.item_id,
+                "due": state.due,
+                "reps": state.reps,
+                "lapses": state.lapses,
+                "state": state.state,
+                "last_review": state.last_review,
+                "is_due": state.due <= now,
+                "item": item,
+            }
+        )
+    return cards
+
+
+def remove_cards(session: Session, srstate_ids: list[int]) -> int:
+    """Remove cards from review only: delete the SR state (and its review logs),
+    but keep the underlying vocab word / exercise in the library."""
+    removed = 0
+    for srstate_id in dict.fromkeys(srstate_ids):
+        state = session.get(SRState, srstate_id)
+        if state is None:
+            continue
+        logs = session.exec(
+            select(ReviewLog).where(ReviewLog.srstate_id == srstate_id)
+        ).all()
+        for log in logs:
+            session.delete(log)
+        session.delete(state)
+        removed += 1
+    session.commit()
+    return removed
+
+
+def delete_cards(session: Session, srstate_ids: list[int]) -> int:
+    """Delete the underlying items of the given cards entirely (vocab words or
+    exercises), which also removes their SR state, review logs, and related rows."""
+    vocab_ids: list[int] = []
+    exercise_ids: list[int] = []
+    for srstate_id in dict.fromkeys(srstate_ids):
+        state = session.get(SRState, srstate_id)
+        if state is None:
+            continue
+        if state.item_type == "vocab":
+            vocab_ids.append(state.item_id)
+        elif state.item_type == "exercise":
+            exercise_ids.append(state.item_id)
+
+    from sprachheft.services.exercises import delete_exercise_items
+    from sprachheft.services.vocab import delete_vocab_items
+
+    deleted = 0
+    if vocab_ids:
+        deleted += delete_vocab_items(session, vocab_ids)
+    if exercise_ids:
+        deleted += delete_exercise_items(session, exercise_ids)
+    return deleted
+
+
 def get_stats(session: Session) -> dict:
     now = utcnow()
     start_today = now.replace(hour=0, minute=0, second=0, microsecond=0)

@@ -6,7 +6,7 @@ from fastapi import APIRouter, HTTPException, Query
 
 from sprachheft.api.deps import SessionDep
 from sprachheft.models import Exercise
-from sprachheft.schemas import AnswerAttemptRead, ExerciseRead
+from sprachheft.schemas import AnswerAttemptRead, ExerciseRead, ExerciseUpdate
 from sprachheft.services import attempts as attempts_svc
 from sprachheft.services import exercises as svc
 
@@ -30,6 +30,14 @@ def list_attempts(
     limit: int = Query(20, ge=1, le=100),
 ):
     return attempts_svc.list_attempts(session, exercise_id, limit=limit)
+
+
+@router.patch("/{exercise_id}", response_model=ExerciseRead)
+def update_exercise(exercise_id: int, data: ExerciseUpdate, session: SessionDep):
+    exercise = svc.update_exercise(session, exercise_id, data)
+    if exercise is None:
+        raise HTTPException(status_code=404, detail="Exercise not found")
+    return svc.to_read(session, exercise)
 
 
 @router.post("/{exercise_id}/variant", response_model=ExerciseRead)

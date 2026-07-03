@@ -3,6 +3,8 @@ import { api } from '../../lib/api'
 import type { Rating, ReviewQueueItem, ReviewStats } from '../../lib/types'
 import { Badge, Button, Card, Spinner } from '../../components/ui'
 import { TokenizedText } from '../../components/TokenizedText'
+import { CardEditor } from './CardEditor'
+import { ManageCards } from './ManageCards'
 
 const RATINGS: { key: Rating; label: string; className: string }[] = [
   { key: 'again', label: 'Again', className: 'bg-danger/10 text-danger' },
@@ -16,6 +18,8 @@ export default function Review() {
   const [idx, setIdx] = useState(0)
   const [revealed, setRevealed] = useState(false)
   const [stats, setStats] = useState<ReviewStats | null>(null)
+  const [mode, setMode] = useState<'review' | 'manage'>('review')
+  const [editing, setEditing] = useState<ReviewQueueItem | null>(null)
 
   function load() {
     api
@@ -52,7 +56,44 @@ export default function Review() {
     }
   }
 
-  if (queue === null) return <Spinner />
+  // Drop the current card locally after it was removed/deleted, advancing the queue.
+  function dropCurrent() {
+    if (!queue) return
+    const next = queue.filter((_, i) => i !== idx)
+    if (next.length === 0) {
+      load()
+      return
+    }
+    setQueue(next)
+    if (idx >= next.length) setIdx(next.length - 1)
+    setRevealed(false)
+    api.reviewStats().then(setStats).catch(() => {})
+  }
+
+  async function removeFromReview() {
+    const item = queue?.[idx]
+    if (!item) return
+    await api.reviewRemoveCards([item.srstate_id])
+    dropCurrent()
+  }
+
+  async function deleteEntirely() {
+    const item = queue?.[idx]
+    if (!item) return
+    if (!window.confirm('Delete this item entirely? It will be removed from your library.')) return
+    await api.reviewDeleteCards([item.srstate_id])
+    dropCurrent()
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  function applyEdit(patch: Record<string, any>) {
+    setQueue((q) =>
+      q ? q.map((c, i) => (i === idx ? { ...c, item: { ...c.item, ...patch } } : c)) : q,
+    )
+    setEditing(null)
+  }
+
+  if (queue === null && mode === 'review') return <Spinner />
 
   return (
     <div className="space-y-6">
@@ -61,10 +102,25 @@ export default function Review() {
           <h1 className="text-3xl">Review</h1>
           <p className="text-muted">Spaced repetition · {stats?.streak ?? 0} day streak</p>
         </div>
-        <Badge>{queue.length ? `${idx + 1} / ${queue.length}` : '0 due'}</Badge>
+        <div className="flex items-center gap-2">
+          {mode === 'review' && (
+            <Badge>{queue && queue.length ? `${idx + 1} / ${queue.length}` : '0 due'}</Badge>
+          )}
+          <Button
+            variant="soft"
+            onClick={() => {
+              if (mode === 'manage') load()
+              setMode(mode === 'review' ? 'manage' : 'review')
+            }}
+          >
+            {mode === 'review' ? 'Manage cards' : 'Back to review'}
+          </Button>
+        </div>
       </header>
 
-      {queue.length === 0 ? (
+      {mode === 'manage' ? (
+        <ManageCards onChanged={() => api.reviewStats().then(setStats).catch(() => {})} />
+      ) : queue && queue.length === 0 ? (
         <Card className="p-10 text-center">
           <div className="font-serif text-2xl">All caught up 🎉</div>
           <p className="mt-1 text-muted">
@@ -72,12 +128,21 @@ export default function Review() {
           </p>
         </Card>
       ) : (
-        <ReviewCard
-          item={queue[idx]}
-          revealed={revealed}
-          onReveal={() => setRevealed(true)}
-          onGrade={grade}
-        />
+        queue && (
+          <ReviewCard
+            item={queue[idx]}
+            revealed={revealed}
+            onReveal={() => setRevealed(true)}
+            onGrade={grade}
+            onEdit={() => setEditing(queue[idx])}
+            onRemoveFromReview={removeFromReview}
+            onDelete={deleteEntirely}
+          />
+        )
+      )}
+
+      {editing && (
+        <CardEditor card={editing} onClose={() => setEditing(null)} onSaved={applyEdit} />
       )}
     </div>
   )
@@ -88,15 +153,36 @@ function ReviewCard({
   revealed,
   onReveal,
   onGrade,
+  onEdit,
+  onRemoveFromReview,
+  onDelete,
 }: {
   item: ReviewQueueItem
   revealed: boolean
   onReveal: () => void
   onGrade: (r: Rating) => void
+  onEdit: () => void
+  onRemoveFromReview: () => void
+  onDelete: () => void
 }) {
   const data = item.item
   return (
     <Card className="p-8">
+      <div className="mb-4 flex items-center justify-end gap-1">
+        <Button variant="ghost" onClick={onEdit}>
+          Edit
+        </Button>
+        <Button
+          variant="ghost"
+          onClick={onRemoveFromReview}
+          title="Remove from review (keeps the item in your library)"
+        >
+          Remove
+        </Button>
+        <Button variant="danger" onClick={onDelete} title="Delete the item entirely">
+          Delete
+        </Button>
+      </div>
       {item.item_type === 'vocab' ? (
         <div className="text-center">
           <div className="font-serif text-3xl">{data.word}</div>

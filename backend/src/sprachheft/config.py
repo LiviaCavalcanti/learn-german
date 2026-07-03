@@ -39,12 +39,20 @@ class Settings(BaseSettings):
     # Learner defaults
     default_level: str = "A2"
 
+    # Dev-server network binding (see main.py). Set host to "0.0.0.0" to let other
+    # devices on your LAN / Tailscale network (e.g. your phone) connect.
+    host: str = "127.0.0.1"
+    port: int = 8000
+
     # LLM — litellm model string, e.g. "ollama/llama3.1", "gpt-4o-mini",
     # "claude-3-5-sonnet-latest". api_base is used for local providers (Ollama).
     llm_model: str = "ollama/llama3.1"
     llm_api_base: str | None = None
     llm_api_key: str | None = None
     llm_temperature: float = 0.3
+    # Per-call timeout (seconds). Generation is split into small batches, so each
+    # call should finish well within this; it guards against a stuck request.
+    llm_timeout: int = 300
 
     # Embeddings for semantic vocab search (empty = local hashing fallback)
     embedding_model: str = ""
@@ -56,6 +64,9 @@ class Settings(BaseSettings):
             "http://127.0.0.1:5173",
         ]
     )
+    # Reflect any Origin. Needed when the frontend is opened from a phone via a
+    # LAN / Tailscale IP whose origin isn't known ahead of time.
+    cors_allow_all: bool = False
 
     # Reminders (local HH:MM)
     reminder_time: str = "18:00"

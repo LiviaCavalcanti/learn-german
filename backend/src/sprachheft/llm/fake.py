@@ -14,12 +14,14 @@ from sprachheft.schemas import (
     ComposedText,
     ConjugationForms,
     ConjugationTable,
+    ExerciseBatch,
     FeedbackError,
     GenerationResult,
     GenExercise,
     GenVocab,
     ImperativeForms,
     RewrittenText,
+    VocabBatch,
 )
 
 _WORD_RE = re.compile(r"[A-Za-zÄÖÜäöüß]{4,}")
@@ -228,6 +230,12 @@ class FakeLLMClient:
         if response_model is GenExercise:
             return self._fake_single_exercise(transcript)
 
+        if response_model is VocabBatch:
+            return VocabBatch(vocabulary=self._fake_vocab(transcript))
+
+        if response_model is ExerciseBatch:
+            return ExerciseBatch(exercises=self._fake_exercise_batch(transcript))
+
         words = _pick_words(transcript) or ["Alltag", "lernen", "wichtig"]
         vocabulary = [
             GenVocab(
@@ -338,6 +346,43 @@ class FakeLLMClient:
         transcript = user_message
         if "TRANSCRIPT:" in user_message:
             transcript = user_message.split("TRANSCRIPT:", 1)[1]
+        return self._build_fake_exercise(ex_type, transcript)
+
+    def _fake_vocab(self, user_message: str) -> list[GenVocab]:
+        """Build a few plausible vocabulary items from the transcript (offline)."""
+        transcript = user_message
+        if "TRANSCRIPT:" in user_message:
+            transcript = user_message.split("TRANSCRIPT:", 1)[1]
+        words = _pick_words(transcript) or ["Alltag", "lernen", "wichtig"]
+        return [
+            GenVocab(
+                word=word,
+                lemma=word.lower(),
+                pos="noun" if word[:1].isupper() else "verb",
+                meaning_en=f"(meaning of {word})",
+                cefr="A2",
+                example_de=f"{word} kommt im Text vor.",
+                example_en=f"{word} appears in the text.",
+                grammar_tags=[],
+            )
+            for word in words[:8]
+        ]
+
+    def _fake_exercise_batch(self, user_message: str) -> list[GenExercise]:
+        """Build one exercise per requested TYPE in the TYPES: line (offline)."""
+        types: list[str] = []
+        for line in user_message.splitlines():
+            if line.strip().upper().startswith("TYPES:"):
+                types = [t.strip() for t in line.split(":", 1)[1].split(",") if t.strip()]
+                break
+        if not types:
+            types = ["fill-in-blank"]
+        transcript = user_message
+        if "TRANSCRIPT:" in user_message:
+            transcript = user_message.split("TRANSCRIPT:", 1)[1]
+        return [self._build_fake_exercise(t, transcript) for t in types]
+
+    def _build_fake_exercise(self, ex_type: str, transcript: str) -> GenExercise:
         word = (_pick_words(transcript) or ["Alltag"])[0]
 
         if ex_type == "conjugation":
