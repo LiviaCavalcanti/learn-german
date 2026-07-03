@@ -38,6 +38,11 @@ class Settings(BaseSettings):
 
     # Learner defaults
     default_level: str = "A2"
+    # Multi-language: the target language to learn and the native/explanation
+    # language (meanings, feedback and translations are written in the latter).
+    # See ``languages.py`` for the registry of supported codes.
+    default_target_lang: str = "de"
+    default_native_lang: str = "en"
 
     # Dev-server network binding (see main.py). Set host to "0.0.0.0" to let other
     # devices on your LAN / Tailscale network (e.g. your phone) connect.

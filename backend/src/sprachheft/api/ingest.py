@@ -7,6 +7,7 @@ from fastapi import APIRouter, HTTPException
 from sprachheft.config import get_settings
 from sprachheft.ingest.base import IngestRequest
 from sprachheft.ingest.link import LinkIngestor
+from sprachheft.languages import normalize_target
 from sprachheft.schemas import TranscribeIn
 
 router = APIRouter(prefix="/ingest", tags=["ingest"])
@@ -35,7 +36,11 @@ def transcribe(payload: TranscribeIn):
         )
     try:
         result = _link.ingest(
-            IngestRequest(media_type="video", source_url=payload.source_url)
+            IngestRequest(
+                media_type="video",
+                source_url=payload.source_url,
+                source_lang=normalize_target(payload.source_lang),
+            )
         )
     except Exception as exc:  # noqa: BLE001
         raise HTTPException(status_code=502, detail=f"Transcription failed: {exc}") from exc

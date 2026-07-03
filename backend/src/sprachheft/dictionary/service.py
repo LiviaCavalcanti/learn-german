@@ -63,10 +63,10 @@ class DictionaryService:
         return int(conn.execute("SELECT count(*) FROM dict_entry").fetchone()[0])
 
     # -- lookup -------------------------------------------------------------
-    def lookup(self, word: str, pos: str | None = None) -> list[DictEntry]:
+    def lookup(self, word: str, pos: str | None = None, lang: str = "de") -> list[DictEntry]:
         if not self.is_available():
             return []
-        cands = candidates(word)
+        cands = candidates(word, lang)
         if not cands:
             return []
         conn = self._connect()
@@ -87,7 +87,7 @@ class DictionaryService:
                 DictEntry(
                     headword=row["headword"],
                     pos=row["pos"],
-                    ipa=row["ipa"] or to_ipa(row["headword"]),
+                    ipa=row["ipa"] or to_ipa(row["headword"], lang),
                     translations=json.loads(row["translations"]) if row["translations"] else [],
                     senses=json.loads(row["senses"]) if row["senses"] else [],
                 )

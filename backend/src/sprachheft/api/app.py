@@ -15,6 +15,7 @@ from sprachheft.api import (
     exercises,
     imports,
     ingest,
+    languages,
     materials,
     practice,
     reference,
@@ -60,6 +61,7 @@ def create_app() -> FastAPI:
         return {"status": "ok", "app": settings.app_name, "version": __version__}
 
     app.include_router(materials.router)
+    app.include_router(languages.router)
     app.include_router(reference.router)
     app.include_router(vocab.router)
     app.include_router(dictionary.router)

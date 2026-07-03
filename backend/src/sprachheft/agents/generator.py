@@ -8,32 +8,66 @@ incrementally. The instructions mirror ``prompts/generate-exercises.prompt.md``.
 
 from __future__ import annotations
 
+from sprachheft.languages import get_language, native_name
 from sprachheft.llm import get_llm_client
 from sprachheft.models import Material
 from sprachheft.schemas import ExerciseBatch, GenExercise, GenVocab, VocabBatch
 
-VOCAB_SYSTEM_PROMPT = """You are an expert German-as-a-foreign-language (DaF) teacher. \
-From a German transcript and a target CEFR level, extract 8-12 vocabulary items that \
-actually occur in the transcript (skip trivial function words and proper names). For \
-nouns, write the article shorthand r/e/s (= der/die/das). For each item give: word, \
-lemma, part of speech, a concise English meaning, one short example (German + English), \
-a CEFR tag, and grammar tags (lowercase kebab codes). Use correct, natural German. \
-Return only the vocabulary list."""
 
-EXERCISE_SYSTEM_PROMPT = """You are an expert German-as-a-foreign-language (DaF) teacher \
-and assessment item-writer. From a German transcript, a target CEFR level, a STAGE, and a \
-list of requested exercise TYPES, produce exactly ONE exercise for EACH requested type, \
-drilling the transcript's grammar and vocabulary.
+def _vocab_system_prompt(material: Material) -> str:
+    profile = get_language(material.source_lang)
+    tname = profile.name
+    nname = native_name(material.native_lang)
+    fw = profile.level_framework
+    return (
+        f"You are an expert {tname}-as-a-foreign-language teacher. From a {tname} transcript and a "
+        f"target {fw} level, extract 8-12 vocabulary items that actually occur in the transcript "
+        f"(skip trivial function words and proper names). {profile.article_note} For each item "
+        f"give: word, lemma, part of speech, a concise {nname} meaning, one short example (in "
+        f"{tname} plus its {nname} translation), a {fw} tag, and grammar tags (lowercase kebab "
+        f"codes). Use correct, natural {tname}. Return only the vocabulary list."
+    )
 
-STAGE controls scaffolding and hints DECREASE as STAGE rises:
-- 1 = just introduced: maximum help (word banks, English + German instructions); put \
-hints in payload.hints.
-- 2 = practising: some hints.
-- 3 = confident: German instructions, at most a short tip.
-- 4 = consolidating: German only, NO hints (payload.hints must be empty), free production.
 
-Keep every item within the CEFR level and solvable from the transcript. Use correct, \
-natural German. Fill answer keys for every exercise. Return only the exercises."""
+def _exercise_system_prompt(material: Material) -> str:
+    profile = get_language(material.source_lang)
+    tname = profile.name
+    nname = native_name(material.native_lang)
+    fw = profile.level_framework
+    return (
+        f"You are an expert {tname}-as-a-foreign-language teacher and assessment item-writer. From "
+        f"a {tname} transcript, a target {fw} level, a STAGE, and a list of requested exercise "
+        "TYPES, produce exactly ONE exercise for EACH requested type, drilling the transcript's "
+        "grammar and vocabulary.\n\n"
+        "STAGE controls scaffolding and hints DECREASE as STAGE rises:\n"
+        f"- 1 = just introduced: maximum help (word banks, {nname} + {tname} instructions); put "
+        "hints in payload.hints.\n"
+        "- 2 = practising: some hints.\n"
+        f"- 3 = confident: {tname} instructions, at most a short tip.\n"
+        f"- 4 = consolidating: {tname} only, NO hints (payload.hints must be empty), free "
+        "production.\n\n"
+        f"Keep every item within the {fw} level and solvable from the transcript. Use correct, "
+        f"natural {tname}. Fill answer keys for every exercise. Return only the exercises."
+    )
+
+
+def _single_system_prompt(material: Material) -> str:
+    profile = get_language(material.source_lang)
+    tname = profile.name
+    fw = profile.level_framework
+    return (
+        f"You are an expert {tname}-as-a-foreign-language teacher and assessment item-writer. From "
+        f"a {tname} transcript, a target {fw} level, a STAGE, and a required exercise TYPE, "
+        "produce exactly ONE exercise of that TYPE that drills the transcript's grammar and "
+        "vocabulary.\n\n"
+        "STAGE controls scaffolding and hints DECREASE as STAGE rises (1 = maximum help with "
+        "word banks and hints in payload.hints; 4 = target language only, no hints, free "
+        "production).\n\n"
+        "The exercise must be a fresh alternative: do NOT reuse any of the AVOID prompts — change "
+        f"the sentences, blanks, options or tokens. Keep it within the {fw} level, solvable from "
+        f"the transcript, in correct natural {tname}, and fill the answer key completely. Return "
+        "only the single exercise object."
+    )
 
 
 def _user_context(material: Material) -> str:
@@ -47,7 +81,7 @@ def generate_vocabulary(material: Material, stage: int = 2) -> list[GenVocab]:
     """Generate the vocabulary list only (one small, fast call)."""
     client = get_llm_client()
     messages = [
-        {"role": "system", "content": VOCAB_SYSTEM_PROMPT},
+        {"role": "system", "content": _vocab_system_prompt(material)},
         {"role": "user", "content": _user_context(material)},
     ]
     return client.generate_structured(messages, VocabBatch).vocabulary
@@ -68,24 +102,10 @@ def generate_exercises(
     if material.translation:
         user += f"TRANSLATION:\n{material.translation}\n"
     messages = [
-        {"role": "system", "content": EXERCISE_SYSTEM_PROMPT},
+        {"role": "system", "content": _exercise_system_prompt(material)},
         {"role": "user", "content": user},
     ]
     return client.generate_structured(messages, ExerciseBatch).exercises
-
-
-SINGLE_SYSTEM_PROMPT = """You are an expert German-as-a-foreign-language (DaF) teacher and \
-assessment item-writer. From a German transcript, a target CEFR level, a STAGE, and a \
-required exercise TYPE, produce exactly ONE exercise of that TYPE that drills the \
-transcript's grammar and vocabulary.
-
-STAGE controls scaffolding and hints DECREASE as STAGE rises (1 = maximum help with word \
-banks and hints in payload.hints; 4 = German only, no hints, free production).
-
-The exercise must be a fresh alternative: do NOT reuse any of the AVOID prompts — change \
-the sentences, blanks, options or tokens. Keep it within the CEFR level, solvable from the \
-transcript, in correct natural German, and fill the answer key completely. Return only the \
-single exercise object."""
 
 
 def build_single_messages(
@@ -104,7 +124,7 @@ def build_single_messages(
         joined = "\n".join(f"- {p}" for p in avoid if p)
         user += f"AVOID (already used, make something different):\n{joined}\n"
     return [
-        {"role": "system", "content": SINGLE_SYSTEM_PROMPT},
+        {"role": "system", "content": _single_system_prompt(material)},
         {"role": "user", "content": user},
     ]
 

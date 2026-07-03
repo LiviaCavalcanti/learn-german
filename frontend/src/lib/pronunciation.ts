@@ -12,10 +12,24 @@
 export interface SpeechProvider {
   /** Whether speech output is usable in the current environment. */
   readonly available: boolean
-  /** Speak the given text (German by default). */
+  /** Speak the given text (in the current target language by default). */
   speak(text: string, lang?: string): void
   /** Stop any in-progress speech. */
   cancel(): void
+}
+
+// Current TTS language (BCP-47), updated by the LanguageProvider when the learner
+// switches target language. Defaults to German for backwards compatibility.
+let currentSpeechLang = 'de-DE'
+
+/** Set the voice/language used by speech output (e.g. 'de-DE', 'es-ES'). */
+export function setSpeechLang(voice: string): void {
+  currentSpeechLang = voice || 'de-DE'
+}
+
+/** The current speech language (BCP-47). */
+export function getSpeechLang(): string {
+  return currentSpeechLang
 }
 
 class WebSpeechProvider implements SpeechProvider {
@@ -36,7 +50,7 @@ class WebSpeechProvider implements SpeechProvider {
     )
   }
 
-  speak(text: string, lang = 'de-DE'): void {
+  speak(text: string, lang = currentSpeechLang): void {
     if (!this.synth || !text.trim()) return
     this.synth.cancel()
     const utter = new SpeechSynthesisUtterance(text)

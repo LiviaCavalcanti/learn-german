@@ -13,14 +13,14 @@ from sprachheft.schemas import (
     AnswerFeedback,
     ChatReply,
     ComposedText,
-    ConjugationForms,
+    ConjugationCell,
     ConjugationTable,
+    ConjugationTense,
     ExerciseBatch,
     FeedbackError,
     GenerationResult,
     GenExercise,
     GenVocab,
-    ImperativeForms,
     RewrittenText,
     TeacherCardSuggestion,
     VocabBatch,
@@ -100,10 +100,11 @@ def _expand_text(text: str, min_lines: int = 15) -> str:
 
 
 # --- Offline verb conjugation ------------------------------------------------
-# A compact rule-based conjugator: correct for regular (weak) verbs, with the
-# three high-frequency irregular auxiliaries hard-coded. A real model gives full
-# accuracy for strong/irregular verbs; this keeps offline mode usable.
-_PERSONS = ("ich", "du", "er_sie_es", "wir", "ihr", "sie_Sie")
+# A compact rule-based conjugator: correct for regular (weak) German verbs, with
+# the three high-frequency irregular auxiliaries hard-coded. A real model gives
+# full accuracy for strong/irregular verbs; this keeps offline mode usable. For
+# non-German targets a minimal deterministic stub is returned instead.
+_PERSON_LABELS = ("ich", "du", "er/sie/es", "wir", "ihr", "sie/Sie")
 _WUERDE = ("würde", "würdest", "würde", "würden", "würdet", "würden")
 
 _PRESENT_IRREGULAR = {
@@ -169,13 +170,41 @@ def _imperative_regular(inf: str) -> tuple[str, str, str]:
     return (stem + ("e" if e else ""), stem + e + "t", inf + " Sie")
 
 
-def _forms(values: tuple[str, ...]) -> ConjugationForms:
-    return ConjugationForms(**dict(zip(_PERSONS, values, strict=True)))
+def _tense(name: str, values: tuple[str, ...], note: str = "") -> ConjugationTense:
+    """Build a tense from the six German personal forms."""
+    return ConjugationTense(
+        name=name,
+        note=note,
+        cells=[
+            ConjugationCell(label=label, form=value)
+            for label, value in zip(_PERSON_LABELS, values, strict=True)
+        ],
+    )
 
 
-def build_conjugation(inf: str) -> ConjugationTable:
+def _stub_conjugation(inf: str, lang: str) -> ConjugationTable:
+    """A minimal deterministic table so offline tests exercise the flow.
+
+    Used for non-German targets, where the app relies on a real model for
+    accurate forms. The shape is valid; the forms are placeholders.
+    """
+    labels = ("1sg", "2sg", "3sg", "1pl", "2pl", "3pl")
+    cells = [ConjugationCell(label=label, form=f"{inf}·{label}") for label in labels]
+    return ConjugationTable(
+        infinitive=inf,
+        language=lang,
+        english="",
+        regular=True,
+        notes="offline stub — connect a model for real forms",
+        tenses=[ConjugationTense(name="Present", cells=cells)],
+    )
+
+
+def build_conjugation(inf: str, lang: str = "de") -> ConjugationTable:
     """Build a conjugation table for ``inf`` using regular rules + irregular tables."""
-    inf = (inf or "").strip() or "machen"
+    inf = (inf or "").strip() or ("machen" if lang == "de" else "verb")
+    if lang != "de":
+        return _stub_conjugation(inf, lang)
     key = inf.lower()
     regular = key not in _PRESENT_IRREGULAR
 
@@ -193,17 +222,27 @@ def build_conjugation(inf: str) -> ConjugationTable:
 
     return ConjugationTable(
         infinitive=inf,
+        language="de",
         english="",
         regular=regular,
         auxiliary=auxiliary,
         partizip_ii=partizip,
         notes="" if regular else "irregular — connect a model for full accuracy",
-        present=_forms(present),
-        praeteritum=_forms(praeteritum),
-        perfekt=_forms(perfekt),
-        futur1=_forms(futur1),
-        konjunktiv2=_forms(konjunktiv2),
-        imperative=ImperativeForms(du=imperative[0], ihr=imperative[1], Sie=imperative[2]),
+        tenses=[
+            _tense("Präsens", present),
+            _tense("Präteritum", praeteritum),
+            _tense("Perfekt", perfekt),
+            _tense("Futur I", futur1),
+            _tense("Konjunktiv II", konjunktiv2),
+            ConjugationTense(
+                name="Imperativ",
+                cells=[
+                    ConjugationCell(label="du", form=imperative[0]),
+                    ConjugationCell(label="ihr", form=imperative[1]),
+                    ConjugationCell(label="Sie", form=imperative[2]),
+                ],
+            ),
+        ],
     )
 
 
@@ -535,14 +574,17 @@ class FakeLLMClient:
         """Build a conjugation table offline from the VERB / INFINITIVE hint."""
         verb = ""
         infinitive = ""
+        lang = "de"
         for line in user_message.splitlines():
             stripped = line.strip()
             upper = stripped.upper()
             if upper.startswith("VERB:"):
                 verb = stripped.split(":", 1)[1].strip()
+            elif upper.startswith("LANG:"):
+                lang = (stripped.split(":", 1)[1].strip() or "de").lower()
             elif "INFINITIVE" in upper and ":" in stripped:
                 infinitive = stripped.split(":", 1)[1].strip()
-        return build_conjugation(infinitive or verb)
+        return build_conjugation(infinitive or verb, lang)
 
     def _fake_feedback(self, messages: list[dict]) -> AnswerFeedback:
         answer = ""

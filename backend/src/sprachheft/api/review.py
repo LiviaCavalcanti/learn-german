@@ -19,8 +19,12 @@ router = APIRouter(prefix="/review", tags=["review"])
 
 
 @router.get("/queue")
-def review_queue(session: SessionDep, limit: int = Query(20, ge=1, le=100)):
-    return get_review_queue(session, limit=limit)
+def review_queue(
+    session: SessionDep,
+    limit: int = Query(20, ge=1, le=100),
+    lang: str | None = Query(None),
+):
+    return get_review_queue(session, limit=limit, lang=lang)
 
 
 @router.get("/cards")

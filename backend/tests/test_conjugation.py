@@ -9,20 +9,31 @@ from fastapi.testclient import TestClient
 from sprachheft.api.app import app
 
 
+def _form(body: dict, tense_name: str, label: str) -> str | None:
+    """Read one conjugated form from the generic tenses/cells structure."""
+    for tense in body.get("tenses", []):
+        if tense["name"] == tense_name:
+            for cell in tense["cells"]:
+                if cell["label"] == label:
+                    return cell["form"]
+    return None
+
+
 def test_conjugate_regular_verb():
     with TestClient(app) as client:
         resp = client.get("/conjugation", params={"verb": "arbeiten"})
         assert resp.status_code == 200, resp.text
         body = resp.json()
         assert body["infinitive"] == "arbeiten"
-        assert body["present"]["ich"] == "arbeite"
-        assert body["present"]["du"] == "arbeitest"
-        assert body["present"]["er_sie_es"] == "arbeitet"
-        assert body["praeteritum"]["ich"] == "arbeitete"
+        assert body["language"] == "de"
+        assert _form(body, "Präsens", "ich") == "arbeite"
+        assert _form(body, "Präsens", "du") == "arbeitest"
+        assert _form(body, "Präsens", "er/sie/es") == "arbeitet"
+        assert _form(body, "Präteritum", "ich") == "arbeitete"
         assert body["partizip_ii"] == "gearbeitet"
-        assert body["perfekt"]["ich"] == "habe gearbeitet"
-        assert body["futur1"]["ich"] == "werde arbeiten"
-        assert body["imperative"]["Sie"] == "arbeiten Sie"
+        assert _form(body, "Perfekt", "ich") == "habe gearbeitet"
+        assert _form(body, "Futur I", "ich") == "werde arbeiten"
+        assert _form(body, "Imperativ", "Sie") == "arbeiten Sie"
 
 
 def test_conjugate_inflected_form_resolves_infinitive():
@@ -32,8 +43,8 @@ def test_conjugate_inflected_form_resolves_infinitive():
         assert resp.status_code == 200, resp.text
         body = resp.json()
         assert body["infinitive"] == "haben"
-        assert body["present"]["er_sie_es"] == "hat"
-        assert body["praeteritum"]["ich"] == "hatte"
+        assert _form(body, "Präsens", "er/sie/es") == "hat"
+        assert _form(body, "Präteritum", "ich") == "hatte"
         assert body["auxiliary"] == "haben"
 
 
@@ -43,10 +54,21 @@ def test_conjugate_sein_is_irregular():
         assert resp.status_code == 200, resp.text
         body = resp.json()
         assert body["infinitive"] == "sein"
-        assert body["present"]["ich"] == "bin"
+        assert _form(body, "Präsens", "ich") == "bin"
         assert body["auxiliary"] == "sein"
-        assert body["perfekt"]["ich"] == "bin gewesen"
+        assert _form(body, "Perfekt", "ich") == "bin gewesen"
         assert body["regular"] is False
+
+
+def test_conjugate_other_language_uses_stub():
+    """A non-German target returns a valid (stub) table offline, tagged by language."""
+    with TestClient(app) as client:
+        resp = client.get("/conjugation", params={"verb": "hablar", "lang": "es"})
+        assert resp.status_code == 200, resp.text
+        body = resp.json()
+        assert body["language"] == "es"
+        assert body["tenses"], "expected at least one tense"
+        assert body["tenses"][0]["cells"], "expected person cells"
 
 
 def test_conjugate_requires_non_blank_verb():

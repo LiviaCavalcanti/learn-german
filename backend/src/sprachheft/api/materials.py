@@ -20,9 +20,9 @@ def create_material(data: MaterialCreate, session: SessionDep):
 
 
 @router.get("", response_model=list[MaterialSummary])
-def list_materials(session: SessionDep):
+def list_materials(session: SessionDep, lang: str | None = Query(None)):
     summaries: list[MaterialSummary] = []
-    for material in svc.list_materials(session):
+    for material in svc.list_materials(session, lang):
         assert material.id is not None
         vocab_count, exercise_count = svc.counts_for(session, material.id)
         summaries.append(

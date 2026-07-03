@@ -49,6 +49,7 @@ def add_verb(data: VerbVocabIn, session: SessionDep):
             partizip_ii=data.partizip_ii,
             auxiliary=data.auxiliary,
             cefr=data.cefr,
+            target_lang=data.target_lang,
         )
     except ValueError as exc:
         raise HTTPException(status_code=422, detail=str(exc)) from exc
@@ -68,11 +69,12 @@ def list_vocab(
     session: SessionDep,
     cefr: str | None = None,
     material_id: int | None = None,
+    lang: str | None = Query(None),
     limit: int = Query(200, ge=1, le=1000),
     offset: int = Query(0, ge=0),
 ):
     return svc.list_vocab(
-        session, cefr=cefr, material_id=material_id, limit=limit, offset=offset
+        session, cefr=cefr, material_id=material_id, target_lang=lang, limit=limit, offset=offset
     )
 
 
@@ -82,12 +84,13 @@ def search_vocab(
     q: str = Query(..., min_length=1),
     cefr: str | None = None,
     tag: str | None = None,
+    lang: str | None = Query(None),
     semantic: bool = False,
     limit: int = Query(100, ge=1, le=500),
 ):
     if semantic:
         return svc.semantic_search(session, q, limit=limit)
-    return svc.search_vocab(session, q, cefr=cefr, tag=tag, limit=limit)
+    return svc.search_vocab(session, q, cefr=cefr, tag=tag, target_lang=lang, limit=limit)
 
 
 @router.post("/reindex")

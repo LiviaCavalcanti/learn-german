@@ -7,6 +7,7 @@ import json
 from sqlmodel import Session
 
 from sprachheft.config import get_settings
+from sprachheft.languages import normalize_native, normalize_target
 from sprachheft.models import ImportSource, Material
 from sprachheft.schemas import GenerationResult, ImportJsonIn
 from sprachheft.services.generation import persist_result
@@ -22,6 +23,8 @@ def import_json(session: Session, payload: ImportJsonIn) -> dict:
         title=title,
         media_type=material_data.get("media_type", "text"),
         source_url=material_data.get("source_url"),
+        source_lang=normalize_target(payload.source_lang),
+        native_lang=normalize_native(payload.native_lang),
         level=level,
         transcript=material_data.get("transcript") or "",
         notes="Imported (JSON)",
@@ -53,16 +56,22 @@ def import_text(
     *,
     level: str | None = None,
     title: str | None = None,
+    source_lang: str = "de",
+    native_lang: str = "en",
 ) -> dict:
     from sprachheft.agents.importer import normalize
 
     settings = get_settings()
     resolved_level = level or settings.default_level
-    result = normalize(raw_text, resolved_level)
+    target = normalize_target(source_lang)
+    native = normalize_native(native_lang)
+    result = normalize(raw_text, resolved_level, target, native)
 
     material = Material(
         title=title or "Imported text",
         media_type="text",
+        source_lang=target,
+        native_lang=native,
         level=resolved_level,
         transcript=raw_text,
         notes="Imported (text)",

@@ -1,0 +1,35 @@
+{
+  "version": 1,
+  "title": "Spanish A1–A2 taxonomy backbone",
+  "note": "Lightweight CEFR level + grammar-topic reference used to tag generated/imported Spanish content. Proof-of-concept slice: A1 plus the start of A2.",
+  "levels": [
+    { "code": "A1", "title": "Foundations", "descriptor": "Understands and uses familiar everyday expressions and very basic phrases." },
+    { "code": "A2", "title": "Everyday Fluency", "descriptor": "Communicates in simple routine tasks on familiar matters." },
+    { "code": "B1", "title": "Independent User", "descriptor": "Deals with most situations while travelling; describes experiences, opinions, plans." },
+    { "code": "B2", "title": "Upper-Intermediate", "descriptor": "Interacts with fluency and spontaneity; produces clear, detailed text on many subjects." }
+  ],
+  "conventions": {
+    "articleShorthand": { "m": "el", "f": "la" },
+    "exerciseTypes": ["fill-in-blank", "conjugation", "translation", "multiple-choice", "reorder", "reading", "interpretation", "writing"]
+  },
+  "grammarTopics": [
+    { "code": "es.a1.ser-estar", "cefr": "A1", "title": "ser & estar", "description": "The two verbs 'to be': permanent traits (ser) vs states/location (estar)." },
+    { "code": "es.a1.subject-pronouns", "cefr": "A1", "title": "Subject pronouns", "description": "yo, tú, él/ella/usted, nosotros, vosotros, ellos/ustedes." },
+    { "code": "es.a1.present-regular", "cefr": "A1", "title": "Present tense (regular -ar/-er/-ir)", "description": "Regular present-tense conjugation of the three verb groups." },
+    { "code": "es.a1.articles-gender", "cefr": "A1", "title": "Articles & noun gender", "description": "Definite el/la/los/las and indefinite un/una/unos/unas; noun gender." },
+    { "code": "es.a1.questions", "cefr": "A1", "title": "Questions & question words", "description": "qué, quién, dónde, cómo, cuándo, por qué; yes/no questions and intonation." },
+    { "code": "es.a1.present-irregular", "cefr": "A1", "title": "Common irregular verbs", "description": "High-frequency irregulars: tener, ir, hacer, poder, querer." },
+    { "code": "es.a1.plurals-numbers", "cefr": "A1", "title": "Plurals & numbers", "description": "Plural formation (-s/-es) and cardinal numbers." },
+    { "code": "es.a1.negation", "cefr": "A1", "title": "Negation (no / nunca / nada)", "description": "Basic negation with no and common negative words." },
+    { "code": "es.a1.possessives", "cefr": "A1", "title": "Possessive adjectives", "description": "mi, tu, su, nuestro, vuestro; agreement in number." },
+    { "code": "es.a1.adjective-agreement", "cefr": "A1", "title": "Adjective agreement", "description": "Adjectives agree in gender and number with the noun." },
+    { "code": "es.a1.gustar", "cefr": "A1", "title": "Gustar & likes", "description": "me/te/le gusta(n) to express likes and preferences." },
+    { "code": "es.a1.ir-a-future", "cefr": "A1", "title": "ir a + infinitive (near future)", "description": "Talking about plans with the periphrastic future." },
+    { "code": "es.a1.prepositions-basic", "cefr": "A1", "title": "Basic prepositions", "description": "en, de, a, con, por; a + el = al, de + el = del." },
+    { "code": "es.a1.hay", "cefr": "A1", "title": "hay (there is / there are)", "description": "Impersonal 'hay' to state existence and quantities." },
+    { "code": "es.a2.preterite", "cefr": "A2", "title": "Pretérito indefinido", "description": "Simple past for completed actions; regular and key irregular forms." },
+    { "code": "es.a2.imperfect", "cefr": "A2", "title": "Pretérito imperfecto", "description": "Past habits, descriptions and background; regular and irregular forms." },
+    { "code": "es.a2.reflexive", "cefr": "A2", "title": "Reflexive verbs", "description": "Reflexive pronouns (me, te, se…) and daily-routine verbs." },
+    { "code": "es.a2.por-para", "cefr": "A2", "title": "por vs para", "description": "Contrasting uses of por and para." }
+  ]
+}

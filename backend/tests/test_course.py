@@ -39,6 +39,9 @@ def test_course_progress_counts_practiced_lessons():
         assert started.status_code == 201, started.text
         progress = client.get("/course/progress").json()
         assert "a1.questions" not in progress["completed_codes"]
+        # next_lesson always points at an unfinished lesson (never a completed one).
+        assert progress["next_lesson"] is not None
+        assert progress["next_lesson"]["code"] not in progress["completed_codes"]
 
         # Practicing a lesson (>=1 answer attempt on its exercise) completes it.
         material = client.post("/course/lessons/a1.alphabet-pronunciation/start").json()
@@ -52,6 +55,9 @@ def test_course_progress_counts_practiced_lessons():
 
         progress = client.get("/course/progress").json()
         assert "a1.alphabet-pronunciation" in progress["completed_codes"]
+        # It advances past the lesson just finished and stays on unfinished lessons.
+        assert progress["next_lesson"]["code"] != "a1.alphabet-pronunciation"
+        assert progress["next_lesson"]["code"] not in progress["completed_codes"]
 
         a1 = next(level for level in progress["levels"] if level["level"] == "A1")
         assert a1["lessons_completed"] >= 1

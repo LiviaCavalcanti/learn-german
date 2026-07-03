@@ -15,6 +15,7 @@ from sqlmodel import Session, select
 
 from sprachheft.config import get_settings
 from sprachheft.embeddings import cosine, embed_texts
+from sprachheft.languages import normalize_target
 from sprachheft.models import Material, ReviewLog, SRState, VocabEmbedding, VocabItem
 from sprachheft.schemas import (
     GenerationResult,
@@ -30,6 +31,7 @@ def list_vocab(
     *,
     cefr: str | None = None,
     material_id: int | None = None,
+    target_lang: str | None = None,
     limit: int = 200,
     offset: int = 0,
 ) -> list[VocabItem]:
@@ -38,6 +40,8 @@ def list_vocab(
         stmt = stmt.where(VocabItem.cefr == cefr)
     if material_id is not None:
         stmt = stmt.where(VocabItem.material_id == material_id)
+    if target_lang:
+        stmt = stmt.where(VocabItem.target_lang == target_lang)
     stmt = stmt.offset(offset).limit(limit)
     return list(session.exec(stmt).all())
 
@@ -48,6 +52,7 @@ def search_vocab(
     *,
     cefr: str | None = None,
     tag: str | None = None,
+    target_lang: str | None = None,
     limit: int = 100,
 ) -> list[VocabItem]:
     like = f"%{query.lower()}%"
@@ -61,6 +66,8 @@ def search_vocab(
     )
     if cefr:
         stmt = stmt.where(VocabItem.cefr == cefr)
+    if target_lang:
+        stmt = stmt.where(VocabItem.target_lang == target_lang)
     stmt = stmt.limit(limit * 3 if tag else limit)
     items = list(session.exec(stmt).all())
     if tag:
@@ -96,6 +103,7 @@ def topic_summary(session: Session) -> list[dict]:
 def create_vocab(session: Session, data: VocabItemCreate) -> VocabItem:
     item = VocabItem(
         material_id=data.material_id,
+        target_lang=normalize_target(data.target_lang),
         word=data.word,
         lemma=(data.lemma or data.word),
         pos=data.pos,
@@ -121,6 +129,7 @@ def add_verb(
     partizip_ii: str = "",
     auxiliary: str = "",
     cefr: str | None = None,
+    target_lang: str = "de",
 ) -> tuple[VocabItem, bool]:
     """Add a verb to the vocabulary, deduplicated by lemma. Returns (item, created)."""
     lemma = (infinitive or "").strip().lower()
@@ -148,6 +157,7 @@ def add_verb(
             cefr=cefr,
             example_de=example_de,
             grammar_tags=["verb"],
+            target_lang=target_lang,
         ),
     )
     return item, True
@@ -177,8 +187,14 @@ def compose_material(session: Session, data: VocabComposeIn) -> dict:
 
     settings = get_settings()
     level = data.level or items[0].cefr or settings.default_level
+    target_lang = normalize_target(items[0].target_lang)
+    native_lang = "en"
+    if items[0].material_id:
+        parent = session.get(Material, items[0].material_id)
+        if parent:
+            native_lang = parent.native_lang
 
-    composed = compose(items, level, data.instructions)
+    composed = compose(items, level, data.instructions, target_lang, native_lang)
     text = (composed.text or "").strip()
     if not text:
         raise ValueError(
@@ -188,6 +204,8 @@ def compose_material(session: Session, data: VocabComposeIn) -> dict:
     material = Material(
         title=data.title or composed.title or "Practice text",
         media_type="text",
+        source_lang=target_lang,
+        native_lang=native_lang,
         level=level,
         transcript=text,
         notes="Composed from vocabulary",

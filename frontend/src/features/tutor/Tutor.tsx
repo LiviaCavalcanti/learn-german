@@ -156,7 +156,7 @@ export default function Tutor() {
       <header>
         <h1 className="text-3xl">Teacher</h1>
         <p className="text-muted">
-          Chat with your German teacher. Attach a material, and save answers to your review deck.
+          Chat with your language teacher. Attach a material, and save answers to your review deck.
         </p>
       </header>
 
@@ -226,7 +226,7 @@ export default function Tutor() {
                   <div>
                     <div className="font-serif text-xl text-ink">Frag deine Lehrerin</div>
                     <p className="mt-1 text-sm">
-                      Ask anything in German or English — grammar, a word, a sentence to check.
+                      Ask anything about the language you're learning — grammar, a word, a sentence to check.
                     </p>
                   </div>
                 </div>

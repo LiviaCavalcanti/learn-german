@@ -27,6 +27,8 @@ class MaterialCreate(BaseModel):
     title: str
     media_type: MediaType = "text"
     source_url: str | None = None
+    source_lang: str = "de"  # target language being learned (ISO 639-1)
+    native_lang: str = "en"  # native/explanation language (ISO 639-1)
     level: Level = "A2"
     transcript: str = ""
     translation: str | None = None
@@ -41,6 +43,7 @@ class MaterialRead(BaseModel):
     media_type: str
     source_url: str | None
     source_lang: str
+    native_lang: str = "en"
     level: str
     transcript: str
     translation: str | None
@@ -64,6 +67,7 @@ class VocabItemRead(BaseModel):
 
     id: int
     material_id: int | None
+    target_lang: str = "de"
     word: str
     lemma: str
     pos: str | None
@@ -80,7 +84,7 @@ class VocabItemRead(BaseModel):
         """IPA pronunciation of the word (computed; needs the phonetics extra)."""
         from sprachheft.phonetics import to_ipa
 
-        return to_ipa(self.word)
+        return to_ipa(self.word, self.target_lang)
 
 
 class VocabItemCreate(BaseModel):
@@ -93,6 +97,7 @@ class VocabItemCreate(BaseModel):
     example_en: str | None = None
     grammar_tags: list[str] = []
     material_id: int | None = None
+    target_lang: str = "de"
 
 
 class VocabItemUpdate(BaseModel):
@@ -140,6 +145,7 @@ class VerbVocabIn(BaseModel):
     partizip_ii: str = ""
     auxiliary: str = ""
     cefr: Level | None = None
+    target_lang: str = "de"
 
 
 class VerbVocabResult(BaseModel):
@@ -194,6 +200,7 @@ class GrammarTopicRead(BaseModel):
 
     id: int
     code: str
+    target_lang: str = "de"
     title: str
     cefr: str
     description: str | None
@@ -314,17 +321,22 @@ class ImportJsonIn(BaseModel):
     exercises: list[GenExercise] = []
     title: str | None = None
     level: Level | None = None
+    source_lang: str = "de"
+    native_lang: str = "en"
 
 
 class ImportTextIn(BaseModel):
     raw_text: str
     level: Level | None = None
     title: str | None = None
+    source_lang: str = "de"
+    native_lang: str = "en"
 
 
 # --- Ingestion ---------------------------------------------------------------
 class TranscribeIn(BaseModel):
     source_url: str
+    source_lang: str = "de"
 
 
 # --- Rewrite -----------------------------------------------------------------
@@ -338,46 +350,46 @@ class RewriteIn(BaseModel):
 
 
 # --- Conjugation -------------------------------------------------------------
-class ConjugationForms(BaseModel):
-    """The six personal forms of a tense."""
+class ConjugationCell(BaseModel):
+    """One person/number slot within a tense (language-agnostic)."""
 
-    ich: str = ""
-    du: str = ""
-    er_sie_es: str = Field(default="", description="third person singular: er/sie/es")
-    wir: str = ""
-    ihr: str = ""
-    sie_Sie: str = Field(default="", description="third person plural / formal: sie/Sie")
+    label: str = Field(description="person/number label, e.g. 'ich', 'yo', 'je', 'I'")
+    form: str = Field(default="", description="the conjugated verb form for this slot")
 
 
-class ImperativeForms(BaseModel):
-    du: str = ""
-    ihr: str = ""
-    Sie: str = ""
+class ConjugationTense(BaseModel):
+    """A named tense or mood together with its personal forms."""
+
+    name: str = Field(
+        description="tense/mood name in the target language, e.g. 'Präsens', 'Presente'"
+    )
+    note: str = Field(default="", description="optional short note, e.g. 'compound tense'")
+    cells: list[ConjugationCell] = Field(default_factory=list)
 
 
 class ConjugationTable(BaseModel):
-    """A full conjugation table for a German verb."""
+    """A full, language-agnostic conjugation table for a verb.
 
-    infinitive: str = Field(description="the verb infinitive, e.g. 'arbeiten'")
-    english: str = Field(default="", description="short English meaning of the verb")
-    regular: bool = Field(default=True, description="false for strong/irregular verbs")
-    auxiliary: str = Field(default="", description="perfect-tense auxiliary: 'haben' or 'sein'")
-    partizip_ii: str = Field(default="", description="past participle, e.g. 'gearbeitet'")
+    Each language decides which tenses/moods and person labels appear (German
+    uses ich/du/… with Präsens/Präteritum/…, Spanish uses yo/tú/… with
+    Presente/Pretérito/…). Optional fields (``auxiliary``, ``partizip_ii``) are
+    populated only where they apply.
+    """
+
+    infinitive: str = Field(description="the verb infinitive / citation form")
+    language: str = Field(default="de", description="target language code, e.g. 'de', 'es'")
+    english: str = Field(default="", description="short meaning in the learner's native language")
+    regular: bool = Field(default=True, description="false for irregular/strong verbs")
     notes: str = Field(default="", description="short hint, e.g. stem change or separable prefix")
-    present: ConjugationForms = Field(default_factory=ConjugationForms, description="Präsens")
-    praeteritum: ConjugationForms = Field(
-        default_factory=ConjugationForms, description="Präteritum"
+    auxiliary: str = Field(
+        default="", description="compound-tense auxiliary if the language has one (e.g. 'haben')"
     )
-    perfekt: ConjugationForms = Field(
-        default_factory=ConjugationForms, description="Perfekt (auxiliary + past participle)"
+    partizip_ii: str = Field(
+        default="", description="past participle if the language has one (e.g. 'gearbeitet')"
     )
-    futur1: ConjugationForms = Field(
-        default_factory=ConjugationForms, description="Futur I (werden + infinitive)"
+    tenses: list[ConjugationTense] = Field(
+        default_factory=list, description="all tenses/moods, each with its personal forms"
     )
-    konjunktiv2: ConjugationForms = Field(
-        default_factory=ConjugationForms, description="Konjunktiv II"
-    )
-    imperative: ImperativeForms = Field(default_factory=ImperativeForms, description="Imperativ")
 
 
 # --- Tutor / teacher chat ----------------------------------------------------

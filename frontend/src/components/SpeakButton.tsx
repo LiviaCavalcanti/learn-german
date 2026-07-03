@@ -1,10 +1,10 @@
-import { getSpeech } from '../lib/pronunciation'
+import { getSpeech, getSpeechLang } from '../lib/pronunciation'
 import { cx } from './ui'
 
-/** Small speaker button that reads a German word aloud via the Web Speech API. */
+/** Small speaker button that reads a word aloud via the Web Speech API. */
 export function SpeakButton({
   text,
-  lang = 'de-DE',
+  lang = getSpeechLang(),
   className,
   title = 'Hear pronunciation',
 }: {

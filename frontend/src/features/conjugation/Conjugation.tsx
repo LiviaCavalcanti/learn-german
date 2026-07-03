@@ -1,16 +1,8 @@
 import { useState, type FormEvent } from 'react'
 import { api } from '../../lib/api'
-import type { ConjugationForms, ConjugationTable } from '../../lib/types'
+import { useLanguage } from '../../contexts/LanguageContext'
+import type { ConjugationTable, ConjugationTense } from '../../lib/types'
 import { Badge, Button, Card, Input, Spinner } from '../../components/ui'
-
-const PERSONS: { key: keyof ConjugationForms; label: string }[] = [
-  { key: 'ich', label: 'ich' },
-  { key: 'du', label: 'du' },
-  { key: 'er_sie_es', label: 'er/sie/es' },
-  { key: 'wir', label: 'wir' },
-  { key: 'ihr', label: 'ihr' },
-  { key: 'sie_Sie', label: 'sie/Sie' },
-]
 
 const SEEN_KEY = 'sprachheft.conjugation.seen'
 
@@ -32,6 +24,8 @@ function saveSeen(verbs: string[]) {
 }
 
 export default function Conjugation() {
+  const { targetProfile } = useLanguage()
+  const languageName = targetProfile?.name ?? 'target-language'
   const [verb, setVerb] = useState('')
   const [table, setTable] = useState<ConjugationTable | null>(null)
   const [loading, setLoading] = useState(false)
@@ -91,8 +85,8 @@ export default function Conjugation() {
       <header>
         <h1 className="text-3xl">Verb conjugation</h1>
         <p className="text-muted">
-          Type a German verb in any form — conjugated or not — to see its full table. New verbs
-          are added to your vocabulary.
+          Type a {languageName} verb in any form — conjugated or not — to see its full table. New
+          verbs are added to your vocabulary.
         </p>
       </header>
 
@@ -101,7 +95,7 @@ export default function Conjugation() {
           <Input
             className="max-w-xs"
             value={verb}
-            placeholder="e.g. habe, ging, arbeiten"
+            placeholder="type any verb form…"
             onChange={(e) => setVerb(e.target.value)}
           />
           <Button type="submit" disabled={loading || !verb.trim()}>
@@ -165,39 +159,31 @@ function ConjugationResult({ table }: { table: ConjugationTable }) {
       </Card>
 
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        <TenseBlock title="Präsens" forms={table.present} />
-        <TenseBlock title="Präteritum" forms={table.praeteritum} />
-        <TenseBlock title="Perfekt" forms={table.perfekt} />
-        <TenseBlock title="Futur I" forms={table.futur1} />
-        <TenseBlock title="Konjunktiv II" forms={table.konjunktiv2} />
-        <Card className="p-4">
-          <div className="mb-2 text-xs font-medium uppercase tracking-wide text-muted">
-            Imperativ
-          </div>
-          <table className="w-full text-sm">
-            <tbody>
-              <Row label="du" value={table.imperative.du} />
-              <Row label="ihr" value={table.imperative.ihr} />
-              <Row label="Sie" value={table.imperative.Sie} last />
-            </tbody>
-          </table>
-        </Card>
+        {table.tenses.map((tense) => (
+          <TenseBlock key={tense.name} tense={tense} />
+        ))}
       </div>
     </div>
   )
 }
 
-function TenseBlock({ title, forms }: { title: string; forms: ConjugationForms }) {
+function TenseBlock({ tense }: { tense: ConjugationTense }) {
   return (
     <Card className="p-4">
-      <div className="mb-2 text-xs font-medium uppercase tracking-wide text-muted">{title}</div>
+      <div className="mb-2 text-xs font-medium uppercase tracking-wide text-muted">{tense.name}</div>
       <table className="w-full text-sm">
         <tbody>
-          {PERSONS.map((p, i) => (
-            <Row key={p.key} label={p.label} value={forms[p.key]} last={i === PERSONS.length - 1} />
+          {tense.cells.map((cell, i) => (
+            <Row
+              key={`${cell.label}-${i}`}
+              label={cell.label}
+              value={cell.form}
+              last={i === tense.cells.length - 1}
+            />
           ))}
         </tbody>
       </table>
+      {tense.note && <p className="mt-2 text-xs text-muted">{tense.note}</p>}
     </Card>
   )
 }

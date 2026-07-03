@@ -1,7 +1,8 @@
 import { useEffect, useMemo, useState, type FormEvent } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { api } from '../../lib/api'
+import { api, getApiLanguage } from '../../lib/api'
 import type { VocabItem } from '../../lib/types'
+import { useLanguage } from '../../contexts/LanguageContext'
 import { Badge, Button, Card, Field, Input, Select, Spinner, cx } from '../../components/ui'
 import { SpeakButton } from '../../components/SpeakButton'
 
@@ -65,18 +66,19 @@ function matches(v: WordEntry, needle: string): boolean {
 
 function sortEntries(entries: WordEntry[], sortBy: SortBy): WordEntry[] {
   const arr = [...entries]
+  const locale = getApiLanguage().target
   switch (sortBy) {
     case 'az':
-      return arr.sort((a, b) => a.word.localeCompare(b.word, 'de'))
+      return arr.sort((a, b) => a.word.localeCompare(b.word, locale))
     case 'za':
-      return arr.sort((a, b) => b.word.localeCompare(a.word, 'de'))
+      return arr.sort((a, b) => b.word.localeCompare(a.word, locale))
     case 'oldest':
       return arr.sort((a, b) => a.created_at.localeCompare(b.created_at))
     case 'level':
       return arr.sort(
         (a, b) =>
           (LEVEL_ORDER[a.cefr ?? ''] ?? 9) - (LEVEL_ORDER[b.cefr ?? ''] ?? 9) ||
-          a.word.localeCompare(b.word, 'de'),
+          a.word.localeCompare(b.word, locale),
       )
     default:
       return arr.sort((a, b) => b.created_at.localeCompare(a.created_at))
@@ -124,6 +126,8 @@ function groupByDate(words: WordEntry[]): Group[] {
 
 export default function Vocabulary() {
   const navigate = useNavigate()
+  const { targetProfile } = useLanguage()
+  const langName = targetProfile?.name ?? 'target'
   const [words, setWords] = useState<VocabItem[] | null>(null)
   const [groupBy, setGroupBy] = useState<GroupBy>('topic')
   const [sortBy, setSortBy] = useState<SortBy>('recent')
@@ -375,7 +379,7 @@ export default function Vocabulary() {
           <div>
             <h2 className="text-lg font-medium">Generate a practice text</h2>
             <p className="text-sm text-muted">
-              Write a German text using your {selected.size} selected word
+              Write a {langName} text using your {selected.size} selected word
               {selected.size === 1 ? '' : 's'} and save it with an exercise.
             </p>
           </div>

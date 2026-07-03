@@ -6,6 +6,7 @@ from sqlalchemy import func
 from sqlmodel import Session, select
 
 from sprachheft.ingest import IngestRequest, resolve
+from sprachheft.languages import normalize_native, normalize_target
 from sprachheft.models import Exercise, Material, VocabItem
 from sprachheft.schemas import MaterialCreate
 
@@ -23,6 +24,8 @@ def create_material(session: Session, data: MaterialCreate) -> Material:
         title=data.title,
         media_type=data.media_type,
         source_url=result.source_url,
+        source_lang=normalize_target(data.source_lang),
+        native_lang=normalize_native(data.native_lang),
         level=data.level,
         transcript=result.transcript,
         translation=result.translation,
@@ -49,8 +52,11 @@ def rewrite_material(
     return material
 
 
-def list_materials(session: Session) -> list[Material]:
-    return list(session.exec(select(Material).order_by(Material.created_at.desc())).all())
+def list_materials(session: Session, lang: str | None = None) -> list[Material]:
+    stmt = select(Material).order_by(Material.created_at.desc())
+    if lang:
+        stmt = stmt.where(Material.source_lang == lang)
+    return list(session.exec(stmt).all())
 
 
 def get_material(session: Session, material_id: int) -> Material | None:

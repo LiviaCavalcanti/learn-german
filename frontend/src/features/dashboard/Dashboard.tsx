@@ -1,19 +1,36 @@
 import { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { api } from '../../lib/api'
 import type { CourseProgress, ReviewStats } from '../../lib/types'
-import { Card, ProgressBar } from '../../components/ui'
+import { useLanguage } from '../../contexts/LanguageContext'
+import { Badge, Button, Card, ProgressBar, Spinner } from '../../components/ui'
 
 export default function Dashboard() {
   const [stats, setStats] = useState<ReviewStats | null>(null)
   const [dict, setDict] = useState<{ available: boolean; entry_count: number } | null>(null)
   const [progress, setProgress] = useState<CourseProgress | null>(null)
+  const [starting, setStarting] = useState(false)
+  const navigate = useNavigate()
+  const { targetProfile } = useLanguage()
+  const langName = targetProfile?.name ?? 'language'
 
   useEffect(() => {
     api.reviewStats().then(setStats).catch(() => {})
     api.dictStatus().then(setDict).catch(() => {})
     api.courseProgress().then(setProgress).catch(() => {})
   }, [])
+
+  async function startNext() {
+    const next = progress?.next_lesson
+    if (!next) return
+    setStarting(true)
+    try {
+      const material = await api.startLesson(next.code)
+      navigate(`/materials/${material.id}`)
+    } finally {
+      setStarting(false)
+    }
+  }
 
   const cards = [
     { label: 'Due now', value: stats?.due_now ?? '—' },
@@ -25,8 +42,8 @@ export default function Dashboard() {
   return (
     <div className="space-y-8">
       <header>
-        <h1 className="text-3xl">Willkommen zurück</h1>
-        <p className="text-muted">Your German learning notebook.</p>
+        <h1 className="text-3xl">Welcome back</h1>
+        <p className="text-muted">Your {langName} learning notebook.</p>
       </header>
 
       <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
@@ -61,6 +78,29 @@ export default function Dashboard() {
               />
             ))}
           </div>
+          {progress.next_lesson && (
+            <div className="flex flex-wrap items-center justify-between gap-3 border-t border-line pt-4">
+              <div className="min-w-0">
+                <div className="text-xs uppercase tracking-wide text-muted">
+                  {progress.completed_lessons > 0 ? 'Up next' : 'Start here'}
+                </div>
+                <div className="mt-0.5 flex items-center gap-2">
+                  <Badge>{progress.next_lesson.level}</Badge>
+                  <span className="font-medium">{progress.next_lesson.title}</span>
+                </div>
+                <div className="text-xs text-muted">{progress.next_lesson.can_do}</div>
+              </div>
+              <Button onClick={startNext} disabled={starting}>
+                {starting ? (
+                  <Spinner />
+                ) : progress.completed_lessons > 0 ? (
+                  'Continue'
+                ) : (
+                  'Start lesson'
+                )}
+              </Button>
+            </div>
+          )}
         </Card>
       )}
 
@@ -80,7 +120,7 @@ export default function Dashboard() {
         <div className="font-medium">Offline dictionary</div>
         <div className="text-sm text-muted">
           {dict?.available
-            ? `${dict.entry_count.toLocaleString()} entries loaded (WikDict). Hover any German word in a material.`
+            ? `${dict.entry_count.toLocaleString()} entries loaded (WikDict). Hover any ${langName} word in a material.`
             : 'Not loaded — run the dictionary loader in the backend.'}
         </div>
       </Card>

@@ -43,6 +43,7 @@ def _persist_vocab(session: Session, material: Material, vocab: Iterable[GenVoca
             continue
         item = VocabItem(
             material_id=material.id,
+            target_lang=material.source_lang,
             word=gv.word,
             lemma=lemma,
             pos=gv.pos,
@@ -70,6 +71,7 @@ def _persist_exercises(
     for ge in exercises:
         exercise = Exercise(
             material_id=material.id,
+            target_lang=material.source_lang,
             source=source,
             type=ge.type,
             cefr=ge.cefr or material.level,

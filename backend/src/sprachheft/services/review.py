@@ -53,6 +53,7 @@ def _serialize_item(session: Session, state: SRState) -> dict | None:
         return {
             "kind": "vocab",
             "id": vocab.id,
+            "target_lang": vocab.target_lang,
             "word": vocab.word,
             "lemma": vocab.lemma,
             "meaning_en": vocab.meaning_en,
@@ -65,6 +66,7 @@ def _serialize_item(session: Session, state: SRState) -> dict | None:
     return {
         "kind": "exercise",
         "id": exercise.id,
+        "target_lang": exercise.target_lang,
         "type": exercise.type,
         "instructions": exercise.instructions,
         "payload": exercise.payload,
@@ -74,29 +76,36 @@ def _serialize_item(session: Session, state: SRState) -> dict | None:
     }
 
 
-def get_review_queue(session: Session, *, limit: int = 20) -> list[dict]:
+def get_review_queue(
+    session: Session, *, limit: int = 20, lang: str | None = None
+) -> list[dict]:
     now = utcnow()
     stmt = (
         select(SRState)
         .where(SRState.due <= now)
         .order_by(SRState.difficulty.desc(), SRState.due)
-        .limit(limit)
+        .limit(limit if lang is None else max(limit * 10, 200))
     )
     queue: list[dict] = []
     for state in session.exec(stmt).all():
         item = _serialize_item(session, state)
-        if item:
-            queue.append(
-                {
-                    "srstate_id": state.id,
-                    "item_type": state.item_type,
-                    "item_id": state.item_id,
-                    "due": state.due,
-                    "reps": state.reps,
-                    "lapses": state.lapses,
-                    "item": item,
-                }
-            )
+        if not item:
+            continue
+        if lang and item.get("target_lang") not in (None, lang):
+            continue
+        queue.append(
+            {
+                "srstate_id": state.id,
+                "item_type": state.item_type,
+                "item_id": state.item_id,
+                "due": state.due,
+                "reps": state.reps,
+                "lapses": state.lapses,
+                "item": item,
+            }
+        )
+        if len(queue) >= limit:
+            break
     return queue
 
 

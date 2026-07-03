@@ -18,9 +18,12 @@ def list_exercises(
     session: SessionDep,
     material_id: int | None = None,
     type: str | None = None,
+    lang: str | None = None,
     limit: int = Query(200, ge=1, le=1000),
 ):
-    return svc.list_exercises_read(session, material_id=material_id, type=type, limit=limit)
+    return svc.list_exercises_read(
+        session, material_id=material_id, type=type, target_lang=lang, limit=limit
+    )
 
 
 @router.get("/{exercise_id}/attempts", response_model=list[AnswerAttemptRead])

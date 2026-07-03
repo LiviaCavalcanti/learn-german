@@ -1,5 +1,25 @@
 export type Level = 'A1' | 'A2' | 'B1' | 'B2'
 
+export interface LanguageOption {
+  code: string
+  name: string
+  endonym: string
+  level_framework: string
+  levels: string[]
+  voice: string
+  has_conjugation: boolean
+}
+
+export interface NativeOption {
+  code: string
+  name: string
+}
+
+export interface LanguagesResponse {
+  targets: LanguageOption[]
+  natives: NativeOption[]
+}
+
 export interface MaterialSummary {
   id: number
   title: string
@@ -16,6 +36,7 @@ export interface Material {
   media_type: string
   source_url: string | null
   source_lang: string
+  native_lang: string
   level: string
   transcript: string
   translation: string | null
@@ -26,6 +47,7 @@ export interface Material {
 export interface VocabItem {
   id: number
   material_id: number | null
+  target_lang: string
   word: string
   lemma: string
   pos: string | null
@@ -169,42 +191,42 @@ export interface LevelProgress {
   percent: number
 }
 
+export interface NextLesson {
+  code: string
+  title: string
+  level: string
+  can_do: string
+}
+
 export interface CourseProgress {
   levels: LevelProgress[]
   total_lessons: number
   completed_lessons: number
   percent: number
   completed_codes: string[]
+  next_lesson: NextLesson | null
 }
 
-export interface ConjugationForms {
-  ich: string
-  du: string
-  er_sie_es: string
-  wir: string
-  ihr: string
-  sie_Sie: string
+export interface ConjugationCell {
+  label: string
+  form: string
 }
 
-export interface ImperativeForms {
-  du: string
-  ihr: string
-  Sie: string
+export interface ConjugationTense {
+  name: string
+  note: string
+  cells: ConjugationCell[]
 }
 
 export interface ConjugationTable {
   infinitive: string
+  language: string
   english: string
   regular: boolean
+  notes: string
   auxiliary: string
   partizip_ii: string
-  notes: string
-  present: ConjugationForms
-  praeteritum: ConjugationForms
-  perfekt: ConjugationForms
-  futur1: ConjugationForms
-  konjunktiv2: ConjugationForms
-  imperative: ImperativeForms
+  tenses: ConjugationTense[]
 }
 
 export interface VerbVocabResult {

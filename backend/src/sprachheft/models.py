@@ -22,7 +22,8 @@ class Material(SQLModel, table=True):
     title: str
     media_type: str = "text"  # video | podcast | text
     source_url: str | None = None
-    source_lang: str = "de"
+    source_lang: str = "de"  # target language being learned (ISO 639-1)
+    native_lang: str = "en"  # native/explanation language (ISO 639-1)
     level: str = "A2"  # A1 | A2 | B1 | B2
     transcript: str
     translation: str | None = None
@@ -33,13 +34,14 @@ class Material(SQLModel, table=True):
 class VocabItem(SQLModel, table=True):
     id: int | None = Field(default=None, primary_key=True)
     material_id: int | None = Field(default=None, foreign_key="material.id", index=True)
+    target_lang: str = Field(default="de", index=True)  # language the word belongs to
     word: str
     lemma: str = Field(index=True)
     pos: str | None = None
-    meaning_en: str
+    meaning_en: str  # meaning in the learner's native language (name kept for compatibility)
     cefr: str | None = None
-    example_de: str | None = None
-    example_en: str | None = None
+    example_de: str | None = None  # example sentence in the target language
+    example_en: str | None = None  # its translation in the native language
     grammar_tags: list[str] = Field(default_factory=list, sa_column=Column(JSON))
     created_at: datetime = Field(default_factory=utcnow)
 
@@ -47,6 +49,7 @@ class VocabItem(SQLModel, table=True):
 class Exercise(SQLModel, table=True):
     id: int | None = Field(default=None, primary_key=True)
     material_id: int | None = Field(default=None, foreign_key="material.id", index=True)
+    target_lang: str = Field(default="de", index=True)  # language the exercise drills
     source: str = "generated"  # generated | imported | review
     type: str = "fill-in-blank"
     cefr: str | None = None
@@ -133,6 +136,7 @@ class ImportSource(SQLModel, table=True):
 class GrammarTopic(SQLModel, table=True):
     id: int | None = Field(default=None, primary_key=True)
     code: str = Field(index=True, unique=True)
+    target_lang: str = Field(default="de", index=True)  # language the topic belongs to
     title: str
     cefr: str
     description: str | None = None

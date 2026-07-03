@@ -1,0 +1,66 @@
+{
+  "title": "Spanish A1–A2 Course",
+  "note": "Curriculum backbone (proof-of-concept slice). Each lesson references a grammar topic from taxonomy.json and carries a short Spanish seed text; starting a lesson creates a Material from that text so the generation agent can build vocab + exercises.",
+  "levels": [
+    {
+      "level": "A1",
+      "title": "Foundations",
+      "units": [
+        {
+          "unit": 1,
+          "title": "Primeros pasos",
+          "lessons": [
+            { "code": "es.a1.ser-estar", "title": "ser & estar", "grammar_topics": ["es.a1.ser-estar"], "can_do": "I can introduce myself and say how I am.", "seed_text": "Hola, me llamo Ana. Soy estudiante y soy de Madrid. Hoy estoy cansada, pero estoy contenta. Mi amigo es simpático y está en casa." },
+            { "code": "es.a1.subject-pronouns", "title": "Subject pronouns", "grammar_topics": ["es.a1.subject-pronouns"], "can_do": "I can say who does something.", "seed_text": "Yo soy profesor y tú eres estudiante. Él vive en Sevilla, pero ella trabaja en Bilbao. Nosotros aprendemos juntos y vosotros ayudáis. Ellos son muy amables." },
+            { "code": "es.a1.present-regular", "title": "Present tense (regular verbs)", "grammar_topics": ["es.a1.present-regular"], "can_do": "I can talk about what I do every day.", "seed_text": "Cada día hablo español y estudio mucho. Tú trabajas en la oficina y nosotros comemos juntos. Por la tarde los niños escriben y leen." },
+            { "code": "es.a1.questions", "title": "Questions & question words", "grammar_topics": ["es.a1.questions"], "can_do": "I can ask simple questions.", "seed_text": "¿Cómo te llamas? ¿De dónde eres? ¿Dónde vives? ¿Qué estudias? ¿Vienes tú también a la clase?" }
+          ]
+        },
+        {
+          "unit": 2,
+          "title": "Personas y verbos",
+          "lessons": [
+            { "code": "es.a1.articles-gender", "title": "Articles & noun gender", "grammar_topics": ["es.a1.articles-gender"], "can_do": "I can name people and things.", "seed_text": "Este es un hombre. El hombre es mi colega. Aquí hay una mujer y allí hay un niño. La mujer es simpática y los niños son pequeños." },
+            { "code": "es.a1.present-irregular", "title": "Common irregular verbs", "grammar_topics": ["es.a1.present-irregular"], "can_do": "I can use common irregular verbs.", "seed_text": "Yo tengo dos hermanos y hago deporte. Ana va al trabajo en autobús. ¿Puedes ayudarme? Quiero aprender español y hoy no tengo tiempo." },
+            { "code": "es.a1.plurals-numbers", "title": "Plurals & numbers", "grammar_topics": ["es.a1.plurals-numbers"], "can_do": "I can count and talk about several things.", "seed_text": "Tengo dos libros, tres bolígrafos y cuatro cuadernos. Los niños tienen muchos amigos. ¿Cuántas tazas necesitas? Necesito cinco." },
+            { "code": "es.a1.adjective-agreement", "title": "Adjective agreement", "grammar_topics": ["es.a1.adjective-agreement"], "can_do": "I can describe people and things.", "seed_text": "La casa es blanca y el coche es rojo. Los libros son nuevos y las sillas son viejas. Mi profesora es alta y simpática." }
+          ]
+        },
+        {
+          "unit": 3,
+          "title": "Tener, querer y poder",
+          "lessons": [
+            { "code": "es.a1.negation", "title": "Negation (no / nunca / nada)", "grammar_topics": ["es.a1.negation"], "can_do": "I can say what I don't have or do.", "seed_text": "No tengo tiempo y no tengo hambre. Ese no es mi coche. Hoy no trabajo y nunca bebo café por la noche." },
+            { "code": "es.a1.possessives", "title": "Possessive adjectives", "grammar_topics": ["es.a1.possessives"], "can_do": "I can say what belongs to whom.", "seed_text": "Este es mi libro y esa es tu bolsa. Su coche es nuevo. Nuestra casa es pequeña, pero es bonita. ¿Dónde están vuestros amigos?" },
+            { "code": "es.a1.hay", "title": "hay (there is / there are)", "grammar_topics": ["es.a1.hay"], "can_do": "I can describe what there is in a place.", "seed_text": "En mi ciudad hay un parque grande y muchos cafés. En la mesa hay dos libros y una taza. ¿Hay una farmacia por aquí?" },
+            { "code": "es.a1.gustar", "title": "Gustar & likes", "grammar_topics": ["es.a1.gustar"], "can_do": "I can talk about what I like.", "seed_text": "Me gusta el café y me gustan los libros. A ti te gusta viajar. A mi hermano le gusta el fútbol, pero no le gustan las verduras." }
+          ]
+        },
+        {
+          "unit": 4,
+          "title": "Planes y lugares",
+          "lessons": [
+            { "code": "es.a1.prepositions-basic", "title": "Basic prepositions", "grammar_topics": ["es.a1.prepositions-basic"], "can_do": "I can say where things and people are.", "seed_text": "Vivo en Madrid, cerca del parque. Voy a la oficina con mi amiga. El libro es de mi hermano. Vamos al cine y volvemos del trabajo tarde." },
+            { "code": "es.a1.ir-a-future", "title": "ir a + infinitive (near future)", "grammar_topics": ["es.a1.ir-a-future"], "can_do": "I can talk about my plans.", "seed_text": "Mañana voy a estudiar español. Ana va a viajar a México. ¿Qué vais a hacer el fin de semana? Vamos a descansar y a ver una película." }
+          ]
+        }
+      ]
+    },
+    {
+      "level": "A2",
+      "title": "Everyday Fluency",
+      "units": [
+        {
+          "unit": 1,
+          "title": "Hablar del pasado",
+          "lessons": [
+            { "code": "es.a2.preterite", "title": "Pretérito indefinido", "grammar_topics": ["es.a2.preterite"], "can_do": "I can talk about what I did.", "seed_text": "Ayer trabajé mucho y por la tarde comí con mi familia. Ana fue al cine y vio una película. Nosotros hablamos por teléfono y luego estudiamos español." },
+            { "code": "es.a2.imperfect", "title": "Pretérito imperfecto", "grammar_topics": ["es.a2.imperfect"], "can_do": "I can describe how things used to be.", "seed_text": "Cuando era niño, vivía en un pueblo pequeño. Todos los días jugaba en el parque y leía muchos libros. Mi abuela cocinaba y siempre estábamos contentos." },
+            { "code": "es.a2.reflexive", "title": "Reflexive verbs", "grammar_topics": ["es.a2.reflexive"], "can_do": "I can describe my daily routine.", "seed_text": "Me levanto a las siete y me ducho rápido. Después me visto y desayuno. Mi hermana se peina y se maquilla. Por la noche nos acostamos temprano." },
+            { "code": "es.a2.por-para", "title": "por vs para", "grammar_topics": ["es.a2.por-para"], "can_do": "I can explain reasons and purposes.", "seed_text": "Estudio español para trabajar en España. Gracias por tu ayuda. Paso por el parque cada mañana. Este regalo es para ti y lo compré por diez euros." }
+          ]
+        }
+      ]
+    }
+  ]
+}

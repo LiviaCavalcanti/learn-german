@@ -13,6 +13,7 @@ def list_exercises(
     *,
     material_id: int | None = None,
     type: str | None = None,
+    target_lang: str | None = None,
     limit: int = 200,
 ) -> list[Exercise]:
     stmt = select(Exercise).order_by(Exercise.created_at.desc())
@@ -20,6 +21,8 @@ def list_exercises(
         stmt = stmt.where(Exercise.material_id == material_id)
     if type:
         stmt = stmt.where(Exercise.type == type)
+    if target_lang:
+        stmt = stmt.where(Exercise.target_lang == target_lang)
     return list(session.exec(stmt.limit(limit)).all())
 
 
@@ -49,10 +52,13 @@ def list_exercises_read(
     *,
     material_id: int | None = None,
     type: str | None = None,
+    target_lang: str | None = None,
     limit: int = 200,
 ) -> list[ExerciseRead]:
     """List exercises enriched with variant group id and position."""
-    exercises = list_exercises(session, material_id=material_id, type=type, limit=limit)
+    exercises = list_exercises(
+        session, material_id=material_id, type=type, target_lang=target_lang, limit=limit
+    )
     variant_map = _variant_map(session, [ex.id for ex in exercises])
     reads: list[ExerciseRead] = []
     for exercise in exercises:

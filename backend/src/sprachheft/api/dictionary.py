@@ -9,6 +9,7 @@ from fastapi import APIRouter, Query
 
 from sprachheft.dictionary.lemmatize import lemmatize
 from sprachheft.dictionary.service import get_dictionary_service
+from sprachheft.languages import get_language, normalize_native, normalize_target
 from sprachheft.schemas import DictEntryOut, DictionaryLookupResponse
 
 router = APIRouter(prefix="/dictionary", tags=["dictionary"])
@@ -28,13 +29,20 @@ def status():
 
 
 @router.get("/lookup", response_model=DictionaryLookupResponse)
-def lookup(word: str = Query(..., min_length=1), pos: str | None = None):
+def lookup(
+    word: str = Query(..., min_length=1),
+    pos: str | None = None,
+    lang: str = Query("de"),
+    native: str = Query("en"),
+):
+    target = normalize_target(lang)
+    nat = normalize_native(native)
     service = get_dictionary_service()
-    entries = [DictEntryOut(**asdict(e)) for e in service.lookup(word, pos=pos)]
+    entries = [DictEntryOut(**asdict(e)) for e in service.lookup(word, pos=pos, lang=target)]
     return DictionaryLookupResponse(
         query=word,
-        lemma=lemmatize(word),
+        lemma=lemmatize(word, get_language(target).lemmatizer),
         available=service.is_available(),
         entries=entries,
-        google_translate_url=google_translate_url(word),
+        google_translate_url=google_translate_url(word, target, nat),
     )

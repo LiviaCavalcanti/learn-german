@@ -12,6 +12,7 @@ class IngestRequest:
     source_url: str | None = None
     transcript: str | None = None
     translation: str | None = None
+    source_lang: str = "de"
 
 
 @dataclass

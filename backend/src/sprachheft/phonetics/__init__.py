@@ -1,11 +1,12 @@
-"""IPA transcription for German words via espeak-ng (through phonemizer).
+"""IPA transcription for words via espeak-ng (through phonemizer).
 
 Offline and optional: install the ``phonetics`` extra (``uv sync --extra
 phonetics``), which pulls ``phonemizer`` plus a pip-packaged espeak-ng shared
 library (``espeakng-loader``) — so no system package is required. espeak-ng is
-fast (sub-millisecond g2p) and includes stress marks, which is helpful for
-learners. When the extra is missing the functions degrade gracefully to ``None``
-so the rest of the app (and the offline test suite) keeps working.
+fast (sub-millisecond g2p), covers many languages, and includes stress marks,
+which is helpful for learners. When the extra is missing the functions degrade
+gracefully to ``None`` so the rest of the app (and the offline test suite) keeps
+working.
 """
 
 from __future__ import annotations
@@ -16,9 +17,9 @@ from collections.abc import Callable
 from functools import lru_cache
 
 
-@lru_cache(maxsize=1)
-def _phonemizer() -> Callable[[str], str] | None:
-    """Return a configured ``word -> IPA`` callable, or ``None`` if unavailable."""
+@lru_cache(maxsize=8)
+def _phonemizer(lang: str = "de") -> Callable[[str], str] | None:
+    """Return a configured ``word -> IPA`` callable for ``lang``, or ``None``."""
     try:
         import espeakng_loader
         from phonemizer.backend import EspeakBackend
@@ -35,7 +36,7 @@ def _phonemizer() -> Callable[[str], str] | None:
         os.environ.setdefault("ESPEAK_DATA_PATH", espeakng_loader.get_data_path())
         EspeakWrapper.set_library(espeakng_loader.get_library_path())
         backend = EspeakBackend(
-            "de",
+            lang,
             with_stress=True,
             preserve_punctuation=False,
             logger=quiet,
@@ -51,16 +52,17 @@ def _phonemizer() -> Callable[[str], str] | None:
 
 
 @lru_cache(maxsize=4096)
-def to_ipa(word: str) -> str | None:
-    """Return an IPA transcription for a German ``word`` wrapped in ``/…/``.
+def to_ipa(word: str, lang: str = "de") -> str | None:
+    """Return an IPA transcription for ``word`` (in ``lang``) wrapped in ``/…/``.
 
-    Returns ``None`` when the ``phonetics`` extra is not installed, the input is
-    empty, or no phonemes could be produced. Results are cached.
+    Returns ``None`` when the ``phonetics`` extra is not installed, the language
+    is unsupported by espeak, the input is empty, or no phonemes could be
+    produced. Results are cached.
     """
     word = (word or "").strip()
     if not word:
         return None
-    phonemize = _phonemizer()
+    phonemize = _phonemizer(lang or "de")
     if phonemize is None:
         return None
     try:

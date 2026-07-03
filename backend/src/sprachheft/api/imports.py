@@ -18,4 +18,11 @@ def import_json(payload: ImportJsonIn, session: SessionDep):
 
 @router.post("/text")
 def import_text(payload: ImportTextIn, session: SessionDep):
-    return svc.import_text(session, payload.raw_text, level=payload.level, title=payload.title)
+    return svc.import_text(
+        session,
+        payload.raw_text,
+        level=payload.level,
+        title=payload.title,
+        source_lang=payload.source_lang,
+        native_lang=payload.native_lang,
+    )

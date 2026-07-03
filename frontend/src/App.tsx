@@ -9,8 +9,12 @@ import Review from './features/review/Review'
 import Conjugation from './features/conjugation/Conjugation'
 import Tutor from './features/tutor/Tutor'
 import ImportPage from './features/importer/ImportPage'
+import LanguagePicker from './features/onboarding/LanguagePicker'
+import { useLanguage } from './contexts/LanguageContext'
 
 export default function App() {
+  const { target } = useLanguage()
+  if (!target) return <LanguagePicker />
   return (
     <Routes>
       <Route element={<Layout />}>

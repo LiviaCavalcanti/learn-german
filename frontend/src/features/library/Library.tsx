@@ -2,6 +2,7 @@ import { useEffect, useState, type FormEvent } from 'react'
 import { Link } from 'react-router-dom'
 import { api, type NewMaterial } from '../../lib/api'
 import type { MaterialSummary } from '../../lib/types'
+import { useLanguage } from '../../contexts/LanguageContext'
 import { Badge, Button, Card, Field, Input, Select, Spinner, Textarea } from '../../components/ui'
 
 const EMPTY = {
@@ -20,6 +21,8 @@ export default function Library() {
   const [form, setForm] = useState(EMPTY)
   const [ingestOk, setIngestOk] = useState(false)
   const [transcribing, setTranscribing] = useState(false)
+  const { targetProfile } = useLanguage()
+  const langName = targetProfile?.name ?? 'target language'
 
   function load() {
     api.materials().then(setItems).catch(() => setItems([]))
@@ -126,7 +129,7 @@ export default function Library() {
                 )}
               </div>
             </Field>
-            <Field label="Transcript (German)">
+            <Field label={`Transcript (${langName})`}>
               <Textarea
                 rows={5}
                 value={form.transcript}

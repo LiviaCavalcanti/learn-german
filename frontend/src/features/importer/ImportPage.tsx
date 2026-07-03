@@ -1,8 +1,11 @@
 import { useState } from 'react'
 import { api } from '../../lib/api'
+import { useLanguage } from '../../contexts/LanguageContext'
 import { Button, Card, Field, Select, Spinner, Textarea, cx } from '../../components/ui'
 
 export default function ImportPage() {
+  const { targetProfile } = useLanguage()
+  const langName = targetProfile?.name ?? 'target language'
   const [tab, setTab] = useState<'json' | 'text'>('json')
   const [raw, setRaw] = useState('')
   const [level, setLevel] = useState('A2')
@@ -35,7 +38,7 @@ export default function ImportPage() {
     <div className="space-y-6">
       <header>
         <h1 className="text-3xl">Import</h1>
-        <p className="text-muted">Paste prompt-pack JSON, or raw German material to normalize.</p>
+        <p className="text-muted">Paste prompt-pack JSON, or raw {langName} material to normalize.</p>
       </header>
 
       <div className="flex gap-2">
@@ -68,7 +71,7 @@ export default function ImportPage() {
           label={
             tab === 'json'
               ? 'JSON (MODE: JSON output from the generate-exercises prompt)'
-              : 'German grammar / content to normalize'
+              : `${langName} grammar / content to normalize`
           }
         >
           <Textarea

@@ -40,14 +40,14 @@ class LinkIngestor:
                 "Transcription is not available. Install the 'transcribe' extra "
                 "(yt-dlp, faster-whisper) and ensure ffmpeg is on PATH."
             )
-        transcript = self._transcribe(req.source_url)
+        transcript = self._transcribe(req.source_url, req.source_lang)
         return IngestResult(
             transcript=transcript,
             translation=req.translation,
             source_url=req.source_url,
         )
 
-    def _transcribe(self, url: str) -> str:
+    def _transcribe(self, url: str, lang: str = "de") -> str:
         import yt_dlp
         from faster_whisper import WhisperModel
 
@@ -69,5 +69,5 @@ class LinkIngestor:
             if not audio_files:
                 raise RuntimeError("Could not download audio from the URL.")
             model = WhisperModel(settings.whisper_model, device="cpu", compute_type="int8")
-            segments, _info = model.transcribe(str(audio_files[0]), language="de")
+            segments, _info = model.transcribe(str(audio_files[0]), language=lang)
             return " ".join(segment.text.strip() for segment in segments).strip()

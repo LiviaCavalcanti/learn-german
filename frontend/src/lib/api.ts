@@ -12,6 +12,7 @@ import type {
   DictLookup,
   Exercise,
   LearnerProfile,
+  LanguagesResponse,
   Material,
   MaterialSummary,
   Rating,
@@ -46,6 +47,27 @@ async function req<T>(path: string, opts: RequestInit = {}): Promise<T> {
   return (await resp.json()) as T
 }
 
+// --- Current language (set by the LanguageProvider) --------------------------
+let apiTarget = 'de'
+let apiNative = 'en'
+
+/** Update the target/native language threaded into language-scoped requests. */
+export function setApiLanguage(target: string, native: string): void {
+  apiTarget = target || 'de'
+  apiNative = native || 'en'
+}
+
+export function getApiLanguage(): { target: string; native: string } {
+  return { target: apiTarget, native: apiNative }
+}
+
+/** Append the current target language (plus any extra params) to a path. */
+function withLang(path: string, extra?: Record<string, string>): string {
+  const sep = path.includes('?') ? '&' : '?'
+  const params = new URLSearchParams({ lang: apiTarget, ...(extra ?? {}) })
+  return `${path}${sep}${params.toString()}`
+}
+
 export interface NewMaterial {
   title: string
   media_type: string
@@ -57,11 +79,15 @@ export interface NewMaterial {
 
 export const api = {
   health: () => req<{ status: string }>('/health'),
+  languages: () => req<LanguagesResponse>('/languages'),
 
-  materials: () => req<MaterialSummary[]>('/materials'),
+  materials: () => req<MaterialSummary[]>(withLang('/materials')),
   material: (id: number) => req<Material>(`/materials/${id}`),
   createMaterial: (data: NewMaterial) =>
-    req<Material>('/materials', { method: 'POST', body: JSON.stringify(data) }),
+    req<Material>('/materials', {
+      method: 'POST',
+      body: JSON.stringify({ ...data, source_lang: apiTarget, native_lang: apiNative }),
+    }),
   deleteMaterial: (id: number) => req<void>(`/materials/${id}`, { method: 'DELETE' }),
   generate: (id: number, stage: number) =>
     req<{ themes: string[]; vocab_added: number; exercises_added: number }>(
@@ -87,16 +113,19 @@ export const api = {
     req<Material>(`/materials/${id}/rewrite`, { method: 'POST', body: JSON.stringify(body) }),
 
   exercises: (materialId: number) =>
-    req<Exercise[]>(`/exercises?material_id=${materialId}`),
+    req<Exercise[]>(withLang(`/exercises?material_id=${materialId}`)),
   generateVariant: (exerciseId: number, stage: number) =>
     req<Exercise>(`/exercises/${exerciseId}/variant?stage=${stage}`, { method: 'POST' }),
   attempts: (exerciseId: number) =>
     req<AnswerAttempt[]>(`/exercises/${exerciseId}/attempts`),
-  vocab: (materialId: number) => req<VocabItem[]>(`/vocab?material_id=${materialId}`),
-  allVocab: (limit = 1000) => req<VocabItem[]>(`/vocab?limit=${limit}`),
+  vocab: (materialId: number) => req<VocabItem[]>(withLang(`/vocab?material_id=${materialId}`)),
+  allVocab: (limit = 1000) => req<VocabItem[]>(withLang(`/vocab?limit=${limit}`)),
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   createVocab: (data: Record<string, any>) =>
-    req<VocabItem>('/vocab', { method: 'POST', body: JSON.stringify(data) }),
+    req<VocabItem>('/vocab', {
+      method: 'POST',
+      body: JSON.stringify({ ...data, target_lang: apiTarget }),
+    }),
   deleteVocab: (ids: number[]) =>
     req<{ deleted: number }>('/vocab/delete', {
       method: 'POST',
@@ -118,11 +147,13 @@ export const api = {
     ),
 
   dictLookup: (word: string) =>
-    req<DictLookup>(`/dictionary/lookup?word=${encodeURIComponent(word)}`),
+    req<DictLookup>(
+      withLang(`/dictionary/lookup?word=${encodeURIComponent(word)}`, { native: apiNative }),
+    ),
   dictStatus: () => req<{ available: boolean; entry_count: number }>('/dictionary/status'),
 
   conjugate: (verb: string) =>
-    req<ConjugationTable>(`/conjugation?verb=${encodeURIComponent(verb)}`),
+    req<ConjugationTable>(withLang(`/conjugation?verb=${encodeURIComponent(verb)}`)),
 
   addVerb: (body: {
     infinitive: string
@@ -130,7 +161,11 @@ export const api = {
     partizip_ii?: string
     auxiliary?: string
     cefr?: string | null
-  }) => req<VerbVocabResult>('/vocab/verb', { method: 'POST', body: JSON.stringify(body) }),
+  }) =>
+    req<VerbVocabResult>('/vocab/verb', {
+      method: 'POST',
+      body: JSON.stringify({ ...body, target_lang: apiTarget }),
+    }),
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   practiceAnswer: (body: { exercise_id: number; responses: string[]; rating?: Rating }) =>
@@ -143,7 +178,7 @@ export const api = {
     }),
 
   reviewStats: () => req<ReviewStats>('/review/stats'),
-  reviewQueue: (limit = 20) => req<ReviewQueueItem[]>(`/review/queue?limit=${limit}`),
+  reviewQueue: (limit = 20) => req<ReviewQueueItem[]>(withLang(`/review/queue?limit=${limit}`)),
   reviewGrade: (body: { item_type: string; item_id: number; rating: Rating }) =>
     req<{ due: string; reps: number }>('/review/grade', {
       method: 'POST',
@@ -178,23 +213,26 @@ export const api = {
   importJson: (data: any) =>
     req<{ material_id: number; vocab_added: number; exercises_added: number }>('/imports/json', {
       method: 'POST',
-      body: JSON.stringify(data),
+      body: JSON.stringify({ ...data, source_lang: apiTarget, native_lang: apiNative }),
     }),
   importText: (data: { raw_text: string; level?: string; title?: string }) =>
     req<{ material_id: number; vocab_added: number; exercises_added: number }>('/imports/text', {
       method: 'POST',
-      body: JSON.stringify(data),
+      body: JSON.stringify({ ...data, source_lang: apiTarget, native_lang: apiNative }),
     }),
 
-  course: () => req<CourseIndex>('/course'),
-  courseProgress: () => req<CourseProgress>('/course/progress'),
-  courseLevel: (level: string) => req<CourseLevelDetail>(`/course/${level}`),
+  course: () => req<CourseIndex>(withLang('/course')),
+  courseProgress: () => req<CourseProgress>(withLang('/course/progress')),
+  courseLevel: (level: string) => req<CourseLevelDetail>(withLang(`/course/${level}`)),
   startLesson: (code: string) =>
-    req<Material>(`/course/lessons/${encodeURIComponent(code)}/start`, { method: 'POST' }),
+    req<Material>(
+      withLang(`/course/lessons/${encodeURIComponent(code)}/start`, { native: apiNative }),
+      { method: 'POST' },
+    ),
 
   vocabSearch: (q: string, semantic = false) =>
     req<VocabItem[]>(
-      `/vocab/search?q=${encodeURIComponent(q)}${semantic ? '&semantic=true' : ''}`,
+      withLang(`/vocab/search?q=${encodeURIComponent(q)}${semantic ? '&semantic=true' : ''}`),
     ),
   vocabReindex: (rebuild = false) =>
     req<{ indexed: number }>(`/vocab/reindex${rebuild ? '?rebuild=true' : ''}`, {
@@ -206,7 +244,7 @@ export const api = {
   transcribe: (source_url: string) =>
     req<{ transcript: string }>('/ingest/transcribe', {
       method: 'POST',
-      body: JSON.stringify({ source_url }),
+      body: JSON.stringify({ source_url, source_lang: apiTarget }),
     }),
 
   // --- Tutor / teacher chat ---

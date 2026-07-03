@@ -5,8 +5,8 @@ from __future__ import annotations
 from sprachheft.schemas import ConjugationTable
 
 
-def conjugate_verb(verb: str) -> ConjugationTable:
-    """Return the full conjugation table for a (possibly inflected) German verb."""
+def conjugate_verb(verb: str, lang: str = "de") -> ConjugationTable:
+    """Return the full conjugation table for a (possibly inflected) verb."""
     from sprachheft.agents.conjugation import conjugate
 
-    return conjugate(verb)
+    return conjugate(verb, lang)
