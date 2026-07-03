@@ -7,6 +7,7 @@ import Vocabulary from './features/vocab/Vocabulary'
 import MaterialDetail from './features/material/MaterialDetail'
 import Review from './features/review/Review'
 import Conjugation from './features/conjugation/Conjugation'
+import Tutor from './features/tutor/Tutor'
 import ImportPage from './features/importer/ImportPage'
 
 export default function App() {
@@ -20,6 +21,7 @@ export default function App() {
         <Route path="materials/:id" element={<MaterialDetail />} />
         <Route path="review" element={<Review />} />
         <Route path="conjugation" element={<Conjugation />} />
+        <Route path="tutor" element={<Tutor />} />
         <Route path="import" element={<ImportPage />} />
       </Route>
     </Routes>

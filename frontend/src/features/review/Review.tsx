@@ -224,6 +224,29 @@ function ReviewCard({
 function ExerciseReview({ data, revealed }: { data: any; revealed: boolean }) {
   const payload = data.payload || {}
   const answerKey = data.answer_key || {}
+
+  // Teacher flashcards (saved from the chat) render as a simple front/back card.
+  if (data.type === 'flashcard') {
+    const back = answerKey.model_answer || answerKey.sample_answer || ''
+    return (
+      <div className="space-y-4 text-center">
+        <Badge>flashcard</Badge>
+        <div className="font-serif text-2xl">
+          <TokenizedText text={String(data.instructions || payload.prompt || '')} />
+        </div>
+        {revealed ? (
+          back && (
+            <div className="mx-auto max-w-prose rounded-lg border border-success/30 bg-success/5 p-3 text-left text-sm">
+              <TokenizedText text={String(back)} />
+            </div>
+          )
+        ) : (
+          <p className="text-xs text-muted">Recall the answer, then reveal to check yourself.</p>
+        )}
+      </div>
+    )
+  }
+
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const items: any[] = Array.isArray(payload.items) ? payload.items : []
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

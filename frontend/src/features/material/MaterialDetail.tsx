@@ -129,6 +129,12 @@ export default function MaterialDetail() {
         <div className="mt-1 flex items-center gap-3">
           <h1 className="text-3xl">{material.title}</h1>
           <Badge>{material.level}</Badge>
+          <Link
+            to={`/tutor?material=${material.id}`}
+            className="ml-auto rounded-lg bg-accent-soft px-3 py-1.5 text-sm font-medium text-ink hover:brightness-95"
+          >
+            Ask the teacher
+          </Link>
         </div>
         {material.source_url && (
           <a className="text-sm text-accent" href={material.source_url} target="_blank" rel="noreferrer">

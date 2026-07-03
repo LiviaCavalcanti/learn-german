@@ -142,3 +142,39 @@ class VocabEmbedding(SQLModel, table=True):
     vocab_id: int = Field(foreign_key="vocabitem.id", primary_key=True)
     dim: int = 0
     vector: list[float] = Field(default_factory=list, sa_column=Column(JSON))
+
+
+class ChatSession(SQLModel, table=True):
+    """A conversation thread with the AI teacher."""
+
+    id: int | None = Field(default=None, primary_key=True)
+    title: str = "Conversation"
+    # Optional attached learning element / context carried through the thread
+    # (shape mirrors schemas.ChatContext): {kind, id, label, text}.
+    context: dict = Field(default_factory=dict, sa_column=Column(JSON))
+    created_at: datetime = Field(default_factory=utcnow)
+    updated_at: datetime = Field(default_factory=utcnow, index=True)
+
+
+class ChatMessage(SQLModel, table=True):
+    id: int | None = Field(default=None, primary_key=True)
+    session_id: int = Field(foreign_key="chatsession.id", index=True)
+    role: str = "user"  # user | teacher
+    content: str = ""
+    created_at: datetime = Field(default_factory=utcnow, index=True)
+
+
+class LearnerProfile(SQLModel, table=True):
+    """A single, evolving picture of the learner the teacher builds over time.
+
+    Kept as one row (the first/only one). ``strengths`` and ``difficulties`` are
+    merged from each chat turn so the teacher "learns" what the student knows and
+    where they struggle.
+    """
+
+    id: int | None = Field(default=None, primary_key=True)
+    summary: str = ""
+    focus: str = ""
+    strengths: list[str] = Field(default_factory=list, sa_column=Column(JSON))
+    difficulties: list[str] = Field(default_factory=list, sa_column=Column(JSON))
+    updated_at: datetime = Field(default_factory=utcnow)

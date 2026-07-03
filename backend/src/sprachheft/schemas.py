@@ -378,3 +378,106 @@ class ConjugationTable(BaseModel):
         default_factory=ConjugationForms, description="Konjunktiv II"
     )
     imperative: ImperativeForms = Field(default_factory=ImperativeForms, description="Imperativ")
+
+
+# --- Tutor / teacher chat ----------------------------------------------------
+ContextKind = Literal["none", "material", "vocab", "exercise", "text"]
+
+
+class ChatContext(BaseModel):
+    """A learning element from the app attached to the conversation."""
+
+    kind: ContextKind = "none"
+    id: int | None = None
+    label: str | None = None
+    text: str | None = None
+
+
+class ChatSessionCreate(BaseModel):
+    title: str | None = None
+    context: ChatContext | None = None
+
+
+class ChatMessageRead(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
+    id: int
+    session_id: int
+    role: str
+    content: str
+    created_at: datetime
+
+
+class ChatSessionRead(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
+    id: int
+    title: str
+    context: dict
+    created_at: datetime
+    updated_at: datetime
+
+
+class ChatSessionDetail(ChatSessionRead):
+    messages: list[ChatMessageRead] = []
+
+
+class ChatSendIn(BaseModel):
+    message: str
+    context: ChatContext | None = None
+
+
+class ChatReply(BaseModel):
+    """Structured teacher reply plus lightweight signals used to update the profile."""
+
+    reply: str = Field(default="", description="the teacher's chat reply to the student")
+    difficulties: list[str] = Field(
+        default_factory=list,
+        description="concrete things the student struggled with in this message (may be empty)",
+    )
+    mastered: list[str] = Field(
+        default_factory=list,
+        description="things the student clearly handled correctly (may be empty)",
+    )
+
+
+class ChatTurnOut(BaseModel):
+    user_message: ChatMessageRead
+    teacher_message: ChatMessageRead
+
+
+class LearnerProfileRead(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
+    summary: str
+    focus: str
+    strengths: list[str]
+    difficulties: list[str]
+    updated_at: datetime
+
+
+class TeacherCardSuggestion(BaseModel):
+    """A spaced-repetition flashcard proposed from a teacher message."""
+
+    front: str = Field(default="", description="short German prompt/cue to recall")
+    back: str = Field(default="", description="concise answer/explanation")
+    cefr: str = Field(default="A2", description="CEFR level of the card")
+    tags: list[str] = Field(default_factory=list, description="0-3 lowercase topic tags")
+
+
+class CardSuggestIn(BaseModel):
+    text: str = ""
+    message_id: int | None = None
+    context: ChatContext | None = None
+
+
+class ReviewCardCreate(BaseModel):
+    front: str
+    back: str
+    cefr: Level | None = None
+    tags: list[str] = []
+
+
+class ReviewCardCreated(BaseModel):
+    exercise_id: int
+    srstate_id: int

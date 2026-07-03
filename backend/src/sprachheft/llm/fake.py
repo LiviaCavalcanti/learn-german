@@ -11,6 +11,7 @@ import re
 
 from sprachheft.schemas import (
     AnswerFeedback,
+    ChatReply,
     ComposedText,
     ConjugationForms,
     ConjugationTable,
@@ -21,6 +22,7 @@ from sprachheft.schemas import (
     GenVocab,
     ImperativeForms,
     RewrittenText,
+    TeacherCardSuggestion,
     VocabBatch,
 )
 
@@ -209,6 +211,12 @@ class FakeLLMClient:
     def generate_structured(self, messages: list[dict], response_model, **kwargs):
         if response_model is AnswerFeedback:
             return self._fake_feedback(messages)
+
+        if response_model is ChatReply:
+            return self._fake_chat(messages)
+
+        if response_model is TeacherCardSuggestion:
+            return self._fake_card_suggestion(messages)
 
         transcript = ""
         for message in messages:
@@ -567,3 +575,37 @@ class FakeLLMClient:
                 "for detailed corrections.)"
             ),
         )
+
+    def _fake_chat(self, messages: list[dict]) -> ChatReply:
+        """A deterministic offline teacher reply that echoes the student's message."""
+        student = ""
+        for message in messages:
+            if message.get("role") == "user":
+                student = message.get("content", "")
+        student = (student or "").strip()
+        snippet = student.splitlines()[0][:200] if student else ""
+        reply = "Gern helfe ich dir! "
+        if snippet:
+            reply += f"Du hast geschrieben: „{snippet}“. "
+        reply += (
+            "Lass uns das Schritt für Schritt anschauen. Ein Beispiel: "
+            "„Ich lerne jeden Tag ein bisschen Deutsch.“ Versuch, einen ähnlichen Satz zu "
+            "bilden — ich korrigiere dich dann. (Offline-Modus: verbinde ein Sprachmodell "
+            "für echte Antworten.)"
+        )
+        return ChatReply(reply=reply, difficulties=[], mastered=[])
+
+    def _fake_card_suggestion(self, messages: list[dict]) -> TeacherCardSuggestion:
+        """Split a teacher message into a plausible front/back flashcard (offline)."""
+        user = ""
+        for message in messages:
+            if message.get("role") == "user":
+                user = message.get("content", "")
+        level = _extract_field(user, "LEVEL", "A2")
+        text = user
+        if "TEACHER_MESSAGE:" in user:
+            text = user.split("TEACHER_MESSAGE:", 1)[1].strip()
+        sentences = [s.strip() for s in re.split(r"(?<=[.!?])\s+", text) if s.strip()]
+        front = (sentences[0] if sentences else text[:60]) or "Neue Karte"
+        back = " ".join(sentences[1:]).strip() or text.strip() or front
+        return TeacherCardSuggestion(front=front[:200], back=back[:500], cefr=level, tags=[])

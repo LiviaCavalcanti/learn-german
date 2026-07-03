@@ -19,6 +19,7 @@ from sprachheft.api import (
     practice,
     reference,
     review,
+    tutor,
     vocab,
 )
 from sprachheft.config import get_settings
@@ -69,6 +70,7 @@ def create_app() -> FastAPI:
     app.include_router(course.router)
     app.include_router(ingest.router)
     app.include_router(conjugation.router)
+    app.include_router(tutor.router)
 
     return app
 

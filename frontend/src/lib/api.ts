@@ -1,17 +1,23 @@
 import type {
   AnswerAttempt,
   AnswerFeedback,
+  ChatContext,
+  ChatSession,
+  ChatSessionDetail,
+  ChatTurn,
   ConjugationTable,
   CourseIndex,
   CourseLevelDetail,
   DictLookup,
   Exercise,
+  LearnerProfile,
   Material,
   MaterialSummary,
   Rating,
   ReviewCard,
   ReviewQueueItem,
   ReviewStats,
+  TeacherCardSuggestion,
   VerbVocabResult,
   VocabItem,
 } from './types'
@@ -199,5 +205,29 @@ export const api = {
     req<{ transcript: string }>('/ingest/transcribe', {
       method: 'POST',
       body: JSON.stringify({ source_url }),
+    }),
+
+  // --- Tutor / teacher chat ---
+  tutorSessions: () => req<ChatSession[]>('/tutor/sessions'),
+  tutorCreateSession: (body: { title?: string; context?: ChatContext }) =>
+    req<ChatSession>('/tutor/sessions', { method: 'POST', body: JSON.stringify(body) }),
+  tutorSession: (id: number) => req<ChatSessionDetail>(`/tutor/sessions/${id}`),
+  tutorDeleteSession: (id: number) =>
+    req<void>(`/tutor/sessions/${id}`, { method: 'DELETE' }),
+  tutorSend: (id: number, body: { message: string; context?: ChatContext }) =>
+    req<ChatTurn>(`/tutor/sessions/${id}/messages`, {
+      method: 'POST',
+      body: JSON.stringify(body),
+    }),
+  tutorProfile: () => req<LearnerProfile>('/tutor/profile'),
+  tutorSuggestCard: (body: { text?: string; message_id?: number; context?: ChatContext }) =>
+    req<TeacherCardSuggestion>('/tutor/cards/suggest', {
+      method: 'POST',
+      body: JSON.stringify(body),
+    }),
+  tutorCreateCard: (body: { front: string; back: string; cefr?: string; tags?: string[] }) =>
+    req<{ exercise_id: number; srstate_id: number }>('/tutor/cards', {
+      method: 'POST',
+      body: JSON.stringify(body),
     }),
 }

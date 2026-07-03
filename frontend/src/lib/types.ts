@@ -195,3 +195,54 @@ export interface VerbVocabResult {
   created: boolean
   item: VocabItem
 }
+
+// --- Tutor / teacher chat ---
+export type ChatContextKind = 'none' | 'material' | 'vocab' | 'exercise' | 'text'
+
+export interface ChatContext {
+  kind: ChatContextKind
+  id?: number | null
+  label?: string | null
+  text?: string | null
+}
+
+export interface ChatMessage {
+  id: number
+  session_id: number
+  role: 'user' | 'teacher' | string
+  content: string
+  created_at: string
+}
+
+export interface ChatSession {
+  id: number
+  title: string
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  context: any
+  created_at: string
+  updated_at: string
+}
+
+export interface ChatSessionDetail extends ChatSession {
+  messages: ChatMessage[]
+}
+
+export interface ChatTurn {
+  user_message: ChatMessage
+  teacher_message: ChatMessage
+}
+
+export interface LearnerProfile {
+  summary: string
+  focus: string
+  strengths: string[]
+  difficulties: string[]
+  updated_at: string
+}
+
+export interface TeacherCardSuggestion {
+  front: string
+  back: string
+  cefr: string
+  tags: string[]
+}
