@@ -16,7 +16,14 @@ from sprachheft.agents.generator import (
     generate_one,
     generate_vocabulary,
 )
-from sprachheft.models import Exercise, ExerciseVariant, Material, SRState, VocabItem
+from sprachheft.models import (
+    AnswerAttempt,
+    Exercise,
+    ExerciseVariant,
+    Material,
+    SRState,
+    VocabItem,
+)
 from sprachheft.schemas import GenerationResult, GenExercise, GenVocab
 
 # Exercises are generated a few types at a time; each batch is one small LLM call.
@@ -235,3 +242,55 @@ def generate_variant(session: Session, exercise: Exercise, *, stage: int = 2) ->
     session.commit()
     session.refresh(new_exercise)
     return new_exercise
+
+
+LEVELS = ("A1", "A2", "B1", "B2")
+
+
+def shift_level(level: str | None, direction: str | None) -> str:
+    """Shift a CEFR level one band easier/harder, clamped to A1..B2."""
+    try:
+        i = LEVELS.index((level or "A2").upper())
+    except ValueError:
+        i = 1
+    if direction == "easier":
+        i = max(0, i - 1)
+    elif direction == "harder":
+        i = min(len(LEVELS) - 1, i + 1)
+    return LEVELS[i]
+
+
+def replace_exercise(session: Session, exercise: Exercise, *, direction: str) -> Exercise:
+    """Regenerate an exercise easier/harder and replace it in place (same slot).
+
+    Powers the learner's "too hard" / "too easy" controls. Keeps the exercise id and
+    its variant links, drops stale answer attempts, and does not touch review
+    (exercises are no longer reviewed).
+    """
+    material = session.get(Material, exercise.material_id) if exercise.material_id else None
+    if material is None:
+        raise ValueError("Exercise is not linked to a material")
+
+    group_id = group_id_for(session, exercise)
+    avoid = _collect_prompts(_group_exercises(session, group_id))
+    stage = 1 if direction == "easier" else 4 if direction == "harder" else 2
+    level = shift_level(exercise.cefr or material.level, direction)
+
+    gen = generate_one(
+        material, exercise.type, stage, avoid=avoid, difficulty=direction, level=level
+    )
+    exercise.cefr = gen.cefr or level
+    exercise.grammar_tags = gen.grammar_tags or exercise.grammar_tags
+    exercise.instructions = gen.instructions
+    exercise.payload = gen.payload
+    exercise.answer_key = gen.answer_key
+    session.add(exercise)
+
+    for attempt in session.exec(
+        select(AnswerAttempt).where(AnswerAttempt.exercise_id == exercise.id)
+    ).all():
+        session.delete(attempt)
+
+    session.commit()
+    session.refresh(exercise)
+    return exercise

@@ -57,3 +57,22 @@ def create_variant(
 
     new_exercise = generation.generate_variant(session, exercise, stage=stage)
     return svc.to_read(session, new_exercise)
+
+
+@router.post("/{exercise_id}/replace", response_model=ExerciseRead)
+def replace_exercise(
+    exercise_id: int,
+    session: SessionDep,
+    direction: str = Query("easier", pattern="^(easier|harder)$"),
+):
+    """Regenerate an exercise easier/harder ("too hard"/"too easy") and swap it in place."""
+    exercise = session.get(Exercise, exercise_id)
+    if not exercise:
+        raise HTTPException(status_code=404, detail="Exercise not found")
+    from sprachheft.services import generation
+
+    try:
+        updated = generation.replace_exercise(session, exercise, direction=direction)
+    except ValueError as exc:
+        raise HTTPException(status_code=422, detail=str(exc)) from exc
+    return svc.to_read(session, updated)

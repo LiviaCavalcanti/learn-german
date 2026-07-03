@@ -113,10 +113,16 @@ def generate_exercises(
 
 
 def build_single_messages(
-    material: Material, ex_type: str, stage: int, avoid: list[str]
+    material: Material,
+    ex_type: str,
+    stage: int,
+    avoid: list[str],
+    *,
+    difficulty: str | None = None,
+    level: str | None = None,
 ) -> list[dict]:
     user = (
-        f"LEVEL: {material.level}\n"
+        f"LEVEL: {level or material.level}\n"
         f"STAGE: {stage}\n"
         f"TYPE: {ex_type}\n"
         f"TITLE: {material.title}\n"
@@ -127,6 +133,16 @@ def build_single_messages(
     if avoid:
         joined = "\n".join(f"- {p}" for p in avoid if p)
         user += f"AVOID (already used, make something different):\n{joined}\n"
+    if difficulty == "easier":
+        user += (
+            "DIFFICULTY: Make this noticeably EASIER than the AVOID items \u2014 simpler, "
+            "higher-frequency vocabulary, shorter sentences, and more support.\n"
+        )
+    elif difficulty == "harder":
+        user += (
+            "DIFFICULTY: Make this noticeably HARDER than the AVOID items \u2014 richer "
+            "vocabulary, longer and more complex sentences, and less support.\n"
+        )
     return [
         {"role": "system", "content": _single_system_prompt(material)},
         {"role": "user", "content": user},
@@ -138,8 +154,56 @@ def generate_one(
     ex_type: str,
     stage: int = 2,
     avoid: list[str] | None = None,
+    *,
+    difficulty: str | None = None,
+    level: str | None = None,
 ) -> GenExercise:
-    """Generate a single new exercise of ``ex_type`` (a variant)."""
+    """Generate a single new exercise of ``ex_type`` (a variant, optionally easier/harder)."""
     client = get_llm_client()
-    messages = build_single_messages(material, ex_type, stage, avoid or [])
+    messages = build_single_messages(
+        material, ex_type, stage, avoid or [], difficulty=difficulty, level=level
+    )
     return client.generate_structured(messages, GenExercise)
+
+
+def _one_vocab_system_prompt(material: Material, difficulty: str | None) -> str:
+    profile = get_language(material.source_lang)
+    tname = profile.name
+    nname = native_name(material.native_lang)
+    fw = profile.level_framework
+    adj = ""
+    if difficulty == "easier":
+        adj = f" Choose an EASIER, higher-frequency {tname} word than the ones to AVOID."
+    elif difficulty == "harder":
+        adj = f" Choose a HARDER, less common {tname} word than the ones to AVOID."
+    return (
+        f"You are an expert {tname}-as-a-foreign-language teacher. Suggest exactly ONE {tname} "
+        f"vocabulary item that fits the transcript and the target {fw} level.{adj} "
+        f"{profile.article_note} Give: word, lemma, part of speech, a concise {nname} meaning, one "
+        f"short example (in {tname} plus its {nname} translation), a {fw} tag, and grammar tags "
+        f"(lowercase kebab codes). Use correct, natural {tname}. Return only the single item."
+    )
+
+
+def generate_one_vocab(
+    material: Material,
+    avoid: list[str] | None = None,
+    *,
+    difficulty: str | None = None,
+    level: str | None = None,
+) -> GenVocab:
+    """Generate a single replacement vocabulary item (optionally easier/harder)."""
+    client = get_llm_client()
+    user = (
+        f"LEVEL: {level or material.level}\n"
+        f"TITLE: {material.title}\n"
+        f"TRANSCRIPT:\n{material.transcript}\n"
+    )
+    if avoid:
+        joined = ", ".join(a for a in avoid if a)
+        user += f"AVOID (already known, pick a different word):\n{joined}\n"
+    messages = [
+        {"role": "system", "content": _one_vocab_system_prompt(material, difficulty)},
+        {"role": "user", "content": user},
+    ]
+    return client.generate_structured(messages, GenVocab)

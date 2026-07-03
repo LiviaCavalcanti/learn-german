@@ -121,6 +121,42 @@ def create_vocab(session: Session, data: VocabItemCreate) -> VocabItem:
     return item
 
 
+def replace_vocab(session: Session, item: VocabItem, *, direction: str) -> VocabItem:
+    """Regenerate a vocabulary item easier/harder and replace it in place.
+
+    Powers the learner's "too hard" / "too easy" control. Keeps the item id and its
+    review card; refreshes the word and its metadata.
+    """
+    material = session.get(Material, item.material_id) if item.material_id else None
+    if material is None:
+        raise ValueError("Vocabulary item is not linked to a material")
+
+    from sprachheft.agents.generator import generate_one_vocab
+    from sprachheft.services.generation import shift_level
+
+    level = shift_level(item.cefr or material.level, direction)
+    gv = generate_one_vocab(
+        material, avoid=[item.word, item.lemma], difficulty=direction, level=level
+    )
+    item.word = gv.word
+    item.lemma = (gv.lemma or gv.word).strip() or item.lemma
+    item.pos = gv.pos
+    item.meaning_en = gv.meaning_en
+    item.cefr = gv.cefr or level
+    item.example_de = gv.example_de
+    item.example_en = gv.example_en
+    item.grammar_tags = gv.grammar_tags
+    session.add(item)
+    # The stored embedding is now stale; drop it so a search reindex recomputes it.
+    for row in session.exec(
+        select(VocabEmbedding).where(VocabEmbedding.vocab_id == item.id)
+    ).all():
+        session.delete(row)
+    session.commit()
+    session.refresh(item)
+    return item
+
+
 def add_verb(
     session: Session,
     infinitive: str,

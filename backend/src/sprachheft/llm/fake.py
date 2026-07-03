@@ -312,6 +312,9 @@ class FakeLLMClient:
         if response_model is ExerciseBatch:
             return ExerciseBatch(exercises=self._fake_exercise_batch(transcript))
 
+        if response_model is GenVocab:
+            return self._fake_one_vocab(transcript)
+
         words = _pick_words(transcript) or ["Alltag", "lernen", "wichtig"]
         vocabulary = [
             GenVocab(
@@ -360,9 +363,30 @@ class FakeLLMClient:
             return result
         return response_model.model_validate(result.model_dump())
 
+    def _fake_one_vocab(self, user_message: str) -> GenVocab:
+        """Offline single replacement word: a transcript word not in the AVOID list."""
+        body = user_message
+        if "TRANSCRIPT:" in body:
+            body = body.split("TRANSCRIPT:", 1)[1]
+        avoid_text = ""
+        if "AVOID" in body:
+            body, avoid_text = body.split("AVOID", 1)
+        avoid_text = avoid_text.lower()
+        candidates = _pick_words(body, 8)
+        word = next((w for w in candidates if w.lower() not in avoid_text), None) or "Ersatzwort"
+        return GenVocab(
+            word=word,
+            lemma=word.lower(),
+            pos="noun" if word[:1].isupper() else "verb",
+            meaning_en=f"(meaning of {word})",
+            cefr="A2",
+            example_de=f"{word} steht im Text.",
+            example_en=f"{word} appears in the text.",
+            grammar_tags=[],
+        )
+
     def _fake_composed(self, user_message: str) -> ComposedText:
-        """Build a short text + exercises from the selected WORDS (offline)."""
-        words = (
+        """Build a short text + exercises from the selected WORDS (offline)."""        words = (
             _extract_words(user_message)
             or _pick_words(user_message)
             or ["Alltag", "lernen", "wichtig"]

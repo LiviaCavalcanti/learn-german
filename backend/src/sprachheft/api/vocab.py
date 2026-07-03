@@ -39,6 +39,24 @@ def update_vocab(vocab_id: int, data: VocabItemUpdate, session: SessionDep):
     return item
 
 
+@router.post("/{vocab_id}/replace", response_model=VocabItemRead)
+def replace_vocab(
+    vocab_id: int,
+    session: SessionDep,
+    direction: str = Query("easier", pattern="^(easier|harder)$"),
+):
+    """Regenerate a vocab word easier/harder ("too hard"/"too easy") and swap it in."""
+    from sprachheft.models import VocabItem
+
+    item = session.get(VocabItem, vocab_id)
+    if item is None:
+        raise HTTPException(status_code=404, detail="Vocab item not found")
+    try:
+        return svc.replace_vocab(session, item, direction=direction)
+    except ValueError as exc:
+        raise HTTPException(status_code=422, detail=str(exc)) from exc
+
+
 @router.post("/verb", response_model=VerbVocabResult)
 def add_verb(data: VerbVocabIn, session: SessionDep):
     try:

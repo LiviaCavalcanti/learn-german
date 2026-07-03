@@ -111,6 +111,14 @@ export default function MaterialDetail() {
     setExercises((prev) => [...prev, ex])
   }
 
+  function replaceExerciseInState(ex: Exercise) {
+    setExercises((prev) => prev.map((e) => (e.id === ex.id ? ex : e)))
+  }
+
+  function replaceVocabInState(v: VocabItem) {
+    setVocab((prev) => prev.map((x) => (x.id === v.id ? v : x)))
+  }
+
   async function rewrite(instructions: string) {
     setRewriting(true)
     try {
@@ -232,18 +240,7 @@ export default function MaterialDetail() {
           <h2 className="text-xl">Vocabulary</h2>
           <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
             {vocab.map((v) => (
-              <Card key={v.id} className="p-3">
-                <div className="flex items-baseline justify-between">
-                  <div className="flex items-baseline gap-1">
-                    <span className="font-serif">{v.word}</span>
-                    <SpeakButton text={v.word} className="self-center" />
-                  </div>
-                  {v.cefr && <Badge>{v.cefr}</Badge>}
-                </div>
-                {v.ipa && <div className="font-mono text-xs text-muted">{v.ipa}</div>}
-                <div className="text-sm text-muted">{v.meaning_en}</div>
-                {v.example_de && <div className="mt-1 text-xs italic text-muted">{v.example_de}</div>}
-              </Card>
+              <VocabCard key={v.id} v={v} onReplace={replaceVocabInState} />
             ))}
           </div>
         </section>
@@ -259,6 +256,7 @@ export default function MaterialDetail() {
                 variants={variants}
                 stage={stage}
                 onAddVariant={addExercise}
+                onReplace={replaceExerciseInState}
               />
             ))}
           </div>
@@ -272,10 +270,12 @@ function ExerciseGroupCard({
   variants,
   stage,
   onAddVariant,
+  onReplace,
 }: {
   variants: Exercise[]
   stage: number
   onAddVariant: (ex: Exercise) => void
+  onReplace: (ex: Exercise) => void
 }) {
   const [active, setActive] = useState(0)
   const [menuOpen, setMenuOpen] = useState(false)
@@ -297,6 +297,22 @@ function ExerciseGroupCard({
       setActive(count) // appended at the end -> becomes the active variant
     } catch (e) {
       setError(e instanceof Error ? e.message : 'Could not generate another exercise')
+    } finally {
+      setGenerating(false)
+    }
+  }
+
+  async function replaceDifficulty(direction: 'easier' | 'harder') {
+    setMenuOpen(false)
+    setGenerating(true)
+    setError(null)
+    try {
+      const updated = await api.replaceExercise(current.id, direction)
+      onReplace(updated)
+      // Content changed under the same id: remount the view so old answers clear.
+      setResetKeys((prev) => ({ ...prev, [current.id]: (prev[current.id] ?? 0) + 1 }))
+    } catch (e) {
+      setError(e instanceof Error ? e.message : 'Could not adjust this exercise')
     } finally {
       setGenerating(false)
     }
@@ -388,6 +404,30 @@ function ExerciseGroupCard({
                     Generate another
                     <span className="block text-xs text-muted">
                       A new variant, saved alongside this one
+                    </span>
+                  </button>
+                  <button
+                    type="button"
+                    role="menuitem"
+                    className="block w-full px-3 py-2 text-left text-sm hover:bg-accent-soft/60 disabled:opacity-50"
+                    onClick={() => replaceDifficulty('easier')}
+                    disabled={generating}
+                  >
+                    Too hard
+                    <span className="block text-xs text-muted">
+                      Replace with an easier exercise
+                    </span>
+                  </button>
+                  <button
+                    type="button"
+                    role="menuitem"
+                    className="block w-full px-3 py-2 text-left text-sm hover:bg-accent-soft/60 disabled:opacity-50"
+                    onClick={() => replaceDifficulty('harder')}
+                    disabled={generating}
+                  >
+                    Too easy
+                    <span className="block text-xs text-muted">
+                      Replace with a harder exercise
                     </span>
                   </button>
                 </div>
@@ -605,6 +645,57 @@ function ExerciseView({ ex, loadHistory = true }: { ex: Exercise; loadHistory?: 
         </div>
       )}
     </div>
+  )
+}
+
+function VocabCard({ v, onReplace }: { v: VocabItem; onReplace: (v: VocabItem) => void }) {
+  const [busy, setBusy] = useState<'easier' | 'harder' | null>(null)
+  const [error, setError] = useState<string | null>(null)
+  async function replace(direction: 'easier' | 'harder') {
+    setBusy(direction)
+    setError(null)
+    try {
+      onReplace(await api.replaceVocab(v.id, direction))
+    } catch (e) {
+      setError(e instanceof Error ? e.message : 'Could not adjust this word')
+    } finally {
+      setBusy(null)
+    }
+  }
+  return (
+    <Card className="p-3">
+      <div className="flex items-baseline justify-between">
+        <div className="flex items-baseline gap-1">
+          <span className="font-serif">{v.word}</span>
+          <SpeakButton text={v.word} className="self-center" />
+        </div>
+        {v.cefr && <Badge>{v.cefr}</Badge>}
+      </div>
+      {v.ipa && <div className="font-mono text-xs text-muted">{v.ipa}</div>}
+      <div className="text-sm text-muted">{v.meaning_en}</div>
+      {v.example_de && <div className="mt-1 text-xs italic text-muted">{v.example_de}</div>}
+      <div className="mt-2 flex items-center gap-2">
+        <button
+          type="button"
+          className="rounded px-1.5 py-0.5 text-xs text-muted hover:bg-accent-soft/60 disabled:opacity-50"
+          onClick={() => replace('easier')}
+          disabled={busy !== null}
+          title="Too hard — replace with an easier word"
+        >
+          {busy === 'easier' ? <Spinner /> : 'Too hard'}
+        </button>
+        <button
+          type="button"
+          className="rounded px-1.5 py-0.5 text-xs text-muted hover:bg-accent-soft/60 disabled:opacity-50"
+          onClick={() => replace('harder')}
+          disabled={busy !== null}
+          title="Too easy — replace with a harder word"
+        >
+          {busy === 'harder' ? <Spinner /> : 'Too easy'}
+        </button>
+        {error && <span className="text-xs text-danger">{error}</span>}
+      </div>
+    </Card>
   )
 }
 

@@ -116,6 +116,10 @@ export const api = {
     req<Exercise[]>(withLang(`/exercises?material_id=${materialId}`)),
   generateVariant: (exerciseId: number, stage: number) =>
     req<Exercise>(`/exercises/${exerciseId}/variant?stage=${stage}`, { method: 'POST' }),
+  replaceExercise: (exerciseId: number, direction: 'easier' | 'harder') =>
+    req<Exercise>(`/exercises/${exerciseId}/replace?direction=${direction}`, {
+      method: 'POST',
+    }),
   attempts: (exerciseId: number) =>
     req<AnswerAttempt[]>(`/exercises/${exerciseId}/attempts`),
   vocab: (materialId: number) => req<VocabItem[]>(withLang(`/vocab?material_id=${materialId}`)),
@@ -131,6 +135,8 @@ export const api = {
       method: 'POST',
       body: JSON.stringify({ ids }),
     }),
+  replaceVocab: (id: number, direction: 'easier' | 'harder') =>
+    req<VocabItem>(`/vocab/${id}/replace?direction=${direction}`, { method: 'POST' }),
   composeFromVocab: (body: {
     vocab_ids: number[]
     level?: string
