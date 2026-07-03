@@ -102,3 +102,29 @@ def test_compose_requires_selection():
     with TestClient(app) as client:
         resp = client.post("/vocab/compose", json={"vocab_ids": []})
         assert resp.status_code == 422
+
+
+def test_delete_vocab_items():
+    with TestClient(app) as client:
+        _seed_vocab()
+        ids = [v["id"] for v in client.get("/vocab").json()]
+        assert len(ids) >= 1
+        target = ids[0]
+
+        # Give the word SR state + a review log + an embedding to clean up.
+        assert client.post("/vocab/reindex").status_code == 200
+        client.post(
+            "/review/grade", json={"item_type": "vocab", "item_id": target, "rating": "good"}
+        )
+
+        resp = client.post("/vocab/delete", json={"ids": [target]})
+        assert resp.status_code == 200
+        assert resp.json()["deleted"] == 1
+
+        remaining = [v["id"] for v in client.get("/vocab").json()]
+        assert target not in remaining
+
+        # Deleting an unknown id is a no-op, not an error.
+        resp = client.post("/vocab/delete", json={"ids": [target]})
+        assert resp.status_code == 200
+        assert resp.json()["deleted"] == 0

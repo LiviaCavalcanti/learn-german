@@ -103,6 +103,29 @@ class VocabComposeResult(BaseModel):
     exercises_added: int = 0
 
 
+class VocabDeleteIn(BaseModel):
+    ids: list[int] = []
+
+
+class VocabDeleteResult(BaseModel):
+    deleted: int = 0
+
+
+class VerbVocabIn(BaseModel):
+    """Add a looked-up verb to the vocabulary (deduplicated by lemma)."""
+
+    infinitive: str
+    english: str = ""
+    partizip_ii: str = ""
+    auxiliary: str = ""
+    cefr: Level | None = None
+
+
+class VerbVocabResult(BaseModel):
+    created: bool
+    item: VocabItemRead
+
+
 # --- Exercises ---------------------------------------------------------------
 class ExerciseRead(BaseModel):
     model_config = ConfigDict(from_attributes=True)

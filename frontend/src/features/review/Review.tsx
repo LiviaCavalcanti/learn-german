@@ -1,7 +1,8 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, type ReactNode } from 'react'
 import { api } from '../../lib/api'
 import type { Rating, ReviewQueueItem, ReviewStats } from '../../lib/types'
 import { Badge, Button, Card, Spinner } from '../../components/ui'
+import { TokenizedText } from '../../components/TokenizedText'
 
 const RATINGS: { key: Rating; label: string; className: string }[] = [
   { key: 'again', label: 'Again', className: 'bg-danger/10 text-danger' },
@@ -107,15 +108,7 @@ function ReviewCard({
           )}
         </div>
       ) : (
-        <div>
-          <Badge>{data.type}</Badge>
-          <div className="mt-2 text-lg font-medium">{data.instructions}</div>
-          {revealed && (
-            <pre className="mt-3 whitespace-pre-wrap rounded-lg bg-paper p-3 text-xs">
-              {JSON.stringify(data.payload, null, 2)}
-            </pre>
-          )}
-        </div>
+        <ExerciseReview data={data} revealed={revealed} />
       )}
 
       <div className="mt-8">
@@ -138,5 +131,207 @@ function ReviewCard({
         )}
       </div>
     </Card>
+  )
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function ExerciseReview({ data, revealed }: { data: any; revealed: boolean }) {
+  const payload = data.payload || {}
+  const answerKey = data.answer_key || {}
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const items: any[] = Array.isArray(payload.items) ? payload.items : []
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const answers: any[] = Array.isArray(answerKey.items) ? answerKey.items : []
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const questions: any[] = Array.isArray(payload.questions) ? payload.questions : []
+  const modelAnswer: string = answerKey.model_answer || answerKey.sample_answer || ''
+  const hasKnown =
+    items.length > 0 ||
+    questions.length > 0 ||
+    Boolean(payload.text) ||
+    Boolean(payload.prompt) ||
+    Boolean(payload.task) ||
+    (Array.isArray(payload.guiding_points) && payload.guiding_points.length > 0)
+
+  return (
+    <div className="space-y-3">
+      <Badge>{data.type}</Badge>
+      <div className="text-lg font-medium">{data.instructions}</div>
+
+      {payload.text && (
+        <div className="notebook-lines rounded-lg bg-paper/60 p-3">
+          <TokenizedText text={String(payload.text)} className="block text-sm leading-7" />
+        </div>
+      )}
+
+      {items.length > 0 && (
+        <ol className="space-y-2">
+          {items.map((it, i) => (
+            <li key={i} className="rounded-lg border border-line/60 bg-paper/40 p-3">
+              {it.prompt && (
+                <div className="text-sm">
+                  <TokenizedText text={String(it.prompt)} />
+                </div>
+              )}
+              {it.person && <div className="text-xs text-muted">{String(it.person)}</div>}
+              {Array.isArray(it.options) && (
+                <div className="mt-1 flex flex-wrap gap-1">
+                  {it.options.map((o: string) => (
+                    <span key={o} className="rounded bg-accent-soft px-2 py-0.5 text-xs">
+                      {o}
+                    </span>
+                  ))}
+                </div>
+              )}
+              {Array.isArray(it.tokens) && (
+                <div className="mt-1 flex flex-wrap gap-1">
+                  {it.tokens.map((t: string, ti: number) => (
+                    <span key={ti} className="rounded bg-accent-soft px-2 py-0.5 text-xs">
+                      {t}
+                    </span>
+                  ))}
+                </div>
+              )}
+              {revealed && answers[i]?.answer != null && (
+                <div className="mt-1 text-sm text-success">
+                  <span className="text-xs uppercase tracking-wide text-muted">Answer: </span>
+                  {String(answers[i].answer)}
+                </div>
+              )}
+            </li>
+          ))}
+        </ol>
+      )}
+
+      {questions.length > 0 && (
+        <ol className="list-decimal space-y-1 pl-5 text-sm">
+          {questions.map((q, i) => (
+            <li key={i}>
+              {String(q?.prompt ?? q)}
+              {revealed && answers[i]?.answer != null && (
+                <div className="text-success">→ {String(answers[i].answer)}</div>
+              )}
+            </li>
+          ))}
+        </ol>
+      )}
+
+      {payload.prompt && <div className="text-sm">{String(payload.prompt)}</div>}
+      {payload.task && <div className="text-sm">{String(payload.task)}</div>}
+      {Array.isArray(payload.guiding_points) && payload.guiding_points.length > 0 && (
+        <ul className="list-disc pl-5 text-xs text-muted">
+          {payload.guiding_points.map((g: string, i: number) => (
+            <li key={i}>{String(g)}</li>
+          ))}
+        </ul>
+      )}
+
+      {!hasKnown && <GenericContent payload={payload} answerKey={answerKey} revealed={revealed} />}
+
+      {revealed && modelAnswer && (
+        <div className="rounded-lg border border-success/30 bg-success/5 p-3 text-sm">
+          <div className="text-xs uppercase tracking-wide text-muted">Model answer</div>
+          <TokenizedText text={String(modelAnswer)} className="italic" />
+        </div>
+      )}
+
+      {!revealed && (
+        <p className="text-xs text-muted">Recall the answer, then reveal to check yourself.</p>
+      )}
+    </div>
+  )
+}
+
+const ANSWER_KEY_RE = /answer|solution|lösung|loesung|correct|result|richtig/i
+const MODEL_ANSWER_KEYS = new Set(['model_answer', 'sample_answer'])
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function isPlainObject(v: any): boolean {
+  return v != null && typeof v === 'object' && !Array.isArray(v)
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function isEmpty(v: any): boolean {
+  if (v == null) return true
+  if (typeof v === 'string') return v.trim() === ''
+  if (Array.isArray(v)) return v.length === 0
+  if (isPlainObject(v)) return Object.keys(v).length === 0
+  return false
+}
+
+/** Render an arbitrary JSON value (from a non-standard exercise payload) readably. */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function renderValue(value: any): ReactNode {
+  if (isEmpty(value)) return null
+  if (Array.isArray(value)) {
+    return (
+      <ul className="list-disc pl-5">
+        {value.map((v, i) => (
+          <li key={i}>{renderValue(v)}</li>
+        ))}
+      </ul>
+    )
+  }
+  if (isPlainObject(value)) {
+    return (
+      <ul className="space-y-0.5">
+        {Object.entries(value).map(([k, v]) => (
+          <li key={k}>
+            <span className="text-muted">{k}: </span>
+            {renderValue(v)}
+          </li>
+        ))}
+      </ul>
+    )
+  }
+  return <TokenizedText text={String(value)} />
+}
+
+/** Fallback for exercises whose payload does not match a known schema. Shows the
+ *  question fields always and answer-like fields only once revealed. */
+function GenericContent({
+  payload,
+  answerKey,
+  revealed,
+}: {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  payload: any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  answerKey: any
+  revealed: boolean
+}) {
+  const entries = isPlainObject(payload)
+    ? Object.entries(payload).filter(([k, v]) => k !== 'hints' && !isEmpty(v))
+    : []
+  const questionEntries = entries.filter(([k]) => !ANSWER_KEY_RE.test(k))
+  const answerEntries = entries.filter(([k]) => ANSWER_KEY_RE.test(k))
+  const answerKeyEntries = (isPlainObject(answerKey) ? Object.entries(answerKey) : []).filter(
+    ([k, v]) => !MODEL_ANSWER_KEYS.has(k) && !isEmpty(v),
+  )
+  const revealEntries = [...answerEntries, ...answerKeyEntries]
+
+  return (
+    <div className="space-y-2 text-sm">
+      {questionEntries.length > 0 && (
+        <dl className="space-y-1">
+          {questionEntries.map(([k, v]) => (
+            <div key={k}>
+              <dt className="text-xs uppercase tracking-wide text-muted">{k}</dt>
+              <dd>{renderValue(v)}</dd>
+            </div>
+          ))}
+        </dl>
+      )}
+      {revealed && revealEntries.length > 0 && (
+        <div className="rounded-lg border border-success/30 bg-success/5 p-3">
+          <div className="text-xs uppercase tracking-wide text-muted">Answer</div>
+          <div className="text-success">
+            {revealEntries.map(([k, v]) => (
+              <div key={k}>{renderValue(v)}</div>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
   )
 }

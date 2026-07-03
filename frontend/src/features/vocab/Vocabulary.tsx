@@ -1,118 +1,483 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState, type FormEvent } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { api } from '../../lib/api'
 import type { VocabItem } from '../../lib/types'
-import { Badge, Button, Card, Input, Spinner } from '../../components/ui'
+import { Badge, Button, Card, Field, Input, Select, Spinner, cx } from '../../components/ui'
 
-type Topic = { topic: string; count: number; samples: { word: string; meaning_en: string }[] }
+type GroupBy = 'topic' | 'date'
+type SortBy = 'recent' | 'oldest' | 'az' | 'za' | 'level'
+
+/** A unique word merged from any duplicate rows (same lemma across materials). */
+type WordEntry = {
+  id: number // representative row id
+  ids: number[] // every underlying row id (for delete/compose)
+  word: string
+  lemma: string
+  meaning_en: string
+  cefr: string | null
+  example_de: string | null
+  grammar_tags: string[]
+  created_at: string
+}
+
+type Group = { key: string; label: string; items: WordEntry[] }
+
+const EMPTY_WORD = { word: '', meaning_en: '', cefr: 'A2', grammar_tags: '', example_de: '' }
+const LEVEL_ORDER: Record<string, number> = { A1: 1, A2: 2, B1: 3, B2: 4 }
+
+/** Collapse duplicate rows into one entry per lemma, unioning tags + ids. */
+function dedupe(words: VocabItem[]): WordEntry[] {
+  const byKey = new Map<string, WordEntry>()
+  for (const v of words) {
+    const key = (v.lemma || v.word).trim().toLowerCase()
+    const existing = byKey.get(key)
+    if (existing) {
+      existing.ids.push(v.id)
+      for (const t of v.grammar_tags || []) {
+        if (!existing.grammar_tags.includes(t)) existing.grammar_tags.push(t)
+      }
+      if (v.created_at > existing.created_at) existing.created_at = v.created_at
+      if (!existing.example_de && v.example_de) existing.example_de = v.example_de
+    } else {
+      byKey.set(key, {
+        id: v.id,
+        ids: [v.id],
+        word: v.word,
+        lemma: v.lemma,
+        meaning_en: v.meaning_en,
+        cefr: v.cefr,
+        example_de: v.example_de,
+        grammar_tags: [...(v.grammar_tags || [])],
+        created_at: v.created_at,
+      })
+    }
+  }
+  return [...byKey.values()]
+}
+
+function matches(v: WordEntry, needle: string): boolean {
+  const hay = [v.word, v.lemma, v.meaning_en, v.grammar_tags.join(' ')].join(' ').toLowerCase()
+  return hay.includes(needle)
+}
+
+function sortEntries(entries: WordEntry[], sortBy: SortBy): WordEntry[] {
+  const arr = [...entries]
+  switch (sortBy) {
+    case 'az':
+      return arr.sort((a, b) => a.word.localeCompare(b.word, 'de'))
+    case 'za':
+      return arr.sort((a, b) => b.word.localeCompare(a.word, 'de'))
+    case 'oldest':
+      return arr.sort((a, b) => a.created_at.localeCompare(b.created_at))
+    case 'level':
+      return arr.sort(
+        (a, b) =>
+          (LEVEL_ORDER[a.cefr ?? ''] ?? 9) - (LEVEL_ORDER[b.cefr ?? ''] ?? 9) ||
+          a.word.localeCompare(b.word, 'de'),
+      )
+    default:
+      return arr.sort((a, b) => b.created_at.localeCompare(a.created_at))
+  }
+}
+
+function groupByTopic(words: WordEntry[]): Group[] {
+  const buckets = new Map<string, WordEntry[]>()
+  for (const v of words) {
+    const tags = v.grammar_tags.length ? v.grammar_tags : ['(untagged)']
+    for (const tag of tags) {
+      const arr = buckets.get(tag) ?? []
+      arr.push(v)
+      buckets.set(tag, arr)
+    }
+  }
+  return [...buckets.entries()]
+    .map(([key, items]) => ({ key, label: key, items }))
+    .sort((a, b) => b.items.length - a.items.length || a.key.localeCompare(b.key))
+}
+
+function groupByDate(words: WordEntry[]): Group[] {
+  const buckets = new Map<string, WordEntry[]>()
+  for (const v of words) {
+    const key = (v.created_at || '').slice(0, 10) || 'unknown'
+    const arr = buckets.get(key) ?? []
+    arr.push(v)
+    buckets.set(key, arr)
+  }
+  return [...buckets.entries()]
+    .map(([key, items]) => ({
+      key,
+      label:
+        key === 'unknown'
+          ? 'Unknown date'
+          : new Date(key).toLocaleDateString(undefined, {
+              year: 'numeric',
+              month: 'short',
+              day: 'numeric',
+            }),
+      items,
+    }))
+    .sort((a, b) => b.key.localeCompare(a.key))
+}
 
 export default function Vocabulary() {
-  const [q, setQ] = useState('')
-  const [semantic, setSemantic] = useState(false)
-  const [results, setResults] = useState<VocabItem[] | null>(null)
-  const [topics, setTopics] = useState<Topic[]>([])
-  const [busy, setBusy] = useState(false)
-  const [indexing, setIndexing] = useState(false)
+  const navigate = useNavigate()
+  const [words, setWords] = useState<VocabItem[] | null>(null)
+  const [groupBy, setGroupBy] = useState<GroupBy>('topic')
+  const [sortBy, setSortBy] = useState<SortBy>('recent')
+  const [filter, setFilter] = useState('')
+  const [selected, setSelected] = useState<Set<number>>(new Set())
 
-  async function rebuild() {
-    setIndexing(true)
-    try {
-      await api.vocabReindex(true)
-    } finally {
-      setIndexing(false)
-    }
-  }
+  const [showAdd, setShowAdd] = useState(false)
+  const [saving, setSaving] = useState(false)
+  const [form, setForm] = useState(EMPTY_WORD)
 
-  useEffect(() => {
+  const [title, setTitle] = useState('')
+  const [instructions, setInstructions] = useState('')
+  const [level, setLevel] = useState('')
+  const [composing, setComposing] = useState(false)
+  const [composeError, setComposeError] = useState<string | null>(null)
+  const [deleting, setDeleting] = useState(false)
+
+  function load() {
     api
-      .vocabTopics()
-      .then((t) => setTopics(t.topics))
-      .catch(() => {})
-    // Keep the similarity index fresh (cheap with the local embedder).
-    api.vocabReindex().catch(() => {})
-  }, [])
+      .allVocab()
+      .then(setWords)
+      .catch(() => setWords([]))
+  }
+  useEffect(load, [])
 
-  async function search() {
-    if (!q.trim()) return
-    setBusy(true)
+  const entries = useMemo(() => (words ? dedupe(words) : []), [words])
+
+  const groups = useMemo(() => {
+    const needle = filter.trim().toLowerCase()
+    const visible = needle ? entries.filter((v) => matches(v, needle)) : entries
+    const sorted = sortEntries(visible, sortBy)
+    return groupBy === 'topic' ? groupByTopic(sorted) : groupByDate(sorted)
+  }, [entries, filter, groupBy, sortBy])
+
+  function toggle(id: number) {
+    setSelected((prev) => {
+      const next = new Set(prev)
+      if (next.has(id)) next.delete(id)
+      else next.add(id)
+      return next
+    })
+  }
+
+  function toggleGroup(items: WordEntry[], on: boolean) {
+    setSelected((prev) => {
+      const next = new Set(prev)
+      for (const v of items) {
+        if (on) next.add(v.id)
+        else next.delete(v.id)
+      }
+      return next
+    })
+  }
+
+  function selectedIds(): number[] {
+    return entries.filter((e) => selected.has(e.id)).flatMap((e) => e.ids)
+  }
+
+  async function addWord(e: FormEvent) {
+    e.preventDefault()
+    setSaving(true)
     try {
-      setResults(await api.vocabSearch(q, semantic))
+      const tags = form.grammar_tags
+        .split(/[,\s]+/)
+        .map((t) => t.trim())
+        .filter(Boolean)
+      await api.createVocab({
+        word: form.word.trim(),
+        meaning_en: form.meaning_en.trim(),
+        cefr: form.cefr || null,
+        grammar_tags: tags,
+        example_de: form.example_de.trim() || null,
+      })
+      setForm(EMPTY_WORD)
+      setShowAdd(false)
+      load()
     } finally {
-      setBusy(false)
+      setSaving(false)
     }
   }
+
+  async function deleteEntry(entry: WordEntry) {
+    if (!window.confirm(`Delete “${entry.word}”? This also removes its review progress.`)) return
+    await api.deleteVocab(entry.ids)
+    setSelected((prev) => {
+      const next = new Set(prev)
+      next.delete(entry.id)
+      return next
+    })
+    load()
+  }
+
+  async function deleteSelected() {
+    const ids = selectedIds()
+    if (!ids.length) return
+    if (
+      !window.confirm(
+        `Delete ${selected.size} selected word${selected.size === 1 ? '' : 's'}? ` +
+          'This also removes their review progress.',
+      )
+    )
+      return
+    setDeleting(true)
+    try {
+      await api.deleteVocab(ids)
+      setSelected(new Set())
+      load()
+    } finally {
+      setDeleting(false)
+    }
+  }
+
+  async function compose() {
+    setComposing(true)
+    setComposeError(null)
+    try {
+      const res = await api.composeFromVocab({
+        vocab_ids: [...selected],
+        title: title.trim() || undefined,
+        instructions: instructions.trim() || undefined,
+        level: level || undefined,
+      })
+      navigate(`/materials/${res.material_id}`)
+    } catch (e) {
+      setComposeError(
+        e instanceof Error ? e.message : 'Generation failed — is the language model running?',
+      )
+    } finally {
+      setComposing(false)
+    }
+  }
+
+  const total = entries.length
 
   return (
     <div className="space-y-6">
-      <header>
-        <h1 className="text-3xl">Vocabulary</h1>
-        <p className="text-muted">Search and review the words you've learned.</p>
+      <header className="flex items-center justify-between">
+        <div>
+          <h1 className="text-3xl">Vocabulary</h1>
+          <p className="text-muted">
+            {total} word{total === 1 ? '' : 's'} learned so far.
+          </p>
+        </div>
+        <Button onClick={() => setShowAdd((v) => !v)}>{showAdd ? 'Close' : '+ Add word'}</Button>
       </header>
 
-      <Card className="space-y-3 p-4">
-        <div className="flex gap-2">
-          <Input
-            value={q}
-            placeholder="Search words, meanings, examples..."
-            onChange={(e) => setQ(e.target.value)}
-            onKeyDown={(e) => e.key === 'Enter' && search()}
-          />
-          <Button onClick={search} disabled={busy}>
-            {busy ? <Spinner /> : 'Search'}
-          </Button>
-        </div>
-        <div className="flex items-center justify-between gap-3">
-          <label className="flex items-center gap-2 text-sm text-muted">
-            <input
-              type="checkbox"
-              checked={semantic}
-              onChange={(e) => setSemantic(e.target.checked)}
-            />
-            Semantic (similarity) search
-          </label>
-          <Button variant="ghost" onClick={rebuild} disabled={indexing}>
-            {indexing ? <Spinner /> : 'Rebuild index'}
-          </Button>
-        </div>
-      </Card>
-
-      {results && (
-        <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
-          {results.length === 0 ? (
-            <div className="text-muted">No matches.</div>
-          ) : (
-            results.map((v) => (
-              <Card key={v.id} className="p-3">
-                <div className="flex items-baseline justify-between">
-                  <span className="font-serif">{v.word}</span>
-                  {v.cefr && <Badge>{v.cefr}</Badge>}
-                </div>
-                <div className="text-sm text-muted">{v.meaning_en}</div>
-              </Card>
-            ))
-          )}
-        </div>
+      {showAdd && (
+        <Card className="p-5">
+          <form onSubmit={addWord} className="space-y-3">
+            <div className="grid gap-3 sm:grid-cols-2">
+              <Field label="Word (r/e/s for nouns)">
+                <Input
+                  value={form.word}
+                  required
+                  placeholder="e Idee"
+                  onChange={(e) => setForm({ ...form, word: e.target.value })}
+                />
+              </Field>
+              <Field label="Meaning (English)">
+                <Input
+                  value={form.meaning_en}
+                  required
+                  placeholder="idea"
+                  onChange={(e) => setForm({ ...form, meaning_en: e.target.value })}
+                />
+              </Field>
+            </div>
+            <div className="grid gap-3 sm:grid-cols-2">
+              <Field label="Level">
+                <Select value={form.cefr} onChange={(e) => setForm({ ...form, cefr: e.target.value })}>
+                  <option>A1</option>
+                  <option>A2</option>
+                  <option>B1</option>
+                  <option>B2</option>
+                </Select>
+              </Field>
+              <Field label="Topic tags (comma separated)">
+                <Input
+                  value={form.grammar_tags}
+                  placeholder="a2.dative, travel"
+                  onChange={(e) => setForm({ ...form, grammar_tags: e.target.value })}
+                />
+              </Field>
+            </div>
+            <Field label="Example sentence (optional)">
+              <Input
+                value={form.example_de}
+                placeholder="Ich habe eine gute Idee."
+                onChange={(e) => setForm({ ...form, example_de: e.target.value })}
+              />
+            </Field>
+            <Button type="submit" disabled={saving || !form.word.trim() || !form.meaning_en.trim()}>
+              {saving ? <Spinner /> : 'Save word'}
+            </Button>
+          </form>
+        </Card>
       )}
 
-      <section className="space-y-3">
-        <h2 className="text-xl">By topic</h2>
-        {topics.length === 0 ? (
-          <div className="text-muted">No vocabulary yet — generate or import some material.</div>
-        ) : (
-          <div className="grid gap-2 sm:grid-cols-2">
-            {topics.map((t) => (
-              <Card key={t.topic} className="p-3">
-                <div className="flex items-center justify-between">
-                  <span className="font-medium">{t.topic}</span>
-                  <Badge>{t.count}</Badge>
-                </div>
-                <div className="mt-1 text-xs text-muted">
-                  {t.samples.map((s) => s.word).join(', ')}
-                </div>
-              </Card>
+      <div className="flex flex-wrap items-center gap-3">
+        <Input
+          className="max-w-xs"
+          value={filter}
+          placeholder="Filter words, meanings, tags..."
+          onChange={(e) => setFilter(e.target.value)}
+        />
+        <div className="flex items-center gap-1 text-sm">
+          <span className="text-muted">Group by</span>
+          <div className="inline-flex overflow-hidden rounded-lg border border-line">
+            {(['topic', 'date'] as GroupBy[]).map((g) => (
+              <button
+                key={g}
+                onClick={() => setGroupBy(g)}
+                className={cx(
+                  'px-3 py-1.5 capitalize transition',
+                  groupBy === g
+                    ? 'bg-accent text-white'
+                    : 'bg-white/70 text-ink hover:bg-accent-soft/50',
+                )}
+              >
+                {g}
+              </button>
             ))}
           </div>
+        </div>
+        <label className="flex items-center gap-1 text-sm text-muted">
+          <span>Sort</span>
+          <Select value={sortBy} onChange={(e) => setSortBy(e.target.value as SortBy)}>
+            <option value="recent">Recent</option>
+            <option value="oldest">Oldest</option>
+            <option value="az">A–Z</option>
+            <option value="za">Z–A</option>
+            <option value="level">Level</option>
+          </Select>
+        </label>
+        {selected.size > 0 && (
+          <>
+            <Button variant="ghost" onClick={() => setSelected(new Set())}>
+              Clear ({selected.size})
+            </Button>
+            <Button variant="danger" onClick={deleteSelected} disabled={deleting}>
+              {deleting ? <Spinner /> : `Delete selected (${selected.size})`}
+            </Button>
+          </>
         )}
-      </section>
+      </div>
+
+      {selected.size > 0 && (
+        <Card className="space-y-3 p-5">
+          <div>
+            <h2 className="text-lg font-medium">Generate a practice text</h2>
+            <p className="text-sm text-muted">
+              Write a German text using your {selected.size} selected word
+              {selected.size === 1 ? '' : 's'} and save it with an exercise.
+            </p>
+          </div>
+          <div className="grid gap-3 sm:grid-cols-3">
+            <Field label="Title (optional)">
+              <Input value={title} onChange={(e) => setTitle(e.target.value)} placeholder="Mein Text" />
+            </Field>
+            <Field label="Level (optional)">
+              <Select value={level} onChange={(e) => setLevel(e.target.value)}>
+                <option value="">Auto</option>
+                <option>A1</option>
+                <option>A2</option>
+                <option>B1</option>
+                <option>B2</option>
+              </Select>
+            </Field>
+            <Field label="Instructions (optional)">
+              <Input
+                value={instructions}
+                onChange={(e) => setInstructions(e.target.value)}
+                placeholder="e.g. write a short dialogue"
+              />
+            </Field>
+          </div>
+          {composeError && <div className="text-sm text-danger">{composeError}</div>}
+          <Button onClick={compose} disabled={composing}>
+            {composing ? <Spinner /> : 'Generate text + exercise'}
+          </Button>
+        </Card>
+      )}
+
+      {words === null ? (
+        <Spinner />
+      ) : total === 0 ? (
+        <Card className="p-8 text-center text-muted">
+          No vocabulary yet — add a word above, or generate/import some material.
+        </Card>
+      ) : groups.length === 0 ? (
+        <Card className="p-8 text-center text-muted">No words match your filter.</Card>
+      ) : (
+        <div className="space-y-5">
+          {groups.map((group) => {
+            const allSelected = group.items.every((v) => selected.has(v.id))
+            return (
+              <section key={group.key} className="space-y-2">
+                <div className="flex items-center gap-2">
+                  <label className="flex cursor-pointer items-center gap-2">
+                    <input
+                      type="checkbox"
+                      checked={allSelected}
+                      onChange={(e) => toggleGroup(group.items, e.target.checked)}
+                    />
+                    <span className="font-medium">{group.label}</span>
+                  </label>
+                  <Badge>{group.items.length}</Badge>
+                </div>
+                <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
+                  {group.items.map((v) => (
+                    <label
+                      key={`${group.key}-${v.id}`}
+                      className={cx(
+                        'group relative flex cursor-pointer gap-2 rounded-xl border bg-card p-3 pr-8 shadow-sm transition',
+                        selected.has(v.id)
+                          ? 'border-accent'
+                          : 'border-line hover:border-accent/40',
+                      )}
+                    >
+                      <input
+                        type="checkbox"
+                        className="mt-1"
+                        checked={selected.has(v.id)}
+                        onChange={() => toggle(v.id)}
+                      />
+                      <div className="min-w-0">
+                        <div className="flex items-baseline gap-2">
+                          <span className="font-serif">{v.word}</span>
+                          {v.cefr && <Badge>{v.cefr}</Badge>}
+                          {v.ids.length > 1 && <Badge>×{v.ids.length}</Badge>}
+                        </div>
+                        <div className="text-sm text-muted">{v.meaning_en}</div>
+                        {v.example_de && (
+                          <div className="mt-1 text-xs italic text-muted">{v.example_de}</div>
+                        )}
+                      </div>
+                      <button
+                        type="button"
+                        aria-label={`Delete ${v.word}`}
+                        title="Delete word"
+                        onClick={(e) => {
+                          e.preventDefault()
+                          e.stopPropagation()
+                          deleteEntry(v)
+                        }}
+                        className="absolute right-1.5 top-1.5 rounded-md px-1.5 text-muted opacity-0 transition hover:bg-danger/10 hover:text-danger group-hover:opacity-100"
+                      >
+                        ×
+                      </button>
+                    </label>
+                  ))}
+                </div>
+              </section>
+            )
+          })}
+        </div>
+      )}
     </div>
   )
 }

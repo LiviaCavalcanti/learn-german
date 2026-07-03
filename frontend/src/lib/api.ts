@@ -1,4 +1,7 @@
 import type {
+  AnswerAttempt,
+  AnswerFeedback,
+  ConjugationTable,
   CourseIndex,
   CourseLevelDetail,
   DictLookup,
@@ -50,12 +53,35 @@ export const api = {
       { method: 'POST' },
     ),
 
+  rewriteMaterial: (id: number, body: { instructions?: string; target_lines?: number }) =>
+    req<Material>(`/materials/${id}/rewrite`, { method: 'POST', body: JSON.stringify(body) }),
+
   exercises: (materialId: number) =>
     req<Exercise[]>(`/exercises?material_id=${materialId}`),
+  generateVariant: (exerciseId: number, stage: number) =>
+    req<Exercise>(`/exercises/${exerciseId}/variant?stage=${stage}`, { method: 'POST' }),
+  attempts: (exerciseId: number) =>
+    req<AnswerAttempt[]>(`/exercises/${exerciseId}/attempts`),
   vocab: (materialId: number) => req<VocabItem[]>(`/vocab?material_id=${materialId}`),
+  allVocab: (limit = 1000) => req<VocabItem[]>(`/vocab?limit=${limit}`),
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   createVocab: (data: Record<string, any>) =>
     req<VocabItem>('/vocab', { method: 'POST', body: JSON.stringify(data) }),
+  deleteVocab: (ids: number[]) =>
+    req<{ deleted: number }>('/vocab/delete', {
+      method: 'POST',
+      body: JSON.stringify({ ids }),
+    }),
+  composeFromVocab: (body: {
+    vocab_ids: number[]
+    level?: string
+    title?: string
+    instructions?: string
+  }) =>
+    req<{ material_id: number; title: string; vocab_added: number; exercises_added: number }>(
+      '/vocab/compose',
+      { method: 'POST', body: JSON.stringify(body) },
+    ),
   vocabTopics: () =>
     req<{ topics: { topic: string; count: number; samples: { word: string; meaning_en: string }[] }[] }>(
       '/vocab/topics',
@@ -65,9 +91,18 @@ export const api = {
     req<DictLookup>(`/dictionary/lookup?word=${encodeURIComponent(word)}`),
   dictStatus: () => req<{ available: boolean; entry_count: number }>('/dictionary/status'),
 
+  conjugate: (verb: string) =>
+    req<ConjugationTable>(`/conjugation?verb=${encodeURIComponent(verb)}`),
+
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   practiceAnswer: (body: { exercise_id: number; responses: string[]; rating?: Rating }) =>
     req<any>('/practice/answer', { method: 'POST', body: JSON.stringify(body) }),
+
+  practiceFeedback: (body: { exercise_id: number; answer: string }) =>
+    req<AnswerFeedback>('/practice/feedback', {
+      method: 'POST',
+      body: JSON.stringify(body),
+    }),
 
   reviewStats: () => req<ReviewStats>('/review/stats'),
   reviewQueue: (limit = 20) => req<ReviewQueueItem[]>(`/review/queue?limit=${limit}`),

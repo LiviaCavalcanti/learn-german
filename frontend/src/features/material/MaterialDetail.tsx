@@ -1,11 +1,39 @@
 import { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { api } from '../../lib/api'
-import type { Exercise, Material, VocabItem } from '../../lib/types'
-import { Badge, Button, Card, Input, Select, Spinner, cx } from '../../components/ui'
+import type { AnswerFeedback, Exercise, Material, VocabItem } from '../../lib/types'
+import { Badge, Button, Card, Input, Select, Spinner, Textarea, cx } from '../../components/ui'
 import { TokenizedText } from '../../components/TokenizedText'
 
 const GRADABLE = ['fill-in-blank', 'conjugation', 'translation', 'multiple-choice', 'reorder']
+
+/** Group exercises that share a variant group into ordered lists (seed first). */
+function groupExercises(list: Exercise[]): Exercise[][] {
+  const byGroup = new Map<number, Exercise[]>()
+  for (const ex of list) {
+    const gid = ex.group_id ?? ex.id
+    const arr = byGroup.get(gid) ?? []
+    arr.push(ex)
+    byGroup.set(gid, arr)
+  }
+  const groups = [...byGroup.values()]
+  for (const g of groups) {
+    g.sort(
+      (a, b) =>
+        (a.variant_position ?? 0) - (b.variant_position ?? 0) ||
+        a.created_at.localeCompare(b.created_at),
+    )
+  }
+  // Newest slot first; adding a variant never moves a group (seed is stable).
+  groups.sort((a, b) => b[0].created_at.localeCompare(a[0].created_at))
+  return groups
+}
+
+/** Format a naive-UTC ISO timestamp from the API as a local date/time. */
+function formatWhen(iso: string): string {
+  const d = new Date(/[zZ]|[+-]\d\d:?\d\d$/.test(iso) ? iso : `${iso}Z`)
+  return isNaN(d.getTime()) ? '' : d.toLocaleString(undefined, { dateStyle: 'medium', timeStyle: 'short' })
+}
 
 export default function MaterialDetail() {
   const { id } = useParams()
@@ -15,6 +43,11 @@ export default function MaterialDetail() {
   const [exercises, setExercises] = useState<Exercise[]>([])
   const [stage, setStage] = useState(2)
   const [generating, setGenerating] = useState(false)
+  const [genNote, setGenNote] = useState<string | null>(null)
+  const [genError, setGenError] = useState<string | null>(null)
+  const [showRewrite, setShowRewrite] = useState(false)
+  const [rewriteInstructions, setRewriteInstructions] = useState('')
+  const [rewriting, setRewriting] = useState(false)
 
   function reload() {
     api.material(materialId).then(setMaterial).catch(() => {})
@@ -25,11 +58,42 @@ export default function MaterialDetail() {
 
   async function generate() {
     setGenerating(true)
+    setGenNote(null)
+    setGenError(null)
     try {
-      await api.generate(materialId, stage)
-      reload()
+      const res = await api.generate(materialId, stage)
+      const [v, ex] = await Promise.all([api.vocab(materialId), api.exercises(materialId)])
+      setVocab(v)
+      setExercises(ex)
+      setGenNote(
+        `Saved · ${res.exercises_added} exercise${res.exercises_added === 1 ? '' : 's'} and ` +
+          `${res.vocab_added} new word${res.vocab_added === 1 ? '' : 's'}.`,
+      )
+    } catch (e) {
+      setGenError(
+        e instanceof Error ? e.message : 'Generation failed — is the language model running?',
+      )
     } finally {
       setGenerating(false)
+    }
+  }
+
+  function addExercise(ex: Exercise) {
+    setExercises((prev) => [...prev, ex])
+  }
+
+  async function rewrite(instructions: string) {
+    setRewriting(true)
+    try {
+      const updated = await api.rewriteMaterial(materialId, {
+        instructions: instructions || undefined,
+        target_lines: 15,
+      })
+      setMaterial(updated)
+      setShowRewrite(false)
+      setRewriteInstructions('')
+    } finally {
+      setRewriting(false)
     }
   }
 
@@ -54,9 +118,40 @@ export default function MaterialDetail() {
 
       <div className="grid gap-4 lg:grid-cols-2">
         <Card className="p-5">
-          <div className="mb-2 text-xs font-medium uppercase tracking-wide text-muted">
-            Transcript · hover any word
+          <div className="mb-2 flex items-center justify-between gap-2">
+            <div className="text-xs font-medium uppercase tracking-wide text-muted">
+              Transcript · hover any word
+            </div>
+            <Button variant="ghost" onClick={() => setShowRewrite((v) => !v)}>
+              {showRewrite ? 'Cancel' : 'Expand / rewrite'}
+            </Button>
           </div>
+          {showRewrite && (
+            <div className="mb-3 space-y-2 rounded-lg border border-line bg-paper/60 p-3">
+              <Textarea
+                rows={2}
+                value={rewriteInstructions}
+                placeholder="How should the text change? e.g. 'make it about a business trip and longer'"
+                onChange={(e) => setRewriteInstructions(e.target.value)}
+              />
+              <div className="flex flex-wrap items-center gap-2">
+                <Button onClick={() => rewrite(rewriteInstructions)} disabled={rewriting}>
+                  {rewriting ? <Spinner /> : 'Expand text'}
+                </Button>
+                <Button
+                  variant="soft"
+                  onClick={() =>
+                    rewrite(
+                      'Make the text noticeably longer and richer (at least 15 lines), same topic and level.',
+                    )
+                  }
+                  disabled={rewriting}
+                >
+                  Make longer (15+ lines)
+                </Button>
+              </div>
+            </div>
+          )}
           <div className="notebook-lines">
             <TokenizedText text={material.transcript} className="block text-[15px] leading-7" />
           </div>
@@ -72,7 +167,9 @@ export default function MaterialDetail() {
       <Card className="flex flex-wrap items-center justify-between gap-3 p-4">
         <div>
           <div className="font-medium">Generate study material</div>
-          <div className="text-sm text-muted">Vocabulary + exercises with adaptive scaffolding.</div>
+          <div className="text-sm text-muted">
+            Saved to this material so you can revisit it anytime. Each generation adds a new set.
+          </div>
         </div>
         <div className="flex items-center gap-2">
           <label className="text-xs text-muted">Stage</label>
@@ -87,6 +184,8 @@ export default function MaterialDetail() {
           </Button>
         </div>
       </Card>
+      {genNote && <div className="-mt-2 text-sm text-success">{genNote}</div>}
+      {genError && <div className="-mt-2 text-sm text-danger">{genError}</div>}
 
       {vocab.length > 0 && (
         <section className="space-y-3">
@@ -110,8 +209,13 @@ export default function MaterialDetail() {
         <section className="space-y-3">
           <h2 className="text-xl">Exercises</h2>
           <div className="space-y-3">
-            {exercises.map((ex) => (
-              <ExerciseCard key={ex.id} ex={ex} />
+            {groupExercises(exercises).map((variants) => (
+              <ExerciseGroupCard
+                key={variants[0].group_id ?? variants[0].id}
+                variants={variants}
+                stage={stage}
+                onAddVariant={addExercise}
+              />
             ))}
           </div>
         </section>
@@ -120,14 +224,199 @@ export default function MaterialDetail() {
   )
 }
 
-function ExerciseCard({ ex }: { ex: Exercise }) {
+function ExerciseGroupCard({
+  variants,
+  stage,
+  onAddVariant,
+}: {
+  variants: Exercise[]
+  stage: number
+  onAddVariant: (ex: Exercise) => void
+}) {
+  const [active, setActive] = useState(0)
+  const [menuOpen, setMenuOpen] = useState(false)
+  const [generating, setGenerating] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+  const [resetKeys, setResetKeys] = useState<Record<number, number>>({})
+
+  const count = variants.length
+  const clampedActive = Math.min(active, count - 1)
+  const current = variants[clampedActive]
+
+  async function generateAnother() {
+    setMenuOpen(false)
+    setGenerating(true)
+    setError(null)
+    try {
+      const created = await api.generateVariant(current.id, stage)
+      onAddVariant(created)
+      setActive(count) // appended at the end -> becomes the active variant
+    } catch (e) {
+      setError(e instanceof Error ? e.message : 'Could not generate another exercise')
+    } finally {
+      setGenerating(false)
+    }
+  }
+
+  function tryAgain() {
+    setMenuOpen(false)
+    setResetKeys((prev) => ({ ...prev, [current.id]: (prev[current.id] ?? 0) + 1 }))
+  }
+
+  return (
+    <Card className="space-y-3 p-4">
+      <div className="flex items-start justify-between gap-2">
+        <div className="flex flex-wrap items-center gap-2">
+          <Badge>{current.type}</Badge>
+          <div className="flex gap-2 text-xs text-muted">
+            {current.grammar_tags?.map((t) => <span key={t}>#{t}</span>)}
+            {current.cefr && <span>{current.cefr}</span>}
+          </div>
+        </div>
+        <div className="flex items-center gap-1">
+          {count > 1 && (
+            <div className="flex items-center gap-1 text-xs text-muted" title="Saved variants">
+              <button
+                type="button"
+                className="rounded px-1.5 py-0.5 hover:bg-accent-soft disabled:opacity-40"
+                onClick={() => setActive(Math.max(0, clampedActive - 1))}
+                disabled={clampedActive === 0}
+                aria-label="Previous variant"
+              >
+                ‹
+              </button>
+              <span className="tabular-nums">
+                {clampedActive + 1} / {count}
+              </span>
+              <button
+                type="button"
+                className="rounded px-1.5 py-0.5 hover:bg-accent-soft disabled:opacity-40"
+                onClick={() => setActive(Math.min(count - 1, clampedActive + 1))}
+                disabled={clampedActive === count - 1}
+                aria-label="Next variant"
+              >
+                ›
+              </button>
+            </div>
+          )}
+          <div className="relative">
+            <button
+              type="button"
+              onClick={() => setMenuOpen((v) => !v)}
+              className="inline-flex items-center gap-1.5 rounded-lg border border-line bg-paper px-2.5 py-1.5 text-sm text-ink shadow-sm hover:bg-accent-soft/60"
+              aria-label="Exercise options"
+              aria-haspopup="menu"
+              aria-expanded={menuOpen}
+              title="Options: try again or generate another"
+            >
+              {generating ? (
+                <Spinner />
+              ) : (
+                <>
+                  <span className="text-base leading-none">⋯</span>
+                  <span>Options</span>
+                </>
+              )}
+            </button>
+            {menuOpen && (
+              <>
+                <div className="fixed inset-0 z-10" onClick={() => setMenuOpen(false)} />
+                <div
+                  className="absolute right-0 z-20 mt-1 w-56 overflow-hidden rounded-lg border border-line bg-card shadow-md"
+                  role="menu"
+                >
+                  <button
+                    type="button"
+                    role="menuitem"
+                    className="block w-full px-3 py-2 text-left text-sm hover:bg-accent-soft/60"
+                    onClick={tryAgain}
+                  >
+                    Try again
+                    <span className="block text-xs text-muted">Clear my answer and retry</span>
+                  </button>
+                  <button
+                    type="button"
+                    role="menuitem"
+                    className="block w-full px-3 py-2 text-left text-sm hover:bg-accent-soft/60 disabled:opacity-50"
+                    onClick={generateAnother}
+                    disabled={generating}
+                  >
+                    Generate another
+                    <span className="block text-xs text-muted">
+                      A new variant, saved alongside this one
+                    </span>
+                  </button>
+                </div>
+              </>
+            )}
+          </div>
+        </div>
+      </div>
+
+      {error && <div className="text-xs text-danger">{error}</div>}
+
+      {variants.map((v, i) => (
+        <div key={v.id} className={i === clampedActive ? '' : 'hidden'}>
+          <ExerciseView
+            key={`${v.id}:${resetKeys[v.id] ?? 0}`}
+            ex={v}
+            loadHistory={(resetKeys[v.id] ?? 0) === 0}
+          />
+        </div>
+      ))}
+    </Card>
+  )
+}
+
+function ExerciseView({ ex, loadHistory = true }: { ex: Exercise; loadHistory?: boolean }) {
+  const gradable = GRADABLE.includes(ex.type)
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const items: any[] = Array.isArray(ex.payload?.items) ? ex.payload.items : []
-  const [responses, setResponses] = useState<string[]>(items.map(() => ''))
+  const inputCount = gradable ? Math.max(items.length, 1) : 0
+  const [responses, setResponses] = useState<string[]>(() => Array(inputCount).fill(''))
+  const [draft, setDraft] = useState('')
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [result, setResult] = useState<any>(null)
-  const [revealed, setRevealed] = useState(false)
-  const gradable = GRADABLE.includes(ex.type)
+  const [feedback, setFeedback] = useState<AnswerFeedback | null>(null)
+  const [checking, setChecking] = useState(false)
+  const [attemptCount, setAttemptCount] = useState(0)
+  const [lastAt, setLastAt] = useState<string | null>(null)
+
+  function refreshAttempts() {
+    api
+      .attempts(ex.id)
+      .then((list) => {
+        setAttemptCount(list.length)
+        setLastAt(list[0]?.created_at ?? null)
+      })
+      .catch(() => {})
+  }
+
+  useEffect(() => {
+    if (!loadHistory) return
+    let cancelled = false
+    api
+      .attempts(ex.id)
+      .then((list) => {
+        if (cancelled) return
+        setAttemptCount(list.length)
+        const last = list[0]
+        if (!last) return
+        setLastAt(last.created_at)
+        if (gradable) {
+          setResponses(Array.from({ length: inputCount }, (_, i) => last.responses[i] ?? ''))
+          if (last.result) setResult(last.result)
+        } else {
+          setDraft(last.answer_text)
+          if (last.result) setFeedback(last.result as AnswerFeedback)
+        }
+      })
+      .catch(() => {})
+    return () => {
+      cancelled = true
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [ex.id, loadHistory])
 
   function setResp(i: number, val: string) {
     setResponses((prev) => {
@@ -140,18 +429,31 @@ function ExerciseCard({ ex }: { ex: Exercise }) {
   async function check() {
     const r = await api.practiceAnswer({ exercise_id: ex.id, responses })
     setResult(r.check)
+    refreshAttempts()
+  }
+
+  async function checkAnswer() {
+    if (!draft.trim()) return
+    setChecking(true)
+    try {
+      const fb = await api.practiceFeedback({ exercise_id: ex.id, answer: draft })
+      setFeedback(fb)
+      refreshAttempts()
+    } finally {
+      setChecking(false)
+    }
   }
 
   return (
-    <Card className="space-y-3 p-4">
-      <div className="flex items-center justify-between">
-        <Badge>{ex.type}</Badge>
-        <div className="flex gap-2 text-xs text-muted">
-          {ex.grammar_tags?.map((t) => <span key={t}>#{t}</span>)}
-          {ex.cefr && <span>{ex.cefr}</span>}
-        </div>
+    <div className="space-y-3">
+      <div className="flex items-baseline justify-between gap-2">
+        <div className="text-sm font-medium">{ex.instructions}</div>
+        {attemptCount > 0 && (
+          <div className="shrink-0 text-xs text-success" title={lastAt ? `Last answered ${formatWhen(lastAt)}` : undefined}>
+            Saved · answered {attemptCount}×
+          </div>
+        )}
       </div>
-      <div className="text-sm font-medium">{ex.instructions}</div>
 
       {ex.payload?.text && (
         <div className="notebook-lines rounded-lg bg-paper/60 p-3">
@@ -161,7 +463,9 @@ function ExerciseCard({ ex }: { ex: Exercise }) {
 
       {gradable ? (
         <div className="space-y-3">
-          {items.map((it, i) => (
+          {Array.from({ length: inputCount }).map((_, i) => {
+            const it = items[i] ?? {}
+            return (
             <div key={i} className="space-y-1">
               {it.prompt && (
                 <div className="text-sm">
@@ -197,13 +501,13 @@ function ExerciseCard({ ex }: { ex: Exercise }) {
                     ))}
                   </div>
                   <Input
-                    value={responses[i]}
+                    value={responses[i] ?? ''}
                     placeholder="Type the ordered sentence"
                     onChange={(e) => setResp(i, e.target.value)}
                   />
                 </div>
               ) : (
-                <Input value={responses[i]} onChange={(e) => setResp(i, e.target.value)} />
+                <Input value={responses[i] ?? ''} onChange={(e) => setResp(i, e.target.value)} />
               )}
               {result?.items?.[i] && (
                 <div
@@ -216,7 +520,8 @@ function ExerciseCard({ ex }: { ex: Exercise }) {
                 </div>
               )}
             </div>
-          ))}
+            )
+          })}
           <div className="flex items-center gap-3">
             <Button onClick={check}>Check</Button>
             {result && (
@@ -229,33 +534,58 @@ function ExerciseCard({ ex }: { ex: Exercise }) {
       ) : (
         <div className="space-y-2">
           <OpenPayload ex={ex} />
-          <Button variant="soft" onClick={() => setRevealed((v) => !v)}>
-            {revealed ? 'Hide' : 'Show'} model answer
-          </Button>
-          {revealed && (
-            <div className="space-y-2 rounded-lg bg-paper p-3 text-sm">
-              {ex.answer_key?.model_answer && <p>{ex.answer_key.model_answer}</p>}
-              {ex.answer_key?.sample_answer && <p>{ex.answer_key.sample_answer}</p>}
-              {Array.isArray(ex.answer_key?.rubric) && (
-                <ul className="list-disc pl-5 text-xs text-muted">
-                  {ex.answer_key.rubric.map((r: string, i: number) => (
-                    <li key={i}>{r}</li>
-                  ))}
-                </ul>
-              )}
-              {Array.isArray(ex.answer_key?.questions) && (
-                <ul className="list-disc pl-5 text-xs text-muted">
-                  {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
-                  {ex.answer_key.questions.map((q: any, i: number) => (
-                    <li key={i}>{q.answer}</li>
-                  ))}
-                </ul>
-              )}
-            </div>
-          )}
+          <Textarea
+            rows={5}
+            value={draft}
+            placeholder="Write your answer here..."
+            onChange={(e) => setDraft(e.target.value)}
+          />
+          <div className="flex items-center gap-3">
+            <Button variant="soft" onClick={checkAnswer} disabled={checking || !draft.trim()}>
+              {checking ? <Spinner /> : 'Check my answer'}
+            </Button>
+            {feedback && !checking && (
+              <span
+                className={cx('text-sm', feedback.has_errors ? 'text-danger' : 'text-success')}
+              >
+                {feedback.has_errors
+                  ? `${feedback.errors.length} correction${feedback.errors.length === 1 ? '' : 's'}`
+                  : 'No errors found'}
+              </span>
+            )}
+          </div>
+          {feedback && <AnswerFeedbackView feedback={feedback} />}
         </div>
       )}
-    </Card>
+    </div>
+  )
+}
+
+function AnswerFeedbackView({ feedback }: { feedback: AnswerFeedback }) {
+  return (
+    <div className="space-y-2 rounded-lg bg-paper p-3 text-sm">
+      {feedback.summary && <p>{feedback.summary}</p>}
+      {feedback.errors.length > 0 && (
+        <ul className="space-y-1.5">
+          {feedback.errors.map((e, i) => (
+            <li key={i} className="rounded-lg border border-line/70 p-2">
+              <div>
+                {e.original && <span className="text-danger line-through">{e.original}</span>}
+                {e.original && e.correction && <span className="mx-1 text-muted">→</span>}
+                {e.correction && <span className="text-success">{e.correction}</span>}
+              </div>
+              {e.explanation && <div className="mt-0.5 text-xs text-muted">{e.explanation}</div>}
+            </li>
+          ))}
+        </ul>
+      )}
+      {feedback.has_errors && feedback.corrected && (
+        <div>
+          <div className="text-xs font-medium text-muted">Corrected version</div>
+          <p className="italic">{feedback.corrected}</p>
+        </div>
+      )}
+    </div>
   )
 }
 

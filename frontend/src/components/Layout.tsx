@@ -6,6 +6,7 @@ const nav = [
   { to: '/course', label: 'Course' },
   { to: '/library', label: 'Library' },
   { to: '/vocab', label: 'Vocabulary' },
+  { to: '/conjugation', label: 'Conjugation' },
   { to: '/review', label: 'Review' },
   { to: '/import', label: 'Import' },
 ]

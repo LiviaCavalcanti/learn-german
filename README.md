@@ -11,6 +11,9 @@ you point it at a cloud LLM yourself.
 
 > New to the method? Read the companion [Learner's Guide](LEARNING-GUIDE.md) —
 > the "why" and "how" of going from A1 to B2 on your own.
+>
+> Contributing or using an AI coding agent? See [AGENTS.md](AGENTS.md) for the
+> architecture, conventions, and the Ubuntu/WSL developer workflow.
 
 ---
 

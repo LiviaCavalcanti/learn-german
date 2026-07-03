@@ -6,8 +6,12 @@ from fastapi import APIRouter, HTTPException, Query
 
 from sprachheft.api.deps import SessionDep
 from sprachheft.schemas import (
+    VerbVocabIn,
+    VerbVocabResult,
     VocabComposeIn,
     VocabComposeResult,
+    VocabDeleteIn,
+    VocabDeleteResult,
     VocabItemCreate,
     VocabItemRead,
 )
@@ -19,6 +23,27 @@ router = APIRouter(prefix="/vocab", tags=["vocab"])
 @router.post("", response_model=VocabItemRead, status_code=201)
 def create_vocab(data: VocabItemCreate, session: SessionDep):
     return svc.create_vocab(session, data)
+
+
+@router.post("/delete", response_model=VocabDeleteResult)
+def delete_vocab(data: VocabDeleteIn, session: SessionDep):
+    return {"deleted": svc.delete_vocab_items(session, data.ids)}
+
+
+@router.post("/verb", response_model=VerbVocabResult)
+def add_verb(data: VerbVocabIn, session: SessionDep):
+    try:
+        item, created = svc.add_verb(
+            session,
+            data.infinitive,
+            english=data.english,
+            partizip_ii=data.partizip_ii,
+            auxiliary=data.auxiliary,
+            cefr=data.cefr,
+        )
+    except ValueError as exc:
+        raise HTTPException(status_code=422, detail=str(exc)) from exc
+    return {"created": created, "item": item}
 
 
 @router.post("/compose", response_model=VocabComposeResult, status_code=201)

@@ -15,7 +15,7 @@ from sqlmodel import Session, select
 
 from sprachheft.config import get_settings
 from sprachheft.embeddings import cosine, embed_texts
-from sprachheft.models import Material, SRState, VocabEmbedding, VocabItem
+from sprachheft.models import Material, ReviewLog, SRState, VocabEmbedding, VocabItem
 from sprachheft.schemas import (
     GenerationResult,
     GenVocab,
@@ -112,6 +112,46 @@ def create_vocab(session: Session, data: VocabItemCreate) -> VocabItem:
     return item
 
 
+def add_verb(
+    session: Session,
+    infinitive: str,
+    *,
+    english: str = "",
+    partizip_ii: str = "",
+    auxiliary: str = "",
+    cefr: str | None = None,
+) -> tuple[VocabItem, bool]:
+    """Add a verb to the vocabulary, deduplicated by lemma. Returns (item, created)."""
+    lemma = (infinitive or "").strip().lower()
+    if not lemma:
+        raise ValueError("infinitive is required")
+    existing = session.exec(
+        select(VocabItem).where(
+            func.lower(VocabItem.lemma) == lemma,
+            func.lower(func.coalesce(VocabItem.pos, "")) == "verb",
+        )
+    ).first()
+    if existing is not None:
+        return existing, False
+    example_de = None
+    if partizip_ii.strip():
+        helper = "bin" if auxiliary.strip().lower() == "sein" else "habe"
+        example_de = f"Ich {helper} {partizip_ii.strip()}."
+    item = create_vocab(
+        session,
+        VocabItemCreate(
+            word=infinitive.strip(),
+            lemma=lemma,
+            pos="verb",
+            meaning_en=english.strip(),
+            cefr=cefr,
+            example_de=example_de,
+            grammar_tags=["verb"],
+        ),
+    )
+    return item, True
+
+
 def compose_material(session: Session, data: VocabComposeIn) -> dict:
     """Generate a German text + exercises from selected words and save it.
 
@@ -173,6 +213,38 @@ def compose_material(session: Session, data: VocabComposeIn) -> dict:
     )
     counts = persist_result(session, material, result, source="generated")
     return {"material_id": material.id, "title": material.title, **counts}
+
+
+def delete_vocab_items(session: Session, ids: list[int]) -> int:
+    """Delete vocab items and their SR state, review logs, and embeddings.
+
+    Accepts a list so the UI can remove a de-duplicated word (all its copies)
+    or several selected words in one call.
+    """
+    deleted = 0
+    for vocab_id in dict.fromkeys(ids):  # de-dupe, keep order
+        item = session.get(VocabItem, vocab_id)
+        if item is None:
+            continue
+        embedding = session.get(VocabEmbedding, vocab_id)
+        if embedding is not None:
+            session.delete(embedding)
+        states = session.exec(
+            select(SRState).where(
+                SRState.item_type == "vocab", SRState.item_id == vocab_id
+            )
+        ).all()
+        for state in states:
+            logs = session.exec(
+                select(ReviewLog).where(ReviewLog.srstate_id == state.id)
+            ).all()
+            for log in logs:
+                session.delete(log)
+            session.delete(state)
+        session.delete(item)
+        deleted += 1
+    session.commit()
+    return deleted
 
 
 def reindex_embeddings(session: Session, *, only_missing: bool = True) -> int:

@@ -50,6 +50,9 @@ export interface Exercise {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   answer_key: any
   created_at: string
+  // Variant grouping: exercises sharing a group_id are alternates of one slot.
+  group_id?: number | null
+  variant_position?: number
 }
 
 export interface DictEntry {
@@ -90,6 +93,32 @@ export interface ReviewQueueItem {
 
 export type Rating = 'again' | 'hard' | 'good' | 'easy'
 
+export interface AnswerAttempt {
+  id: number
+  exercise_id: number
+  kind: 'check' | 'feedback' | string
+  responses: string[]
+  answer_text: string
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  result: any
+  correct: number
+  total: number
+  created_at: string
+}
+
+export interface FeedbackError {
+  original: string
+  correction: string
+  explanation: string
+}
+
+export interface AnswerFeedback {
+  has_errors: boolean
+  corrected: string
+  errors: FeedbackError[]
+  summary: string
+}
+
 export interface CourseIndex {
   title: string
   levels: { level: string; title: string; units: number; lessons: number }[]
@@ -115,4 +144,34 @@ export interface CourseLevelDetail {
   level: string
   title: string
   units: CourseUnit[]
+}
+
+export interface ConjugationForms {
+  ich: string
+  du: string
+  er_sie_es: string
+  wir: string
+  ihr: string
+  sie_Sie: string
+}
+
+export interface ImperativeForms {
+  du: string
+  ihr: string
+  Sie: string
+}
+
+export interface ConjugationTable {
+  infinitive: string
+  english: string
+  regular: boolean
+  auxiliary: string
+  partizip_ii: string
+  notes: string
+  present: ConjugationForms
+  praeteritum: ConjugationForms
+  perfekt: ConjugationForms
+  futur1: ConjugationForms
+  konjunktiv2: ConjugationForms
+  imperative: ImperativeForms
 }

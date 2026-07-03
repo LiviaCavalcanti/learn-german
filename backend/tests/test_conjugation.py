@@ -51,3 +51,32 @@ def test_conjugate_requires_non_blank_verb():
     with TestClient(app) as client:
         assert client.get("/conjugation", params={"verb": "   "}).status_code == 400
         assert client.get("/conjugation", params={"verb": ""}).status_code == 422
+
+
+def test_add_verb_to_vocab_is_deduplicated():
+    with TestClient(app) as client:
+        first = client.post(
+            "/vocab/verb",
+            json={"infinitive": "arbeiten", "english": "to work", "partizip_ii": "gearbeitet"},
+        )
+        assert first.status_code == 200, first.text
+        body = first.json()
+        assert body["created"] is True
+        assert body["item"]["lemma"] == "arbeiten"
+        assert body["item"]["pos"] == "verb"
+        assert "verb" in body["item"]["grammar_tags"]
+
+        # Looking the same verb up again does not create a duplicate.
+        again = client.post("/vocab/verb", json={"infinitive": "arbeiten", "english": "to work"})
+        assert again.status_code == 200, again.text
+        assert again.json()["created"] is False
+        assert again.json()["item"]["id"] == body["item"]["id"]
+
+        # The verb is now searchable in the vocabulary.
+        found = client.get("/vocab/search", params={"q": "arbeiten"}).json()
+        assert any(v["lemma"] == "arbeiten" for v in found)
+
+
+def test_add_verb_requires_infinitive():
+    with TestClient(app) as client:
+        assert client.post("/vocab/verb", json={"infinitive": "  "}).status_code == 422
