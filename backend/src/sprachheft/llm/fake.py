@@ -386,7 +386,8 @@ class FakeLLMClient:
         )
 
     def _fake_composed(self, user_message: str) -> ComposedText:
-        """Build a short text + exercises from the selected WORDS (offline)."""        words = (
+        """Build a short text + exercises from the selected WORDS (offline)."""
+        words = (
             _extract_words(user_message)
             or _pick_words(user_message)
             or ["Alltag", "lernen", "wichtig"]

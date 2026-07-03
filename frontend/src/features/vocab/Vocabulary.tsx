@@ -13,6 +13,7 @@ type SortBy = 'recent' | 'oldest' | 'az' | 'za' | 'level'
 type WordEntry = {
   id: number // representative row id
   ids: number[] // every underlying row id (for delete/compose)
+  material_id: number | null // source material (needed to regenerate easier/harder)
   word: string
   lemma: string
   meaning_en: string
@@ -36,6 +37,9 @@ function dedupe(words: VocabItem[]): WordEntry[] {
     const existing = byKey.get(key)
     if (existing) {
       existing.ids.push(v.id)
+      if (existing.material_id == null && v.material_id != null) {
+        existing.material_id = v.material_id
+      }
       for (const t of v.grammar_tags || []) {
         if (!existing.grammar_tags.includes(t)) existing.grammar_tags.push(t)
       }
@@ -45,6 +49,7 @@ function dedupe(words: VocabItem[]): WordEntry[] {
       byKey.set(key, {
         id: v.id,
         ids: [v.id],
+        material_id: v.material_id,
         word: v.word,
         lemma: v.lemma,
         meaning_en: v.meaning_en,
@@ -144,6 +149,7 @@ export default function Vocabulary() {
   const [composing, setComposing] = useState(false)
   const [composeError, setComposeError] = useState<string | null>(null)
   const [deleting, setDeleting] = useState(false)
+  const [replacingId, setReplacingId] = useState<number | null>(null)
 
   function load() {
     api
@@ -218,6 +224,19 @@ export default function Vocabulary() {
       return next
     })
     load()
+  }
+
+  async function replaceEntry(entry: WordEntry, direction: 'easier' | 'harder') {
+    if (entry.material_id == null) return
+    setReplacingId(entry.id)
+    try {
+      await api.replaceVocab(entry.id, direction)
+      load()
+    } catch (err) {
+      window.alert(err instanceof Error ? err.message : 'Could not adjust this word')
+    } finally {
+      setReplacingId(null)
+    }
   }
 
   async function deleteSelected() {
@@ -464,6 +483,36 @@ export default function Vocabulary() {
                         <div className="text-sm text-muted">{v.meaning_en}</div>
                         {v.example_de && (
                           <div className="mt-1 text-xs italic text-muted">{v.example_de}</div>
+                        )}
+                        {v.material_id != null && (
+                          <div className="mt-1.5 flex items-center gap-2">
+                            <button
+                              type="button"
+                              onClick={(e) => {
+                                e.preventDefault()
+                                e.stopPropagation()
+                                replaceEntry(v, 'easier')
+                              }}
+                              disabled={replacingId === v.id}
+                              className="rounded px-1.5 py-0.5 text-xs text-muted hover:bg-accent-soft/60 disabled:opacity-50"
+                              title="Too hard — replace with an easier word"
+                            >
+                              {replacingId === v.id ? <Spinner /> : 'Too hard'}
+                            </button>
+                            <button
+                              type="button"
+                              onClick={(e) => {
+                                e.preventDefault()
+                                e.stopPropagation()
+                                replaceEntry(v, 'harder')
+                              }}
+                              disabled={replacingId === v.id}
+                              className="rounded px-1.5 py-0.5 text-xs text-muted hover:bg-accent-soft/60 disabled:opacity-50"
+                              title="Too easy — replace with a harder word"
+                            >
+                              Too easy
+                            </button>
+                          </div>
                         )}
                       </div>
                       <button

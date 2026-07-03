@@ -135,12 +135,12 @@ def build_single_messages(
         user += f"AVOID (already used, make something different):\n{joined}\n"
     if difficulty == "easier":
         user += (
-            "DIFFICULTY: Make this noticeably EASIER than the AVOID items \u2014 simpler, "
+            "DIFFICULTY: Make this noticeably EASIER than the AVOID items — simpler, "
             "higher-frequency vocabulary, shorter sentences, and more support.\n"
         )
     elif difficulty == "harder":
         user += (
-            "DIFFICULTY: Make this noticeably HARDER than the AVOID items \u2014 richer "
+            "DIFFICULTY: Make this noticeably HARDER than the AVOID items — richer "
             "vocabulary, longer and more complex sentences, and less support.\n"
         )
     return [
