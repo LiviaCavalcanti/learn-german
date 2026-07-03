@@ -10,37 +10,51 @@
           "unit": 1,
           "title": "Erste Schritte",
           "lessons": [
+            { "code": "a1.alphabet-pronunciation", "title": "Alphabet & pronunciation", "grammar_topics": ["a1.alphabet-pronunciation"], "can_do": "I can greet people and spell my name.", "seed_text": "Guten Tag! Ich heiße Björn. Mein Name schreibt sich B-J-Ö-R-N. Wie schreibt man deinen Namen? Ich wohne in der Grünstraße." },
             { "code": "a1.sein-haben", "title": "sein & haben", "grammar_topics": ["a1.sein-haben"], "can_do": "I can introduce myself and say how I am.", "seed_text": "Hallo, ich bin Anna. Ich bin müde, aber ich bin bereit. Wir haben heute viel Zeit. Hast du auch Zeit?" },
-            { "code": "a1.present-regular", "title": "Present tense (regular verbs)", "grammar_topics": ["a1.present-regular"], "can_do": "I can talk about what I do every day.", "seed_text": "Ich lerne jeden Tag Deutsch. Du arbeitest im Büro und wir machen viel zusammen. Am Abend spielen die Kinder." },
-            { "code": "a1.articles-nominative", "title": "Articles (Nominative)", "grammar_topics": ["a1.articles-nominative"], "can_do": "I can name people and things.", "seed_text": "Das ist ein Mann. Der Mann ist mein Kollege. Hier ist eine Frau und dort ist ein Kind. Die Frau ist nett." },
+            { "code": "a1.personal-pronouns", "title": "Personal pronouns (Nominative)", "grammar_topics": ["a1.personal-pronouns"], "can_do": "I can say who does something.", "seed_text": "Ich bin Student und du bist Lehrerin. Er kommt aus Köln, aber sie wohnt in Wien. Wir lernen zusammen und ihr helft uns. Sie sind sehr nett." },
             { "code": "a1.questions", "title": "Questions & word order", "grammar_topics": ["a1.questions"], "can_do": "I can ask simple questions.", "seed_text": "Wie heißt du? Woher kommst du? Wohnst du hier in der Stadt? Heute lerne ich Deutsch. Kommst du auch mit?" }
           ]
         },
         {
           "unit": 2,
-          "title": "Menschen & Dinge",
+          "title": "Menschen & Verben",
           "lessons": [
-            { "code": "a1.accusative", "title": "Accusative case", "grammar_topics": ["a1.accusative"], "can_do": "I can talk about things I have and buy.", "seed_text": "Ich habe einen Bruder und eine Schwester. Ich kaufe einen Kaffee und ein Buch. Den Schlüssel finde ich leider nicht." },
-            { "code": "a1.negation", "title": "Negation (nicht / kein)", "grammar_topics": ["a1.negation"], "can_do": "I can say what I don't have or do.", "seed_text": "Ich habe keine Zeit und keinen Hunger. Das ist nicht mein Auto. Heute arbeite ich nicht." },
-            { "code": "a1.possessives", "title": "Possessive articles", "grammar_topics": ["a1.possessives"], "can_do": "I can say what belongs to whom.", "seed_text": "Das ist mein Buch und deine Tasche. Sein Auto ist neu. Unsere Wohnung ist klein, aber schön." },
+            { "code": "a1.present-regular", "title": "Present tense (regular verbs)", "grammar_topics": ["a1.present-regular"], "can_do": "I can talk about what I do every day.", "seed_text": "Ich lerne jeden Tag Deutsch. Du arbeitest im Büro und wir machen viel zusammen. Am Abend spielen die Kinder." },
+            { "code": "a1.present-irregular", "title": "Present tense (stem-changing verbs)", "grammar_topics": ["a1.present-irregular"], "can_do": "I can use common irregular verbs.", "seed_text": "Ich fahre gern Rad, aber Anna fährt lieber Auto. Er isst einen Apfel und liest die Zeitung. Sprichst du Deutsch? Ja, ich spreche ein bisschen." },
+            { "code": "a1.articles-nominative", "title": "Articles (Nominative)", "grammar_topics": ["a1.articles-nominative"], "can_do": "I can name people and things.", "seed_text": "Das ist ein Mann. Der Mann ist mein Kollege. Hier ist eine Frau und dort ist ein Kind. Die Frau ist nett." },
             { "code": "a1.plurals-numbers", "title": "Plurals & numbers", "grammar_topics": ["a1.plurals-numbers"], "can_do": "I can count and talk about several things.", "seed_text": "Ich habe zwei Bücher, drei Stifte und vier Hefte. Die Kinder haben viele Freunde. Wie viele Tassen brauchst du?" }
           ]
         },
         {
           "unit": 3,
-          "title": "Alltag",
+          "title": "Haben, Wollen & Können",
           "lessons": [
-            { "code": "a1.modals", "title": "Modal verbs", "grammar_topics": ["a1.modals"], "can_do": "I can say what I can, must, and want to do.", "seed_text": "Ich kann gut kochen. Heute muss ich arbeiten, aber morgen will ich schlafen. Kannst du mir bitte helfen?" },
-            { "code": "a1.separable-verbs", "title": "Separable verbs", "grammar_topics": ["a1.separable-verbs"], "can_do": "I can describe my daily routine.", "seed_text": "Ich stehe um sieben Uhr auf. Dann kaufe ich ein und rufe meine Mutter an. Am Abend sehe ich fern." },
-            { "code": "a1.imperative-basic", "title": "Imperative (basics)", "grammar_topics": ["a1.imperative-basic"], "can_do": "I can give simple instructions.", "seed_text": "Komm bitte her! Mach die Tür zu. Nehmt eure Bücher. Sprechen Sie bitte langsam." },
-            { "code": "a1.prepositions-basic", "title": "Prepositions (basic) & es gibt", "grammar_topics": ["a1.prepositions-basic"], "can_do": "I can talk about times and places.", "seed_text": "Ich fahre um acht Uhr zur Arbeit. Am Montag habe ich frei. Im Büro gibt es einen Kühlschrank und viel Kaffee." }
+            { "code": "a1.accusative", "title": "Accusative case", "grammar_topics": ["a1.accusative"], "can_do": "I can talk about things I have and buy.", "seed_text": "Ich habe einen Bruder und eine Schwester. Ich kaufe einen Kaffee und ein Buch. Den Schlüssel finde ich leider nicht." },
+            { "code": "a1.negation", "title": "Negation (nicht / kein)", "grammar_topics": ["a1.negation"], "can_do": "I can say what I don't have or do.", "seed_text": "Ich habe keine Zeit und keinen Hunger. Das ist nicht mein Auto. Heute arbeite ich nicht." },
+            { "code": "a1.possessives", "title": "Possessive articles", "grammar_topics": ["a1.possessives"], "can_do": "I can say what belongs to whom.", "seed_text": "Das ist mein Buch und deine Tasche. Sein Auto ist neu. Unsere Wohnung ist klein, aber schön." },
+            { "code": "a1.modals", "title": "Modal verbs", "grammar_topics": ["a1.modals"], "can_do": "I can say what I can, must, and want to do.", "seed_text": "Ich kann gut kochen. Heute muss ich arbeiten, aber morgen will ich schlafen. Kannst du mir bitte helfen?" }
           ]
         },
         {
           "unit": 4,
+          "title": "Alltag & Freizeit",
+          "lessons": [
+            { "code": "a1.gern-moegen", "title": "Likes & preferences (gern, mögen, möchten)", "grammar_topics": ["a1.gern-moegen"], "can_do": "I can say what I like and want.", "seed_text": "Ich trinke gern Kaffee, aber Tee mag ich nicht. Magst du Schokolade? Am Wochenende möchte ich ins Kino gehen. Wir spielen gern Fußball." },
+            { "code": "a1.separable-verbs", "title": "Separable verbs", "grammar_topics": ["a1.separable-verbs"], "can_do": "I can describe my daily routine.", "seed_text": "Ich stehe um sieben Uhr auf. Dann kaufe ich ein und rufe meine Mutter an. Am Abend sehe ich fern." },
+            { "code": "a1.time-dates", "title": "Time, clock & dates", "grammar_topics": ["a1.time-dates"], "can_do": "I can tell the time and talk about dates.", "seed_text": "Es ist jetzt halb neun. Der Kurs beginnt um Viertel nach zehn. Heute ist Montag, der dritte März. Am Freitag habe ich Geburtstag." },
+            { "code": "a1.imperative-basic", "title": "Imperative (basics)", "grammar_topics": ["a1.imperative-basic"], "can_do": "I can give simple instructions.", "seed_text": "Komm bitte her! Mach die Tür zu. Nehmt eure Bücher. Sprechen Sie bitte langsam." }
+          ]
+        },
+        {
+          "unit": 5,
           "title": "Unterwegs",
           "lessons": [
-            { "code": "a1.perfekt-intro", "title": "Perfekt (introduction)", "grammar_topics": ["a1.perfekt-intro"], "can_do": "I can say what I did earlier today.", "seed_text": "Gestern habe ich viel gearbeitet. Ich habe einen Kaffee getrunken und eine E-Mail geschrieben. Danach habe ich gelernt." }
+            { "code": "a1.prepositions-basic", "title": "Prepositions (basic) & es gibt", "grammar_topics": ["a1.prepositions-basic"], "can_do": "I can talk about times and places.", "seed_text": "Ich fahre um acht Uhr zur Arbeit. Am Montag habe ich frei. Im Büro gibt es einen Kühlschrank und viel Kaffee." },
+            { "code": "a1.prepositions-accusative", "title": "Accusative prepositions", "grammar_topics": ["a1.prepositions-accusative"], "can_do": "I can use durch, für, gegen, ohne, and um.", "seed_text": "Ich kaufe ein Geschenk für meine Mutter. Wir gehen durch den Park. Ohne meinen Kaffee bin ich müde. Die Gruppe sitzt um den Tisch." },
+            { "code": "a1.coordinating-conjunctions", "title": "Coordinating conjunctions", "grammar_topics": ["a1.coordinating-conjunctions"], "can_do": "I can connect ideas with und, aber, oder, and denn.", "seed_text": "Ich lerne Deutsch, denn ich wohne in Berlin. Ich möchte Kaffee, aber ich habe keine Zeit. Wir bleiben zu Hause oder wir gehen spazieren." },
+            { "code": "a1.perfekt-intro", "title": "Perfekt (introduction)", "grammar_topics": ["a1.perfekt-intro"], "can_do": "I can say what I did earlier today.", "seed_text": "Gestern habe ich viel gearbeitet. Ich habe einen Kaffee getrunken und eine E-Mail geschrieben. Danach habe ich gelernt." },
+            { "code": "a1.perfekt-sein", "title": "Perfekt with sein", "grammar_topics": ["a1.perfekt-sein"], "can_do": "I can say where I went and traveled.", "seed_text": "Gestern bin ich nach Hamburg gefahren. Ich bin früh aufgestanden und um acht Uhr losgegangen. Am Abend bin ich müde nach Hause gekommen." }
           ]
         }
       ]
@@ -54,36 +68,49 @@
           "title": "Fälle & Präpositionen",
           "lessons": [
             { "code": "a2.sein-haben-werden", "title": "sein / haben / werden", "grammar_topics": ["a2.sein-haben-werden"], "can_do": "I can talk about states and changes.", "seed_text": "Ich bin Programmierer und ich habe viel Arbeit. Nächstes Jahr werde ich dreißig. Das Projekt wird bald fertig." },
-            { "code": "a2.modals-accusative", "title": "Modals & Accusative", "grammar_topics": ["a2.modals-accusative"], "can_do": "I can express wishes and needs at work.", "seed_text": "Ich möchte einen neuen Laptop kaufen. Für die Arbeit muss ich ein Dokument öffnen. Kannst du die Datei speichern?" },
             { "code": "a2.dative", "title": "Dative case", "grammar_topics": ["a2.dative"], "can_do": "I can talk about helping people and locations.", "seed_text": "Ich helfe meinem Kollegen bei der Arbeit. Der Laptop gehört der Firma. Am Wochenende bin ich bei meinen Eltern." },
+            { "code": "a2.prepositions-dative", "title": "Dative prepositions", "grammar_topics": ["a2.prepositions-dative"], "can_do": "I can use aus, bei, mit, nach, seit, von, and zu.", "seed_text": "Ich komme aus der Schweiz und wohne seit einem Jahr bei meiner Tante. Nach der Arbeit fahre ich mit dem Bus zu meinem Freund. Das Geschenk ist von meinen Kollegen." },
             { "code": "a2.two-way-prepositions", "title": "Two-way prepositions", "grammar_topics": ["a2.two-way-prepositions"], "can_do": "I can describe where things are and where they go.", "seed_text": "Der Laptop liegt auf dem Tisch. Ich lege das Buch in die Tasche. An der Wand hängt eine Uhr, und jetzt gehe ich in die Küche." }
           ]
         },
         {
           "unit": 2,
-          "title": "Über die Vergangenheit",
+          "title": "Personen & Pronomen",
           "lessons": [
-            { "code": "a2.perfekt", "title": "Perfekt (full)", "grammar_topics": ["a2.perfekt"], "can_do": "I can talk about my weekend and trips.", "seed_text": "Am Wochenende bin ich nach Berlin gefahren. Ich habe Freunde getroffen und wir sind ins Kino gegangen. Es hat mir gefallen." },
-            { "code": "a2.praeteritum-basic", "title": "Präteritum (sein/haben/modals)", "grammar_topics": ["a2.praeteritum-basic"], "can_do": "I can say how I felt and what I had to do.", "seed_text": "Gestern war ich krank. Ich hatte Kopfschmerzen und konnte nicht arbeiten. Ich musste leider zu Hause bleiben." },
+            { "code": "a2.pronouns-akk-dat", "title": "Pronouns (Akk/Dat)", "grammar_topics": ["a2.pronouns-akk-dat"], "can_do": "I can use pronouns to avoid repetition.", "seed_text": "Kannst du mir den Schlüssel geben? Ich gebe ihn dir später zurück. Meine Kollegin hilft uns, und wir danken ihr." },
+            { "code": "a2.modals-accusative", "title": "Modals & Accusative", "grammar_topics": ["a2.modals-accusative"], "can_do": "I can express wishes and needs at work.", "seed_text": "Ich möchte einen neuen Laptop kaufen. Für die Arbeit muss ich ein Dokument öffnen. Kannst du die Datei speichern?" },
             { "code": "a2.reflexive", "title": "Reflexive verbs", "grammar_topics": ["a2.reflexive"], "can_do": "I can talk about my routine and feelings.", "seed_text": "Morgens beeile ich mich immer. Ich freue mich auf das Wochenende. Am Abend entspanne ich mich auf dem Sofa." },
-            { "code": "a2.comparatives", "title": "Comparative & superlative", "grammar_topics": ["a2.comparatives"], "can_do": "I can compare things.", "seed_text": "Mein neues Handy ist besser als das alte. Der Zug ist schneller als das Auto, aber das Fahrrad ist am günstigsten." }
+            { "code": "a2.demonstratives", "title": "Demonstrative & indefinite pronouns", "grammar_topics": ["a2.demonstratives"], "can_do": "I can point things out and speak generally.", "seed_text": "Dieser Laptop ist neu, aber jener ist kaputt. Jeder kennt diese Firma. Man arbeitet hier viel. Ich brauche etwas zu trinken, aber ich habe nichts dabei." }
           ]
         },
         {
           "unit": 3,
-          "title": "Gedanken verbinden & Beruf",
+          "title": "Über die Vergangenheit",
           "lessons": [
-            { "code": "a2.subordinate-basic", "title": "Subordinate clauses (weil/dass/wenn)", "grammar_topics": ["a2.subordinate-basic"], "can_do": "I can give reasons and opinions.", "seed_text": "Ich lerne Deutsch, weil ich in Deutschland arbeite. Ich glaube, dass die Sprache wichtig ist. Wenn ich Zeit habe, übe ich jeden Tag." },
-            { "code": "a2.imperative-workplace", "title": "Imperative (workplace)", "grammar_topics": ["a2.imperative-workplace"], "can_do": "I can give instructions at work.", "seed_text": "Prüfen Sie bitte den Bericht. Schickt mir die Daten bis morgen. Speichere das Dokument und zeig mir die Grafik." },
-            { "code": "a2.konjunktiv2-politeness", "title": "Konjunktiv II (politeness)", "grammar_topics": ["a2.konjunktiv2-politeness"], "can_do": "I can make polite requests.", "seed_text": "Könnten Sie mir bitte helfen? Ich hätte gern einen Kaffee. Es wäre schön, wenn wir uns morgen treffen würden." },
-            { "code": "a2.pronouns-akk-dat", "title": "Pronouns (Akk/Dat)", "grammar_topics": ["a2.pronouns-akk-dat"], "can_do": "I can use pronouns to avoid repetition.", "seed_text": "Kannst du mir den Schlüssel geben? Ich gebe ihn dir später zurück. Meine Kollegin hilft uns, und wir danken ihr." }
+            { "code": "a2.perfekt", "title": "Perfekt (full)", "grammar_topics": ["a2.perfekt"], "can_do": "I can talk about my weekend and trips.", "seed_text": "Am Wochenende bin ich nach Berlin gefahren. Ich habe Freunde getroffen und wir sind ins Kino gegangen. Es hat mir gefallen." },
+            { "code": "a2.praeteritum-basic", "title": "Präteritum (sein/haben/modals)", "grammar_topics": ["a2.praeteritum-basic"], "can_do": "I can say how I felt and what I had to do.", "seed_text": "Gestern war ich krank. Ich hatte Kopfschmerzen und konnte nicht arbeiten. Ich musste leider zu Hause bleiben." },
+            { "code": "a2.time-expressions", "title": "Time expressions", "grammar_topics": ["a2.time-expressions"], "can_do": "I can say when things happen.", "seed_text": "Am Montag habe ich um neun Uhr ein Meeting. Im Sommer fahren wir in den Urlaub. Vor dem Essen wasche ich mir die Hände, und nach einer Stunde bin ich fertig." },
+            { "code": "a2.comparatives", "title": "Comparative & superlative", "grammar_topics": ["a2.comparatives"], "can_do": "I can compare things.", "seed_text": "Mein neues Handy ist besser als das alte. Der Zug ist schneller als das Auto, aber das Fahrrad ist am günstigsten." }
           ]
         },
         {
           "unit": 4,
-          "title": "Beruf & Technik",
+          "title": "Sätze verbinden",
           "lessons": [
-            { "code": "a2.adjective-endings-intro", "title": "Adjective endings (introduction)", "grammar_topics": ["a2.adjective-endings-intro"], "can_do": "I can describe things with adjectives.", "seed_text": "Ich habe einen neuen Laptop und eine schnelle Verbindung. Das kleine Büro hat große Fenster. Guten Morgen, liebe Kollegen!" }
+            { "code": "a2.subordinate-basic", "title": "Subordinate clauses (weil/dass/wenn)", "grammar_topics": ["a2.subordinate-basic"], "can_do": "I can give reasons and opinions.", "seed_text": "Ich lerne Deutsch, weil ich in Deutschland arbeite. Ich glaube, dass die Sprache wichtig ist. Wenn ich Zeit habe, übe ich jeden Tag." },
+            { "code": "a2.indirect-questions", "title": "Indirect questions (ob / W-clauses)", "grammar_topics": ["a2.indirect-questions"], "can_do": "I can ask politely and report questions.", "seed_text": "Ich weiß nicht, ob der Chef heute kommt. Kannst du mir sagen, wo der Bahnhof ist? Ich frage mich, warum das Projekt so lange dauert." },
+            { "code": "a2.konjunktiv2-politeness", "title": "Konjunktiv II (politeness)", "grammar_topics": ["a2.konjunktiv2-politeness"], "can_do": "I can make polite requests.", "seed_text": "Könnten Sie mir bitte helfen? Ich hätte gern einen Kaffee. Es wäre schön, wenn wir uns morgen treffen würden." },
+            { "code": "a2.imperative-workplace", "title": "Imperative (workplace)", "grammar_topics": ["a2.imperative-workplace"], "can_do": "I can give instructions at work.", "seed_text": "Prüfen Sie bitte den Bericht. Schickt mir die Daten bis morgen. Speichere das Dokument und zeig mir die Grafik." }
+          ]
+        },
+        {
+          "unit": 5,
+          "title": "Beschreiben & Beruf",
+          "lessons": [
+            { "code": "a2.adjective-endings-intro", "title": "Adjective endings (introduction)", "grammar_topics": ["a2.adjective-endings-intro"], "can_do": "I can describe things with adjectives.", "seed_text": "Ich habe einen neuen Laptop und eine schnelle Verbindung. Das kleine Büro hat große Fenster. Guten Morgen, liebe Kollegen!" },
+            { "code": "a2.local-adverbs", "title": "Local adverbs (wo/wohin/woher)", "grammar_topics": ["a2.local-adverbs"], "can_do": "I can ask and say where to and where from.", "seed_text": "Wo bist du gerade? Ich bin hier im Büro. Wohin gehst du? Ich gehe dorthin, zum Ausgang. Woher kommt der Lärm? Komm mal her!" },
+            { "code": "a2.verbs-prepositions", "title": "Verbs with prepositions", "grammar_topics": ["a2.verbs-prepositions"], "can_do": "I can use common verb + preposition combinations.", "seed_text": "Ich warte auf den Bus und denke an das Wochenende. Wir sprechen über das Projekt. Er interessiert sich für Technik und freut sich auf den Urlaub." },
+            { "code": "a2.ordinal-numbers", "title": "Ordinal numbers & dates", "grammar_topics": ["a2.ordinal-numbers"], "can_do": "I can give dates and positions.", "seed_text": "Heute ist der erste September. Mein Termin ist am dritten Oktober. Ich wohne im vierten Stock. In der zweiten Reihe sitzt mein Kollege." }
           ]
         }
       ]
@@ -97,35 +124,49 @@
           "title": "Adjektive & Genitiv",
           "lessons": [
             { "code": "b1.adjective-declension", "title": "Adjective declension (all cases)", "grammar_topics": ["b1.adjective-declension"], "can_do": "I can describe people and things precisely.", "seed_text": "Der neue Kollege sitzt in dem großen Büro. Ich suche einen guten Kaffee und eine ruhige Ecke. Mit freundlichen Grüßen schreibe ich die E-Mail." },
+            { "code": "b1.adjective-nominalized", "title": "Nominalized adjectives & participles", "grammar_topics": ["b1.adjective-nominalized"], "can_do": "I can use adjectives as nouns.", "seed_text": "Der Neue in unserem Team ist sehr fleißig. Die Angestellten treffen sich mittags. Ich wünsche dir alles Gute und viel Erfolg. Etwas Wichtiges muss ich dir noch sagen." },
             { "code": "b1.genitive", "title": "Genitive case", "grammar_topics": ["b1.genitive"], "can_do": "I can express possession and give reasons.", "seed_text": "Das Büro meines Chefs ist im dritten Stock. Wegen des Regens komme ich heute später. Die Farbe des neuen Autos gefällt mir sehr." },
             { "code": "b1.n-declension", "title": "n-Deklination", "grammar_topics": ["b1.n-declension"], "can_do": "I can use weak masculine nouns correctly.", "seed_text": "Ich spreche mit einem Kollegen und einem Studenten. Der Name des Kunden fehlt noch. Wir helfen dem Praktikanten und dem Nachbarn." }
           ]
         },
         {
           "unit": 2,
-          "title": "Komplexe Sätze",
+          "title": "Relativsätze & Infinitive",
           "lessons": [
             { "code": "b1.relative-clauses", "title": "Relative clauses", "grammar_topics": ["b1.relative-clauses"], "can_do": "I can give extra information in one sentence.", "seed_text": "Das ist der Kollege, der mir geholfen hat. Die Firma, bei der ich arbeite, ist klein. Das Projekt, an dem wir arbeiten, ist wichtig." },
+            { "code": "b1.relative-prepositions", "title": "Relative clauses with prepositions", "grammar_topics": ["b1.relative-prepositions"], "can_do": "I can link detailed information with prepositions.", "seed_text": "Das ist der Kollege, mit dem ich das Projekt mache. Die Firma, für die ich arbeite, ist international. Das Thema, worüber wir sprechen, ist kompliziert." },
             { "code": "b1.infinitive-zu", "title": "Infinitive clauses (zu + Infinitiv)", "grammar_topics": ["b1.infinitive-zu"], "can_do": "I can talk about plans and purposes.", "seed_text": "Ich habe vor, mehr Deutsch zu lernen. Es ist wichtig, jeden Tag zu üben. Ich fahre in die Stadt, um einzukaufen, ohne zu viel Geld auszugeben." },
-            { "code": "b1.temporal-clauses", "title": "Temporal clauses", "grammar_topics": ["b1.temporal-clauses"], "can_do": "I can order events in time.", "seed_text": "Als ich klein war, wohnte ich in Berlin. Bevor ich arbeite, trinke ich einen Kaffee. Nachdem ich gegessen hatte, ging ich spazieren." }
+            { "code": "b1.um-zu-damit", "title": "Purpose clauses (um…zu, damit)", "grammar_topics": ["b1.um-zu-damit"], "can_do": "I can explain purposes and goals.", "seed_text": "Ich lerne Deutsch, um in Deutschland zu arbeiten. Ich schreibe alles auf, damit ich nichts vergesse. Wir treffen uns früh, um pünktlich zu sein." }
           ]
         },
         {
           "unit": 3,
-          "title": "Zeit, Grund & Einräumung",
+          "title": "Zeiten & Erzählen",
           "lessons": [
             { "code": "b1.praeteritum", "title": "Präteritum (narrative)", "grammar_topics": ["b1.praeteritum"], "can_do": "I can tell a story in the past.", "seed_text": "Früher lebte ich in einer kleinen Stadt. Jeden Morgen ging ich zur Schule und traf meine Freunde. Wir spielten und lachten viel." },
             { "code": "b1.plusquamperfekt", "title": "Plusquamperfekt", "grammar_topics": ["b1.plusquamperfekt"], "can_do": "I can describe what had happened earlier.", "seed_text": "Nachdem ich die E-Mail geschrieben hatte, ging ich nach Hause. Der Zug war schon abgefahren, als ich am Bahnhof ankam." },
-            { "code": "b1.connectors", "title": "Connectors (deshalb/trotzdem/obwohl)", "grammar_topics": ["b1.connectors"], "can_do": "I can express cause and contrast.", "seed_text": "Es regnete, deshalb blieb ich zu Hause. Ich war müde, trotzdem arbeitete ich weiter. Obwohl es spät war, lernte ich noch ein bisschen." }
+            { "code": "b1.temporal-clauses", "title": "Temporal clauses", "grammar_topics": ["b1.temporal-clauses"], "can_do": "I can order events in time.", "seed_text": "Als ich klein war, wohnte ich in Berlin. Bevor ich arbeite, trinke ich einen Kaffee. Nachdem ich gegessen hatte, ging ich spazieren." },
+            { "code": "b1.futur1", "title": "Futur I", "grammar_topics": ["b1.futur1"], "can_do": "I can talk about the future and plans.", "seed_text": "Nächste Woche werde ich ein neues Projekt beginnen. Wir werden uns am Montag treffen. Ich freue mich darauf und denke oft daran." }
           ]
         },
         {
           "unit": 4,
-          "title": "Hypothesen, Passiv & Zukunft",
+          "title": "Verben, Präpositionen & Reflexiv",
+          "lessons": [
+            { "code": "b1.verbs-prepositions", "title": "Verbs with prepositions & da-/wo-compounds", "grammar_topics": ["b1.verbs-prepositions"], "can_do": "I can refer back to things with da-/wo-words.", "seed_text": "Ich freue mich auf den Urlaub und denke oft daran. Worüber sprecht ihr? Wir sprechen über das neue Projekt und sind stolz darauf. Erinnerst du dich noch daran?" },
+            { "code": "b1.local-directions", "title": "Places & directions", "grammar_topics": ["b1.local-directions"], "can_do": "I can say where I am and where I'm going.", "seed_text": "Ich fahre nach Hause, aber zuerst gehe ich zum Arzt. Nächste Woche fliege ich in die Schweiz. Sie kommt gerade aus dem Büro und geht ins Fitnessstudio." },
+            { "code": "b1.reflexive-advanced", "title": "Reflexive & reciprocal verbs", "grammar_topics": ["b1.reflexive-advanced"], "can_do": "I can describe mutual and reflexive actions.", "seed_text": "Wir treffen uns jeden Montag und helfen einander. Ich interessiere mich für Sprachen. Bewirb dich für die Stelle! Die Kollegen unterhalten sich über das Projekt." },
+            { "code": "b1.connectors", "title": "Connectors (deshalb/trotzdem/obwohl)", "grammar_topics": ["b1.connectors"], "can_do": "I can express cause and contrast.", "seed_text": "Es regnete, deshalb blieb ich zu Hause. Ich war müde, trotzdem arbeitete ich weiter. Obwohl es spät war, lernte ich noch ein bisschen." }
+          ]
+        },
+        {
+          "unit": 5,
+          "title": "Hypothesen & Passiv",
           "lessons": [
             { "code": "b1.konjunktiv2", "title": "Konjunktiv II (full)", "grammar_topics": ["b1.konjunktiv2"], "can_do": "I can talk about wishes and hypotheticals.", "seed_text": "Wenn ich mehr Zeit hätte, würde ich reisen. An deiner Stelle würde ich den Chef fragen. Ich wünschte, ich könnte besser Deutsch sprechen." },
+            { "code": "b1.konjunktiv2-past", "title": "Past Konjunktiv II", "grammar_topics": ["b1.konjunktiv2-past"], "can_do": "I can talk about missed opportunities and regrets.", "seed_text": "Wenn ich mehr gelernt hätte, hätte ich die Prüfung bestanden. An deiner Stelle wäre ich früher gegangen. Wir hätten das Problem vermeiden können." },
             { "code": "b1.passive", "title": "Passive (Präsens/Präteritum)", "grammar_topics": ["b1.passive"], "can_do": "I can describe processes at work.", "seed_text": "Der Bericht wird jeden Montag geschrieben. Die Daten wurden gestern geprüft. Das Problem muss schnell gelöst werden." },
-            { "code": "b1.futur1", "title": "Futur I", "grammar_topics": ["b1.futur1"], "can_do": "I can talk about the future and plans.", "seed_text": "Nächste Woche werde ich ein neues Projekt beginnen. Wir werden uns am Montag treffen. Ich freue mich darauf und denke oft daran." }
+            { "code": "b1.passive-modals", "title": "Passive with modal verbs", "grammar_topics": ["b1.passive-modals"], "can_do": "I can describe what must or can be done.", "seed_text": "Der Bericht muss bis Freitag geschrieben werden. Die Daten können leicht exportiert werden. Das Problem sollte schnell gelöst werden. Hier darf nicht geraucht werden." }
           ]
         }
       ]
@@ -139,15 +180,19 @@
           "title": "Passiv & Partizipien",
           "lessons": [
             { "code": "b2.passive-advanced", "title": "Passive (all tenses) & Zustandspassiv", "grammar_topics": ["b2.passive-advanced"], "can_do": "I can describe technical processes and states.", "seed_text": "Der Fehler ist inzwischen behoben worden. Die Software wird gerade aktualisiert und muss noch getestet werden. Der Zugriff ist zurzeit gesperrt." },
-            { "code": "b2.participles-adjectives", "title": "Participles as adjectives", "grammar_topics": ["b2.participles-adjectives"], "can_do": "I can use participles to describe things compactly.", "seed_text": "Die steigenden Kosten sind ein Problem. Der neu eingeführte Prozess funktioniert gut. Das gestern veröffentlichte Update enthält viele Verbesserungen." }
+            { "code": "b2.passive-alternatives", "title": "Passive alternatives", "grammar_topics": ["b2.passive-alternatives"], "can_do": "I can vary how I describe processes.", "seed_text": "Das Problem lässt sich leicht lösen. Die Software ist einfach zu bedienen. Man aktualisiert das System jede Woche. Die Datei ist nicht mehr zu öffnen, aber der Fehler ist behebbar." },
+            { "code": "b2.participles-adjectives", "title": "Participles as adjectives", "grammar_topics": ["b2.participles-adjectives"], "can_do": "I can use participles to describe things compactly.", "seed_text": "Die steigenden Kosten sind ein Problem. Der neu eingeführte Prozess funktioniert gut. Das gestern veröffentlichte Update enthält viele Verbesserungen." },
+            { "code": "b2.participle-attributes", "title": "Extended participle attributes", "grammar_topics": ["b2.participle-attributes"], "can_do": "I can pack detailed descriptions into noun phrases.", "seed_text": "Die vor Kurzem eingeführte Software läuft stabil. Der von unserem Team entwickelte Prototyp überzeugt. Die ständig steigenden Kosten bereiten uns Sorgen." }
           ]
         },
         {
           "unit": 2,
-          "title": "Indirekte Rede & Subjektivität",
+          "title": "Indirekte Rede & Modalität",
           "lessons": [
             { "code": "b2.konjunktiv1", "title": "Konjunktiv I (reported speech)", "grammar_topics": ["b2.konjunktiv1"], "can_do": "I can report what others said.", "seed_text": "Der Kollege sagte, er habe die Datei gesendet. Sie meinte, das Projekt sei fast fertig. Man berichtet, die Firma werde bald wachsen." },
-            { "code": "b2.subjective-modals", "title": "Subjective modal verbs", "grammar_topics": ["b2.subjective-modals"], "can_do": "I can express probability and hearsay.", "seed_text": "Er will alles selbst programmiert haben. Sie soll sehr erfahren sein. Das Update dürfte bald fertig sein." }
+            { "code": "b2.subjective-modals", "title": "Subjective modal verbs", "grammar_topics": ["b2.subjective-modals"], "can_do": "I can express probability and hearsay.", "seed_text": "Er will alles selbst programmiert haben. Sie soll sehr erfahren sein. Das Update dürfte bald fertig sein." },
+            { "code": "b2.futur2", "title": "Futur II (assumptions)", "grammar_topics": ["b2.futur2"], "can_do": "I can speculate about what will have happened.", "seed_text": "Bis morgen werde ich den Bericht fertiggestellt haben. Sie wird den Zug wohl verpasst haben. Bis Ende des Jahres werden wir das Projekt abgeschlossen haben." },
+            { "code": "b2.modal-particles", "title": "Modal particles", "grammar_topics": ["b2.modal-particles"], "can_do": "I can sound more natural and nuanced.", "seed_text": "Komm doch mal vorbei! Das ist ja interessant. Das weißt du doch. Es ist halt kompliziert. Wie heißt du noch mal? Das dauert eben seine Zeit." }
           ]
         },
         {
@@ -162,9 +207,21 @@
         },
         {
           "unit": 4,
-          "title": "Konnektoren & Stil",
+          "title": "Komplexe Sätze",
           "lessons": [
             { "code": "b2.two-part-connectors", "title": "Two-part connectors", "grammar_topics": ["b2.two-part-connectors"], "can_do": "I can build nuanced, balanced sentences.", "seed_text": "Je mehr ich übe, desto besser verstehe ich. Sowohl der Chef als auch das Team sind zufrieden. Entweder wir liefern heute oder wir verlieren den Kunden." },
+            { "code": "b2.subordinate-advanced", "title": "Advanced subordinate clauses", "grammar_topics": ["b2.subordinate-advanced"], "can_do": "I can express manner, result and alternatives.", "seed_text": "Indem wir automatisieren, sparen wir Zeit. Er ging, ohne dass er sich verabschiedete. Das Meeting wurde verschoben, sodass wir mehr Zeit hatten. Statt dass er anrief, schickte er eine Mail." },
+            { "code": "b2.concessive-conditional", "title": "Concessive & conditional connectors", "grammar_topics": ["b2.concessive-conditional"], "can_do": "I can express conditions and concessions formally.", "seed_text": "Falls es Probleme gibt, ruf mich an. Sofern alles klappt, liefern wir morgen. Obwohl das Budget knapp war, gelang das Projekt. Wir kommen, es sei denn, es schneit." },
+            { "code": "b2.comparison-irrealis", "title": "Irreal comparison (als ob)", "grammar_topics": ["b2.comparison-irrealis"], "can_do": "I can describe how things seem.", "seed_text": "Er tut so, als ob er alles wüsste. Es sieht aus, als hätte es geregnet. Sie redet, als wäre sie die Chefin. Das klingt, als ob es einfach wäre." }
+          ]
+        },
+        {
+          "unit": 5,
+          "title": "Stil & Ausdruck",
+          "lessons": [
+            { "code": "b2.adjective-prepositions", "title": "Adjectives with prepositions", "grammar_topics": ["b2.adjective-prepositions"], "can_do": "I can express attitudes precisely.", "seed_text": "Ich bin stolz auf mein Team und zufrieden mit dem Ergebnis. Sie ist an neuen Technologien interessiert. Wir sind froh über den Erfolg und gespannt auf die Zukunft." },
+            { "code": "b2.word-order-emphasis", "title": "Word order & emphasis", "grammar_topics": ["b2.word-order-emphasis"], "can_do": "I can structure sentences for emphasis.", "seed_text": "Diesen Fehler habe ich noch nie gesehen. Gestern erst wurde das Update veröffentlicht. Nicht das Team ist schuld, sondern der Zeitplan. Gerade jetzt brauchen wir Ruhe." },
+            { "code": "b2.collocations-idioms", "title": "Collocations & idioms", "grammar_topics": ["b2.collocations-idioms"], "can_do": "I can use idiomatic, natural expressions.", "seed_text": "Wir müssen eine Entscheidung treffen und das Projekt in Angriff nehmen. Das kommt überhaupt nicht in Frage. Ich drücke dir die Daumen. Am Ende des Tages zählt das Ergebnis." },
             { "code": "b2.cohesion-register", "title": "Cohesion & register", "grammar_topics": ["b2.cohesion-register"], "can_do": "I can write formal, well-structured texts.", "seed_text": "Sehr geehrte Damen und Herren, hiermit teile ich Ihnen mit, dass das Projekt abgeschlossen ist. Zusammenfassend lässt sich sagen, dass die Zusammenarbeit reibungslos verlief." }
           ]
         }

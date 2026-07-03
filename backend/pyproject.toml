@@ -30,7 +30,8 @@ embeddings = [
     "fastembed>=0.4.0",
 ]
 phonetics = [
-    "gruut[de]>=2.4.0",
+    "phonemizer>=3.2",
+    "espeakng-loader>=0.2",
 ]
 dev = [
     "pytest>=8.0",

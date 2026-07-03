@@ -1,9 +1,9 @@
 """Pronunciation (IPA) support.
 
-The g2p transcription itself needs the optional ``phonetics`` extra (gruut), so
-those assertions are skipped when it is not installed. The API contract — that an
-``ipa`` field is always present on dictionary and vocab responses — is verified
-regardless, and everything here stays offline.
+The g2p transcription itself needs the optional ``phonetics`` extra (espeak-ng
+via phonemizer), so those assertions are skipped when it is not installed. The API
+contract — that an ``ipa`` field is always present on dictionary and vocab
+responses — is verified regardless, and everything here stays offline.
 """
 
 from __future__ import annotations
@@ -23,7 +23,7 @@ from sprachheft.phonetics import to_ipa  # noqa: E402
 
 client = TestClient(app)
 
-_HAS_GRUUT = to_ipa("Haus") is not None
+_HAS_PHONETICS = to_ipa("Haus") is not None
 
 
 def test_to_ipa_empty_is_none():
@@ -52,7 +52,7 @@ def test_dictionary_entries_include_ipa_field():
         assert "ipa" in entry
 
 
-@pytest.mark.skipif(not _HAS_GRUUT, reason="phonetics extra (gruut) not installed")
+@pytest.mark.skipif(not _HAS_PHONETICS, reason="phonetics extra not installed")
 def test_to_ipa_real_transcription():
     ipa = to_ipa("Haus")
     assert ipa is not None
@@ -60,7 +60,7 @@ def test_to_ipa_real_transcription():
     assert len(ipa) > 2
 
 
-@pytest.mark.skipif(not _HAS_GRUUT, reason="phonetics extra (gruut) not installed")
+@pytest.mark.skipif(not _HAS_PHONETICS, reason="phonetics extra not installed")
 def test_vocab_response_populates_ipa():
     resp = client.post(
         "/vocab",

@@ -110,7 +110,7 @@ export default function Conjugation() {
         </form>
       </Card>
 
-      {seen.length > 0 && (
+      {!table && seen.length > 0 && (
         <Card className="p-4">
           <div className="mb-2 flex items-center justify-between">
             <div className="text-xs font-medium uppercase tracking-wide text-muted">Seen verbs</div>
