@@ -6,9 +6,21 @@ flow can be exercised without any model. Not a real generator.
 
 from __future__ import annotations
 
+import random
 import re
 
-from sprachheft.schemas import GenerationResult, GenExercise, GenVocab
+from sprachheft.schemas import (
+    AnswerFeedback,
+    ComposedText,
+    ConjugationForms,
+    ConjugationTable,
+    FeedbackError,
+    GenerationResult,
+    GenExercise,
+    GenVocab,
+    ImperativeForms,
+    RewrittenText,
+)
 
 _WORD_RE = re.compile(r"[A-Za-zÄÖÜäöüß]{4,}")
 _STOP = {"heute", "eine", "einen", "meine", "meiner", "diese", "dieser", "haben", "sein"}
@@ -26,12 +38,195 @@ def _pick_words(text: str, n: int = 3) -> list[str]:
     return picked
 
 
+def _extract_field(text: str, key: str, default: str = "") -> str:
+    """Read a ``KEY: value`` line from a formatted user message."""
+    prefix = key.upper() + ":"
+    for line in (text or "").splitlines():
+        if line.strip().upper().startswith(prefix):
+            return line.split(":", 1)[1].strip() or default
+    return default
+
+
+def _extract_words(text: str) -> list[str]:
+    """Read the ``- word — meaning`` bullet list under a ``WORDS:`` header."""
+    words: list[str] = []
+    capturing = False
+    for line in (text or "").splitlines():
+        stripped = line.strip()
+        if stripped.upper().startswith("WORDS:"):
+            capturing = True
+            continue
+        if not capturing:
+            continue
+        if stripped.startswith("-"):
+            token = stripped.lstrip("-").strip()
+            for sep in ("—", " – ", " - "):
+                if sep in token:
+                    token = token.split(sep, 1)[0].strip()
+                    break
+            if token:
+                words.append(token)
+        elif stripped.upper().startswith(("INSTRUCTIONS:", "LEVEL:", "TITLE:")):
+            break
+    return words
+
+
+_FILLERS = [
+    "Außerdem finde ich das Thema sehr interessant.",
+    "Meine Kollegen und ich sprechen oft darüber.",
+    "Am Anfang war es schwierig, aber jetzt geht es besser.",
+    "Jeden Tag lerne ich etwas Neues dazu.",
+    "Das hilft mir sehr bei der Arbeit.",
+    "Manchmal mache ich Fehler, aber das ist ganz normal.",
+    "Später möchte ich noch mehr üben.",
+    "Zum Schluss fasse ich alles kurz zusammen.",
+]
+
+
+def _expand_text(text: str, min_lines: int = 15) -> str:
+    sentences = [s.strip() for s in re.split(r"(?<=[.!?])\s+", (text or "").strip()) if s.strip()]
+    if not sentences:
+        sentences = ["Das ist ein kurzer Beispieltext auf Deutsch."]
+    lines = list(sentences)
+    i = 0
+    while len(lines) < min_lines:
+        lines.append(_FILLERS[i % len(_FILLERS)])
+        i += 1
+    return "\n".join(lines)
+
+
+# --- Offline verb conjugation ------------------------------------------------
+# A compact rule-based conjugator: correct for regular (weak) verbs, with the
+# three high-frequency irregular auxiliaries hard-coded. A real model gives full
+# accuracy for strong/irregular verbs; this keeps offline mode usable.
+_PERSONS = ("ich", "du", "er_sie_es", "wir", "ihr", "sie_Sie")
+_WUERDE = ("würde", "würdest", "würde", "würden", "würdet", "würden")
+
+_PRESENT_IRREGULAR = {
+    "sein": ("bin", "bist", "ist", "sind", "seid", "sind"),
+    "haben": ("habe", "hast", "hat", "haben", "habt", "haben"),
+    "werden": ("werde", "wirst", "wird", "werden", "werdet", "werden"),
+}
+_PRAT_IRREGULAR = {
+    "sein": ("war", "warst", "war", "waren", "wart", "waren"),
+    "haben": ("hatte", "hattest", "hatte", "hatten", "hattet", "hatten"),
+    "werden": ("wurde", "wurdest", "wurde", "wurden", "wurdet", "wurden"),
+}
+_KONJ2_IRREGULAR = {
+    "sein": ("wäre", "wärst", "wäre", "wären", "wärt", "wären"),
+    "haben": ("hätte", "hättest", "hätte", "hätten", "hättet", "hätten"),
+    "werden": ("würde", "würdest", "würde", "würden", "würdet", "würden"),
+}
+_PARTIZIP_IRREGULAR = {"sein": "gewesen", "haben": "gehabt", "werden": "geworden"}
+_IMPERATIVE_IRREGULAR = {
+    "sein": ("sei", "seid", "seien Sie"),
+    "haben": ("hab", "habt", "haben Sie"),
+    "werden": ("werde", "werdet", "werden Sie"),
+}
+_AUXILIARY = {"sein": "sein", "werden": "sein"}
+_INSEPARABLE_PREFIXES = ("be", "ge", "er", "ver", "zer", "ent", "emp", "miss")
+
+
+def _verb_stem(inf: str) -> str:
+    if inf.endswith("en"):
+        return inf[:-2]
+    if inf.endswith("n"):
+        return inf[:-1]
+    return inf
+
+
+def _present_regular(inf: str) -> tuple[str, ...]:
+    stem = _verb_stem(inf)
+    e = "e" if stem.endswith(("d", "t")) else ""
+    du = stem + ("est" if e else "st")
+    return (stem + "e", du, stem + e + "t", inf, stem + e + "t", inf)
+
+
+def _praeteritum_regular(inf: str) -> tuple[str, ...]:
+    stem = _verb_stem(inf)
+    e = "e" if stem.endswith(("d", "t")) else ""
+    base = stem + e + "te"
+    return (base, base + "st", base, base + "n", base + "t", base + "n")
+
+
+def _partizip_regular(inf: str) -> str:
+    stem = _verb_stem(inf)
+    e = "e" if stem.endswith(("d", "t")) else ""
+    if inf.endswith("ieren"):
+        return stem + "t"
+    if inf.startswith(_INSEPARABLE_PREFIXES):
+        return stem + e + "t"
+    return "ge" + stem + e + "t"
+
+
+def _imperative_regular(inf: str) -> tuple[str, str, str]:
+    stem = _verb_stem(inf)
+    e = "e" if stem.endswith(("d", "t")) else ""
+    return (stem + ("e" if e else ""), stem + e + "t", inf + " Sie")
+
+
+def _forms(values: tuple[str, ...]) -> ConjugationForms:
+    return ConjugationForms(**dict(zip(_PERSONS, values, strict=True)))
+
+
+def build_conjugation(inf: str) -> ConjugationTable:
+    """Build a conjugation table for ``inf`` using regular rules + irregular tables."""
+    inf = (inf or "").strip() or "machen"
+    key = inf.lower()
+    regular = key not in _PRESENT_IRREGULAR
+
+    present = _PRESENT_IRREGULAR.get(key) or _present_regular(inf)
+    praeteritum = _PRAT_IRREGULAR.get(key) or _praeteritum_regular(inf)
+    partizip = _PARTIZIP_IRREGULAR.get(key) or _partizip_regular(inf)
+    auxiliary = _AUXILIARY.get(key, "haben")
+    imperative = _IMPERATIVE_IRREGULAR.get(key) or _imperative_regular(inf)
+
+    aux_present = _PRESENT_IRREGULAR["sein" if auxiliary == "sein" else "haben"]
+    werden_present = _PRESENT_IRREGULAR["werden"]
+    perfekt = tuple(f"{aux_present[i]} {partizip}" for i in range(6))
+    futur1 = tuple(f"{werden_present[i]} {inf}" for i in range(6))
+    konjunktiv2 = _KONJ2_IRREGULAR.get(key) or tuple(f"{w} {inf}" for w in _WUERDE)
+
+    return ConjugationTable(
+        infinitive=inf,
+        english="",
+        regular=regular,
+        auxiliary=auxiliary,
+        partizip_ii=partizip,
+        notes="" if regular else "irregular — connect a model for full accuracy",
+        present=_forms(present),
+        praeteritum=_forms(praeteritum),
+        perfekt=_forms(perfekt),
+        futur1=_forms(futur1),
+        konjunktiv2=_forms(konjunktiv2),
+        imperative=ImperativeForms(du=imperative[0], ihr=imperative[1], Sie=imperative[2]),
+    )
+
+
 class FakeLLMClient:
     def generate_structured(self, messages: list[dict], response_model, **kwargs):
+        if response_model is AnswerFeedback:
+            return self._fake_feedback(messages)
+
         transcript = ""
         for message in messages:
             if message.get("role") == "user":
                 transcript = message.get("content", "")
+
+        if response_model is ConjugationTable:
+            return self._fake_conjugation(transcript)
+
+        if response_model is RewrittenText:
+            current = transcript
+            if "CURRENT_TEXT:" in transcript:
+                current = transcript.split("CURRENT_TEXT:", 1)[1].strip()
+            return RewrittenText(text=_expand_text(current, 15))
+
+        if response_model is ComposedText:
+            return self._fake_composed(transcript)
+
+        if response_model is GenExercise:
+            return self._fake_single_exercise(transcript)
 
         words = _pick_words(transcript) or ["Alltag", "lernen", "wichtig"]
         vocabulary = [
@@ -80,3 +275,250 @@ class FakeLLMClient:
         if response_model is GenerationResult:
             return result
         return response_model.model_validate(result.model_dump())
+
+    def _fake_composed(self, user_message: str) -> ComposedText:
+        """Build a short text + exercises from the selected WORDS (offline)."""
+        words = (
+            _extract_words(user_message)
+            or _pick_words(user_message)
+            or ["Alltag", "lernen", "wichtig"]
+        )
+        level = _extract_field(user_message, "LEVEL", "A2")
+        lines = ["Heute lerne ich einige neue Wörter auf Deutsch."]
+        for word in words:
+            lines.append(f"Das Wort {word} kommt in diesem Text vor.")
+        lines.append("So kann ich die Wörter im Zusammenhang üben.")
+        lines.append("Am Ende wiederhole ich alles noch einmal.")
+        text = "\n".join(lines)
+
+        first = words[0]
+        joined = ", ".join(words)
+        exercises = [
+            GenExercise(
+                type="fill-in-blank",
+                cefr=level,
+                instructions="Setze das passende Wort aus dem Text ein.",
+                payload={
+                    "items": [
+                        {"prompt": "Das Wort ___ kommt in diesem Text vor.", "hint": first}
+                    ],
+                    "hints": [],
+                },
+                answer_key={"items": [{"answer": first}]},
+            ),
+            GenExercise(
+                type="writing",
+                cefr=level,
+                instructions="Schreibe ein paar Sätze mit den neuen Wörtern.",
+                payload={
+                    "theme": "Wortschatz",
+                    "task": f"Schreibe 3–5 Sätze und benutze: {joined}.",
+                    "target_length": "40–60 Wörter",
+                    "useful_phrases": [],
+                    "checklist": ["Alle Wörter benutzen"],
+                    "hints": [],
+                },
+                answer_key={
+                    "model_answer": " ".join(f"Ich benutze das Wort {w}." for w in words),
+                    "rubric": ["Alle Wörter benutzt"],
+                },
+            ),
+        ]
+        return ComposedText(
+            title=f"Übung: {', '.join(words[:3])}", text=text, exercises=exercises
+        )
+
+    def _fake_single_exercise(self, user_message: str) -> GenExercise:
+        """Build one plausible exercise of the requested TYPE (offline variant)."""
+        ex_type = "fill-in-blank"
+        for line in user_message.splitlines():
+            if line.strip().upper().startswith("TYPE:"):
+                ex_type = line.split(":", 1)[1].strip() or ex_type
+                break
+        transcript = user_message
+        if "TRANSCRIPT:" in user_message:
+            transcript = user_message.split("TRANSCRIPT:", 1)[1]
+        word = (_pick_words(transcript) or ["Alltag"])[0]
+
+        if ex_type == "conjugation":
+            verb, form, person = random.choice(
+                [
+                    ("arbeiten", "arbeite", "ich"),
+                    ("gehen", "gehst", "du"),
+                    ("machen", "macht", "er"),
+                    ("lernen", "lernen", "wir"),
+                ]
+            )
+            return GenExercise(
+                type="conjugation",
+                cefr="A2",
+                instructions="Konjugiere das Verb in Klammern.",
+                payload={
+                    "items": [{"prompt": f"{person} ({verb}) heute.", "person": person}],
+                    "hints": [],
+                },
+                answer_key={"items": [{"answer": form}]},
+            )
+        if ex_type == "translation":
+            en, de = random.choice(
+                [
+                    ("I work in the office.", "Ich arbeite im Büro."),
+                    ("She drinks coffee.", "Sie trinkt Kaffee."),
+                    ("We write an email.", "Wir schreiben eine E-Mail."),
+                ]
+            )
+            return GenExercise(
+                type="translation",
+                cefr="A2",
+                instructions="Übersetze ins Deutsche.",
+                payload={"items": [{"prompt": en}], "hints": []},
+                answer_key={"items": [{"answer": de}]},
+            )
+        if ex_type == "multiple-choice":
+            q = random.choice(
+                [
+                    {
+                        "prompt": "Das ist ___ Büro.",
+                        "options": ["ein", "eine", "einen"],
+                        "answer": "ein",
+                    },
+                    {
+                        "prompt": "Ich trinke ___ Kaffee.",
+                        "options": ["ein", "einen", "eine"],
+                        "answer": "einen",
+                    },
+                    {
+                        "prompt": "Wir schreiben ___ E-Mail.",
+                        "options": ["ein", "eine", "einen"],
+                        "answer": "eine",
+                    },
+                ]
+            )
+            return GenExercise(
+                type="multiple-choice",
+                cefr="A2",
+                instructions="Wähle die richtige Antwort.",
+                payload={"items": [{"prompt": q["prompt"], "options": q["options"]}], "hints": []},
+                answer_key={"items": [{"answer": q["answer"]}]},
+            )
+        if ex_type == "reorder":
+            ordered, tokens = random.choice(
+                [
+                    ("Ich arbeite im Büro", ["im", "Ich", "Büro", "arbeite"]),
+                    ("Sie trinkt gern Kaffee", ["Kaffee", "Sie", "gern", "trinkt"]),
+                ]
+            )
+            return GenExercise(
+                type="reorder",
+                cefr="A2",
+                instructions="Bringe die Wörter in die richtige Reihenfolge.",
+                payload={"items": [{"tokens": tokens}], "hints": []},
+                answer_key={"items": [{"answer": ordered}]},
+            )
+        if ex_type == "reading":
+            return GenExercise(
+                type="reading",
+                cefr="A2",
+                instructions="Lies den Text und beantworte die Frage.",
+                payload={
+                    "text": _expand_text(transcript, 6),
+                    "questions": [{"prompt": "Worum geht es im Text?"}],
+                    "hints": [],
+                },
+                answer_key={"items": [{"answer": "Um den Alltag und die Arbeit."}]},
+            )
+        if ex_type == "interpretation":
+            return GenExercise(
+                type="interpretation",
+                cefr="A2",
+                instructions="Interpretiere den Text.",
+                payload={
+                    "prompt": random.choice(
+                        [
+                            "Was denkst du über das Thema? Begründe deine Meinung.",
+                            "Welche Absicht hat die Person im Text?",
+                        ]
+                    ),
+                    "guiding_points": ["Nenne ein Beispiel aus dem Text.", "Gib deine Meinung."],
+                    "hints": [],
+                },
+                answer_key={
+                    "model_answer": "Ich denke, das Thema ist wichtig, weil ...",
+                    "rubric": ["Meinung genannt"],
+                },
+            )
+        if ex_type == "writing":
+            return GenExercise(
+                type="writing",
+                cefr="A2",
+                instructions="Schreibe einen kurzen Text.",
+                payload={
+                    "theme": random.choice(["Mein Arbeitstag", "Mein Wochenende", "Meine Pläne"]),
+                    "task": "Schreibe 4–6 Sätze zum Thema.",
+                    "target_length": "40–60 Wörter",
+                    "useful_phrases": ["zuerst", "danach", "am Ende"],
+                    "checklist": ["Perfekt benutzen", "Verbindungswörter benutzen"],
+                    "hints": [],
+                },
+                answer_key={
+                    "model_answer": "Heute habe ich viel gearbeitet.",
+                    "rubric": ["Thema getroffen"],
+                },
+            )
+        # default: fill-in-blank
+        adj = random.choice(["wichtig", "neu", "interessant"])
+        return GenExercise(
+            type="fill-in-blank",
+            cefr="A2",
+            instructions="Setze das passende Wort ein.",
+            payload={
+                "items": [{"prompt": f"Im Text ist ___ {adj}.", "hint": word}],
+                "hints": [],
+            },
+            answer_key={"items": [{"answer": word}]},
+        )
+
+    def _fake_conjugation(self, user_message: str) -> ConjugationTable:
+        """Build a conjugation table offline from the VERB / INFINITIVE hint."""
+        verb = ""
+        infinitive = ""
+        for line in user_message.splitlines():
+            stripped = line.strip()
+            upper = stripped.upper()
+            if upper.startswith("VERB:"):
+                verb = stripped.split(":", 1)[1].strip()
+            elif "INFINITIVE" in upper and ":" in stripped:
+                infinitive = stripped.split(":", 1)[1].strip()
+        return build_conjugation(infinitive or verb)
+
+    def _fake_feedback(self, messages: list[dict]) -> AnswerFeedback:
+        answer = ""
+        for message in messages:
+            if message.get("role") == "user":
+                content = message.get("content", "")
+                marker = "STUDENT ANSWER:"
+                answer = (
+                    content.split(marker, 1)[1].strip() if marker in content else content.strip()
+                )
+        if not answer:
+            return AnswerFeedback(
+                has_errors=True,
+                corrected="",
+                errors=[
+                    FeedbackError(
+                        original="",
+                        correction="",
+                        explanation="No answer was provided to check.",
+                    )
+                ],
+                summary="Please write an answer so it can be checked.",
+            )
+        return AnswerFeedback(
+            has_errors=False,
+            corrected=answer,
+            errors=[],
+            summary=(
+                "No errors detected. (Offline check — connect a real model in Settings "
+                "for detailed corrections.)"
+            ),
+        )

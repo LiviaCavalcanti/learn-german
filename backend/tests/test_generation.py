@@ -65,3 +65,45 @@ def test_generate_creates_vocab_and_exercises():
         resp = client.get("/vocab", params={"material_id": material_id})
         assert resp.status_code == 200
         assert len(resp.json()) >= 1
+
+
+def test_generate_variant_coexists_and_is_grouped():
+    with TestClient(app) as client:
+        payload = {
+            "title": "Im Büro",
+            "media_type": "text",
+            "level": "A2",
+            "transcript": "Heute arbeite ich im Büro und schreibe eine E-Mail an meine Kollegin.",
+        }
+        material_id = client.post("/materials", json=payload).json()["id"]
+        client.post(f"/materials/{material_id}/generate", params={"stage": 2})
+
+        exercises = client.get("/exercises", params={"material_id": material_id}).json()
+        before = len(exercises)
+        assert before >= 1
+        original = exercises[0]
+
+        resp = client.post(f"/exercises/{original['id']}/variant", params={"stage": 2})
+        assert resp.status_code == 200, resp.text
+        variant = resp.json()
+        # Same slot type, saved alongside, and grouped with the original.
+        assert variant["type"] == original["type"]
+        assert variant["id"] != original["id"]
+        assert variant["group_id"] == original["id"]
+        assert variant["variant_position"] >= 1
+
+        after = client.get("/exercises", params={"material_id": material_id}).json()
+        assert len(after) == before + 1
+        # The original and its variant now share one group id.
+        group = [e for e in after if (e.get("group_id") or e["id"]) == original["id"]]
+        assert {e["id"] for e in group} == {original["id"], variant["id"]}
+
+        # Variant is persisted: a fresh request still returns both.
+        refetched = client.get("/exercises", params={"material_id": material_id}).json()
+        assert any(e["id"] == variant["id"] for e in refetched)
+
+
+def test_variant_missing_exercise_returns_404():
+    with TestClient(app) as client:
+        resp = client.post("/exercises/999999/variant", params={"stage": 2})
+        assert resp.status_code == 404

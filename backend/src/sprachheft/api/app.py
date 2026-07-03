@@ -9,6 +9,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from sprachheft import __version__
 from sprachheft.api import (
+    conjugation,
     course,
     dictionary,
     exercises,
@@ -64,6 +65,7 @@ def create_app() -> FastAPI:
     app.include_router(imports.router)
     app.include_router(course.router)
     app.include_router(ingest.router)
+    app.include_router(conjugation.router)
 
     return app
 

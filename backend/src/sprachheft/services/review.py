@@ -68,6 +68,8 @@ def _serialize_item(session: Session, state: SRState) -> dict | None:
         "type": exercise.type,
         "instructions": exercise.instructions,
         "payload": exercise.payload,
+        "answer_key": exercise.answer_key,
+        "grammar_tags": exercise.grammar_tags,
         "cefr": exercise.cefr,
     }
 

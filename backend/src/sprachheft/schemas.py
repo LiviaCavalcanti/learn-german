@@ -5,7 +5,7 @@ from __future__ import annotations
 from datetime import datetime
 from typing import Literal
 
-from pydantic import BaseModel, ConfigDict
+from pydantic import BaseModel, ConfigDict, Field
 
 Level = Literal["A1", "A2", "B1", "B2"]
 MediaType = Literal["video", "podcast", "text"]
@@ -87,6 +87,22 @@ class VocabItemCreate(BaseModel):
     material_id: int | None = None
 
 
+class VocabComposeIn(BaseModel):
+    """Request to compose a practice text + exercises from selected vocabulary."""
+
+    vocab_ids: list[int] = []
+    level: Level | None = None
+    title: str | None = None
+    instructions: str | None = None
+
+
+class VocabComposeResult(BaseModel):
+    material_id: int
+    title: str
+    vocab_added: int = 0
+    exercises_added: int = 0
+
+
 # --- Exercises ---------------------------------------------------------------
 class ExerciseRead(BaseModel):
     model_config = ConfigDict(from_attributes=True)
@@ -100,6 +116,24 @@ class ExerciseRead(BaseModel):
     instructions: str
     payload: dict
     answer_key: dict
+    created_at: datetime
+    # Variant grouping (see models.ExerciseVariant). For a standalone exercise
+    # group_id defaults to its own id and variant_position to 0.
+    group_id: int | None = None
+    variant_position: int = 0
+
+
+class AnswerAttemptRead(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
+    id: int
+    exercise_id: int
+    kind: str
+    responses: list[str]
+    answer_text: str
+    result: dict
+    correct: int
+    total: int
     created_at: datetime
 
 
@@ -158,6 +192,14 @@ class GenerationResult(BaseModel):
     exercises: list[GenExercise] = []
 
 
+class ComposedText(BaseModel):
+    """A practice text plus exercises composed from a set of learned words."""
+
+    title: str = ""
+    text: str = ""
+    exercises: list[GenExercise] = []
+
+
 # --- Practice / Review -------------------------------------------------------
 class PracticeSessionCreate(BaseModel):
     kind: str = "practice"
@@ -169,6 +211,24 @@ class PracticeAnswerIn(BaseModel):
     responses: list[str] = []
     rating: Rating | None = None
     session_id: int | None = None
+
+
+class AnswerFeedbackIn(BaseModel):
+    exercise_id: int
+    answer: str = ""
+
+
+class FeedbackError(BaseModel):
+    original: str = ""
+    correction: str = ""
+    explanation: str = ""
+
+
+class AnswerFeedback(BaseModel):
+    has_errors: bool = False
+    corrected: str = ""
+    errors: list[FeedbackError] = []
+    summary: str = ""
 
 
 class GradeIn(BaseModel):
@@ -196,3 +256,56 @@ class ImportTextIn(BaseModel):
 # --- Ingestion ---------------------------------------------------------------
 class TranscribeIn(BaseModel):
     source_url: str
+
+
+# --- Rewrite -----------------------------------------------------------------
+class RewrittenText(BaseModel):
+    text: str
+
+
+class RewriteIn(BaseModel):
+    instructions: str | None = None
+    target_lines: int = 15
+
+
+# --- Conjugation -------------------------------------------------------------
+class ConjugationForms(BaseModel):
+    """The six personal forms of a tense."""
+
+    ich: str = ""
+    du: str = ""
+    er_sie_es: str = Field(default="", description="third person singular: er/sie/es")
+    wir: str = ""
+    ihr: str = ""
+    sie_Sie: str = Field(default="", description="third person plural / formal: sie/Sie")
+
+
+class ImperativeForms(BaseModel):
+    du: str = ""
+    ihr: str = ""
+    Sie: str = ""
+
+
+class ConjugationTable(BaseModel):
+    """A full conjugation table for a German verb."""
+
+    infinitive: str = Field(description="the verb infinitive, e.g. 'arbeiten'")
+    english: str = Field(default="", description="short English meaning of the verb")
+    regular: bool = Field(default=True, description="false for strong/irregular verbs")
+    auxiliary: str = Field(default="", description="perfect-tense auxiliary: 'haben' or 'sein'")
+    partizip_ii: str = Field(default="", description="past participle, e.g. 'gearbeitet'")
+    notes: str = Field(default="", description="short hint, e.g. stem change or separable prefix")
+    present: ConjugationForms = Field(default_factory=ConjugationForms, description="Präsens")
+    praeteritum: ConjugationForms = Field(
+        default_factory=ConjugationForms, description="Präteritum"
+    )
+    perfekt: ConjugationForms = Field(
+        default_factory=ConjugationForms, description="Perfekt (auxiliary + past participle)"
+    )
+    futur1: ConjugationForms = Field(
+        default_factory=ConjugationForms, description="Futur I (werden + infinitive)"
+    )
+    konjunktiv2: ConjugationForms = Field(
+        default_factory=ConjugationForms, description="Konjunktiv II"
+    )
+    imperative: ImperativeForms = Field(default_factory=ImperativeForms, description="Imperativ")

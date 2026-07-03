@@ -13,9 +13,15 @@ from collections import defaultdict
 from sqlalchemy import func, or_
 from sqlmodel import Session, select
 
+from sprachheft.config import get_settings
 from sprachheft.embeddings import cosine, embed_texts
-from sprachheft.models import SRState, VocabEmbedding, VocabItem
-from sprachheft.schemas import VocabItemCreate
+from sprachheft.models import Material, SRState, VocabEmbedding, VocabItem
+from sprachheft.schemas import (
+    GenerationResult,
+    GenVocab,
+    VocabComposeIn,
+    VocabItemCreate,
+)
 
 
 def list_vocab(
@@ -104,6 +110,69 @@ def create_vocab(session: Session, data: VocabItemCreate) -> VocabItem:
     session.commit()
     session.refresh(item)
     return item
+
+
+def compose_material(session: Session, data: VocabComposeIn) -> dict:
+    """Generate a German text + exercises from selected words and save it.
+
+    The result is a normal ``Material`` (so it appears in the library, practice,
+    and review): the composed text becomes the transcript, the composed exercises
+    are persisted, and the selected words are saved as the material's vocabulary.
+    """
+    from sprachheft.agents.composer import compose
+    from sprachheft.services.generation import persist_result
+
+    items: list[VocabItem] = []
+    seen: set[int] = set()
+    for vocab_id in data.vocab_ids:
+        if vocab_id in seen:
+            continue
+        seen.add(vocab_id)
+        item = session.get(VocabItem, vocab_id)
+        if item is not None:
+            items.append(item)
+    if not items:
+        raise ValueError("Select at least one vocabulary word.")
+
+    settings = get_settings()
+    level = data.level or items[0].cefr or settings.default_level
+
+    composed = compose(items, level, data.instructions)
+    text = (composed.text or "").strip()
+    if not text:
+        raise ValueError(
+            "Text generation returned nothing — is the language model configured?"
+        )
+
+    material = Material(
+        title=data.title or composed.title or "Practice text",
+        media_type="text",
+        level=level,
+        transcript=text,
+        notes="Composed from vocabulary",
+    )
+    session.add(material)
+    session.commit()
+    session.refresh(material)
+
+    result = GenerationResult(
+        vocabulary=[
+            GenVocab(
+                word=v.word,
+                lemma=v.lemma,
+                pos=v.pos,
+                meaning_en=v.meaning_en,
+                cefr=v.cefr or level,
+                example_de=v.example_de,
+                example_en=v.example_en,
+                grammar_tags=v.grammar_tags,
+            )
+            for v in items
+        ],
+        exercises=composed.exercises,
+    )
+    counts = persist_result(session, material, result, source="generated")
+    return {"material_id": material.id, "title": material.title, **counts}
 
 
 def reindex_embeddings(session: Session, *, only_missing: bool = True) -> int:

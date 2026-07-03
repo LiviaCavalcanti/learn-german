@@ -8,7 +8,7 @@ from __future__ import annotations
 
 from sprachheft.llm import get_llm_client
 from sprachheft.models import Material
-from sprachheft.schemas import GenerationResult
+from sprachheft.schemas import GenerationResult, GenExercise
 
 SYSTEM_PROMPT = """You are an expert German-as-a-foreign-language (DaF) teacher and \
 assessment item-writer. From a German transcript, a target CEFR level, and a STAGE, produce:
@@ -52,3 +52,50 @@ def generate(material: Material, stage: int = 2) -> GenerationResult:
     client = get_llm_client()
     messages = build_messages(material, stage)
     return client.generate_structured(messages, GenerationResult)
+
+
+SINGLE_SYSTEM_PROMPT = """You are an expert German-as-a-foreign-language (DaF) teacher and \
+assessment item-writer. From a German transcript, a target CEFR level, a STAGE, and a \
+required exercise TYPE, produce exactly ONE exercise of that TYPE that drills the \
+transcript's grammar and vocabulary.
+
+STAGE controls scaffolding and hints DECREASE as STAGE rises (1 = maximum help with word \
+banks and hints in payload.hints; 4 = German only, no hints, free production).
+
+The exercise must be a fresh alternative: do NOT reuse any of the AVOID prompts — change \
+the sentences, blanks, options or tokens. Keep it within the CEFR level, solvable from the \
+transcript, in correct natural German, and fill the answer key completely. Return only the \
+single exercise object."""
+
+
+def build_single_messages(
+    material: Material, ex_type: str, stage: int, avoid: list[str]
+) -> list[dict]:
+    user = (
+        f"LEVEL: {material.level}\n"
+        f"STAGE: {stage}\n"
+        f"TYPE: {ex_type}\n"
+        f"TITLE: {material.title}\n"
+        f"TRANSCRIPT:\n{material.transcript}\n"
+    )
+    if material.translation:
+        user += f"TRANSLATION:\n{material.translation}\n"
+    if avoid:
+        joined = "\n".join(f"- {p}" for p in avoid if p)
+        user += f"AVOID (already used, make something different):\n{joined}\n"
+    return [
+        {"role": "system", "content": SINGLE_SYSTEM_PROMPT},
+        {"role": "user", "content": user},
+    ]
+
+
+def generate_one(
+    material: Material,
+    ex_type: str,
+    stage: int = 2,
+    avoid: list[str] | None = None,
+) -> GenExercise:
+    """Generate a single new exercise of ``ex_type`` (a variant)."""
+    client = get_llm_client()
+    messages = build_single_messages(material, ex_type, stage, avoid or [])
+    return client.generate_structured(messages, GenExercise)

@@ -2,10 +2,15 @@
 
 from __future__ import annotations
 
-from fastapi import APIRouter, Query
+from fastapi import APIRouter, HTTPException, Query
 
 from sprachheft.api.deps import SessionDep
-from sprachheft.schemas import VocabItemCreate, VocabItemRead
+from sprachheft.schemas import (
+    VocabComposeIn,
+    VocabComposeResult,
+    VocabItemCreate,
+    VocabItemRead,
+)
 from sprachheft.services import vocab as svc
 
 router = APIRouter(prefix="/vocab", tags=["vocab"])
@@ -14,6 +19,14 @@ router = APIRouter(prefix="/vocab", tags=["vocab"])
 @router.post("", response_model=VocabItemRead, status_code=201)
 def create_vocab(data: VocabItemCreate, session: SessionDep):
     return svc.create_vocab(session, data)
+
+
+@router.post("/compose", response_model=VocabComposeResult, status_code=201)
+def compose_from_vocab(data: VocabComposeIn, session: SessionDep):
+    try:
+        return svc.compose_material(session, data)
+    except ValueError as exc:
+        raise HTTPException(status_code=422, detail=str(exc)) from exc
 
 
 @router.get("", response_model=list[VocabItemRead])

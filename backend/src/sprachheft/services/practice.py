@@ -52,3 +52,10 @@ def check_exercise(exercise: Exercise, responses: list[str]) -> dict:
         "total": total,
         "all_correct": total > 0 and correct == total,
     }
+
+
+def evaluate_answer(exercise: Exercise, answer: str):
+    """Ask the LLM to review a free-text answer and report German errors."""
+    from sprachheft.agents.feedback import evaluate
+
+    return evaluate(exercise, answer)

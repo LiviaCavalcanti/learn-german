@@ -16,7 +16,17 @@ class LiteLLMClient:
         import instructor
         import litellm
 
-        client = instructor.from_litellm(litellm.completion)
+        # Local providers (Ollama) don't reliably support OpenAI-style tool calling,
+        # so instructor's default TOOLS mode fails with "'NoneType' object is not
+        # iterable" (the response has no tool_calls to iterate). JSON mode parses the
+        # model's content directly and is the recommended setting for Ollama.
+        model = self._model.lower()
+        mode = (
+            instructor.Mode.JSON
+            if model.startswith(("ollama/", "ollama_chat/"))
+            else instructor.Mode.TOOLS
+        )
+        client = instructor.from_litellm(litellm.completion, mode=mode)
         extra: dict = {}
         if self._api_base:
             extra["api_base"] = self._api_base

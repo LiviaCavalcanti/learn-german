@@ -34,6 +34,21 @@ def create_material(session: Session, data: MaterialCreate) -> Material:
     return material
 
 
+def rewrite_material(
+    session: Session,
+    material: Material,
+    instructions: str | None,
+    target_lines: int = 15,
+) -> Material:
+    from sprachheft.agents.rewriter import rewrite_text
+
+    material.transcript = rewrite_text(material, instructions, target_lines)
+    session.add(material)
+    session.commit()
+    session.refresh(material)
+    return material
+
+
 def list_materials(session: Session) -> list[Material]:
     return list(session.exec(select(Material).order_by(Material.created_at.desc())).all())
 

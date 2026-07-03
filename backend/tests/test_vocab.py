@@ -70,3 +70,35 @@ def test_semantic_search():
         ).json()
         assert isinstance(results, list)
         assert len(results) >= 1
+
+
+def test_compose_material_from_vocab():
+    with TestClient(app) as client:
+        _seed_vocab()
+        ids = [v["id"] for v in client.get("/vocab").json()][:2]
+        assert ids
+
+        resp = client.post("/vocab/compose", json={"vocab_ids": ids, "level": "A2"})
+        assert resp.status_code == 201
+        body = resp.json()
+        assert body["material_id"] > 0
+        assert body["title"]
+        assert body["vocab_added"] >= 1
+        assert body["exercises_added"] >= 1
+
+        material_id = body["material_id"]
+        material = client.get(f"/materials/{material_id}").json()
+        assert material["transcript"].strip()
+        assert material["media_type"] == "text"
+
+        exercises = client.get(f"/exercises?material_id={material_id}").json()
+        assert len(exercises) >= 1
+
+        vocab = client.get("/vocab", params={"material_id": material_id}).json()
+        assert len(vocab) >= 1
+
+
+def test_compose_requires_selection():
+    with TestClient(app) as client:
+        resp = client.post("/vocab/compose", json={"vocab_ids": []})
+        assert resp.status_code == 422

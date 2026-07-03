@@ -6,8 +6,13 @@ from fastapi import APIRouter, HTTPException
 
 from sprachheft.api.deps import SessionDep
 from sprachheft.models import Exercise, StudySession
-from sprachheft.schemas import PracticeAnswerIn, PracticeSessionCreate
-from sprachheft.services.practice import check_exercise
+from sprachheft.schemas import (
+    AnswerFeedback,
+    AnswerFeedbackIn,
+    PracticeAnswerIn,
+    PracticeSessionCreate,
+)
+from sprachheft.services.practice import check_exercise, evaluate_answer
 
 router = APIRouter(prefix="/practice", tags=["practice"])
 
@@ -47,4 +52,37 @@ def submit_answer(payload: PracticeAnswerIn, session: SessionDep):
             "reps": state.reps,
         }
 
+    if any((r or "").strip() for r in payload.responses):
+        from sprachheft.services import attempts as attempts_svc
+
+        attempts_svc.record_attempt(
+            session,
+            exercise_id=exercise.id,
+            kind="check",
+            responses=payload.responses,
+            result=check,
+            correct=int(check.get("correct", 0) or 0),
+            total=int(check.get("total", 0) or 0),
+        )
+
     return {"exercise_id": exercise.id, "check": check, "graded": graded}
+
+
+@router.post("/feedback", response_model=AnswerFeedback)
+def answer_feedback(payload: AnswerFeedbackIn, session: SessionDep) -> AnswerFeedback:
+    exercise = session.get(Exercise, payload.exercise_id)
+    if not exercise:
+        raise HTTPException(status_code=404, detail="Exercise not found")
+
+    feedback = evaluate_answer(exercise, payload.answer)
+    if payload.answer.strip():
+        from sprachheft.services import attempts as attempts_svc
+
+        attempts_svc.record_attempt(
+            session,
+            exercise_id=exercise.id,
+            kind="feedback",
+            answer_text=payload.answer,
+            result=feedback.model_dump(),
+        )
+    return feedback

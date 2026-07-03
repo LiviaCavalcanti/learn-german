@@ -57,6 +57,40 @@ class Exercise(SQLModel, table=True):
     created_at: datetime = Field(default_factory=utcnow)
 
 
+class AnswerAttempt(SQLModel, table=True):
+    """A saved answer attempt for an exercise (gradable check or open feedback).
+
+    Kept in its own table so learners can revisit what they answered. ``result``
+    stores the full check/feedback payload so the UI can re-render it verbatim.
+    """
+
+    id: int | None = Field(default=None, primary_key=True)
+    exercise_id: int = Field(foreign_key="exercise.id", index=True)
+    kind: str = "check"  # check | feedback
+    responses: list[str] = Field(default_factory=list, sa_column=Column(JSON))
+    answer_text: str = ""
+    result: dict = Field(default_factory=dict, sa_column=Column(JSON))
+    correct: int = 0
+    total: int = 0
+    created_at: datetime = Field(default_factory=utcnow)
+
+
+class ExerciseVariant(SQLModel, table=True):
+    """Groups exercises that are alternate variants of the same practice slot.
+
+    ``group_id`` is the id of the seed (first) exercise in the group; every
+    variant — including the seed — gets a row so ordering is explicit. Kept in a
+    separate table so no existing table needs an ``ALTER`` (``init_db`` only
+    creates missing tables).
+    """
+
+    id: int | None = Field(default=None, primary_key=True)
+    group_id: int = Field(index=True)
+    exercise_id: int = Field(foreign_key="exercise.id", index=True)
+    position: int = 0
+    created_at: datetime = Field(default_factory=utcnow)
+
+
 class SRState(SQLModel, table=True):
     id: int | None = Field(default=None, primary_key=True)
     item_type: str = "vocab"  # vocab | exercise

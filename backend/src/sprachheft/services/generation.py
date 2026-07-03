@@ -4,8 +4,8 @@ from __future__ import annotations
 
 from sqlmodel import Session, select
 
-from sprachheft.agents.generator import generate
-from sprachheft.models import Exercise, Material, SRState, VocabItem
+from sprachheft.agents.generator import generate, generate_one
+from sprachheft.models import Exercise, ExerciseVariant, Material, SRState, VocabItem
 from sprachheft.schemas import GenerationResult
 
 
@@ -73,3 +73,88 @@ def persist_result(
 def generate_for_material(session: Session, material: Material, *, stage: int = 2) -> dict:
     result = generate(material, stage)
     return persist_result(session, material, result, source="generated")
+
+
+def group_id_for(session: Session, exercise: Exercise) -> int:
+    """Group id of an exercise: its variant link's group, else its own id (seed)."""
+    link = session.exec(
+        select(ExerciseVariant).where(ExerciseVariant.exercise_id == exercise.id)
+    ).first()
+    return link.group_id if link else exercise.id
+
+
+def _group_exercises(session: Session, group_id: int) -> list[Exercise]:
+    links = session.exec(
+        select(ExerciseVariant).where(ExerciseVariant.group_id == group_id)
+    ).all()
+    ids = {link.exercise_id for link in links}
+    ids.add(group_id)  # the seed is always part of its own group
+    return list(session.exec(select(Exercise).where(Exercise.id.in_(ids))).all())
+
+
+def _collect_prompts(exercises: list[Exercise], limit: int = 6) -> list[str]:
+    prompts: list[str] = []
+    for ex in exercises:
+        if ex.instructions:
+            prompts.append(ex.instructions)
+        payload = ex.payload or {}
+        for item in payload.get("items", []) or []:
+            if isinstance(item, dict) and item.get("prompt"):
+                prompts.append(str(item["prompt"]))
+        for key in ("prompt", "task", "theme"):
+            if payload.get(key):
+                prompts.append(str(payload[key]))
+    return prompts[:limit]
+
+
+def generate_variant(session: Session, exercise: Exercise, *, stage: int = 2) -> Exercise:
+    """Generate a fresh alternate of ``exercise`` (same type) and persist it.
+
+    The new exercise coexists with the original; both are linked into the same
+    variant group so the UI can paginate between them.
+    """
+    material = session.get(Material, exercise.material_id) if exercise.material_id else None
+    if material is None:
+        raise ValueError("Exercise is not linked to a material")
+
+    group_id = group_id_for(session, exercise)
+    siblings = _group_exercises(session, group_id)
+    avoid = _collect_prompts(siblings)
+
+    gen = generate_one(material, exercise.type, stage, avoid=avoid)
+    new_exercise = Exercise(
+        material_id=material.id,
+        source="generated",
+        type=exercise.type,  # keep the slot's type regardless of what the model returns
+        cefr=gen.cefr or exercise.cefr or material.level,
+        grammar_tags=gen.grammar_tags or exercise.grammar_tags,
+        instructions=gen.instructions,
+        payload=gen.payload,
+        answer_key=gen.answer_key,
+    )
+    session.add(new_exercise)
+    session.flush()
+    session.add(SRState(item_type="exercise", item_id=new_exercise.id))
+
+    # Ensure the seed has an explicit position-0 link, then append the new variant.
+    seed_link = session.exec(
+        select(ExerciseVariant).where(ExerciseVariant.exercise_id == group_id)
+    ).first()
+    if seed_link is None:
+        session.add(ExerciseVariant(group_id=group_id, exercise_id=group_id, position=0))
+    positions = [
+        link.position
+        for link in session.exec(
+            select(ExerciseVariant).where(ExerciseVariant.group_id == group_id)
+        ).all()
+    ]
+    next_position = (max(positions) + 1) if positions else 1
+    session.add(
+        ExerciseVariant(
+            group_id=group_id, exercise_id=new_exercise.id, position=next_position
+        )
+    )
+
+    session.commit()
+    session.refresh(new_exercise)
+    return new_exercise
