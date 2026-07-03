@@ -1,16 +1,18 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { api } from '../../lib/api'
-import type { ReviewStats } from '../../lib/types'
-import { Card } from '../../components/ui'
+import type { CourseProgress, ReviewStats } from '../../lib/types'
+import { Card, ProgressBar } from '../../components/ui'
 
 export default function Dashboard() {
   const [stats, setStats] = useState<ReviewStats | null>(null)
   const [dict, setDict] = useState<{ available: boolean; entry_count: number } | null>(null)
+  const [progress, setProgress] = useState<CourseProgress | null>(null)
 
   useEffect(() => {
     api.reviewStats().then(setStats).catch(() => {})
     api.dictStatus().then(setDict).catch(() => {})
+    api.courseProgress().then(setProgress).catch(() => {})
   }, [])
 
   const cards = [
@@ -35,6 +37,32 @@ export default function Dashboard() {
           </Card>
         ))}
       </div>
+
+      {progress && progress.total_lessons > 0 && (
+        <Card className="space-y-4 p-5">
+          <div className="flex items-baseline justify-between">
+            <div className="font-medium">Course progress</div>
+            <div className="text-sm text-muted">
+              {progress.completed_lessons}/{progress.total_lessons} lessons · {progress.percent}%
+            </div>
+          </div>
+          <ProgressBar
+            value={progress.completed_lessons}
+            max={progress.total_lessons}
+            showCount={false}
+          />
+          <div className="grid gap-3 sm:grid-cols-2">
+            {progress.levels.map((l) => (
+              <ProgressBar
+                key={l.level}
+                value={l.lessons_completed}
+                max={l.lessons_total}
+                label={`${l.level} · ${l.title}`}
+              />
+            ))}
+          </div>
+        </Card>
+      )}
 
       <Card className="flex flex-wrap items-center justify-between gap-3 p-5">
         <div>

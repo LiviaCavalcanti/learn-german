@@ -9,7 +9,7 @@ import type {
   LearnerProfile,
   MaterialSummary,
 } from '../../lib/types'
-import { Badge, Button, Card, Select, Spinner, Textarea } from '../../components/ui'
+import { Badge, Button, Card, cx, Select, Spinner, Textarea } from '../../components/ui'
 import { TokenizedText } from '../../components/TokenizedText'
 import { AddToReviewModal } from './AddToReviewModal'
 
@@ -26,6 +26,10 @@ export default function Tutor() {
   const [cardFor, setCardFor] = useState<string | null>(null)
   const [savedNote, setSavedNote] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [chatsOpen, setChatsOpen] = useState(
+    () =>
+      typeof localStorage === 'undefined' || localStorage.getItem('tutor-chats-open') !== 'false',
+  )
   const endRef = useRef<HTMLDivElement | null>(null)
 
   useEffect(() => {
@@ -133,6 +137,18 @@ export default function Tutor() {
     }
   }
 
+  function toggleChats() {
+    setChatsOpen((v) => {
+      const next = !v
+      try {
+        localStorage.setItem('tutor-chats-open', String(next))
+      } catch {
+        /* ignore unavailable storage */
+      }
+      return next
+    })
+  }
+
   const messages = detail?.messages ?? []
 
   return (
@@ -144,12 +160,23 @@ export default function Tutor() {
         </p>
       </header>
 
-      <div className="grid grid-cols-[13rem_1fr] gap-6">
+      <div className={cx('grid gap-6', chatsOpen ? 'grid-cols-[15rem_1fr]' : 'grid-cols-1')}>
         {/* Sessions */}
+        {chatsOpen && (
         <div className="space-y-2">
-          <Button variant="soft" className="w-full" onClick={newSession}>
-            + New chat
-          </Button>
+          <div className="flex items-center gap-1">
+            <Button variant="soft" className="flex-1" onClick={newSession}>
+              + New chat
+            </Button>
+            <button
+              onClick={toggleChats}
+              title="Hide chats"
+              aria-label="Hide chats"
+              className="shrink-0 rounded-lg px-2.5 py-2 text-muted transition hover:bg-accent-soft hover:text-ink"
+            >
+              «
+            </button>
+          </div>
           <div className="space-y-1">
             {(sessions ?? []).map((s) => (
               <div
@@ -176,9 +203,20 @@ export default function Tutor() {
             )}
           </div>
         </div>
+        )}
 
         {/* Conversation */}
         <div className="space-y-4">
+          {!chatsOpen && (
+            <div className="flex items-center gap-2">
+              <Button variant="soft" onClick={toggleChats}>
+                ☰ Chats
+              </Button>
+              <Button variant="ghost" onClick={newSession}>
+                + New chat
+              </Button>
+            </div>
+          )}
           <ProfilePanel profile={profile} />
 
           <Card className="flex h-[58vh] flex-col">

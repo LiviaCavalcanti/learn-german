@@ -16,6 +16,11 @@ def get_course():
     return svc.get_course()
 
 
+@router.get("/progress")
+def get_progress(session: SessionDep):
+    return svc.get_progress(session)
+
+
 @router.get("/lessons/{code}")
 def get_lesson(code: str):
     lesson = svc.get_lesson(code)

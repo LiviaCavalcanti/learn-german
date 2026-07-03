@@ -97,3 +97,45 @@ export function Spinner() {
     <span className="inline-block h-4 w-4 animate-spin rounded-full border-2 border-accent border-t-transparent" />
   )
 }
+
+export function ProgressBar({
+  value,
+  max,
+  label,
+  showCount = true,
+  className,
+}: {
+  value: number
+  max: number
+  label?: ReactNode
+  showCount?: boolean
+  className?: string
+}) {
+  const pct = max > 0 ? Math.round((value / max) * 100) : 0
+  return (
+    <div className={cx('space-y-1', className)}>
+      {(label || showCount) && (
+        <div className="flex items-center justify-between text-xs text-muted">
+          <span>{label}</span>
+          {showCount && (
+            <span className="tabular-nums">
+              {value}/{max} · {pct}%
+            </span>
+          )}
+        </div>
+      )}
+      <div
+        className="h-2 w-full overflow-hidden rounded-full bg-line"
+        role="progressbar"
+        aria-valuenow={value}
+        aria-valuemin={0}
+        aria-valuemax={max}
+      >
+        <div
+          className="h-full rounded-full bg-success transition-[width] duration-500"
+          style={{ width: `${pct}%` }}
+        />
+      </div>
+    </div>
+  )
+}

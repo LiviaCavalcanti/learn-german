@@ -161,6 +161,22 @@ export interface CourseLevelDetail {
   units: CourseUnit[]
 }
 
+export interface LevelProgress {
+  level: string
+  title: string
+  lessons_total: number
+  lessons_completed: number
+  percent: number
+}
+
+export interface CourseProgress {
+  levels: LevelProgress[]
+  total_lessons: number
+  completed_lessons: number
+  percent: number
+  completed_codes: string[]
+}
+
 export interface ConjugationForms {
   ich: string
   du: string

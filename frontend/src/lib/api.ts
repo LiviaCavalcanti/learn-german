@@ -8,6 +8,7 @@ import type {
   ConjugationTable,
   CourseIndex,
   CourseLevelDetail,
+  CourseProgress,
   DictLookup,
   Exercise,
   LearnerProfile,
@@ -186,6 +187,7 @@ export const api = {
     }),
 
   course: () => req<CourseIndex>('/course'),
+  courseProgress: () => req<CourseProgress>('/course/progress'),
   courseLevel: (level: string) => req<CourseLevelDetail>(`/course/${level}`),
   startLesson: (code: string) =>
     req<Material>(`/course/lessons/${encodeURIComponent(code)}/start`, { method: 'POST' }),

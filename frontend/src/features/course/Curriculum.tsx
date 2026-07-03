@@ -1,19 +1,21 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { api } from '../../lib/api'
-import type { CourseIndex, CourseLevelDetail } from '../../lib/types'
-import { Badge, Button, Card, Spinner, cx } from '../../components/ui'
+import type { CourseIndex, CourseLevelDetail, CourseProgress } from '../../lib/types'
+import { Badge, Button, Card, ProgressBar, Spinner, cx } from '../../components/ui'
 import { TokenizedText } from '../../components/TokenizedText'
 
 export default function Curriculum() {
   const [index, setIndex] = useState<CourseIndex | null>(null)
   const [level, setLevel] = useState('A1')
   const [detail, setDetail] = useState<CourseLevelDetail | null>(null)
+  const [progress, setProgress] = useState<CourseProgress | null>(null)
   const [starting, setStarting] = useState<string | null>(null)
   const navigate = useNavigate()
 
   useEffect(() => {
     api.course().then(setIndex).catch(() => {})
+    api.courseProgress().then(setProgress).catch(() => {})
   }, [])
   useEffect(() => {
     setDetail(null)
@@ -29,6 +31,9 @@ export default function Curriculum() {
       setStarting(null)
     }
   }
+
+  const completed = new Set(progress?.completed_codes ?? [])
+  const levelProgress = progress?.levels.find((l) => l.level === level) ?? null
 
   return (
     <div className="space-y-6">
@@ -52,6 +57,14 @@ export default function Curriculum() {
         ))}
       </div>
 
+      {levelProgress && (
+        <ProgressBar
+          value={levelProgress.lessons_completed}
+          max={levelProgress.lessons_total}
+          label={`${levelProgress.lessons_completed} of ${levelProgress.lessons_total} lessons practiced`}
+        />
+      )}
+
       {!detail ? (
         <Spinner />
       ) : (
@@ -64,9 +77,16 @@ export default function Curriculum() {
               <div className="grid gap-3 sm:grid-cols-2">
                 {unit.lessons.map((lesson) => (
                   <Card key={lesson.code} className="space-y-2 p-4">
-                    <div className="flex items-center justify-between">
+                    <div className="flex items-center justify-between gap-2">
                       <div className="font-serif text-lg">{lesson.title}</div>
-                      {lesson.grammar_topics?.[0] && <Badge>{lesson.grammar_topics[0]}</Badge>}
+                      <div className="flex shrink-0 items-center gap-1.5">
+                        {completed.has(lesson.code) && (
+                          <Badge className="border-success/40 bg-success/10 text-success">
+                            ✓ Done
+                          </Badge>
+                        )}
+                        {lesson.grammar_topics?.[0] && <Badge>{lesson.grammar_topics[0]}</Badge>}
+                      </div>
                     </div>
                     <div className="text-xs text-muted">{lesson.can_do}</div>
                     <div className="rounded-lg bg-paper/60 p-2 text-sm">
