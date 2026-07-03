@@ -174,7 +174,7 @@ export const api = {
   practiceFeedback: (body: { exercise_id: number; answer: string }) =>
     req<AnswerFeedback>('/practice/feedback', {
       method: 'POST',
-      body: JSON.stringify(body),
+      body: JSON.stringify({ ...body, native_lang: apiNative }),
     }),
 
   reviewStats: () => req<ReviewStats>('/review/stats'),

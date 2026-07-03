@@ -74,7 +74,7 @@ def answer_feedback(payload: AnswerFeedbackIn, session: SessionDep) -> AnswerFee
     if not exercise:
         raise HTTPException(status_code=404, detail="Exercise not found")
 
-    feedback = evaluate_answer(exercise, payload.answer)
+    feedback = evaluate_answer(exercise, payload.answer, payload.native_lang)
     if payload.answer.strip():
         from sprachheft.services import attempts as attempts_svc
 

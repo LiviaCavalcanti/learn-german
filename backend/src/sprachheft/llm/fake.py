@@ -51,6 +51,35 @@ def _extract_field(text: str, key: str, default: str = "") -> str:
     return default
 
 
+def _section(content: str, start: str, end: str | None = None) -> str:
+    """Extract the text after ``start`` (up to ``end`` if given) from a message."""
+    if start not in (content or ""):
+        return ""
+    tail = content.split(start, 1)[1]
+    if end and end in tail:
+        tail = tail.split(end, 1)[0]
+    return tail.strip()
+
+
+def _fake_verdict(answer: str, reference: str) -> tuple[str, float]:
+    """Deterministic offline correctness estimate via token overlap with the reference."""
+    if not (reference or "").strip():
+        return ("partial", 0.5)
+
+    def toks(text: str) -> set[str]:
+        return {w for w in re.findall(r"[a-zäöüß]+", text.lower()) if len(w) > 2}
+
+    ref = toks(reference)
+    if not ref:
+        return ("partial", 0.5)
+    overlap = len(toks(answer) & ref) / len(ref)
+    if overlap >= 0.6:
+        return ("correct", 1.0)
+    if overlap >= 0.25:
+        return ("partial", 0.5)
+    return ("incorrect", 0.0)
+
+
 def _extract_words(text: str) -> list[str]:
     """Read the ``- word — meaning`` bullet list under a ``WORDS:`` header."""
     words: list[str] = []
@@ -587,14 +616,12 @@ class FakeLLMClient:
         return build_conjugation(infinitive or verb, lang)
 
     def _fake_feedback(self, messages: list[dict]) -> AnswerFeedback:
-        answer = ""
+        content = ""
         for message in messages:
             if message.get("role") == "user":
                 content = message.get("content", "")
-                marker = "STUDENT ANSWER:"
-                answer = (
-                    content.split(marker, 1)[1].strip() if marker in content else content.strip()
-                )
+        answer = _section(content, "STUDENT ANSWER:")
+        reference = _section(content, "REFERENCE ANSWER:", "STUDENT ANSWER:")
         if not answer:
             return AnswerFeedback(
                 has_errors=True,
@@ -607,15 +634,20 @@ class FakeLLMClient:
                     )
                 ],
                 summary="Please write an answer so it can be checked.",
+                verdict="unanswered",
+                score=0.0,
             )
+        verdict, score = _fake_verdict(answer, reference)
         return AnswerFeedback(
             has_errors=False,
             corrected=answer,
             errors=[],
             summary=(
-                "No errors detected. (Offline check — connect a real model in Settings "
-                "for detailed corrections.)"
+                "Offline check — connect a real model in Settings for detailed, "
+                "reference-based feedback."
             ),
+            verdict=verdict,
+            score=score,
         )
 
     def _fake_chat(self, messages: list[dict]) -> ChatReply:

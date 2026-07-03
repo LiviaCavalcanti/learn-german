@@ -36,17 +36,41 @@ class WebSpeechProvider implements SpeechProvider {
   private synth: SpeechSynthesis | null =
     typeof window !== 'undefined' && 'speechSynthesis' in window ? window.speechSynthesis : null
 
+  // Browsers populate the voice list asynchronously: the first getVoices() call
+  // often returns []. If we speak before voices load, no voice matches the target
+  // language and the engine falls back to the OS default voice — which is exactly
+  // the "wrong language" bug. So we cache voices and refresh on `voiceschanged`.
+  private voices: SpeechSynthesisVoice[] = []
+
+  constructor() {
+    if (!this.synth) return
+    this.refreshVoices()
+    if (typeof this.synth.addEventListener === 'function') {
+      this.synth.addEventListener('voiceschanged', () => this.refreshVoices())
+    } else {
+      this.synth.onvoiceschanged = () => this.refreshVoices()
+    }
+  }
+
+  private refreshVoices(): void {
+    const list = this.synth?.getVoices() ?? []
+    if (list.length) this.voices = list
+  }
+
   get available(): boolean {
     return this.synth !== null
   }
 
+  /** Best voice for a BCP-47 tag: exact match, then region variant, then base language. */
   private pickVoice(lang: string): SpeechSynthesisVoice | undefined {
-    const voices = this.synth?.getVoices() ?? []
-    const target = lang.toLowerCase()
-    const prefix = target.slice(0, 2)
+    if (!this.voices.length) this.refreshVoices()
+    const target = lang.toLowerCase().replace('_', '-')
+    const base = target.slice(0, 2)
+    const norm = (v: SpeechSynthesisVoice) => v.lang.toLowerCase().replace('_', '-')
     return (
-      voices.find((v) => v.lang.toLowerCase() === target) ??
-      voices.find((v) => v.lang.toLowerCase().startsWith(prefix))
+      this.voices.find((v) => norm(v) === target) ??
+      this.voices.find((v) => norm(v).startsWith(`${base}-`)) ??
+      this.voices.find((v) => norm(v) === base)
     )
   }
 
@@ -55,8 +79,36 @@ class WebSpeechProvider implements SpeechProvider {
     this.synth.cancel()
     const utter = new SpeechSynthesisUtterance(text)
     utter.lang = lang
+
     const voice = this.pickVoice(lang)
-    if (voice) utter.voice = voice
+    if (voice) {
+      utter.voice = voice
+      this.synth.speak(utter)
+      return
+    }
+
+    // No matching voice yet. If the list simply hasn't loaded, wait once for it so
+    // we can attach the right-language voice instead of using the OS default.
+    if (!this.voices.length && typeof this.synth.addEventListener === 'function') {
+      const synth = this.synth
+      let done = false
+      const finish = () => {
+        if (done) return
+        done = true
+        synth.removeEventListener('voiceschanged', finish)
+        this.refreshVoices()
+        const v = this.pickVoice(lang)
+        if (v) utter.voice = v
+        synth.speak(utter)
+      }
+      synth.addEventListener('voiceschanged', finish)
+      // Safety net if the event never fires (some browsers preload voices).
+      window.setTimeout(finish, 300)
+      return
+    }
+
+    // Voices are loaded but none matches this language (not installed on the OS):
+    // still set utter.lang so the engine picks the closest available match.
     this.synth.speak(utter)
   }
 

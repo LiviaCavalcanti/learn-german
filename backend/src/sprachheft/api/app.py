@@ -28,12 +28,18 @@ from sprachheft.config import get_settings
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    from sprachheft.db import init_db
+    from sqlmodel import Session
+
+    from sprachheft.db import engine, init_db
     from sprachheft.reminders.scheduler import shutdown_reminders, start_reminders
     from sprachheft.seed import seed_taxonomy
+    from sprachheft.services.review import purge_exercise_review_cards
 
     init_db()
     seed_taxonomy()
+    # Exercises are no longer part of spaced review — drop any legacy exercise cards.
+    with Session(engine) as session:
+        purge_exercise_review_cards(session)
     start_reminders()
     try:
         yield

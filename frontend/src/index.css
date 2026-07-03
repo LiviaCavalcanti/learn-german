@@ -40,9 +40,11 @@
 }
 
 /* Subtle ruled-paper motif for reading panels.
-   The gradient period must equal the text line-height (1.75rem / leading-7),
-   so the 1px rule is drawn at the bottom edge *inside* each band — otherwise
-   the extra pixel makes the lines drift into the text after a few rows. */
+   The gradient period equals the text line-height (1.75rem / leading-7) and the
+   grid is anchored to the *content box* (background-origin: content-box) so the
+   1px rule sits just under each line regardless of the panel's padding. Without
+   this, the panel's top padding offsets the rule grid and the lines drift up into
+   the text. Every `.notebook-lines` block must render its text with `leading-7`. */
 .notebook-lines {
   background-image: repeating-linear-gradient(
     to bottom,
@@ -51,5 +53,37 @@
     var(--color-line) calc(1.75rem - 1px),
     var(--color-line) 1.75rem
   );
+  background-origin: content-box;
+  background-clip: content-box;
   background-attachment: local;
+}
+
+/* Onboarding niceties: a gentle entrance + float used by the language picker. */
+@keyframes sprachheft-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.animate-fade-in {
+  animation: sprachheft-fade-in 0.45s ease-out both;
+}
+
+@keyframes sprachheft-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+.animate-float {
+  animation: sprachheft-float 3.5s ease-in-out infinite;
 }

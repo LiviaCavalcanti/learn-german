@@ -47,7 +47,10 @@ def _exercise_system_prompt(material: Material) -> str:
         f"- 4 = consolidating: {tname} only, NO hints (payload.hints must be empty), free "
         "production.\n\n"
         f"Keep every item within the {fw} level and solvable from the transcript. Use correct, "
-        f"natural {tname}. Fill answer keys for every exercise. Return only the exercises."
+        f"natural {tname}. Fill answer keys for every exercise. For open types the answer key MUST "
+        "carry a reference the learner is graded against: reading -> answer_key.items[].answer for "
+        "each question; interpretation and writing -> answer_key.model_answer (a full model "
+        "answer) plus a short rubric. Return only the exercises."
     )
 
 
@@ -65,8 +68,9 @@ def _single_system_prompt(material: Material) -> str:
         "production).\n\n"
         "The exercise must be a fresh alternative: do NOT reuse any of the AVOID prompts — change "
         f"the sentences, blanks, options or tokens. Keep it within the {fw} level, solvable from "
-        f"the transcript, in correct natural {tname}, and fill the answer key completely. Return "
-        "only the single exercise object."
+        f"transcript, in correct natural {tname}, and fill the answer key completely (for open "
+        "types include a reference: reading -> answer_key.items[].answer; interpretation and "
+        "writing -> answer_key.model_answer). Return only the single exercise object."
     )
 
 

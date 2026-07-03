@@ -8,6 +8,14 @@ import { SpeakButton } from '../../components/SpeakButton'
 
 const GRADABLE = ['fill-in-blank', 'conjugation', 'translation', 'multiple-choice', 'reorder']
 
+// Correctness labels for LLM-evaluated open answers (checked against a reference).
+const VERDICTS: Record<string, { label: string; className: string }> = {
+  correct: { label: '✓ Correct', className: 'text-success' },
+  partial: { label: '~ Partly correct', className: 'text-accent' },
+  incorrect: { label: '✗ Not quite', className: 'text-danger' },
+  unanswered: { label: '', className: 'text-muted' },
+}
+
 /** Group exercises that share a variant group into ordered lists (seed first). */
 function groupExercises(list: Exercise[]): Exercise[][] {
   const byGroup = new Map<number, Exercise[]>()
@@ -582,11 +590,14 @@ function ExerciseView({ ex, loadHistory = true }: { ex: Exercise; loadHistory?: 
             </Button>
             {feedback && !checking && (
               <span
-                className={cx('text-sm', feedback.has_errors ? 'text-danger' : 'text-success')}
+                className={cx('text-sm font-medium', VERDICTS[feedback.verdict]?.className)}
               >
-                {feedback.has_errors
-                  ? `${feedback.errors.length} correction${feedback.errors.length === 1 ? '' : 's'}`
-                  : 'No errors found'}
+                {VERDICTS[feedback.verdict]?.label || 'Checked'}
+                {feedback.errors.length > 0 && (
+                  <span className="ml-2 text-xs font-normal text-muted">
+                    {feedback.errors.length} correction{feedback.errors.length === 1 ? '' : 's'}
+                  </span>
+                )}
               </span>
             )}
           </div>
@@ -598,8 +609,13 @@ function ExerciseView({ ex, loadHistory = true }: { ex: Exercise; loadHistory?: 
 }
 
 function AnswerFeedbackView({ feedback }: { feedback: AnswerFeedback }) {
+  const [showRef, setShowRef] = useState(false)
+  const verdict = VERDICTS[feedback.verdict]
   return (
     <div className="space-y-2 rounded-lg bg-paper p-3 text-sm">
+      {verdict?.label && (
+        <div className={cx('text-sm font-medium', verdict.className)}>{verdict.label}</div>
+      )}
       {feedback.summary && <p>{feedback.summary}</p>}
       {feedback.errors.length > 0 && (
         <ul className="space-y-1.5">
@@ -619,6 +635,18 @@ function AnswerFeedbackView({ feedback }: { feedback: AnswerFeedback }) {
         <div>
           <div className="text-xs font-medium text-muted">Corrected version</div>
           <p className="italic">{feedback.corrected}</p>
+        </div>
+      )}
+      {feedback.reference && (
+        <div>
+          <button
+            type="button"
+            className="text-xs font-medium text-accent underline"
+            onClick={() => setShowRef((v) => !v)}
+          >
+            {showRef ? 'Hide reference answer' : 'Show reference answer'}
+          </button>
+          {showRef && <p className="mt-1 italic text-muted">{feedback.reference}</p>}
         </div>
       )}
     </div>

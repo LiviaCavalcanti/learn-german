@@ -4,7 +4,7 @@ import { cx } from './ui'
 /** Small speaker button that reads a word aloud via the Web Speech API. */
 export function SpeakButton({
   text,
-  lang = getSpeechLang(),
+  lang,
   className,
   title = 'Hear pronunciation',
 }: {
@@ -23,7 +23,9 @@ export function SpeakButton({
       onClick={(e) => {
         e.preventDefault()
         e.stopPropagation()
-        speech.speak(text, lang)
+        // Resolve the target language at click time so it always reflects the
+        // current selection (a render-time default can be stale after switching).
+        speech.speak(text, lang ?? getSpeechLang())
       }}
       className={cx(
         'inline-flex shrink-0 items-center rounded-md px-1 py-0.5 text-muted transition hover:bg-accent-soft/60 hover:text-ink',

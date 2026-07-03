@@ -80,9 +80,10 @@ def get_review_queue(
     session: Session, *, limit: int = 20, lang: str | None = None
 ) -> list[dict]:
     now = utcnow()
+    # Review is vocab-only: exercises are practised on their material page, not here.
     stmt = (
         select(SRState)
-        .where(SRState.due <= now)
+        .where(SRState.due <= now, SRState.item_type == "vocab")
         .order_by(SRState.difficulty.desc(), SRState.due)
         .limit(limit if lang is None else max(limit * 10, 200))
     )
@@ -187,6 +188,25 @@ def delete_cards(session: Session, srstate_ids: list[int]) -> int:
     if exercise_ids:
         deleted += delete_exercise_items(session, exercise_ids)
     return deleted
+
+
+def purge_exercise_review_cards(session: Session) -> int:
+    """Drop all exercise cards from spaced review (review is vocab-only).
+
+    Exercises are no longer scheduled for review, so delete any existing exercise
+    SR states and their review logs. Idempotent: safe to run on every startup.
+    """
+    states = session.exec(select(SRState).where(SRState.item_type == "exercise")).all()
+    removed = 0
+    for state in states:
+        logs = session.exec(select(ReviewLog).where(ReviewLog.srstate_id == state.id)).all()
+        for log in logs:
+            session.delete(log)
+        session.delete(state)
+        removed += 1
+    if removed:
+        session.commit()
+    return removed
 
 
 def get_stats(session: Session) -> dict:

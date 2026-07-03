@@ -154,6 +154,9 @@ export interface AnswerFeedback {
   corrected: string
   errors: FeedbackError[]
   summary: string
+  verdict: 'correct' | 'partial' | 'incorrect' | 'unanswered'
+  score: number
+  reference: string
 }
 
 export interface CourseIndex {

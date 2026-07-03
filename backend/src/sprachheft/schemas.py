@@ -286,6 +286,7 @@ class PracticeAnswerIn(BaseModel):
 class AnswerFeedbackIn(BaseModel):
     exercise_id: int
     answer: str = ""
+    native_lang: str = "en"
 
 
 class FeedbackError(BaseModel):
@@ -299,6 +300,12 @@ class AnswerFeedback(BaseModel):
     corrected: str = ""
     errors: list[FeedbackError] = []
     summary: str = ""
+    # Correctness assessed against a reference/model answer (open questions and
+    # reading comprehension). ``reference`` is set server-side after grading so the
+    # UI can reveal it; the LLM only fills verdict/score/errors/corrected/summary.
+    verdict: Literal["correct", "partial", "incorrect", "unanswered"] = "unanswered"
+    score: float = 0.0
+    reference: str = ""
 
 
 class GradeIn(BaseModel):

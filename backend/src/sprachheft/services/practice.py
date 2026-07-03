@@ -14,6 +14,16 @@ def _norm(value: object) -> str:
 def _expected(exercise: Exercise) -> list[list[str]]:
     answer_key = exercise.answer_key or {}
     items = answer_key.get("items")
+    # Fallback: some models attach the answers to the payload items instead of the
+    # answer key. Without this the grader finds nothing and always scores 0.
+    if not isinstance(items, list) or not items:
+        payload_items = (exercise.payload or {}).get("items")
+        if isinstance(payload_items, list):
+            items = [
+                it
+                for it in payload_items
+                if isinstance(it, dict) and it.get("answer") is not None
+            ]
     expected: list[list[str]] = []
     if isinstance(items, list):
         for item in items:
@@ -54,8 +64,8 @@ def check_exercise(exercise: Exercise, responses: list[str]) -> dict:
     }
 
 
-def evaluate_answer(exercise: Exercise, answer: str):
-    """Ask the LLM to review a free-text answer and report German errors."""
+def evaluate_answer(exercise: Exercise, answer: str, native_lang: str = "en"):
+    """Ask the LLM to assess a free-text answer against its reference and flag errors."""
     from sprachheft.agents.feedback import evaluate
 
-    return evaluate(exercise, answer)
+    return evaluate(exercise, answer, native_lang)

@@ -82,7 +82,6 @@ def _persist_exercises(
         )
         session.add(exercise)
         session.flush()
-        session.add(SRState(item_type="exercise", item_id=exercise.id))
         added += 1
     return added
 
@@ -213,7 +212,6 @@ def generate_variant(session: Session, exercise: Exercise, *, stage: int = 2) ->
     )
     session.add(new_exercise)
     session.flush()
-    session.add(SRState(item_type="exercise", item_id=new_exercise.id))
 
     # Ensure the seed has an explicit position-0 link, then append the new variant.
     seed_link = session.exec(
