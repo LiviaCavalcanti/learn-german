@@ -63,6 +63,32 @@ learning/
 
 ---
 
+## Quick start
+
+One command installs every dependency (uv + Python 3.12, Node, and all backend
+and frontend packages), creates `backend/.env`, and builds the offline
+dictionary:
+
+- **Windows** — double-click **`setup.bat`**, or from a terminal:
+
+  ```powershell
+  .\setup.bat            # install everything
+  .\setup.bat -Run       # install, then start the app
+  ```
+
+- **WSL / Linux / macOS:**
+
+  ```bash
+  ./setup.sh             # install everything
+  ./setup.sh --run       # install, then start the app
+  ```
+
+The scripts are idempotent, so they are safe to re-run. Add `--help` (`-Help` on
+Windows) to see every option (`--minimal`, `--with-transcribe`, `--skip-dict`).
+Prefer to set things up by hand? Follow the manual steps below.
+
+---
+
 ## Prerequisites
 
 - [**uv**](https://docs.astral.sh/uv/getting-started/installation/) (installs and
@@ -118,9 +144,12 @@ on first run.
 
 ## Configuration
 
-Backend settings use the `SPRACHHEFT_` prefix and can live in a `backend/.env`
-file (see [backend/src/sprachheft/config.py](backend/src/sprachheft/config.py)).
-Common options:
+Backend settings use the `SPRACHHEFT_` prefix and live in a `backend/.env` file.
+The setup scripts create it from
+[backend/.env.example](backend/.env.example) — which defaults to an offline
+`fake` LLM so the app runs with no model configured. See
+[backend/src/sprachheft/config.py](backend/src/sprachheft/config.py) for every
+option. Common ones:
 
 | Variable | Purpose | Default |
 |---|---|---|
@@ -136,6 +165,108 @@ The frontend reads the backend URL from `VITE_API_BASE` (defaults to
 > The AI generation agent needs the `llm` extra (`uv sync --extra llm`) and a
 > configured model. Point `SPRACHHEFT_LLM_MODEL` at a local Ollama model to keep
 > everything fully offline, or at a cloud model with an API key.
+
+## Import study material from an AI chat
+
+Already worked through some German with an AI — a grammar explanation, a
+vocabulary list, a transcript you discussed? You can turn that conversation into
+importable study material without a configured model. Paste the **anchor prompt**
+below (with your conversation) into any chat model, then paste the JSON it returns
+into the app's **Import → Prompt-pack JSON** tab (or `POST /imports/json`).
+
+> Want full control over difficulty and scaffolding (LEVEL / STAGE dials, or a
+> printable worksheet)? Use the fuller instruction pack in
+> [prompts/](prompts/README.md) instead.
+
+### The import JSON format
+
+One object with a `material`, a `vocabulary[]` list, and an `exercises[]` list.
+The material's `level` (`A1`–`B2`) sets the CEFR level for everything imported:
+
+```json
+{
+  "material": {
+    "title": "Ein Tag im Büro",
+    "level": "A2",
+    "media_type": "text",
+    "source_url": null,
+    "themes": ["Alltag", "Arbeit"],
+    "transcript": "optional source text the material is based on"
+  },
+  "vocabulary": [
+    {
+      "word": "r Bahnhof",
+      "lemma": "Bahnhof",
+      "pos": "noun",
+      "meaning_en": "train station",
+      "cefr": "A2",
+      "example_de": "Der Zug fährt vom Bahnhof ab.",
+      "example_en": "The train departs from the station.",
+      "grammar_tags": ["a2.dative"]
+    }
+  ],
+  "exercises": [
+    {
+      "type": "fill-in-blank",
+      "cefr": "A2",
+      "grammar_tags": ["a2.dative"],
+      "instructions": "Setze das richtige Artikelwort ein.",
+      "payload": { "items": [{ "prompt": "Ich fahre mit ___ Bus.", "hint": "Dativ" }], "hints": [] },
+      "answer_key": { "items": [{ "answer": "dem" }] }
+    }
+  ]
+}
+```
+
+Each exercise `type` has its own `payload` / `answer_key` shape (answers align to
+payload items **by index**):
+
+- **fill-in-blank** — payload `{ "items": [{ "prompt": "… ___ …", "hint": "?" }] }` · key `{ "items": [{ "answer": "…" }] }`
+- **conjugation** — payload `{ "verb": "gehen", "tense": "Präsens", "items": [{ "person": "ich" }] }` · key `{ "items": [{ "answer": "gehe" }] }`
+- **translation** — payload `{ "direction": "en-de", "items": [{ "prompt": "…" }] }` · key `{ "items": [{ "answer": "…", "accept": ["…"] }] }`
+- **multiple-choice** — payload `{ "items": [{ "prompt": "…", "options": ["…"] }] }` · key `{ "items": [{ "answer": "…", "explanation": "…" }] }` — `answer` must be exactly one of the `options`
+- **reorder** — payload `{ "items": [{ "tokens": ["…"] }] }` · key `{ "items": [{ "answer": "…" }] }`
+- **reading** — payload `{ "text": "…", "questions": [{ "prompt": "…" }] }` · key `{ "questions": [{ "answer": "…" }] }`
+- **interpretation** — payload `{ "prompt": "…", "guiding_points": ["…"] }` · key `{ "sample_answer": "…", "rubric": ["…"] }`
+- **writing** — payload `{ "theme": "…", "task": "…", "useful_phrases": ["…"], "checklist": ["…"] }` · key `{ "model_answer": "…", "rubric": ["…"] }`
+
+The first five types are auto-graded during practice; `reading`,
+`interpretation`, and `writing` reveal a model answer instead. Nouns use the
+article shorthand `r` / `e` / `s` = der / die / das.
+
+### Anchor prompt
+
+Copy this, paste your conversation where marked, and send. The model returns a
+single JSON object you can import as-is:
+
+```text
+You are an expert German-as-a-foreign-language (DaF) teacher and assessment
+item-writer. Convert the German learning conversation / notes I provide into
+Sprachheft study material.
+
+Output ONLY one valid JSON object — no markdown fences, no commentary — with
+exactly this shape:
+{ "material": { … }, "vocabulary": [ … ], "exercises": [ … ] }
+
+Rules:
+- Choose a CEFR level (A1–B2) matching the German and set material.level; tag
+  every item's "cefr".
+- vocabulary: 8–15 useful items that actually appear in the conversation. Write
+  nouns with the article shorthand r/e/s (der/die/das); include lemma, pos, a
+  concise English meaning_en, and one short example (example_de + example_en).
+- exercises: use ONLY these "type" values — fill-in-blank, conjugation,
+  translation, multiple-choice, reorder, reading, interpretation, writing.
+  Include a mix, with exactly one interpretation task and one writing task.
+- Each "answer_key" aligns to its "payload" items by index. For multiple-choice,
+  "answer" must be exactly one of the "options" strings.
+- Valid JSON only: double quotes, no trailing commas, no comments, null for empty
+  optionals.
+
+Conversation / notes to convert:
+<<<
+(paste your AI conversation or notes here)
+>>>
+```
 
 ## Testing
 
