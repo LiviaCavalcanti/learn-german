@@ -90,6 +90,17 @@ export const api = {
       body: JSON.stringify({ ...data, source_lang: apiTarget, native_lang: apiNative }),
     }),
   deleteMaterial: (id: number) => req<void>(`/materials/${id}`, { method: 'DELETE' }),
+  updateMaterial: (
+    id: number,
+    data: Partial<{
+      title: string
+      level: string
+      media_type: string
+      source_url: string | null
+      transcript: string
+      translation: string | null
+    }>,
+  ) => req<Material>(`/materials/${id}`, { method: 'PATCH', body: JSON.stringify(data) }),
   generate: (id: number, stage: number) =>
     req<{ themes: string[]; vocab_added: number; exercises_added: number }>(
       `/materials/${id}/generate?stage=${stage}`,

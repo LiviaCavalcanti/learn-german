@@ -9,7 +9,7 @@ import type {
   Material,
   VocabItem,
 } from '../../lib/types'
-import { Badge, Button, Card, Input, Select, Spinner, Textarea, cx } from '../../components/ui'
+import { Badge, Button, Card, Field, Input, Select, Spinner, Textarea, cx } from '../../components/ui'
 import { TokenizedText } from '../../components/TokenizedText'
 import { SpeakButton } from '../../components/SpeakButton'
 import { VideoEmbed } from '../../components/VideoEmbed'
@@ -73,6 +73,17 @@ export default function MaterialDetail() {
   const [rewriteInstructions, setRewriteInstructions] = useState('')
   const [rewriting, setRewriting] = useState(false)
   const [lesson, setLesson] = useState<Lesson | null>(null)
+  const [editing, setEditing] = useState(false)
+  const [editForm, setEditForm] = useState({
+    title: '',
+    level: 'A2',
+    media_type: 'text',
+    source_url: '',
+    transcript: '',
+    translation: '',
+  })
+  const [savingEdit, setSavingEdit] = useState(false)
+  const [editError, setEditError] = useState<string | null>(null)
 
   function reload() {
     api.material(materialId).then(setMaterial).catch(() => {})
@@ -160,6 +171,41 @@ export default function MaterialDetail() {
     }
   }
 
+  function startEdit() {
+    if (!material) return
+    setEditForm({
+      title: material.title,
+      level: material.level,
+      media_type: material.media_type,
+      source_url: material.source_url ?? '',
+      transcript: material.transcript,
+      translation: material.translation ?? '',
+    })
+    setEditError(null)
+    setEditing(true)
+  }
+
+  async function saveEdit() {
+    setSavingEdit(true)
+    setEditError(null)
+    try {
+      const updated = await api.updateMaterial(materialId, {
+        title: editForm.title,
+        level: editForm.level,
+        media_type: editForm.media_type,
+        source_url: editForm.source_url.trim() || null,
+        transcript: editForm.transcript,
+        translation: editForm.translation.trim() || null,
+      })
+      setMaterial(updated)
+      setEditing(false)
+    } catch (e) {
+      setEditError(e instanceof Error ? e.message : 'Could not save changes')
+    } finally {
+      setSavingEdit(false)
+    }
+  }
+
   if (!material) return <Spinner />
 
   return (
@@ -171,12 +217,17 @@ export default function MaterialDetail() {
         <div className="mt-1 flex items-center gap-3">
           <h1 className="text-3xl">{material.title}</h1>
           <Badge>{material.level}</Badge>
-          <Link
-            to={`/tutor?material=${material.id}`}
-            className="ml-auto rounded-lg bg-accent-soft px-3 py-1.5 text-sm font-medium text-ink hover:brightness-95"
-          >
-            Ask the teacher
-          </Link>
+          <div className="ml-auto flex items-center gap-2">
+            <Button variant="soft" onClick={() => (editing ? setEditing(false) : startEdit())}>
+              {editing ? 'Cancel' : 'Edit'}
+            </Button>
+            <Link
+              to={`/tutor?material=${material.id}`}
+              className="rounded-lg bg-accent-soft px-3 py-1.5 text-sm font-medium text-ink hover:brightness-95"
+            >
+              Ask the teacher
+            </Link>
+          </div>
         </div>
         {material.source_url && (
           <a className="text-sm text-accent" href={material.source_url} target="_blank" rel="noreferrer">
@@ -184,6 +235,75 @@ export default function MaterialDetail() {
           </a>
         )}
       </div>
+
+      {editing && (
+        <Card className="space-y-3 p-5">
+          <div className="text-xs font-medium uppercase tracking-wide text-muted">
+            Edit material
+          </div>
+          <div className="grid gap-3 sm:grid-cols-2">
+            <Field label="Title">
+              <Input
+                value={editForm.title}
+                onChange={(e) => setEditForm({ ...editForm, title: e.target.value })}
+              />
+            </Field>
+            <div className="grid grid-cols-2 gap-3">
+              <Field label="Level">
+                <Select
+                  value={editForm.level}
+                  onChange={(e) => setEditForm({ ...editForm, level: e.target.value })}
+                >
+                  <option>A1</option>
+                  <option>A2</option>
+                  <option>B1</option>
+                  <option>B2</option>
+                </Select>
+              </Field>
+              <Field label="Type">
+                <Select
+                  value={editForm.media_type}
+                  onChange={(e) => setEditForm({ ...editForm, media_type: e.target.value })}
+                >
+                  <option value="text">text</option>
+                  <option value="video">video</option>
+                  <option value="podcast">podcast</option>
+                </Select>
+              </Field>
+            </div>
+          </div>
+          <Field label="Link (optional)">
+            <Input
+              value={editForm.source_url}
+              placeholder="https://..."
+              onChange={(e) => setEditForm({ ...editForm, source_url: e.target.value })}
+            />
+          </Field>
+          <Field label="Transcript">
+            <Textarea
+              rows={8}
+              value={editForm.transcript}
+              onChange={(e) => setEditForm({ ...editForm, transcript: e.target.value })}
+            />
+          </Field>
+          <Field label="Translation (optional)">
+            <Textarea
+              rows={4}
+              value={editForm.translation}
+              onChange={(e) => setEditForm({ ...editForm, translation: e.target.value })}
+            />
+          </Field>
+          <div className="flex items-center gap-2">
+            <Button onClick={saveEdit} disabled={savingEdit}>
+              {savingEdit ? <Spinner /> : 'Save changes'}
+            </Button>
+            <Button variant="ghost" onClick={() => setEditing(false)}>
+              Cancel
+            </Button>
+            {editError && <span className="text-sm text-danger">{editError}</span>}
+          </div>
+        </Card>
+      )}
 
       {lesson?.intro && (
         <Card className="border-accent/30 bg-accent-soft/40 p-4">

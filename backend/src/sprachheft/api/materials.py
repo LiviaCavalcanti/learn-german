@@ -5,7 +5,13 @@ from __future__ import annotations
 from fastapi import APIRouter, HTTPException, Query
 
 from sprachheft.api.deps import SessionDep
-from sprachheft.schemas import MaterialCreate, MaterialRead, MaterialSummary, RewriteIn
+from sprachheft.schemas import (
+    MaterialCreate,
+    MaterialRead,
+    MaterialSummary,
+    MaterialUpdate,
+    RewriteIn,
+)
 from sprachheft.services import materials as svc
 
 router = APIRouter(prefix="/materials", tags=["materials"])
@@ -42,6 +48,14 @@ def list_materials(session: SessionDep, lang: str | None = Query(None)):
 @router.get("/{material_id}", response_model=MaterialRead)
 def get_material(material_id: int, session: SessionDep):
     material = svc.get_material(session, material_id)
+    if not material:
+        raise HTTPException(status_code=404, detail="Material not found")
+    return material
+
+
+@router.patch("/{material_id}", response_model=MaterialRead)
+def update_material(material_id: int, data: MaterialUpdate, session: SessionDep):
+    material = svc.update_material(session, material_id, data)
     if not material:
         raise HTTPException(status_code=404, detail="Material not found")
     return material

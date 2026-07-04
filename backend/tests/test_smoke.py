@@ -63,6 +63,35 @@ def test_material_crud_and_manual_ingest():
         assert resp.status_code == 404
 
 
+def test_material_update_patches_only_sent_fields():
+    with TestClient(app) as client:
+        created = client.post(
+            "/materials",
+            json={
+                "title": "Alt",
+                "media_type": "text",
+                "level": "A2",
+                "transcript": "Ursprünglicher Text.",
+                "translation": "Original text.",
+            },
+        ).json()
+        material_id = created["id"]
+
+        resp = client.patch(
+            f"/materials/{material_id}",
+            json={"title": "Neu", "level": "B1", "transcript": "Bearbeiteter Text."},
+        )
+        assert resp.status_code == 200, resp.text
+        updated = resp.json()
+        assert updated["title"] == "Neu"
+        assert updated["level"] == "B1"
+        assert updated["transcript"] == "Bearbeiteter Text."
+        # Fields not sent are left untouched.
+        assert updated["translation"] == "Original text."
+
+        assert client.patch("/materials/999999", json={"title": "x"}).status_code == 404
+
+
 def test_manual_ingest_requires_transcript():
     with TestClient(app) as client:
         resp = client.post(

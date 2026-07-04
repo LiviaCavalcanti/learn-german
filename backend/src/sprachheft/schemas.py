@@ -35,6 +35,17 @@ class MaterialCreate(BaseModel):
     notes: str | None = None
 
 
+class MaterialUpdate(BaseModel):
+    """Partial update of a material (only fields sent in the request are changed)."""
+
+    title: str | None = None
+    media_type: MediaType | None = None
+    source_url: str | None = None
+    level: Level | None = None
+    transcript: str | None = None
+    translation: str | None = None
+
+
 class MaterialRead(BaseModel):
     model_config = ConfigDict(from_attributes=True)
 

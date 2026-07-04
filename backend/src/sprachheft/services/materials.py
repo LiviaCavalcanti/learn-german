@@ -8,7 +8,7 @@ from sqlmodel import Session, select
 from sprachheft.ingest import IngestRequest, resolve
 from sprachheft.languages import normalize_native, normalize_target
 from sprachheft.models import Exercise, Material, VocabItem
-from sprachheft.schemas import MaterialCreate
+from sprachheft.schemas import MaterialCreate, MaterialUpdate
 
 
 def create_material(session: Session, data: MaterialCreate) -> Material:
@@ -61,6 +61,20 @@ def list_materials(session: Session, lang: str | None = None) -> list[Material]:
 
 def get_material(session: Session, material_id: int) -> Material | None:
     return session.get(Material, material_id)
+
+
+def update_material(
+    session: Session, material_id: int, data: MaterialUpdate
+) -> Material | None:
+    material = session.get(Material, material_id)
+    if not material:
+        return None
+    for field, value in data.model_dump(exclude_unset=True).items():
+        setattr(material, field, value)
+    session.add(material)
+    session.commit()
+    session.refresh(material)
+    return material
 
 
 def counts_for(session: Session, material_id: int) -> tuple[int, int]:
