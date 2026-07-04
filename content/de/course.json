@@ -10091,40 +10091,2634 @@
           "unit": 2,
           "title": "Indirekte Rede & Modalität",
           "lessons": [
-            { "code": "b2.konjunktiv1", "title": "Konjunktiv I (reported speech)", "grammar_topics": ["b2.konjunktiv1"], "can_do": "I can report what others said.", "seed_text": "Der Kollege sagte, er habe die Datei gesendet. Sie meinte, das Projekt sei fast fertig. Man berichtet, die Firma werde bald wachsen." },
-            { "code": "b2.subjective-modals", "title": "Subjective modal verbs", "grammar_topics": ["b2.subjective-modals"], "can_do": "I can express probability and hearsay.", "seed_text": "Er will alles selbst programmiert haben. Sie soll sehr erfahren sein. Das Update dürfte bald fertig sein." },
-            { "code": "b2.futur2", "title": "Futur II (assumptions)", "grammar_topics": ["b2.futur2"], "can_do": "I can speculate about what will have happened.", "seed_text": "Bis morgen werde ich den Bericht fertiggestellt haben. Sie wird den Zug wohl verpasst haben. Bis Ende des Jahres werden wir das Projekt abgeschlossen haben." },
-            { "code": "b2.modal-particles", "title": "Modal particles", "grammar_topics": ["b2.modal-particles"], "can_do": "I can sound more natural and nuanced.", "seed_text": "Komm doch mal vorbei! Das ist ja interessant. Das weißt du doch. Es ist halt kompliziert. Wie heißt du noch mal? Das dauert eben seine Zeit." }
+            {
+              "code": "b2.konjunktiv1",
+              "title": "Konjunktiv I (reported speech)",
+              "grammar_topics": [
+                "b2.konjunktiv1"
+              ],
+              "can_do": "I can report what others said.",
+              "seed_text": "Der Kollege sagte, er habe die Datei gesendet. Sie meinte, das Projekt sei fast fertig. Man berichtet, die Firma werde bald wachsen.",
+              "intro": "In this lesson you'll report what others said with Konjunktiv I (indirect speech): er habe, sie sei, man werde, es gebe. When Konjunktiv I looks like the indicative, Konjunktiv II is used instead (sie hätten).",
+              "story": "Pressebericht: Neue Pläne der Firma TechNova\n\nGestern hat das Unternehmen TechNova auf einer Pressekonferenz seine Pläne für das nächste Jahr vorgestellt. Der Vorstand erklärte, man wolle das Unternehmen grundlegend verändern. In diesem Bericht wird zusammengefasst, was die Verantwortlichen gesagt haben. Dabei wird die indirekte Rede benutzt, um die Aussagen wiederzugeben.\n\nDer Geschäftsführer sagte, die Firma stehe vor einer wichtigen Phase. Man habe im letzten Jahr viel erreicht, aber es gebe noch viel zu tun. Die Umsätze seien gestiegen, und die Zahl der Kunden habe sich verdoppelt. Er betonte, das Unternehmen sei auf einem guten Weg.\n\nWeiter erklärte er, man werde in neue Technologien investieren. Besonders im Bereich der künstlichen Intelligenz sehe man großes Potenzial. Die Firma plane, hundert neue Mitarbeiter einzustellen. Er sagte, man suche vor allem gut ausgebildete Fachleute. Diese Fachleute könnten das Team entscheidend verstärken.\n\nDie Finanzchefin ergänzte, die Zahlen seien sehr positiv. Der Gewinn sei um zehn Prozent gestiegen, und man habe kaum Schulden. Sie sagte, das Unternehmen könne deshalb ohne Sorgen in die Zukunft blicken. Man wolle einen Teil des Gewinns in die Forschung stecken.\n\nAuch zu einem heiklen Thema äußerte sich der Vorstand. Es gab Gerüchte, die Firma wolle einen Konkurrenten kaufen. Der Geschäftsführer sagte, dazu könne er im Moment nichts sagen. Man prüfe verschiedene Möglichkeiten, aber es gebe noch keine Entscheidung. Er bat um Verständnis, dass er nicht mehr verraten dürfe.\n\nEin Journalist fragte, ob die Preise steigen würden. Der Geschäftsführer antwortete, das sei zurzeit nicht geplant. Die Kunden müssten sich keine Sorgen machen. Man wolle fair bleiben und die Qualität weiter verbessern. Er versicherte, die Zufriedenheit der Kunden stehe an erster Stelle.\n\nAm Ende der Konferenz zeigte sich der Vorstand optimistisch. Man sei stolz auf das Erreichte und blicke voller Zuversicht nach vorn. Die nächsten Monate würden spannend, sagte der Geschäftsführer. Er dankte allen Mitarbeitern und meinte, ohne ihr Engagement wäre der Erfolg nicht möglich gewesen.\n\nEin Analyst kommentierte die Pläne. Er sagte, das Unternehmen habe eine gute Ausgangslage. Der Markt sei zwar schwierig, aber TechNova sei gut vorbereitet. Man dürfe jedoch die Risiken nicht unterschätzen. Es komme nun darauf an, dass die Pläne auch umgesetzt würden.\n\nAuch die Gewerkschaft nahm Stellung. Ihr Vertreter sagte, man begrüße die neuen Stellen, doch man erwarte faire Löhne. Die Mitarbeiter dürften nicht vergessen werden. Er betonte, die Belegschaft habe ein Recht auf Mitsprache. Das Unternehmen solle diese Versprechen ernst nehmen.\n\nAuch die Mitarbeiter äußerten sich. Eine Angestellte sagte, sie freue sich über die neuen Chancen. Ein Kollege meinte, er sei gespannt, wie sich alles entwickle. Andere sagten, sie hätten noch Fragen, aber sie seien insgesamt zufrieden. Man merkte, dass die Stimmung gut sei.\n\nDie Reaktionen auf die Pläne waren überwiegend positiv. Ein Experte sagte, die Strategie sei mutig, aber sinnvoll. Andere meinten, man müsse abwarten, ob die Firma ihre Versprechen halten könne. Insgesamt herrschte jedoch die Meinung, TechNova habe eine klare Vision.\n\nDer Konjunktiv I wird für die indirekte Rede benutzt. Man zeigt damit, dass man etwas nur wiedergibt und nicht selbst behauptet. Typische Formen sind: er habe, sie sei, man werde, es gebe, er könne. Wenn der Konjunktiv I wie der Indikativ aussieht, benutzt man den Konjunktiv II: sie hätten statt sie haben. So bleibt die Aussage klar als fremde Meinung erkennbar.",
+              "questions": [
+                {
+                  "prompt": "Was hat TechNova gestern vorgestellt?",
+                  "translation": "What did TechNova present yesterday?",
+                  "reference": "Seine Pläne für das nächste Jahr auf einer Pressekonferenz."
+                },
+                {
+                  "prompt": "Was sagte der Geschäftsführer über das letzte Jahr?",
+                  "translation": "What did the CEO say about last year?",
+                  "reference": "Man habe viel erreicht; die Umsätze seien gestiegen und die Zahl der Kunden habe sich verdoppelt."
+                },
+                {
+                  "prompt": "In welchen Bereich will die Firma investieren?",
+                  "translation": "In which area does the company want to invest?",
+                  "reference": "In neue Technologien, besonders in künstliche Intelligenz."
+                },
+                {
+                  "prompt": "Was sagte die Finanzchefin über die Zahlen?",
+                  "translation": "What did the CFO say about the figures?",
+                  "reference": "Sie seien sehr positiv; der Gewinn sei um zehn Prozent gestiegen und man habe kaum Schulden."
+                },
+                {
+                  "prompt": "Was sagte der Vorstand zu dem Gerücht über den Kauf eines Konkurrenten?",
+                  "translation": "What did the board say about the rumour of buying a competitor?",
+                  "reference": "Dazu könne er nichts sagen; man prüfe Möglichkeiten, aber es gebe noch keine Entscheidung."
+                },
+                {
+                  "prompt": "Was antwortete der Geschäftsführer auf die Frage nach steigenden Preisen?",
+                  "translation": "How did the CEO answer the question about rising prices?",
+                  "reference": "Das sei nicht geplant; die Kunden müssten sich keine Sorgen machen."
+                },
+                {
+                  "prompt": "Wie waren die Reaktionen auf die Pläne?",
+                  "translation": "How were the reactions to the plans?",
+                  "reference": "Überwiegend positiv; ein Experte nannte die Strategie mutig, aber sinnvoll."
+                },
+                {
+                  "prompt": "Wozu benutzt man den Konjunktiv I?",
+                  "translation": "What is Konjunktiv I used for?",
+                  "reference": "Für die indirekte Rede, um zu zeigen, dass man etwas nur wiedergibt und nicht selbst behauptet."
+                }
+              ],
+              "exercises": [
+                {
+                  "type": "fill-in-blank",
+                  "instructions": "Ergänze den Konjunktiv I von haben (3. Person Singular).",
+                  "payload": {
+                    "items": [
+                      {
+                        "prompt": "Der Kollege sagte, er ___ die Datei gesendet."
+                      }
+                    ],
+                    "hints": []
+                  },
+                  "answer_key": {
+                    "items": [
+                      {
+                        "answer": "habe"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "type": "fill-in-blank",
+                  "instructions": "Ergänze den Konjunktiv I von sein (3. Person Singular).",
+                  "payload": {
+                    "items": [
+                      {
+                        "prompt": "Sie meinte, das Projekt ___ fast fertig."
+                      }
+                    ],
+                    "hints": []
+                  },
+                  "answer_key": {
+                    "items": [
+                      {
+                        "answer": "sei"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "type": "multiple-choice",
+                  "instructions": "Wähle den Konjunktiv I von werden.",
+                  "payload": {
+                    "items": [
+                      {
+                        "prompt": "Man berichtet, die Firma ___ bald wachsen.",
+                        "options": [
+                          "werde",
+                          "wird",
+                          "würde"
+                        ]
+                      }
+                    ],
+                    "hints": []
+                  },
+                  "answer_key": {
+                    "items": [
+                      {
+                        "answer": "werde"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "type": "fill-in-blank",
+                  "instructions": "Ergänze den Konjunktiv I von geben (es ___).",
+                  "payload": {
+                    "items": [
+                      {
+                        "prompt": "Er sagte, es ___ noch viel zu tun."
+                      }
+                    ],
+                    "hints": []
+                  },
+                  "answer_key": {
+                    "items": [
+                      {
+                        "answer": "gebe"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "type": "reorder",
+                  "instructions": "Bringe die Wörter in die richtige Reihenfolge.",
+                  "payload": {
+                    "items": [
+                      {
+                        "tokens": [
+                          "Er",
+                          "sagte",
+                          "er",
+                          "habe",
+                          "die",
+                          "Datei",
+                          "gesendet"
+                        ]
+                      }
+                    ],
+                    "hints": []
+                  },
+                  "answer_key": {
+                    "items": [
+                      {
+                        "answer": "Er sagte, er habe die Datei gesendet"
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "code": "b2.subjective-modals",
+              "title": "Subjective modal verbs",
+              "grammar_topics": [
+                "b2.subjective-modals"
+              ],
+              "can_do": "I can express probability and hearsay.",
+              "seed_text": "Er will alles selbst programmiert haben. Sie soll sehr erfahren sein. Das Update dürfte bald fertig sein.",
+              "intro": "In this lesson you'll express probability and hearsay with subjective modal verbs: sollen (I heard: er soll erfahren sein), wollen (he claims: er will es programmiert haben), and dürfte/müsste/könnte for likelihood.",
+              "story": "In jedem Büro gibt es Gerüchte und Vermutungen. Man hört etwas, ist sich aber nicht sicher, ob es stimmt. Für solche Fälle gibt es im Deutschen die subjektiven Modalverben. Mit ihnen kann man ausdrücken, was jemand behauptet, was man gehört hat oder was wahrscheinlich ist. Heute erzähle ich euch von den Gerüchten über meinen neuen Kollegen.\n\nSeit einer Woche haben wir einen neuen Kollegen, und alle reden über ihn. Er soll ein echtes Genie sein, sagt man. Angeblich hat er schon große Projekte geleitet. Er will sogar eine berühmte App selbst programmiert haben. Ob das wirklich stimmt, weiß niemand genau, aber die Geschichte klingt beeindruckend.\n\n„Er soll früher bei einer sehr bekannten Firma gearbeitet haben“, erzählt eine Kollegin. „Und er will dort das ganze System neu aufgebaut haben.“ Ich bin ein bisschen skeptisch. So ein junger Mensch dürfte kaum so viel Erfahrung haben. Aber vielleicht täusche ich mich ja auch.\n\nAm Montag habe ich ihn zum ersten Mal richtig getroffen. Er müsste eigentlich sehr stolz sein, dachte ich, aber er war ganz bescheiden. „Das kann nicht der große Experte sein“, dachte ich zuerst. Doch als er anfing zu reden, merkte ich schnell: Er versteht wirklich viel. Die Gerüchte könnten also doch wahr sein.\n\nSpäter fragte ich einen anderen Kollegen. „Stimmt es, dass er so erfahren ist?“ „Das mag sein“, antwortete er. „Aber man sollte nicht alles glauben. Er dürfte einfach ein guter Programmierer sein, mehr nicht.“ Da hatte er wohl recht. Man muss vorsichtig sein mit solchen Geschichten.\n\nEs gab noch mehr Gerüchte. Er soll ein sehr hohes Gehalt bekommen, hieß es. Angeblich will der Chef ihn unbedingt behalten. „Er muss dem Chef wirklich wichtig sein“, sagte jemand. Aber auch das konnte niemand beweisen. Vielleicht wollte einfach jemand die Geschichte interessanter machen.\n\nNach ein paar Tagen legte sich die Aufregung. Der neue Kollege erwies sich als netter, normaler Mensch. Er ist gut in seinem Job, aber er ist kein Zauberer. Die meisten Gerüchte dürften stark übertrieben gewesen sein. „So ist es immer“, sagte meine Kollegin. „Am Anfang wird viel geredet.“\n\nIch beobachtete auch, wie der neue Kollege selbst mit den Gerüchten umging. Er müsste sie eigentlich gehört haben, aber er ließ sich nichts anmerken. „Die Leute sollen ruhig reden“, sagte er einmal lächelnd. „Das mag ja unterhaltsam sein.“ Diese Gelassenheit gefiel mir sehr.\n\nManchmal frage ich mich, wie solche Gerüchte überhaupt entstehen. Jemand hört etwas, erzählt es weiter, und am Ende klingt alles viel größer. „Die Hälfte davon kann gar nicht stimmen“, sagt mein Chef. „Man müsste immer nachfragen, bevor man etwas glaubt.“ Da hat er sicher recht.\n\nAm Ende habe ich etwas gelernt. Man sollte Gerüchte nicht zu ernst nehmen. Vieles, was erzählt wird, muss nicht stimmen. Der neue Kollege will vieles gemacht haben, und manches davon mag wahr sein. Aber am wichtigsten ist, dass er ein guter Mensch und ein guter Kollege ist.\n\nSubjektive Modalverben drücken eine Vermutung oder eine fremde Behauptung aus. „Sollen“ bedeutet, dass man es von anderen gehört hat: Er soll erfahren sein. „Wollen“ bedeutet, dass jemand etwas über sich selbst behauptet: Er will es programmiert haben. „Dürfte“, „müsste“ und „könnte“ zeigen, wie wahrscheinlich etwas ist. So kann ich vorsichtig über Dinge sprechen, die ich nicht genau weiß.",
+              "questions": [
+                {
+                  "prompt": "Wofür benutzt man subjektive Modalverben?",
+                  "translation": "What are subjective modal verbs used for?",
+                  "reference": "Um auszudrücken, was jemand behauptet, was man gehört hat oder was wahrscheinlich ist."
+                },
+                {
+                  "prompt": "Was sagt man über den neuen Kollegen?",
+                  "translation": "What do people say about the new colleague?",
+                  "reference": "Er soll ein echtes Genie sein und angeblich große Projekte geleitet haben."
+                },
+                {
+                  "prompt": "Was behauptet der neue Kollege über sich selbst?",
+                  "translation": "What does the new colleague claim about himself?",
+                  "reference": "Er will eine berühmte App selbst programmiert haben."
+                },
+                {
+                  "prompt": "Warum war der Erzähler zuerst skeptisch?",
+                  "translation": "Why was the narrator skeptical at first?",
+                  "reference": "Weil so ein junger Mensch kaum so viel Erfahrung haben dürfte."
+                },
+                {
+                  "prompt": "Was rät der andere Kollege über die Gerüchte?",
+                  "translation": "What does the other colleague advise about the rumours?",
+                  "reference": "Man solle nicht alles glauben; der neue Kollege dürfte einfach ein guter Programmierer sein."
+                },
+                {
+                  "prompt": "Welches weitere Gerücht gab es über das Gehalt?",
+                  "translation": "What other rumour was there about the salary?",
+                  "reference": "Er solle ein sehr hohes Gehalt bekommen, und der Chef wolle ihn unbedingt behalten."
+                },
+                {
+                  "prompt": "Wie erwies sich der neue Kollege am Ende?",
+                  "translation": "How did the new colleague turn out in the end?",
+                  "reference": "Als netter, normaler Mensch, gut in seinem Job, aber kein Zauberer; die Gerüchte waren übertrieben."
+                },
+                {
+                  "prompt": "Was bedeuten „sollen“ und „wollen“ als subjektive Modalverben?",
+                  "translation": "What do sollen and wollen mean as subjective modal verbs?",
+                  "reference": "„sollen“ = man hat es von anderen gehört (er soll erfahren sein); „wollen“ = jemand behauptet es über sich selbst (er will es programmiert haben)."
+                }
+              ],
+              "exercises": [
+                {
+                  "type": "fill-in-blank",
+                  "instructions": "Ergänze das subjektive Modalverb (er behauptet es selbst).",
+                  "payload": {
+                    "items": [
+                      {
+                        "prompt": "Er ___ alles selbst programmiert haben."
+                      }
+                    ],
+                    "hints": []
+                  },
+                  "answer_key": {
+                    "items": [
+                      {
+                        "answer": "will"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "type": "multiple-choice",
+                  "instructions": "Wähle das subjektive Modalverb (Hörensagen).",
+                  "payload": {
+                    "items": [
+                      {
+                        "prompt": "Sie ___ sehr erfahren sein.",
+                        "options": [
+                          "soll",
+                          "will",
+                          "muss"
+                        ]
+                      }
+                    ],
+                    "hints": []
+                  },
+                  "answer_key": {
+                    "items": [
+                      {
+                        "answer": "soll"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "type": "fill-in-blank",
+                  "instructions": "Ergänze das subjektive Modalverb (wahrscheinlich).",
+                  "payload": {
+                    "items": [
+                      {
+                        "prompt": "Das Update ___ bald fertig sein."
+                      }
+                    ],
+                    "hints": []
+                  },
+                  "answer_key": {
+                    "items": [
+                      {
+                        "answer": "dürfte"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "type": "multiple-choice",
+                  "instructions": "Wähle das passende Modalverb (Möglichkeit).",
+                  "payload": {
+                    "items": [
+                      {
+                        "prompt": "Das ___ sein, aber sicher ist es nicht.",
+                        "options": [
+                          "mag",
+                          "will",
+                          "soll"
+                        ]
+                      }
+                    ],
+                    "hints": []
+                  },
+                  "answer_key": {
+                    "items": [
+                      {
+                        "answer": "mag"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "type": "reorder",
+                  "instructions": "Bringe die Wörter in die richtige Reihenfolge.",
+                  "payload": {
+                    "items": [
+                      {
+                        "tokens": [
+                          "Sie",
+                          "soll",
+                          "sehr",
+                          "erfahren",
+                          "sein"
+                        ]
+                      }
+                    ],
+                    "hints": []
+                  },
+                  "answer_key": {
+                    "items": [
+                      {
+                        "answer": "Sie soll sehr erfahren sein"
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "code": "b2.futur2",
+              "title": "Futur II (assumptions)",
+              "grammar_topics": [
+                "b2.futur2"
+              ],
+              "can_do": "I can speculate about what will have happened.",
+              "seed_text": "Bis morgen werde ich den Bericht fertiggestellt haben. Sie wird den Zug wohl verpasst haben. Bis Ende des Jahres werden wir das Projekt abgeschlossen haben.",
+              "intro": "In this lesson you'll use Futur II (werden + past participle + haben/sein) for actions that will be completed in the future (Ich werde es beendet haben) and for assumptions about the past (Sie wird den Zug verpasst haben).",
+              "story": "Am Ende eines großen Projekts denke ich oft über die Zukunft nach. Was werde ich bis dann erreicht haben? Und was ist wohl gerade passiert, während ich hier sitze? Für solche Gedanken benutzt man im Deutschen das Futur II. Damit kann man ausdrücken, was in der Zukunft abgeschlossen sein wird, und Vermutungen über die Vergangenheit anstellen.\n\nHeute habe ich viel zu tun. Bis heute Abend werde ich den ganzen Bericht fertiggestellt haben. Bis morgen früh werde ich auch die letzten E-Mails beantwortet haben. Und bis zum Ende der Woche werden wir das komplette Projekt abgeschlossen haben. Ich freue mich schon auf diesen Moment.\n\nMein Kollege ist heute nicht im Büro. „Wo ist er nur?“, frage ich mich. Er wird wohl den Zug verpasst haben. Oder er wird verschlafen haben. Vielleicht ist er auch krank geworden. „Er wird bestimmt einen guten Grund gehabt haben“, sagt meine Chefin. Wir machen uns aber keine großen Sorgen.\n\nAuch über andere Dinge stelle ich Vermutungen an. Die Kundin hat sich noch nicht gemeldet. Sie wird die Nachricht wohl noch nicht gelesen haben. Oder sie wird zu beschäftigt gewesen sein. „Sie wird sich schon melden“, denke ich. Manchmal muss man einfach Geduld haben.\n\nIch plane auch weiter in die Zukunft. In fünf Jahren werde ich hoffentlich viel erreicht haben. Bis dahin werde ich vielleicht befördert worden sein. Ich werde neue Fähigkeiten gelernt und viele Projekte geleitet haben. Wenn ich zurückblicke, werde ich stolz auf meinen Weg sein.\n\nMeine Freundin und ich sprechen oft über solche Pläne. „Bis wir vierzig sind, werden wir sicher ein Haus gekauft haben“, sagt sie. „Und wir werden bestimmt viel gereist sein.“ Ich lächle. „Ja, und wir werden hoffentlich immer noch glücklich sein.“ Solche Gedanken geben uns Kraft.\n\nAm Abend denke ich an den vergangenen Tag. Ich habe fast alles geschafft. „Der Chef wird zufrieden sein“, denke ich. Er wird meinen Bericht inzwischen gelesen haben. Vielleicht wird er ihn sogar gelobt haben. Morgen werde ich es erfahren. Bis dahin bleibt es eine Vermutung.\n\nAuch meine Eltern rufe ich noch an. Sie sind nicht zu Hause. „Sie werden wohl spazieren gegangen sein“, denke ich. Oder sie werden schon geschlafen haben, denn es ist spät. Ich schreibe ihnen eine Nachricht. Bis morgen werden sie sie bestimmt gelesen haben.\n\nAuch an das Wochenende denke ich. Bis Samstag werde ich die ganze Woche geschafft haben. Meine Freunde werden bis dahin schon Pläne gemacht haben. „Sie werden bestimmt etwas Schönes organisiert haben“, hoffe ich. Ich freue mich jetzt schon darauf.\n\nBevor ich schlafe, mache ich noch eine kleine Liste. Bis zum nächsten Monat werde ich viele Dinge erledigt haben. Ich bin sicher: Wenn ich fleißig bleibe, werde ich meine Ziele erreicht haben. Das Gefühl, etwas geschafft zu haben, ist wunderbar.\n\nDas Futur II wird mit „werden“, dem Partizip II und „haben“ oder „sein“ gebildet: Ich werde den Bericht fertiggestellt haben. Es hat zwei Bedeutungen. Erstens beschreibt es eine Handlung, die in der Zukunft abgeschlossen sein wird. Zweitens drückt es eine Vermutung über die Vergangenheit aus: Sie wird den Zug verpasst haben. So kann man über abgeschlossene Zukunft und über wahrscheinliche Vergangenheit sprechen.",
+              "questions": [
+                {
+                  "prompt": "Wozu benutzt man das Futur II?",
+                  "translation": "What is Futur II used for?",
+                  "reference": "Um auszudrücken, was in der Zukunft abgeschlossen sein wird, und um Vermutungen über die Vergangenheit anzustellen."
+                },
+                {
+                  "prompt": "Was wird der Erzähler bis heute Abend erledigt haben?",
+                  "translation": "What will the narrator have done by this evening?",
+                  "reference": "Er wird den ganzen Bericht fertiggestellt haben."
+                },
+                {
+                  "prompt": "Warum ist der Kollege wohl nicht im Büro?",
+                  "translation": "Why is the colleague probably not at the office?",
+                  "reference": "Er wird wohl den Zug verpasst oder verschlafen haben, oder er ist krank geworden."
+                },
+                {
+                  "prompt": "Warum hat sich die Kundin noch nicht gemeldet?",
+                  "translation": "Why hasn't the customer been in touch yet?",
+                  "reference": "Sie wird die Nachricht wohl noch nicht gelesen haben oder zu beschäftigt gewesen sein."
+                },
+                {
+                  "prompt": "Was wird der Erzähler in fünf Jahren erreicht haben?",
+                  "translation": "What will the narrator have achieved in five years?",
+                  "reference": "Er wird vielleicht befördert worden sein, neue Fähigkeiten gelernt und viele Projekte geleitet haben."
+                },
+                {
+                  "prompt": "Was sagt die Freundin über die Zukunft mit vierzig?",
+                  "translation": "What does the girlfriend say about the future at forty?",
+                  "reference": "Sie werden sicher ein Haus gekauft haben und viel gereist sein."
+                },
+                {
+                  "prompt": "Was vermutet der Erzähler am Abend über den Chef?",
+                  "translation": "What does the narrator assume about the boss in the evening?",
+                  "reference": "Der Chef wird seinen Bericht inzwischen gelesen und ihn vielleicht gelobt haben."
+                },
+                {
+                  "prompt": "Wie bildet man das Futur II?",
+                  "translation": "How is Futur II formed?",
+                  "reference": "Mit „werden“ + Partizip II + „haben“/„sein“ (ich werde den Bericht fertiggestellt haben)."
+                }
+              ],
+              "exercises": [
+                {
+                  "type": "fill-in-blank",
+                  "instructions": "Ergänze das Hilfsverb im Futur II (haben).",
+                  "payload": {
+                    "items": [
+                      {
+                        "prompt": "Bis morgen werde ich den Bericht fertiggestellt ___."
+                      }
+                    ],
+                    "hints": []
+                  },
+                  "answer_key": {
+                    "items": [
+                      {
+                        "answer": "haben"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "type": "fill-in-blank",
+                  "instructions": "Ergänze „werden“ (Futur II, 3. Person Singular).",
+                  "payload": {
+                    "items": [
+                      {
+                        "prompt": "Sie ___ den Zug wohl verpasst haben."
+                      }
+                    ],
+                    "hints": []
+                  },
+                  "answer_key": {
+                    "items": [
+                      {
+                        "answer": "wird"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "type": "multiple-choice",
+                  "instructions": "Wähle das Hilfsverb.",
+                  "payload": {
+                    "items": [
+                      {
+                        "prompt": "Bis Ende des Jahres werden wir das Projekt abgeschlossen ___.",
+                        "options": [
+                          "haben",
+                          "sein",
+                          "werden"
+                        ]
+                      }
+                    ],
+                    "hints": []
+                  },
+                  "answer_key": {
+                    "items": [
+                      {
+                        "answer": "haben"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "type": "fill-in-blank",
+                  "instructions": "Ergänze das Partizip II von verpassen.",
+                  "payload": {
+                    "items": [
+                      {
+                        "prompt": "Er wird den Zug ___ haben."
+                      }
+                    ],
+                    "hints": []
+                  },
+                  "answer_key": {
+                    "items": [
+                      {
+                        "answer": "verpasst"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "type": "reorder",
+                  "instructions": "Bringe die Wörter in die richtige Reihenfolge.",
+                  "payload": {
+                    "items": [
+                      {
+                        "tokens": [
+                          "Sie",
+                          "wird",
+                          "den",
+                          "Zug",
+                          "verpasst",
+                          "haben"
+                        ]
+                      }
+                    ],
+                    "hints": []
+                  },
+                  "answer_key": {
+                    "items": [
+                      {
+                        "answer": "Sie wird den Zug verpasst haben"
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "code": "b2.modal-particles",
+              "title": "Modal particles",
+              "grammar_topics": [
+                "b2.modal-particles"
+              ],
+              "can_do": "I can sound more natural and nuanced.",
+              "seed_text": "Komm doch mal vorbei! Das ist ja interessant. Das weißt du doch. Es ist halt kompliziert. Wie heißt du noch mal? Das dauert eben seine Zeit.",
+              "intro": "In this lesson you'll sound more natural with modal particles (doch, ja, halt, mal, eben, denn, wohl). They don't change the meaning but add nuance — friendliness, surprise, impatience or acceptance.",
+              "story": "Modalpartikeln sind kleine Wörter, die im Deutschen sehr wichtig sind. Sie ändern nicht die Bedeutung eines Satzes, aber sie geben ihm eine bestimmte Färbung. Mit ihnen klingt man natürlicher und drückt Gefühle wie Überraschung, Ungeduld oder Freundlichkeit aus. Heute erzähle ich euch von einem ganz normalen Tag, an dem ich viele solche Wörter benutzt habe.\n\nAm Morgen rief mich mein Freund an. „Komm doch mal vorbei!“, sagte er. „Wir haben uns ja schon lange nicht gesehen.“ „Das ist ja eine tolle Idee“, antwortete ich. „Aber ich muss halt zuerst arbeiten. Wie heißt du noch mal deine neue Adresse?“ Wir lachten, denn natürlich kannte ich seine Adresse.\n\nIm Büro war viel los. „Wo ist denn der Bericht?“, fragte mein Chef. „Der liegt doch auf Ihrem Tisch“, sagte ich. „Ach ja, stimmt“, sagte er. „Das habe ich wohl übersehen.“ Solche kleinen Wörter machten das Gespräch gleich viel freundlicher. Ohne sie hätte alles viel härter geklungen.\n\nAm Mittag beschwerte sich eine Kollegin. „Das dauert eben seine Zeit“, sagte sie. „Man kann halt nicht alles auf einmal machen.“ „Das ist schon richtig“, antwortete ich. „Aber wir sollten uns trotzdem beeilen.“ „Na gut“, sagte sie, „dann machen wir mal weiter.“ So kamen wir wieder gut voran.\n\nAm Nachmittag hatte ich ein Problem mit dem Computer. „Was ist denn jetzt los?“, dachte ich. „Das gibt es doch nicht!“ Ein Kollege half mir. „Probier es mal so“, sagte er. „Das klappt schon.“ Und tatsächlich, es funktionierte. „Na also“, sagte ich erleichtert. „Das war ja gar nicht so schwer.“\n\nSpäter kam ein neuer Kollege zu mir. „Könntest du mir mal helfen?“, fragte er höflich. „Klar, komm doch her“, sagte ich. „Das ist ja ganz einfach. Schau mal, du musst hier eben klicken.“ Er bedankte sich. „Das ist wirklich nett von dir.“ „Kein Problem“, sagte ich. „Das machen wir doch gern.“\n\nAm Abend traf ich Freunde in einem Café. „Wie war denn dein Tag?“, fragten sie. „Ach, ganz normal“, sagte ich. „Es war halt viel zu tun.“ „Trink doch erst mal einen Kaffee“, sagte einer. „Dann geht es dir gleich besser.“ Wir redeten und lachten, und der Stress war schnell vergessen.\n\nZu Hause rief mich meine Mutter an. „Du klingst ja müde“, sagte sie. „Ruh dich doch ein bisschen aus.“ „Mach ich, Mama“, sagte ich. „Es war eben ein langer Tag.“ „Das kenne ich doch“, sagte sie und lachte. So ein kurzes Gespräch tut immer gut.\n\nBevor ich ins Bett ging, dachte ich noch kurz nach. „Das war ja ein voller Tag“, sagte ich mir. „Aber es war halt auch ein schöner.“ Man muss die kleinen Momente eben genießen. Und morgen ist ja auch noch ein Tag.\n\nSo ein Tag zeigt, wie oft man Modalpartikeln benutzt. Sie sind fast in jedem Satz zu hören. „Komm doch mal“, „das ist ja toll“, „es dauert eben“ — ohne diese Wörter klingt Deutsch steif und unnatürlich. Für Lernende sind sie schwierig, aber sie sind der Schlüssel zu einer natürlichen Sprache.\n\nModalpartikeln haben je nach Situation eine andere Wirkung. „Doch“ kann eine Bitte freundlicher machen oder Überraschung zeigen. „Ja“ drückt aus, dass etwas bekannt oder offensichtlich ist. „Halt“ und „eben“ bedeuten, dass man etwas akzeptiert. „Mal“ macht eine Aufforderung lockerer. Man lernt sie am besten, indem man viel zuhört und dann selbst ausprobiert.",
+              "questions": [
+                {
+                  "prompt": "Was machen Modalpartikeln mit einem Satz?",
+                  "translation": "What do modal particles do to a sentence?",
+                  "reference": "Sie ändern nicht die Bedeutung, aber geben ihm eine bestimmte Färbung (Überraschung, Ungeduld, Freundlichkeit)."
+                },
+                {
+                  "prompt": "Was sagte der Freund am Morgen am Telefon?",
+                  "translation": "What did the friend say on the phone in the morning?",
+                  "reference": "„Komm doch mal vorbei! Wir haben uns ja schon lange nicht gesehen.“"
+                },
+                {
+                  "prompt": "Wo lag der Bericht, den der Chef suchte?",
+                  "translation": "Where was the report the boss was looking for?",
+                  "reference": "Er lag auf dem Tisch des Chefs; er hatte ihn wohl übersehen."
+                },
+                {
+                  "prompt": "Was sagte die Kollegin über die Arbeit am Mittag?",
+                  "translation": "What did the colleague say about the work at midday?",
+                  "reference": "„Das dauert eben seine Zeit; man kann halt nicht alles auf einmal machen.“"
+                },
+                {
+                  "prompt": "Wie half der Kollege beim Computerproblem?",
+                  "translation": "How did the colleague help with the computer problem?",
+                  "reference": "Er sagte „Probier es mal so“, und es funktionierte."
+                },
+                {
+                  "prompt": "Wie reagierte der Erzähler, als der neue Kollege um Hilfe bat?",
+                  "translation": "How did the narrator react when the new colleague asked for help?",
+                  "reference": "Freundlich: „Klar, komm doch her, das ist ja ganz einfach.“"
+                },
+                {
+                  "prompt": "Warum sind Modalpartikeln für Lernende wichtig?",
+                  "translation": "Why are modal particles important for learners?",
+                  "reference": "Weil ohne sie Deutsch steif und unnatürlich klingt; sie sind der Schlüssel zu einer natürlichen Sprache."
+                },
+                {
+                  "prompt": "Welche Wirkung haben „doch“, „ja“ und „mal“?",
+                  "translation": "What effect do doch, ja and mal have?",
+                  "reference": "„doch“ macht eine Bitte freundlicher oder zeigt Überraschung; „ja“ zeigt, dass etwas bekannt/offensichtlich ist; „mal“ macht eine Aufforderung lockerer."
+                }
+              ],
+              "exercises": [
+                {
+                  "type": "fill-in-blank",
+                  "instructions": "Ergänze die Modalpartikel (freundliche Aufforderung).",
+                  "payload": {
+                    "items": [
+                      {
+                        "prompt": "Komm ___ mal vorbei!"
+                      }
+                    ],
+                    "hints": []
+                  },
+                  "answer_key": {
+                    "items": [
+                      {
+                        "answer": "doch"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "type": "multiple-choice",
+                  "instructions": "Wähle die Modalpartikel (Überraschung / etwas Offensichtliches).",
+                  "payload": {
+                    "items": [
+                      {
+                        "prompt": "Das ist ___ interessant!",
+                        "options": [
+                          "ja",
+                          "mal",
+                          "denn"
+                        ]
+                      }
+                    ],
+                    "hints": []
+                  },
+                  "answer_key": {
+                    "items": [
+                      {
+                        "answer": "ja"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "type": "fill-in-blank",
+                  "instructions": "Ergänze die Modalpartikel (man akzeptiert es).",
+                  "payload": {
+                    "items": [
+                      {
+                        "prompt": "Es ist ___ kompliziert."
+                      }
+                    ],
+                    "hints": []
+                  },
+                  "answer_key": {
+                    "items": [
+                      {
+                        "answer": "halt"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "type": "fill-in-blank",
+                  "instructions": "Ergänze das Wort (höfliche Nachfrage: noch ___).",
+                  "payload": {
+                    "items": [
+                      {
+                        "prompt": "Wie heißt du ___ mal?"
+                      }
+                    ],
+                    "hints": []
+                  },
+                  "answer_key": {
+                    "items": [
+                      {
+                        "answer": "noch"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "type": "reorder",
+                  "instructions": "Bringe die Wörter in die richtige Reihenfolge.",
+                  "payload": {
+                    "items": [
+                      {
+                        "tokens": [
+                          "Komm",
+                          "doch",
+                          "mal",
+                          "vorbei"
+                        ]
+                      }
+                    ],
+                    "hints": []
+                  },
+                  "answer_key": {
+                    "items": [
+                      {
+                        "answer": "Komm doch mal vorbei"
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
           ]
         },
         {
           "unit": 3,
           "title": "Nominalstil & Wortbildung",
           "lessons": [
-            { "code": "b2.nominalization", "title": "Nominalization ↔ Verbalization", "grammar_topics": ["b2.nominalization"], "can_do": "I can switch between nominal and verbal style.", "seed_text": "Nach der Prüfung des Berichts trafen wir eine Entscheidung. Die Einführung der neuen Software erfolgt im Herbst. Zur Lösung des Problems brauchen wir mehr Zeit." },
-            { "code": "b2.word-formation", "title": "Word formation", "grammar_topics": ["b2.word-formation"], "can_do": "I can understand and build complex words.", "seed_text": "Die Entwicklungsumgebung ist benutzerfreundlich. Unsere Zusammenarbeit war sehr erfolgreich. Die Fehlermeldung war unverständlich und die Datenbank kurz unerreichbar." },
-            { "code": "b2.genitive-prepositions", "title": "Genitive prepositions", "grammar_topics": ["b2.genitive-prepositions"], "can_do": "I can use formal prepositions.", "seed_text": "Trotz des Regens kamen alle pünktlich. Während der Besprechung klingelte mehrmals das Telefon. Aufgrund eines Fehlers verzögert sich das Projekt." },
-            { "code": "b2.funktionsverbgefuege", "title": "Funktionsverbgefüge", "grammar_topics": ["b2.funktionsverbgefuege"], "can_do": "I can use light-verb constructions.", "seed_text": "Wir treffen heute eine Entscheidung und stellen eine wichtige Frage. Das Projekt kommt langsam in Gang. Ich nehme Rücksicht auf das ganze Team." }
+            {
+              "code": "b2.nominalization",
+              "title": "Nominalization ↔ Verbalization",
+              "grammar_topics": [
+                "b2.nominalization"
+              ],
+              "can_do": "I can switch between nominal and verbal style.",
+              "seed_text": "Nach der Prüfung des Berichts trafen wir eine Entscheidung. Die Einführung der neuen Software erfolgt im Herbst. Zur Lösung des Problems brauchen wir mehr Zeit.",
+              "intro": "In this lesson you'll switch between nominal and verbal style. Formal German often turns a verb into a noun (prüfen → die Prüfung) with a preposition and the genitive: nach der Prüfung des Berichts.",
+              "story": "Protokoll der Sitzung vom 12. März\n\nIn dieser Sitzung ging es um die Planung des neuen Projekts. Nach der Begrüßung der Teilnehmer begann die Besprechung der wichtigsten Punkte. In diesem Protokoll werden die Ergebnisse zusammengefasst. Dabei wird der für offizielle Texte typische Nominalstil verwendet.\n\nZu Beginn erfolgte die Vorstellung des Projektplans. Nach der Prüfung der Zahlen trafen wir eine wichtige Entscheidung. Die Umsetzung des Plans soll im Herbst beginnen. Zur Vorbereitung der einzelnen Schritte wurde eine Arbeitsgruppe gebildet. Die Leitung der Gruppe übernimmt Frau Berger.\n\nEin wichtiges Thema war die Einführung der neuen Software. Nach langer Diskussion einigten wir uns auf einen Zeitplan. Die Installation des Systems erfolgt im Oktober. Für die Schulung der Mitarbeiter sind zwei Wochen vorgesehen. Nach der Schulung beginnt die eigentliche Nutzung des Programms.\n\nAuch die Kosten wurden besprochen. Zur Senkung der Ausgaben schlug Herr Klein mehrere Maßnahmen vor. Die Reduzierung der Reisekosten war ein wichtiger Punkt. Nach der Berechnung der Zahlen zeigte sich, dass große Einsparungen möglich sind. Die Genehmigung des Budgets steht allerdings noch aus.\n\nBei der Verteilung der Aufgaben gab es zunächst unterschiedliche Meinungen. Doch nach einer offenen Aussprache fanden wir eine gute Lösung. Zur Vermeidung von Missverständnissen wurde alles schriftlich festgehalten. Die Verantwortung für die Technik liegt bei Herrn Wagner. Die Betreuung der Kunden übernimmt das Serviceteam.\n\nAuch die Sicherheit der Daten war ein Thema. Zur Verhinderung von Angriffen wird ein neues System eingeführt. Nach der Installation der Software erfolgt eine gründliche Prüfung. Die Schulung des Personals ist für den Schutz der Informationen entscheidend.\n\nEin weiterer Punkt war die Verbesserung der Zusammenarbeit. Zur Förderung des Austauschs sollen regelmäßige Treffen stattfinden. Die Einrichtung eines gemeinsamen Kalenders wurde beschlossen. Nach der Einführung dieser Neuerungen erwarten wir eine deutliche Steigerung der Effizienz.\n\nZum Abschluss der Sitzung erfolgte die Festlegung der nächsten Termine. Die Fertigstellung des ersten Berichts ist für Ende April geplant. Vor der Veröffentlichung wird eine gründliche Kontrolle durchgeführt. Nach der Zustimmung der Geschäftsleitung kann das Projekt offiziell starten.\n\nDie Verteilung der Ressourcen wurde ebenfalls geregelt. Zur Sicherung der Qualität ist die Einstellung weiterer Fachkräfte nötig. Nach der Prüfung der Bewerbungen erfolgt die Auswahl der Kandidaten. Die Einarbeitung der neuen Kollegen beginnt im Mai.\n\nAuch die Frage der Weiterbildung wurde behandelt. Zur Verbesserung der Fähigkeiten sollen mehrere Kurse angeboten werden. Die Anmeldung zu den Kursen erfolgt online. Nach dem Abschluss der Weiterbildung erhalten die Teilnehmer ein Zertifikat. Die Finanzierung der Kurse übernimmt die Firma.\n\nAuch die Werbung für das neue Produkt wurde besprochen. Die Gestaltung der Kampagne übernimmt eine externe Agentur. Nach der Auswahl der Bilder erfolgt die Freigabe durch die Leitung. Zur Erreichung möglichst vieler Kunden ist die Nutzung sozialer Medien geplant. Die Messung des Erfolgs erfolgt nach drei Monaten.\n\nDie Sitzung endete mit dem Dank an alle Teilnehmer. Trotz der vielen Themen verlief die Besprechung sehr effizient. Die nächste Sitzung findet in zwei Wochen statt. Bis dahin sollen alle Aufgaben erledigt sein.\n\nDer Nominalstil ist typisch für formelle und schriftliche Texte. Statt eines Verbs benutzt man ein Nomen: „prüfen“ wird zu „die Prüfung“, „einführen“ zu „die Einführung“. Oft steht davor eine Präposition mit dem Genitiv: nach der Prüfung des Berichts. In der gesprochenen Sprache benutzt man dagegen lieber Verben: Nachdem wir den Bericht geprüft hatten. Beide Stile haben ihren Platz.",
+              "questions": [
+                {
+                  "prompt": "Worum ging es in der Sitzung?",
+                  "translation": "What was the meeting about?",
+                  "reference": "Um die Planung des neuen Projekts."
+                },
+                {
+                  "prompt": "Wann soll die Umsetzung des Plans beginnen?",
+                  "translation": "When should the plan be implemented?",
+                  "reference": "Im Herbst."
+                },
+                {
+                  "prompt": "Wann erfolgt die Installation der neuen Software?",
+                  "translation": "When does the new software get installed?",
+                  "reference": "Im Oktober."
+                },
+                {
+                  "prompt": "Wie lange dauert die Schulung der Mitarbeiter?",
+                  "translation": "How long does the staff training take?",
+                  "reference": "Zwei Wochen."
+                },
+                {
+                  "prompt": "Welche Maßnahme schlug Herr Klein zur Senkung der Kosten vor?",
+                  "translation": "Which measure did Mr Klein propose to cut costs?",
+                  "reference": "Unter anderem die Reduzierung der Reisekosten."
+                },
+                {
+                  "prompt": "Wer übernimmt die Verantwortung für die Technik?",
+                  "translation": "Who takes responsibility for the technology?",
+                  "reference": "Herr Wagner."
+                },
+                {
+                  "prompt": "Wann ist die Fertigstellung des ersten Berichts geplant?",
+                  "translation": "When is the first report scheduled to be finished?",
+                  "reference": "Für Ende April."
+                },
+                {
+                  "prompt": "Was ist typisch für den Nominalstil?",
+                  "translation": "What is typical of the nominal style?",
+                  "reference": "Statt eines Verbs benutzt man ein Nomen (prüfen → die Prüfung), oft mit einer Präposition + Genitiv (nach der Prüfung des Berichts)."
+                }
+              ],
+              "exercises": [
+                {
+                  "type": "fill-in-blank",
+                  "instructions": "Nominalisiere „prüfen“ (die ___).",
+                  "payload": {
+                    "items": [
+                      {
+                        "prompt": "Nach der ___ des Berichts trafen wir eine Entscheidung."
+                      }
+                    ],
+                    "hints": []
+                  },
+                  "answer_key": {
+                    "items": [
+                      {
+                        "answer": "Prüfung"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "type": "fill-in-blank",
+                  "instructions": "Nominalisiere „einführen“ (die ___).",
+                  "payload": {
+                    "items": [
+                      {
+                        "prompt": "Die ___ der neuen Software erfolgt im Herbst."
+                      }
+                    ],
+                    "hints": []
+                  },
+                  "answer_key": {
+                    "items": [
+                      {
+                        "answer": "Einführung"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "type": "fill-in-blank",
+                  "instructions": "Nominalisiere „lösen“ (die ___).",
+                  "payload": {
+                    "items": [
+                      {
+                        "prompt": "Zur ___ des Problems brauchen wir mehr Zeit."
+                      }
+                    ],
+                    "hints": []
+                  },
+                  "answer_key": {
+                    "items": [
+                      {
+                        "answer": "Lösung"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "type": "multiple-choice",
+                  "instructions": "Wähle den richtigen Artikel (nach + Dativ, feminin).",
+                  "payload": {
+                    "items": [
+                      {
+                        "prompt": "Nach ___ Prüfung des Berichts trafen wir eine Entscheidung.",
+                        "options": [
+                          "der",
+                          "die",
+                          "des"
+                        ]
+                      }
+                    ],
+                    "hints": []
+                  },
+                  "answer_key": {
+                    "items": [
+                      {
+                        "answer": "der"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "type": "reorder",
+                  "instructions": "Bringe die Wörter in die richtige Reihenfolge.",
+                  "payload": {
+                    "items": [
+                      {
+                        "tokens": [
+                          "Die",
+                          "Einführung",
+                          "der",
+                          "Software",
+                          "erfolgt",
+                          "im",
+                          "Herbst"
+                        ]
+                      }
+                    ],
+                    "hints": []
+                  },
+                  "answer_key": {
+                    "items": [
+                      {
+                        "answer": "Die Einführung der Software erfolgt im Herbst"
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "code": "b2.word-formation",
+              "title": "Word formation",
+              "grammar_topics": [
+                "b2.word-formation"
+              ],
+              "can_do": "I can understand and build complex words.",
+              "seed_text": "Die Entwicklungsumgebung ist benutzerfreundlich. Unsere Zusammenarbeit war sehr erfolgreich. Die Fehlermeldung war unverständlich und die Datenbank kurz unerreichbar.",
+              "intro": "In this lesson you'll understand and build complex words: compounds (Entwicklung + Umgebung = Entwicklungsumgebung), prefixes (un-, miss-) and suffixes (-ung, -keit, -bar, -los, -reich, -frei).",
+              "story": "Die deutsche Sprache ist berühmt für ihre langen Wörter. Aber diese Wörter sind kein Zufall: Sie werden nach klaren Regeln gebildet. Wer die Wortbildung versteht, kann viele neue Wörter selbst verstehen, auch wenn man sie noch nie gehört hat. In diesem Artikel wird erklärt, wie das funktioniert.\n\nEin wichtiger Weg ist die Zusammensetzung. Man verbindet einfach zwei oder mehr Wörter zu einem neuen. Aus „Entwicklung“ und „Umgebung“ wird die „Entwicklungsumgebung“. Aus „Fehler“ und „Meldung“ wird die „Fehlermeldung“. Das letzte Wort bestimmt das Geschlecht: Die Meldung ist feminin, also ist auch die Fehlermeldung feminin.\n\nSolche zusammengesetzten Wörter sind in der Technik sehr häufig. Man spricht von einer „Datenbank“, einem „Benutzerkonto“ oder einer „Sicherheitseinstellung“. Diese Wörter wirken kompliziert, aber sie sind eigentlich logisch. Man muss sie nur in ihre Teile zerlegen, dann versteht man ihre Bedeutung sofort.\n\nEin weiterer Weg ist die Verwendung von Vorsilben. Die Vorsilbe „un-“ macht das Gegenteil: „verständlich“ wird zu „unverständlich“, „erreichbar“ zu „unerreichbar“. Die Vorsilbe „miss-“ zeigt einen Fehler: „das Verständnis“ wird zum „Missverständnis“. Mit solchen Vorsilben kann man die Bedeutung eines Wortes stark verändern.\n\nAuch die Nachsilben sind wichtig. Mit „-ung“ wird aus einem Verb ein Nomen: „entwickeln“ wird zur „Entwicklung“. Mit „-keit“ oder „-heit“ entstehen Nomen aus Adjektiven: „freundlich“ wird zur „Freundlichkeit“. Die Nachsilbe „-bar“ zeigt eine Möglichkeit: „lesbar“ bedeutet, dass man etwas lesen kann.\n\nManche Nachsilben haben eine besondere Bedeutung. „-los“ bedeutet „ohne“: „arbeitslos“ heißt „ohne Arbeit“. „-reich“ bedeutet „mit viel“: „erfolgreich“ heißt „mit viel Erfolg“. „-frei“ bedeutet „ohne etwas Negatives“: „fehlerfrei“ heißt „ohne Fehler“. Mit diesen kleinen Endungen kann man sehr präzise sein.\n\nIm Berufsleben begegnet man der Wortbildung ständig. „Unsere Zusammenarbeit war sehr erfolgreich“, sagt ein Chef. Ein Kollege beschwert sich: „Die Fehlermeldung war völlig unverständlich, und die Datenbank war kurz unerreichbar.“ In einem einzigen Satz stecken oft mehrere zusammengesetzte oder abgeleitete Wörter.\n\nAuch neue Technologien bringen ständig neue Wörter hervor. Aus „künstlich“ und „Intelligenz“ wird die „künstliche Intelligenz“, und aus vielen Teilen entsteht das „Cloud-Speichersystem“. Die Sprache wächst also mit der Technik. Wer die Regeln kennt, versteht auch ganz neue Begriffe ohne große Mühe.\n\nManchmal entstehen durch die Wortbildung auch lustige oder sehr lange Wörter. Berühmt ist das Wort „Donaudampfschifffahrtsgesellschaft“. Solche Wörter sind zwar selten, aber sie zeigen, wie flexibel die Sprache ist. Auch in der Verwaltung findet man endlose Begriffe wie „Kraftfahrzeughaftpflichtversicherung“.\n\nEs gibt auch Wörter, die aus einem Verb und einem Nomen bestehen, wie „der Schreibtisch“ oder „die Waschmaschine“. Andere verbinden ein Adjektiv mit einem Nomen: „die Großstadt“, „der Rotwein“. Auf diese Weise kann man fast unendlich viele neue Wörter bilden. Die deutsche Sprache ist dabei sehr kreativ, und genau das macht sie so interessant.\n\nFür Deutschlernende ist die Wortbildung ein großer Vorteil. Wenn man die Bausteine kennt, kann man tausende Wörter verstehen und sogar selbst neue bilden. Natürlich muss man aufpassen, denn nicht jede Kombination existiert wirklich. Aber mit etwas Übung entwickelt man ein gutes Gefühl dafür.\n\nDie Wortbildung ist also der Schlüssel zum deutschen Wortschatz. Durch Zusammensetzung entstehen lange, aber logische Wörter. Durch Vorsilben und Nachsilben verändert man die Bedeutung. Wer diese Regeln beherrscht, wird die deutsche Sprache viel besser verstehen und mit ihren berühmten langen Wörtern keine Probleme mehr haben.",
+              "questions": [
+                {
+                  "prompt": "Wofür ist die deutsche Sprache berühmt?",
+                  "translation": "What is the German language famous for?",
+                  "reference": "Für ihre langen Wörter."
+                },
+                {
+                  "prompt": "Was ist die Zusammensetzung?",
+                  "translation": "What is compounding?",
+                  "reference": "Man verbindet zwei oder mehr Wörter zu einem neuen (z. B. Entwicklung + Umgebung = Entwicklungsumgebung)."
+                },
+                {
+                  "prompt": "Was bestimmt das Geschlecht eines zusammengesetzten Wortes?",
+                  "translation": "What determines the gender of a compound word?",
+                  "reference": "Das letzte Wort (die Meldung → die Fehlermeldung)."
+                },
+                {
+                  "prompt": "Was macht die Vorsilbe „un-“?",
+                  "translation": "What does the prefix un- do?",
+                  "reference": "Sie macht das Gegenteil (verständlich → unverständlich)."
+                },
+                {
+                  "prompt": "Was passiert mit der Nachsilbe „-ung“?",
+                  "translation": "What happens with the suffix -ung?",
+                  "reference": "Aus einem Verb wird ein Nomen (entwickeln → die Entwicklung)."
+                },
+                {
+                  "prompt": "Was bedeuten „-los“, „-reich“ und „-frei“?",
+                  "translation": "What do -los, -reich and -frei mean?",
+                  "reference": "„-los“ = ohne (arbeitslos); „-reich“ = mit viel (erfolgreich); „-frei“ = ohne etwas Negatives (fehlerfrei)."
+                },
+                {
+                  "prompt": "Warum ist die Wortbildung für Lernende ein Vorteil?",
+                  "translation": "Why is word formation an advantage for learners?",
+                  "reference": "Wenn man die Bausteine kennt, kann man tausende Wörter verstehen und selbst neue bilden."
+                },
+                {
+                  "prompt": "Welche zwei Hauptwege der Wortbildung nennt der Text?",
+                  "translation": "Which two main ways of word formation does the text mention?",
+                  "reference": "Die Zusammensetzung (lange Wörter) und die Ableitung durch Vor- und Nachsilben."
+                }
+              ],
+              "exercises": [
+                {
+                  "type": "fill-in-blank",
+                  "instructions": "Bilde das zusammengesetzte Wort aus „Fehler“ + „Meldung“.",
+                  "payload": {
+                    "items": [
+                      {
+                        "prompt": "Aus „Fehler“ und „Meldung“ wird die ___."
+                      }
+                    ],
+                    "hints": []
+                  },
+                  "answer_key": {
+                    "items": [
+                      {
+                        "answer": "Fehlermeldung"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "type": "multiple-choice",
+                  "instructions": "Wähle das Wort mit der richtigen Vorsilbe (Gegenteil).",
+                  "payload": {
+                    "items": [
+                      {
+                        "prompt": "Das Gegenteil von „verständlich“ ist ___.",
+                        "options": [
+                          "unverständlich",
+                          "missverständlich",
+                          "verständnislos"
+                        ]
+                      }
+                    ],
+                    "hints": []
+                  },
+                  "answer_key": {
+                    "items": [
+                      {
+                        "answer": "unverständlich"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "type": "fill-in-blank",
+                  "instructions": "Bilde das Nomen mit „-ung“ (von entwickeln).",
+                  "payload": {
+                    "items": [
+                      {
+                        "prompt": "entwickeln → die ___"
+                      }
+                    ],
+                    "hints": []
+                  },
+                  "answer_key": {
+                    "items": [
+                      {
+                        "answer": "Entwicklung"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "type": "fill-in-blank",
+                  "instructions": "Bilde das Adjektiv mit „-reich“ (mit viel Erfolg).",
+                  "payload": {
+                    "items": [
+                      {
+                        "prompt": "mit viel Erfolg = ___"
+                      }
+                    ],
+                    "hints": []
+                  },
+                  "answer_key": {
+                    "items": [
+                      {
+                        "answer": "erfolgreich"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "type": "reorder",
+                  "instructions": "Bringe die Wörter in die richtige Reihenfolge.",
+                  "payload": {
+                    "items": [
+                      {
+                        "tokens": [
+                          "Unsere",
+                          "Zusammenarbeit",
+                          "war",
+                          "sehr",
+                          "erfolgreich"
+                        ]
+                      }
+                    ],
+                    "hints": []
+                  },
+                  "answer_key": {
+                    "items": [
+                      {
+                        "answer": "Unsere Zusammenarbeit war sehr erfolgreich"
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "code": "b2.genitive-prepositions",
+              "title": "Genitive prepositions",
+              "grammar_topics": [
+                "b2.genitive-prepositions"
+              ],
+              "can_do": "I can use formal prepositions.",
+              "seed_text": "Trotz des Regens kamen alle pünktlich. Während der Besprechung klingelte mehrmals das Telefon. Aufgrund eines Fehlers verzögert sich das Projekt.",
+              "intro": "In this lesson you'll use formal prepositions that take the genitive: trotz (despite), während (during), wegen/aufgrund (because of), statt (instead of), innerhalb/außerhalb (inside/outside).",
+              "story": "Mitteilung an alle Mitarbeiter\n\nAufgrund verschiedener organisatorischer Änderungen möchten wir Sie über einige wichtige Punkte informieren. Trotz des vollen Terminkalenders bitten wir Sie, diese Mitteilung aufmerksam zu lesen. Während der nächsten Wochen werden mehrere Neuerungen eingeführt. Innerhalb dieser Zeit ist mit einigen Umstellungen zu rechnen.\n\nWegen des Umbaus im Erdgeschoss ist der Haupteingang vorübergehend gesperrt. Während der Bauarbeiten benutzen Sie bitte den Seiteneingang. Trotz der Unannehmlichkeiten hoffen wir auf Ihr Verständnis. Aufgrund der Lärmbelästigung können einige Büros zeitweise nicht genutzt werden.\n\nStatt der üblichen Besprechung am Montag findet diese Woche ein größeres Treffen statt. Während dieses Treffens werden die neuen Regeln vorgestellt. Aufgrund der Wichtigkeit des Themas ist die Teilnahme für alle verpflichtend. Innerhalb des Gebäudes stehen mehrere Räume zur Verfügung.\n\nWegen der gestiegenen Energiekosten bitten wir um einen sparsamen Umgang mit Strom. Außerhalb der Arbeitszeiten sollen alle Geräte ausgeschaltet werden. Trotz dieser Maßnahmen wird die Qualität der Arbeit selbstverständlich nicht leiden. Dank Ihres Engagements können wir gemeinsam viel erreichen.\n\nAufgrund eines technischen Fehlers verzögert sich außerdem die Einführung des neuen Systems. Während der Übergangszeit benutzen wir weiterhin die alte Software. Trotz der Verzögerung bleibt der Zeitplan für das Gesamtprojekt bestehen. Innerhalb weniger Wochen soll das Problem behoben sein.\n\nLaut Beschluss der Geschäftsleitung wird ab nächstem Monat eine neue Regelung für das Homeoffice gelten. Während der Woche können Sie an zwei Tagen von zu Hause arbeiten. Aufgrund zahlreicher Wünsche wurde diese Möglichkeit geschaffen. Trotz der Flexibilität erwarten wir weiterhin eine gute Erreichbarkeit.\n\nWegen des großen Erfolgs des letzten Sommerfestes planen wir auch dieses Jahr eine Feier. Statt eines externen Anbieters organisieren wir das Fest diesmal selbst. Während des Festes wird für Essen und Musik gesorgt. Trotz des begrenzten Budgets soll es ein schöner Abend werden.\n\nAußerhalb des Gebäudes wird zusätzlich ein neuer Parkplatz eingerichtet. Wegen der wachsenden Zahl der Mitarbeiter war dies dringend nötig. Innerhalb des nächsten Monats sollen die Arbeiten abgeschlossen sein. Trotz der Bauarbeiten bleibt der alte Parkplatz weiter nutzbar.\n\nWegen der Grippewelle bitten wir außerdem um besondere Vorsicht. Während der Erkältungszeit sollten kranke Mitarbeiter zu Hause bleiben. Trotz des Personalmangels hat die Gesundheit Vorrang. Innerhalb des Büros stehen genug Desinfektionsmittel zur Verfügung.\n\nAufgrund der guten Ergebnisse des letzten Quartals plant die Firma eine kleine Prämie. Trotz der schwierigen Marktlage konnten die Ziele erreicht werden. Während der kommenden Wochen erhalten alle weitere Details. Innerhalb kurzer Zeit soll die Auszahlung erfolgen.\n\nWährend der Sommermonate gelten außerdem flexible Arbeitszeiten. Aufgrund der Hitze darf man früher beginnen und früher gehen. Trotz der kürzeren Kernzeit bleibt die Erreichbarkeit wichtig. Innerhalb des Teams sollen die Zeiten gut abgesprochen werden.\n\nWir danken Ihnen für Ihre Aufmerksamkeit. Bei Fragen stehen wir Ihnen jederzeit zur Verfügung. Trotz aller Veränderungen bleibt eines gleich: die gute Zusammenarbeit in unserem Team. Innerhalb der nächsten Tage erhalten Sie weitere Informationen.\n\nBestimmte Präpositionen verlangen den Genitiv. Dazu gehören „trotz“ (Gegensatz), „während“ (Zeit), „wegen“ und „aufgrund“ (Grund), „statt“ (Ersatz) sowie „innerhalb“ und „außerhalb“ (Ort und Zeit). Diese Präpositionen sind typisch für die formelle Sprache: Trotz des Regens, während der Sitzung, wegen eines Fehlers. In der Umgangssprache hört man wegen oft auch mit dem Dativ, aber im formellen Text benutzt man den Genitiv.",
+              "questions": [
+                {
+                  "prompt": "Warum ist der Haupteingang gesperrt?",
+                  "translation": "Why is the main entrance closed?",
+                  "reference": "Wegen des Umbaus im Erdgeschoss."
+                },
+                {
+                  "prompt": "Welchen Eingang sollen die Mitarbeiter während der Bauarbeiten benutzen?",
+                  "translation": "Which entrance should staff use during the construction work?",
+                  "reference": "Den Seiteneingang."
+                },
+                {
+                  "prompt": "Was findet statt der üblichen Montagsbesprechung statt?",
+                  "translation": "What takes place instead of the usual Monday meeting?",
+                  "reference": "Ein größeres Treffen, bei dem die neuen Regeln vorgestellt werden."
+                },
+                {
+                  "prompt": "Worum wird wegen der gestiegenen Energiekosten gebeten?",
+                  "translation": "What is requested because of the higher energy costs?",
+                  "reference": "Um einen sparsamen Umgang mit Strom; außerhalb der Arbeitszeiten sollen Geräte ausgeschaltet werden."
+                },
+                {
+                  "prompt": "Warum verzögert sich die Einführung des neuen Systems?",
+                  "translation": "Why is the introduction of the new system delayed?",
+                  "reference": "Aufgrund eines technischen Fehlers."
+                },
+                {
+                  "prompt": "Was gilt laut Beschluss der Geschäftsleitung ab nächstem Monat?",
+                  "translation": "What applies from next month according to the management's decision?",
+                  "reference": "Eine neue Regelung für das Homeoffice (an zwei Tagen von zu Hause arbeiten)."
+                },
+                {
+                  "prompt": "Wie wird das Sommerfest dieses Jahr organisiert?",
+                  "translation": "How is the summer party organized this year?",
+                  "reference": "Statt eines externen Anbieters organisiert die Firma es selbst."
+                },
+                {
+                  "prompt": "Welche Präpositionen verlangen den Genitiv?",
+                  "translation": "Which prepositions take the genitive?",
+                  "reference": "trotz, während, wegen, aufgrund, statt, innerhalb und außerhalb (u. a.)."
+                }
+              ],
+              "exercises": [
+                {
+                  "type": "fill-in-blank",
+                  "instructions": "Ergänze die Genitivpräposition (Gegensatz).",
+                  "payload": {
+                    "items": [
+                      {
+                        "prompt": "___ des Regens kamen alle pünktlich."
+                      }
+                    ],
+                    "hints": []
+                  },
+                  "answer_key": {
+                    "items": [
+                      {
+                        "answer": "Trotz"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "type": "fill-in-blank",
+                  "instructions": "Ergänze die Genitivpräposition (Zeit).",
+                  "payload": {
+                    "items": [
+                      {
+                        "prompt": "___ der Besprechung klingelte das Telefon."
+                      }
+                    ],
+                    "hints": []
+                  },
+                  "answer_key": {
+                    "items": [
+                      {
+                        "answer": "Während"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "type": "multiple-choice",
+                  "instructions": "Wähle die Genitivpräposition (Grund).",
+                  "payload": {
+                    "items": [
+                      {
+                        "prompt": "___ eines Fehlers verzögert sich das Projekt.",
+                        "options": [
+                          "Aufgrund",
+                          "Trotz",
+                          "Während"
+                        ]
+                      }
+                    ],
+                    "hints": []
+                  },
+                  "answer_key": {
+                    "items": [
+                      {
+                        "answer": "Aufgrund"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "type": "fill-in-blank",
+                  "instructions": "Ergänze den Genitivartikel (der Regen → ___ Regens).",
+                  "payload": {
+                    "items": [
+                      {
+                        "prompt": "Trotz ___ Regens kamen alle pünktlich."
+                      }
+                    ],
+                    "hints": []
+                  },
+                  "answer_key": {
+                    "items": [
+                      {
+                        "answer": "des"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "type": "reorder",
+                  "instructions": "Bringe die Wörter in die richtige Reihenfolge.",
+                  "payload": {
+                    "items": [
+                      {
+                        "tokens": [
+                          "Trotz",
+                          "des",
+                          "Regens",
+                          "kamen",
+                          "alle",
+                          "pünktlich"
+                        ]
+                      }
+                    ],
+                    "hints": []
+                  },
+                  "answer_key": {
+                    "items": [
+                      {
+                        "answer": "Trotz des Regens kamen alle pünktlich"
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "code": "b2.funktionsverbgefuege",
+              "title": "Funktionsverbgefüge",
+              "grammar_topics": [
+                "b2.funktionsverbgefuege"
+              ],
+              "can_do": "I can use light-verb constructions.",
+              "seed_text": "Wir treffen heute eine Entscheidung und stellen eine wichtige Frage. Das Projekt kommt langsam in Gang. Ich nehme Rücksicht auf das ganze Team.",
+              "intro": "In this lesson you'll use light-verb constructions (Funktionsverbgefüge), fixed noun+verb pairs where the noun carries the meaning: eine Entscheidung treffen, eine Frage stellen, in Gang kommen, Rücksicht nehmen.",
+              "story": "Im Berufsleben benutzt man oft feste Wendungen aus einem Nomen und einem Verb. Man sagt nicht einfach „entscheiden“, sondern „eine Entscheidung treffen“. Solche Verbindungen nennt man Funktionsverbgefüge. Sie klingen formeller und werden besonders im Geschäftsleben viel benutzt. Heute erzähle ich von einem typischen Arbeitstag voller solcher Wendungen.\n\nAm Morgen mussten wir eine wichtige Entscheidung treffen. Es ging um ein neues Projekt, das langsam in Gang kam. Zuerst stellte mein Chef eine schwierige Frage: „Können wir das Risiko in Kauf nehmen?“ Alle dachten nach. Diese Frage spielte eine große Rolle für unsere Zukunft.\n\nNach langer Diskussion trafen wir eine Entscheidung. „Wir setzen das Projekt in Gang“, sagte der Chef. „Aber wir müssen auf das Budget Rücksicht nehmen.“ Ich war einverstanden. Trotzdem stellte ich einen Punkt in Frage. „Sind wir sicher, dass genug Zeit zur Verfügung steht?“, fragte ich.\n\nMein Chef nahm meine Bedenken ernst. „Du hast recht, das müssen wir berücksichtigen“, sagte er. „Aber ich bin sicher, dass wir es schaffen.“ Wir kamen also zu dem Ergebnis, dass wir vorsichtig, aber mutig vorgehen. Danach nahmen wir die Arbeit in Angriff.\n\nAm Mittag übten einige Kollegen Kritik an dem Plan. „Das kostet zu viel Geld“, sagten sie. Ich verstand ihre Sorgen und nahm darauf Rücksicht. Trotzdem erklärte ich, warum der Plan wichtig war. Am Ende fanden wir einen Kompromiss, mit dem alle zufrieden waren. Die gute Zusammenarbeit spielte dabei eine wichtige Rolle.\n\nAm Nachmittag stand mir ein Kollege zur Verfügung, um mir zu helfen. Gemeinsam setzten wir die ersten Schritte in Gang. „Wenn du Fragen hast, kannst du jederzeit auf mich zählen“, sagte er. Ich war dankbar, denn seine Erfahrung war eine große Hilfe. So machten wir schnell Fortschritte.\n\nGegen Abend mussten wir noch von einem alten Plan Abschied nehmen. Er hatte lange eine wichtige Rolle gespielt, aber jetzt passte er nicht mehr. „Manchmal muss man auch loslassen“, sagte mein Chef. Wir zogen einen Schlussstrich und richteten den Blick nach vorn. Diese Entscheidung fiel uns nicht leicht.\n\nAuch mit den Kunden mussten wir Kontakt aufnehmen. Wir setzten sie über die Änderungen in Kenntnis und baten um ihr Verständnis. Die meisten zeigten Verständnis und stellten kaum Fragen. So konnten wir die Sache schnell in Ordnung bringen und zur nächsten Aufgabe übergehen.\n\nZwischendurch nahm ich noch an einer kurzen Besprechung teil. Dort brachte ein Kollege einen guten Vorschlag ein. Wir zogen seine Idee in Betracht und fassten schnell einen Beschluss. So kamen wir Schritt für Schritt voran und behielten den Überblick.\n\nSpäter am Tag geriet ein anderes Projekt kurz in Schwierigkeiten. Doch wir behielten die Ruhe und nahmen die Sache selbst in die Hand. Gemeinsam trafen wir die nötigen Vorkehrungen. So brachten wir auch dieses Problem rasch zum Abschluss.\n\nAm Ende des Tages war ich zufrieden. Wir hatten viele Entscheidungen getroffen und wichtige Fragen geklärt. Das Projekt war endlich in Gang gekommen. „Heute haben wir großen Fortschritt gemacht“, sagte ich. Solche Tage geben mir das Gefühl, dass sich die Mühe lohnt.\n\nFunktionsverbgefüge bestehen aus einem Nomen und einem Verb mit wenig eigener Bedeutung. Das Nomen trägt den Sinn: eine Entscheidung treffen bedeutet einfach „entscheiden“. Weitere Beispiele sind „eine Frage stellen“, „in Gang kommen“, „Rücksicht nehmen“ und „zur Verfügung stehen“. Diese Wendungen klingen formell und gehören zum guten Stil in Beruf und Schriftsprache. Wer sie sicher benutzt, wirkt kompetent und professionell.",
+              "questions": [
+                {
+                  "prompt": "Was sind Funktionsverbgefüge?",
+                  "translation": "What are light-verb constructions?",
+                  "reference": "Feste Verbindungen aus einem Nomen und einem Verb mit wenig eigener Bedeutung (z. B. eine Entscheidung treffen = entscheiden)."
+                },
+                {
+                  "prompt": "Welche Entscheidung musste das Team am Morgen treffen?",
+                  "translation": "What decision did the team have to make in the morning?",
+                  "reference": "Ob sie das neue Projekt in Gang setzen und das Risiko in Kauf nehmen."
+                },
+                {
+                  "prompt": "Worauf muss das Team laut Chef Rücksicht nehmen?",
+                  "translation": "What must the team consider according to the boss?",
+                  "reference": "Auf das Budget."
+                },
+                {
+                  "prompt": "Was stellte der Erzähler in Frage?",
+                  "translation": "What did the narrator call into question?",
+                  "reference": "Ob genug Zeit zur Verfügung steht."
+                },
+                {
+                  "prompt": "Was machten die Kollegen am Mittag?",
+                  "translation": "What did the colleagues do at midday?",
+                  "reference": "Sie übten Kritik an dem Plan, weil er zu viel Geld koste."
+                },
+                {
+                  "prompt": "Wie half der Kollege am Nachmittag?",
+                  "translation": "How did the colleague help in the afternoon?",
+                  "reference": "Er stand dem Erzähler zur Verfügung und half ihm; man konnte auf ihn zählen."
+                },
+                {
+                  "prompt": "Wovon musste das Team am Abend Abschied nehmen?",
+                  "translation": "What did the team have to say goodbye to in the evening?",
+                  "reference": "Von einem alten Plan, der nicht mehr passte."
+                },
+                {
+                  "prompt": "Woraus bestehen Funktionsverbgefüge, und wer trägt den Sinn?",
+                  "translation": "What do light-verb constructions consist of, and what carries the meaning?",
+                  "reference": "Aus einem Nomen und einem bedeutungsarmen Verb; das Nomen trägt den Sinn."
+                }
+              ],
+              "exercises": [
+                {
+                  "type": "fill-in-blank",
+                  "instructions": "Ergänze das Nomen (eine ___ treffen = entscheiden).",
+                  "payload": {
+                    "items": [
+                      {
+                        "prompt": "Wir treffen heute eine ___."
+                      }
+                    ],
+                    "hints": []
+                  },
+                  "answer_key": {
+                    "items": [
+                      {
+                        "answer": "Entscheidung"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "type": "fill-in-blank",
+                  "instructions": "Ergänze das Nomen (eine ___ stellen = fragen).",
+                  "payload": {
+                    "items": [
+                      {
+                        "prompt": "Wir stellen eine wichtige ___."
+                      }
+                    ],
+                    "hints": []
+                  },
+                  "answer_key": {
+                    "items": [
+                      {
+                        "answer": "Frage"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "type": "multiple-choice",
+                  "instructions": "Wähle das richtige Nomen (in ___ kommen).",
+                  "payload": {
+                    "items": [
+                      {
+                        "prompt": "Das Projekt kommt langsam in ___.",
+                        "options": [
+                          "Gang",
+                          "Frage",
+                          "Kauf"
+                        ]
+                      }
+                    ],
+                    "hints": []
+                  },
+                  "answer_key": {
+                    "items": [
+                      {
+                        "answer": "Gang"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "type": "fill-in-blank",
+                  "instructions": "Ergänze das Nomen (___ nehmen auf = berücksichtigen).",
+                  "payload": {
+                    "items": [
+                      {
+                        "prompt": "Ich nehme ___ auf das ganze Team."
+                      }
+                    ],
+                    "hints": []
+                  },
+                  "answer_key": {
+                    "items": [
+                      {
+                        "answer": "Rücksicht"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "type": "reorder",
+                  "instructions": "Bringe die Wörter in die richtige Reihenfolge.",
+                  "payload": {
+                    "items": [
+                      {
+                        "tokens": [
+                          "Wir",
+                          "treffen",
+                          "eine",
+                          "wichtige",
+                          "Entscheidung"
+                        ]
+                      }
+                    ],
+                    "hints": []
+                  },
+                  "answer_key": {
+                    "items": [
+                      {
+                        "answer": "Wir treffen eine wichtige Entscheidung"
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
           ]
         },
         {
           "unit": 4,
           "title": "Komplexe Sätze",
           "lessons": [
-            { "code": "b2.two-part-connectors", "title": "Two-part connectors", "grammar_topics": ["b2.two-part-connectors"], "can_do": "I can build nuanced, balanced sentences.", "seed_text": "Je mehr ich übe, desto besser verstehe ich. Sowohl der Chef als auch das Team sind zufrieden. Entweder wir liefern heute oder wir verlieren den Kunden." },
-            { "code": "b2.subordinate-advanced", "title": "Advanced subordinate clauses", "grammar_topics": ["b2.subordinate-advanced"], "can_do": "I can express manner, result and alternatives.", "seed_text": "Indem wir automatisieren, sparen wir Zeit. Er ging, ohne dass er sich verabschiedete. Das Meeting wurde verschoben, sodass wir mehr Zeit hatten. Statt dass er anrief, schickte er eine Mail." },
-            { "code": "b2.concessive-conditional", "title": "Concessive & conditional connectors", "grammar_topics": ["b2.concessive-conditional"], "can_do": "I can express conditions and concessions formally.", "seed_text": "Falls es Probleme gibt, ruf mich an. Sofern alles klappt, liefern wir morgen. Obwohl das Budget knapp war, gelang das Projekt. Wir kommen, es sei denn, es schneit." },
-            { "code": "b2.comparison-irrealis", "title": "Irreal comparison (als ob)", "grammar_topics": ["b2.comparison-irrealis"], "can_do": "I can describe how things seem.", "seed_text": "Er tut so, als ob er alles wüsste. Es sieht aus, als hätte es geregnet. Sie redet, als wäre sie die Chefin. Das klingt, als ob es einfach wäre." }
+            {
+              "code": "b2.two-part-connectors",
+              "title": "Two-part connectors",
+              "grammar_topics": [
+                "b2.two-part-connectors"
+              ],
+              "can_do": "I can build nuanced, balanced sentences.",
+              "seed_text": "Je mehr ich übe, desto besser verstehe ich. Sowohl der Chef als auch das Team sind zufrieden. Entweder wir liefern heute oder wir verlieren den Kunden.",
+              "intro": "In this lesson you'll build balanced sentences with two-part connectors: je … desto (the more … the more), sowohl … als auch (both … and), entweder … oder (either … or), weder … noch (neither … nor).",
+              "story": "Warum lohnt es sich, eine Fremdsprache zu lernen? In diesem kurzen Essay möchte ich einige Gründe nennen und dabei zeigen, wie man mit zweiteiligen Konnektoren Argumente elegant verbindet. Solche Konnektoren machen einen Text klarer und überzeugender, denn sie stellen Dinge in Beziehung zueinander.\n\nZunächst einmal gilt: Je mehr man eine Sprache übt, desto besser wird man. Das klingt einfach, ist aber die wichtigste Regel. Je öfter ich spreche, desto sicherer fühle ich mich. Und je sicherer ich mich fühle, desto mehr traue ich mich. So entsteht ein positiver Kreislauf.\n\nEine Fremdsprache bringt sowohl berufliche als auch persönliche Vorteile. Beruflich öffnet sie viele Türen, denn sowohl große Firmen als auch kleine Betriebe suchen mehrsprachige Mitarbeiter. Persönlich lernt man nicht nur neue Wörter, sondern auch eine neue Kultur kennen. Man gewinnt also in mehrfacher Hinsicht.\n\nNatürlich gibt es auch Herausforderungen. Entweder man investiert regelmäßig Zeit, oder man macht kaum Fortschritte. Es gibt keinen Mittelweg. Wer weder übt noch zuhört, wird die Sprache nie beherrschen. Man muss sich also entscheiden: entweder man bleibt dran, oder man gibt auf.\n\nViele Menschen glauben, man sei entweder sprachbegabt oder nicht. Das halte ich für falsch. Zwar lernen manche schneller, aber am Ende zählt vor allem der Fleiß. Nicht das Talent, sondern die Übung macht den Meister. Einerseits braucht man Geduld, andererseits wird man mit Erfolg belohnt.\n\nAuch die Methode spielt eine Rolle. Sowohl das Lesen als auch das Hören sind wichtig. Man sollte nicht nur Grammatik lernen, sondern auch echte Gespräche führen. Je natürlicher man übt, desto schneller kommt der Erfolg. Weder trockene Regeln allein noch reines Auswendiglernen führen zum Ziel.\n\nEin weiterer Vorteil ist das Selbstvertrauen. Je mehr Sprachen man spricht, desto offener wird man für die Welt. Man reist nicht nur mit dem Körper, sondern auch mit dem Geist. Sowohl auf Reisen als auch im Alltag hilft eine Fremdsprache. Sie verbindet Menschen, die sich sonst nicht verstehen könnten.\n\nMan darf auch die Freude nicht vergessen. Eine Sprache zu lernen ist nicht nur Arbeit, sondern auch ein Vergnügen. Je mehr man versteht, desto größer wird der Spaß. Sowohl beim Lesen eines Buches als auch beim Ansehen eines Films entdeckt man ständig Neues. Weder Langeweile noch Frust haben dann eine Chance.\n\nAuch für das Gehirn ist das Lernen gut. Sowohl das Gedächtnis als auch die Konzentration werden trainiert. Je älter man wird, desto wichtiger ist geistige Aktivität. Man bleibt also nicht nur geistig fit, sondern fühlt sich auch jünger. Entweder man fordert sein Gehirn, oder es wird langsamer.\n\nZusammenfassend lässt sich sagen: Eine Fremdsprache zu lernen bringt viele Vorteile. Entweder man sieht es als Last, oder man sieht es als Chance. Ich persönlich bin überzeugt: Je früher man anfängt, desto größer ist der Gewinn. Und der Aufwand lohnt sich sowohl kurzfristig als auch langfristig.\n\nZweiteilige Konnektoren verbinden zwei Teile eines Gedankens. „Je … desto“ zeigt eine Steigerung: Je mehr, desto besser. „Sowohl … als auch“ bedeutet „beide“. „Entweder … oder“ zeigt eine Wahl, „weder … noch“ eine doppelte Verneinung. „Nicht nur … sondern auch“ fügt etwas hinzu. Mit ihnen kann man Argumente klar und elegant strukturieren.",
+              "questions": [
+                {
+                  "prompt": "Was ist laut dem Essay die wichtigste Regel beim Sprachenlernen?",
+                  "translation": "According to the essay, what is the most important rule for learning a language?",
+                  "reference": "Je mehr man übt, desto besser wird man."
+                },
+                {
+                  "prompt": "Welche zwei Arten von Vorteilen bringt eine Fremdsprache?",
+                  "translation": "Which two kinds of benefits does a foreign language bring?",
+                  "reference": "Sowohl berufliche als auch persönliche Vorteile."
+                },
+                {
+                  "prompt": "Was passiert, wenn man weder übt noch zuhört?",
+                  "translation": "What happens if you neither practise nor listen?",
+                  "reference": "Man wird die Sprache nie beherrschen."
+                },
+                {
+                  "prompt": "Was macht laut dem Text den Meister – Talent oder Übung?",
+                  "translation": "What makes the master according to the text — talent or practice?",
+                  "reference": "Nicht das Talent, sondern die Übung macht den Meister."
+                },
+                {
+                  "prompt": "Welche zwei Fähigkeiten sind beim Lernen wichtig?",
+                  "translation": "Which two skills are important when learning?",
+                  "reference": "Sowohl das Lesen als auch das Hören."
+                },
+                {
+                  "prompt": "Wie wirkt sich das Sprechen mehrerer Sprachen auf den Menschen aus?",
+                  "translation": "How does speaking several languages affect a person?",
+                  "reference": "Je mehr Sprachen man spricht, desto offener wird man für die Welt."
+                },
+                {
+                  "prompt": "Wie sieht der Autor das Sprachenlernen – als Last oder als Chance?",
+                  "translation": "How does the author see language learning — as a burden or a chance?",
+                  "reference": "Als Chance; er ist überzeugt, dass sich der Aufwand kurz- und langfristig lohnt."
+                },
+                {
+                  "prompt": "Was bedeuten „sowohl … als auch“ und „entweder … oder“?",
+                  "translation": "What do sowohl … als auch and entweder … oder mean?",
+                  "reference": "„sowohl … als auch“ bedeutet „beide“; „entweder … oder“ zeigt eine Wahl."
+                }
+              ],
+              "exercises": [
+                {
+                  "type": "fill-in-blank",
+                  "instructions": "Ergänze das zweite Wort (je … ___).",
+                  "payload": {
+                    "items": [
+                      {
+                        "prompt": "Je mehr ich übe, ___ besser verstehe ich."
+                      }
+                    ],
+                    "hints": []
+                  },
+                  "answer_key": {
+                    "items": [
+                      {
+                        "answer": "desto"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "type": "fill-in-blank",
+                  "instructions": "Ergänze das erste Wort (___ … als auch).",
+                  "payload": {
+                    "items": [
+                      {
+                        "prompt": "___ der Chef als auch das Team sind zufrieden."
+                      }
+                    ],
+                    "hints": []
+                  },
+                  "answer_key": {
+                    "items": [
+                      {
+                        "answer": "Sowohl"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "type": "multiple-choice",
+                  "instructions": "Wähle das zweite Wort (entweder … ___).",
+                  "payload": {
+                    "items": [
+                      {
+                        "prompt": "Entweder wir liefern heute, ___ wir verlieren den Kunden.",
+                        "options": [
+                          "oder",
+                          "und",
+                          "aber"
+                        ]
+                      }
+                    ],
+                    "hints": []
+                  },
+                  "answer_key": {
+                    "items": [
+                      {
+                        "answer": "oder"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "type": "fill-in-blank",
+                  "instructions": "Ergänze das erste Wort (doppelte Verneinung: ___ … noch).",
+                  "payload": {
+                    "items": [
+                      {
+                        "prompt": "Er spricht ___ Englisch noch Französisch."
+                      }
+                    ],
+                    "hints": []
+                  },
+                  "answer_key": {
+                    "items": [
+                      {
+                        "answer": "weder"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "type": "reorder",
+                  "instructions": "Bringe die Wörter in die richtige Reihenfolge.",
+                  "payload": {
+                    "items": [
+                      {
+                        "tokens": [
+                          "Je",
+                          "mehr",
+                          "ich",
+                          "übe",
+                          "desto",
+                          "besser",
+                          "verstehe",
+                          "ich"
+                        ]
+                      }
+                    ],
+                    "hints": []
+                  },
+                  "answer_key": {
+                    "items": [
+                      {
+                        "answer": "Je mehr ich übe, desto besser verstehe ich"
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "code": "b2.subordinate-advanced",
+              "title": "Advanced subordinate clauses",
+              "grammar_topics": [
+                "b2.subordinate-advanced"
+              ],
+              "can_do": "I can express manner, result and alternatives.",
+              "seed_text": "Indem wir automatisieren, sparen wir Zeit. Er ging, ohne dass er sich verabschiedete. Das Meeting wurde verschoben, sodass wir mehr Zeit hatten. Statt dass er anrief, schickte er eine Mail.",
+              "intro": "In this lesson you'll express means, result and alternatives with advanced subordinating conjunctions: indem (by …), sodass (so that), ohne dass (without), statt dass (instead of). With the same subject, use ohne zu / statt zu.",
+              "story": "Wie kann man im Beruf effizienter arbeiten? In diesem Text erkläre ich einige Methoden und benutze dabei anspruchsvolle Nebensätze. Mit Konjunktionen wie „indem“, „sodass“, „ohne dass“ und „statt dass“ kann man Mittel, Folgen und Alternativen genau ausdrücken. Sie machen die Sprache präzise und logisch.\n\nDer erste Tipp betrifft die Automatisierung. Indem wir wiederkehrende Aufgaben automatisieren, sparen wir viel Zeit. Der Computer erledigt die Arbeit, ohne dass wir eingreifen müssen. So können wir uns auf das Wesentliche konzentrieren, sodass am Ende mehr Qualität entsteht. Das ist ein großer Vorteil.\n\nAuch die Kommunikation lässt sich verbessern. Statt dass jeder einzeln nachfragt, benutzen wir einen gemeinsamen Chat. Indem alle die gleichen Informationen sehen, vermeiden wir Missverständnisse. Man kann schnell antworten, ohne dass ein langes Meeting nötig ist. So bleibt mehr Zeit für die eigentliche Arbeit.\n\nEin weiterer Punkt ist die Planung. Indem man den Tag im Voraus plant, verliert man weniger Zeit. Statt dass man ständig überlegt, was als Nächstes kommt, folgt man einer klaren Liste. So arbeitet man ruhiger, sodass weniger Fehler passieren. Ohne dass man sich stresst, schafft man am Ende sogar mehr.\n\nNatürlich muss man auch Pausen machen. Indem man regelmäßig kurz aufsteht, bleibt man konzentrierter. Statt dass man acht Stunden am Stück sitzt, teilt man die Arbeit in Blöcke. Man arbeitet intensiver, ohne dass man müde wird. So steigt die Produktivität, sodass man abends zufriedener nach Hause geht.\n\nWichtig ist auch, um Hilfe zu bitten. Statt stundenlang allein zu suchen, fragt man besser einen Kollegen. Indem man sein Wissen teilt, wird das ganze Team stärker. Ohne zu zögern, sollte man Fragen stellen. Niemand weiß alles, und gemeinsam findet man schneller eine Lösung.\n\nZum Schluss noch ein Gedanke zur Motivation. Indem man sich kleine Ziele setzt, bleibt man motiviert. Statt dass man nur an das große Ganze denkt, feiert man jeden kleinen Erfolg. So bleibt die Freude an der Arbeit erhalten, sodass man langfristig gute Ergebnisse erzielt. Motivation ist der Schlüssel zum Erfolg.\n\nAuch das Lernen sollte nicht zu kurz kommen. Indem man Neues ausprobiert, bleibt man flexibel. Statt dass man immer dasselbe tut, sucht man bessere Wege. Ohne dass man es merkt, wächst dabei die eigene Erfahrung. So wird man mit der Zeit immer besser, sodass die Arbeit leichter fällt.\n\nAuch die Ordnung am Arbeitsplatz hilft. Indem man alles an seinen Platz legt, findet man es schnell wieder. Statt dass man lange sucht, greift man sofort zu. Ohne dass man Zeit verliert, kommt man ans Ziel. So wird der Alltag ruhiger, sodass man entspannter arbeitet.\n\nDiese Methoden zeigen, dass effizientes Arbeiten kein Geheimnis ist. Indem man klug plant, automatisiert und zusammenarbeitet, spart man Zeit und Energie. Ohne dass man härter arbeitet, erreicht man mehr. Man muss nur die richtigen Gewohnheiten entwickeln, sodass die Arbeit leichter und angenehmer wird.\n\nAnspruchsvolle Nebensätze drücken feine Bedeutungen aus. „Indem“ nennt ein Mittel: Indem wir automatisieren, sparen wir Zeit. „Sodass“ nennt eine Folge: Es wurde verschoben, sodass wir mehr Zeit hatten. „Ohne dass“ bedeutet, dass etwas Erwartetes nicht passiert. „Statt dass“ nennt eine Alternative. Wenn das Subjekt gleich ist, benutzt man oft „ohne zu“ oder „statt zu“.",
+              "questions": [
+                {
+                  "prompt": "Wie spart man laut dem Text durch Automatisierung Zeit?",
+                  "translation": "How does automation save time according to the text?",
+                  "reference": "Indem man wiederkehrende Aufgaben automatisiert; der Computer erledigt die Arbeit, ohne dass man eingreifen muss."
+                },
+                {
+                  "prompt": "Wie lässt sich die Kommunikation verbessern?",
+                  "translation": "How can communication be improved?",
+                  "reference": "Statt dass jeder einzeln nachfragt, benutzt man einen gemeinsamen Chat, sodass alle die gleichen Informationen sehen."
+                },
+                {
+                  "prompt": "Welchen Vorteil bringt die Planung des Tages?",
+                  "translation": "What advantage does planning the day bring?",
+                  "reference": "Indem man den Tag im Voraus plant, verliert man weniger Zeit und macht weniger Fehler."
+                },
+                {
+                  "prompt": "Warum sollte man Pausen machen?",
+                  "translation": "Why should you take breaks?",
+                  "reference": "Indem man regelmäßig kurz aufsteht, bleibt man konzentrierter und arbeitet intensiver, ohne müde zu werden."
+                },
+                {
+                  "prompt": "Was rät der Text zum Thema Hilfe?",
+                  "translation": "What does the text advise about getting help?",
+                  "reference": "Statt stundenlang allein zu suchen, sollte man einen Kollegen fragen; indem man Wissen teilt, wird das Team stärker."
+                },
+                {
+                  "prompt": "Wie bleibt man motiviert?",
+                  "translation": "How do you stay motivated?",
+                  "reference": "Indem man sich kleine Ziele setzt und jeden kleinen Erfolg feiert."
+                },
+                {
+                  "prompt": "Was ist die Kernaussage über effizientes Arbeiten?",
+                  "translation": "What is the key message about efficient work?",
+                  "reference": "Indem man klug plant, automatisiert und zusammenarbeitet, erreicht man mehr, ohne härter zu arbeiten."
+                },
+                {
+                  "prompt": "Was drücken „indem“, „sodass“ und „ohne dass“ aus?",
+                  "translation": "What do indem, sodass and ohne dass express?",
+                  "reference": "„indem“ = Mittel; „sodass“ = Folge; „ohne dass“ = etwas Erwartetes passiert nicht."
+                }
+              ],
+              "exercises": [
+                {
+                  "type": "fill-in-blank",
+                  "instructions": "Ergänze die Konjunktion (Mittel/Methode).",
+                  "payload": {
+                    "items": [
+                      {
+                        "prompt": "___ wir automatisieren, sparen wir Zeit."
+                      }
+                    ],
+                    "hints": []
+                  },
+                  "answer_key": {
+                    "items": [
+                      {
+                        "answer": "Indem"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "type": "multiple-choice",
+                  "instructions": "Wähle die Konjunktion (Folge).",
+                  "payload": {
+                    "items": [
+                      {
+                        "prompt": "Das Meeting wurde verschoben, ___ wir mehr Zeit hatten.",
+                        "options": [
+                          "sodass",
+                          "indem",
+                          "ohne dass"
+                        ]
+                      }
+                    ],
+                    "hints": []
+                  },
+                  "answer_key": {
+                    "items": [
+                      {
+                        "answer": "sodass"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "type": "fill-in-blank",
+                  "instructions": "Ergänze das Wort (etwas Erwartetes passiert nicht: ___ dass).",
+                  "payload": {
+                    "items": [
+                      {
+                        "prompt": "Er ging, ___ dass er sich verabschiedete."
+                      }
+                    ],
+                    "hints": []
+                  },
+                  "answer_key": {
+                    "items": [
+                      {
+                        "answer": "ohne"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "type": "fill-in-blank",
+                  "instructions": "Ergänze die Konjunktion (Alternative).",
+                  "payload": {
+                    "items": [
+                      {
+                        "prompt": "___ dass er anrief, schickte er eine Mail."
+                      }
+                    ],
+                    "hints": []
+                  },
+                  "answer_key": {
+                    "items": [
+                      {
+                        "answer": "Statt"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "type": "reorder",
+                  "instructions": "Bringe die Wörter in die richtige Reihenfolge.",
+                  "payload": {
+                    "items": [
+                      {
+                        "tokens": [
+                          "Indem",
+                          "wir",
+                          "automatisieren",
+                          "sparen",
+                          "wir",
+                          "Zeit"
+                        ]
+                      }
+                    ],
+                    "hints": []
+                  },
+                  "answer_key": {
+                    "items": [
+                      {
+                        "answer": "Indem wir automatisieren, sparen wir Zeit"
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "code": "b2.concessive-conditional",
+              "title": "Concessive & conditional connectors",
+              "grammar_topics": [
+                "b2.concessive-conditional"
+              ],
+              "can_do": "I can express conditions and concessions formally.",
+              "seed_text": "Falls es Probleme gibt, ruf mich an. Sofern alles klappt, liefern wir morgen. Obwohl das Budget knapp war, gelang das Projekt. Wir kommen, es sei denn, es schneit.",
+              "intro": "In this lesson you'll express conditions and concessions formally: falls and sofern (if), obwohl / auch wenn / selbst wenn (although / even if), and es sei denn (unless).",
+              "story": "Projektvorschlag: Einführung eines neuen Ablaufs\n\nIn diesem Vorschlag beschreibe ich, wie wir einen neuen Ablauf einführen könnten. Dabei nenne ich verschiedene Bedingungen und mögliche Einwände. Mit Konnektoren wie „falls“, „sofern“, „obwohl“ und „es sei denn“ kann man Bedingungen und Gegensätze genau ausdrücken. So bleibt der Plan flexibel und realistisch.\n\nZunächst zur Ausgangslage. Obwohl unser aktueller Ablauf funktioniert, ist er nicht mehr zeitgemäß. Auch wenn viele Kollegen daran gewöhnt sind, verlieren wir dadurch Zeit. Selbst wenn es zunächst Aufwand bedeutet, sollten wir etwas ändern. Der neue Ablauf würde uns langfristig helfen.\n\nFalls die Geschäftsleitung zustimmt, könnten wir schon nächsten Monat beginnen. Sofern das Budget ausreicht, kaufen wir die nötige Software. Angenommen, alles läuft nach Plan, wäre das System bis zum Sommer fertig. Falls es jedoch Verzögerungen gibt, verschieben wir den Start um einige Wochen.\n\nNatürlich gibt es auch Risiken. Obwohl die Software gut ist, muss das Team geschult werden. Selbst wenn alle motiviert sind, braucht die Umstellung Zeit. Es sei denn, wir planen genug Reserven ein, könnte es eng werden. Deshalb schlage ich vor, vorsichtig und in kleinen Schritten vorzugehen.\n\nAuch die Meinung der Mitarbeiter ist wichtig. Sofern alle einverstanden sind, führen wir den Ablauf überall ein. Falls es jedoch großen Widerstand gibt, starten wir zunächst nur in einer Abteilung. Obwohl Veränderungen oft schwerfallen, sind die meisten Kollegen offen. Auch wenn es Kritik gibt, sollten wir das Gespräch suchen.\n\nBetrachten wir die Kosten. Sofern wir früh bestellen, bekommen wir einen Rabatt. Falls wir warten, wird es teurer. Obwohl das Budget knapp ist, halte ich die Investition für sinnvoll. Selbst wenn wir am Anfang mehr ausgeben, sparen wir später deutlich. Die Rechnung geht langfristig auf.\n\nZum Zeitplan: Wir liefern die erste Version im Herbst, es sei denn, es treten unerwartete Probleme auf. Sofern die Tests erfolgreich sind, folgt kurz darauf die zweite Version. Falls nötig, holen wir externe Hilfe. Angenommen, alles klappt, könnten wir das Projekt sogar früher abschließen.\n\nAuch an die Schulung ist gedacht. Sofern genug Zeit bleibt, schulen wir alle gemeinsam. Falls das nicht möglich ist, bilden wir kleine Gruppen. Obwohl das mehr Aufwand bedeutet, ist es effektiver. Auch wenn manche skeptisch sind, wird die Schulung allen helfen.\n\nAuch an die Zukunft ist zu denken. Sofern der neue Ablauf funktioniert, können wir ihn erweitern. Falls sich neue Bedürfnisse ergeben, passen wir ihn an. Obwohl niemand die Zukunft kennt, sollten wir flexibel bleiben. Selbst wenn sich etwas ändert, ist ein guter Plan die beste Grundlage.\n\nAuch die Kunden sollten wir informieren. Falls sie Fragen haben, beantworten wir sie gern. Sofern sie einverstanden sind, führen wir die Änderung ein. Obwohl manche zunächst skeptisch sein könnten, überzeugt am Ende das Ergebnis.\n\nZusammenfassend bin ich überzeugt, dass sich der neue Ablauf lohnt. Obwohl der Anfang schwierig sein mag, überwiegen die Vorteile. Falls Sie Fragen haben, stehe ich gern zur Verfügung. Sofern Sie zustimmen, beginne ich sofort mit der genaueren Planung.\n\nKonditionale Konnektoren nennen eine Bedingung: „falls“ und „sofern“ bedeuten „wenn“. Konzessive Konnektoren nennen einen Gegensatz: „obwohl“, „auch wenn“ und „selbst wenn“ bedeuten, dass etwas trotz eines Hindernisses gilt. „Es sei denn“ bedeutet „außer wenn“. Mit diesen Wörtern kann man Pläne genau und vorsichtig formulieren, was besonders in formellen Texten wichtig ist.",
+              "questions": [
+                {
+                  "prompt": "Warum sollte der aktuelle Ablauf geändert werden?",
+                  "translation": "Why should the current process be changed?",
+                  "reference": "Obwohl er funktioniert, ist er nicht mehr zeitgemäß, und man verliert Zeit."
+                },
+                {
+                  "prompt": "Wann könnte man mit dem neuen Ablauf beginnen?",
+                  "translation": "When could the new process begin?",
+                  "reference": "Falls die Geschäftsleitung zustimmt, schon nächsten Monat."
+                },
+                {
+                  "prompt": "Was passiert, wenn es Verzögerungen gibt?",
+                  "translation": "What happens if there are delays?",
+                  "reference": "Dann wird der Start um einige Wochen verschoben."
+                },
+                {
+                  "prompt": "Was muss trotz der guten Software gemacht werden?",
+                  "translation": "What has to be done despite the good software?",
+                  "reference": "Das Team muss geschult werden."
+                },
+                {
+                  "prompt": "Was schlägt der Autor vor, falls es großen Widerstand gibt?",
+                  "translation": "What does the author suggest if there is strong resistance?",
+                  "reference": "Zunächst nur in einer Abteilung zu starten."
+                },
+                {
+                  "prompt": "Warum lohnt sich die Investition trotz des knappen Budgets?",
+                  "translation": "Why is the investment worthwhile despite the tight budget?",
+                  "reference": "Selbst wenn man am Anfang mehr ausgibt, spart man später deutlich; die Rechnung geht langfristig auf."
+                },
+                {
+                  "prompt": "Wann wird die erste Version geliefert?",
+                  "translation": "When will the first version be delivered?",
+                  "reference": "Im Herbst, es sei denn, es treten unerwartete Probleme auf."
+                },
+                {
+                  "prompt": "Was bedeuten „falls/sofern“ und „es sei denn“?",
+                  "translation": "What do falls/sofern and es sei denn mean?",
+                  "reference": "„falls/sofern“ bedeuten „wenn“ (Bedingung); „es sei denn“ bedeutet „außer wenn“."
+                }
+              ],
+              "exercises": [
+                {
+                  "type": "fill-in-blank",
+                  "instructions": "Ergänze den konditionalen Konnektor (wenn).",
+                  "payload": {
+                    "items": [
+                      {
+                        "prompt": "___ es Probleme gibt, ruf mich an."
+                      }
+                    ],
+                    "hints": []
+                  },
+                  "answer_key": {
+                    "items": [
+                      {
+                        "answer": "Falls"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "type": "multiple-choice",
+                  "instructions": "Wähle den konzessiven Konnektor (Gegensatz).",
+                  "payload": {
+                    "items": [
+                      {
+                        "prompt": "___ das Budget knapp war, gelang das Projekt.",
+                        "options": [
+                          "Obwohl",
+                          "Falls",
+                          "Sofern"
+                        ]
+                      }
+                    ],
+                    "hints": []
+                  },
+                  "answer_key": {
+                    "items": [
+                      {
+                        "answer": "Obwohl"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "type": "fill-in-blank",
+                  "instructions": "Ergänze den konditionalen Konnektor (formell für „wenn“).",
+                  "payload": {
+                    "items": [
+                      {
+                        "prompt": "___ alles klappt, liefern wir morgen."
+                      }
+                    ],
+                    "hints": []
+                  },
+                  "answer_key": {
+                    "items": [
+                      {
+                        "answer": "Sofern"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "type": "fill-in-blank",
+                  "instructions": "Ergänze das fehlende Wort (es sei ___ = außer wenn).",
+                  "payload": {
+                    "items": [
+                      {
+                        "prompt": "Wir kommen, es sei ___, es schneit."
+                      }
+                    ],
+                    "hints": []
+                  },
+                  "answer_key": {
+                    "items": [
+                      {
+                        "answer": "denn"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "type": "reorder",
+                  "instructions": "Bringe die Wörter in die richtige Reihenfolge.",
+                  "payload": {
+                    "items": [
+                      {
+                        "tokens": [
+                          "Obwohl",
+                          "das",
+                          "Budget",
+                          "knapp",
+                          "war",
+                          "gelang",
+                          "das",
+                          "Projekt"
+                        ]
+                      }
+                    ],
+                    "hints": []
+                  },
+                  "answer_key": {
+                    "items": [
+                      {
+                        "answer": "Obwohl das Budget knapp war, gelang das Projekt"
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "code": "b2.comparison-irrealis",
+              "title": "Irreal comparison (als ob)",
+              "grammar_topics": [
+                "b2.comparison-irrealis"
+              ],
+              "can_do": "I can describe how things seem.",
+              "seed_text": "Er tut so, als ob er alles wüsste. Es sieht aus, als hätte es geregnet. Sie redet, als wäre sie die Chefin. Das klingt, als ob es einfach wäre.",
+              "intro": "In this lesson you'll describe how things seem with irreal comparison. After als ob / als wenn the verb goes to the end in Konjunktiv II (als ob er alles wüsste); after als alone the verb comes right after (als wüsste er alles).",
+              "story": "Manchmal beobachte ich die Menschen um mich herum und denke: Sie tun so, als ob alles ganz anders wäre. Menschen spielen oft eine Rolle, und ihre Worte passen nicht immer zu ihren Gefühlen. Mit der irrealen Vergleichsform „als ob“ kann man genau beschreiben, wie etwas scheint, aber nicht wirklich ist.\n\nGestern hatte ich einen interessanten Tag im Büro. Mein Kollege Max tat so, als ob er alles wüsste. Er redete, als wäre er der Chef, obwohl er erst seit einem Monat hier ist. „Das macht man so“, sagte er, als hätte er jahrelange Erfahrung. In Wirklichkeit war er genauso unsicher wie wir alle.\n\nAuch meine Kollegin Lena verhielt sich seltsam. Sie sah aus, als hätte sie die ganze Nacht nicht geschlafen. Trotzdem lächelte sie, als ob alles in bester Ordnung wäre. „Mir geht es gut“, sagte sie, als würde sie sich selbst überzeugen wollen. Aber ich merkte, dass etwas nicht stimmte.\n\nAm Mittag kam der Chef herein. Er tat so, als ob er sehr beschäftigt wäre, aber eigentlich hatte er wenig zu tun. Er lief schnell durch den Raum, als hätte er einen wichtigen Termin. Dabei blieb er heimlich stehen, um zu hören, worüber wir sprachen. Es sah aus, als würde er uns kontrollieren.\n\nSpäter erzählte ein Kollege eine Geschichte. Er beschrieb seinen Urlaub, als wäre es das größte Abenteuer der Welt gewesen. „Es war unglaublich“, sagte er, als ob niemand jemals etwas Ähnliches erlebt hätte. Wir hörten höflich zu, obwohl die Geschichte eigentlich ganz gewöhnlich klang.\n\nAm Nachmittag gab es ein Problem. Ein Kunde beschwerte sich, als ob wir alles falsch gemacht hätten. Er redete sehr laut, als wäre er der einzige wichtige Mensch. Dabei war der Fehler halb so schlimm. Wir blieben ruhig und taten so, als ob nichts uns aus der Fassung bringen könnte.\n\nAm frühen Abend traf ich eine alte Bekannte. Sie tat so, als ob wir uns erst gestern gesehen hätten, obwohl Jahre vergangen waren. Sie sprach so herzlich, als wäre nie Zeit vergangen. Das gefiel mir, denn bei ihr wirkte nichts gespielt. Es war, als ob wir alte Freunde wären.\n\nAm Abend dachte ich über den Tag nach. Warum tun Menschen oft so, als ob sie jemand anderes wären? Vielleicht haben sie Angst, dass man ihre wahren Gefühle sieht. Manchmal tue ich ja selbst so, als ob ich stärker wäre, als ich bin. Es gehört wohl zum Leben dazu.\n\nTrotzdem finde ich Ehrlichkeit schöner. Es ist angenehmer, wenn jemand nicht so tut, als ob, sondern einfach er selbst ist. Am Ende merkt man sowieso, was echt ist und was gespielt. Deshalb versuche ich, ehrlich zu bleiben, auch wenn es manchmal schwerfällt.\n\nDie irreale Vergleichsform beschreibt, wie etwas scheint. Nach „als ob“ und „als wenn“ steht das Verb am Ende, und man benutzt den Konjunktiv II: Er tut so, als ob er alles wüsste. Nach „als“ allein steht das Verb direkt danach: Er tut so, als wüsste er alles. Beide Formen bedeuten dasselbe und zeigen, dass etwas nicht der Wirklichkeit entspricht. Mit ihnen kann man treffend beschreiben, wie jemand wirkt, auch wenn die Realität eine andere ist.",
+              "questions": [
+                {
+                  "prompt": "Wie verhielt sich der Kollege Max?",
+                  "translation": "How did the colleague Max behave?",
+                  "reference": "Er tat so, als ob er alles wüsste, und redete, als wäre er der Chef, obwohl er erst seit einem Monat da ist."
+                },
+                {
+                  "prompt": "Wie sah die Kollegin Lena aus, und wie verhielt sie sich?",
+                  "translation": "How did the colleague Lena look, and how did she behave?",
+                  "reference": "Sie sah aus, als hätte sie nicht geschlafen, lächelte aber, als ob alles in Ordnung wäre."
+                },
+                {
+                  "prompt": "Was tat der Chef am Mittag?",
+                  "translation": "What did the boss do at midday?",
+                  "reference": "Er tat so, als ob er sehr beschäftigt wäre, wollte aber heimlich hören, worüber sie sprachen."
+                },
+                {
+                  "prompt": "Wie erzählte der Kollege von seinem Urlaub?",
+                  "translation": "How did the colleague talk about his holiday?",
+                  "reference": "Als wäre es das größte Abenteuer der Welt gewesen, obwohl die Geschichte gewöhnlich klang."
+                },
+                {
+                  "prompt": "Wie beschwerte sich der Kunde am Nachmittag?",
+                  "translation": "How did the customer complain in the afternoon?",
+                  "reference": "Als ob sie alles falsch gemacht hätten, obwohl der Fehler halb so schlimm war."
+                },
+                {
+                  "prompt": "Warum tun Menschen laut dem Erzähler oft so, als ob sie jemand anderes wären?",
+                  "translation": "Why, according to the narrator, do people often act as if they were someone else?",
+                  "reference": "Vielleicht aus Angst, dass man ihre wahren Gefühle sieht."
+                },
+                {
+                  "prompt": "Was findet der Erzähler am Ende schöner?",
+                  "translation": "What does the narrator find nicer in the end?",
+                  "reference": "Ehrlichkeit; wenn jemand einfach er selbst ist."
+                },
+                {
+                  "prompt": "Wie bildet man die irreale Vergleichsform mit „als ob“?",
+                  "translation": "How do you form the irreal comparison with als ob?",
+                  "reference": "Nach „als ob“ steht das Verb am Ende im Konjunktiv II (er tut so, als ob er alles wüsste); nach „als“ allein steht das Verb direkt danach."
+                }
+              ],
+              "exercises": [
+                {
+                  "type": "fill-in-blank",
+                  "instructions": "Ergänze den Konjunktiv II von wissen (Verb am Ende).",
+                  "payload": {
+                    "items": [
+                      {
+                        "prompt": "Er tut so, als ob er alles ___."
+                      }
+                    ],
+                    "hints": []
+                  },
+                  "answer_key": {
+                    "items": [
+                      {
+                        "answer": "wüsste"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "type": "fill-in-blank",
+                  "instructions": "Ergänze den Konjunktiv II von haben (nach „als“).",
+                  "payload": {
+                    "items": [
+                      {
+                        "prompt": "Es sieht aus, als ___ es geregnet."
+                      }
+                    ],
+                    "hints": []
+                  },
+                  "answer_key": {
+                    "items": [
+                      {
+                        "answer": "hätte"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "type": "multiple-choice",
+                  "instructions": "Wähle den Konjunktiv II von sein.",
+                  "payload": {
+                    "items": [
+                      {
+                        "prompt": "Sie redet, als ___ sie die Chefin.",
+                        "options": [
+                          "wäre",
+                          "ist",
+                          "war"
+                        ]
+                      }
+                    ],
+                    "hints": []
+                  },
+                  "answer_key": {
+                    "items": [
+                      {
+                        "answer": "wäre"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "type": "fill-in-blank",
+                  "instructions": "Ergänze das erste Wort der Vergleichsform (___ ob).",
+                  "payload": {
+                    "items": [
+                      {
+                        "prompt": "Das klingt, ___ ob es einfach wäre."
+                      }
+                    ],
+                    "hints": []
+                  },
+                  "answer_key": {
+                    "items": [
+                      {
+                        "answer": "als"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "type": "reorder",
+                  "instructions": "Bringe die Wörter in die richtige Reihenfolge.",
+                  "payload": {
+                    "items": [
+                      {
+                        "tokens": [
+                          "Er",
+                          "tut",
+                          "so",
+                          "als",
+                          "ob",
+                          "er",
+                          "alles",
+                          "wüsste"
+                        ]
+                      }
+                    ],
+                    "hints": []
+                  },
+                  "answer_key": {
+                    "items": [
+                      {
+                        "answer": "Er tut so, als ob er alles wüsste"
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
           ]
         },
         {
           "unit": 5,
           "title": "Stil & Ausdruck",
           "lessons": [
-            { "code": "b2.adjective-prepositions", "title": "Adjectives with prepositions", "grammar_topics": ["b2.adjective-prepositions"], "can_do": "I can express attitudes precisely.", "seed_text": "Ich bin stolz auf mein Team und zufrieden mit dem Ergebnis. Sie ist an neuen Technologien interessiert. Wir sind froh über den Erfolg und gespannt auf die Zukunft." },
-            { "code": "b2.word-order-emphasis", "title": "Word order & emphasis", "grammar_topics": ["b2.word-order-emphasis"], "can_do": "I can structure sentences for emphasis.", "seed_text": "Diesen Fehler habe ich noch nie gesehen. Gestern erst wurde das Update veröffentlicht. Nicht das Team ist schuld, sondern der Zeitplan. Gerade jetzt brauchen wir Ruhe." },
-            { "code": "b2.collocations-idioms", "title": "Collocations & idioms", "grammar_topics": ["b2.collocations-idioms"], "can_do": "I can use idiomatic, natural expressions.", "seed_text": "Wir müssen eine Entscheidung treffen und das Projekt in Angriff nehmen. Das kommt überhaupt nicht in Frage. Ich drücke dir die Daumen. Am Ende des Tages zählt das Ergebnis." },
-            { "code": "b2.cohesion-register", "title": "Cohesion & register", "grammar_topics": ["b2.cohesion-register"], "can_do": "I can write formal, well-structured texts.", "seed_text": "Sehr geehrte Damen und Herren, hiermit teile ich Ihnen mit, dass das Projekt abgeschlossen ist. Zusammenfassend lässt sich sagen, dass die Zusammenarbeit reibungslos verlief." }
+            {
+              "code": "b2.adjective-prepositions",
+              "title": "Adjectives with prepositions",
+              "grammar_topics": [
+                "b2.adjective-prepositions"
+              ],
+              "can_do": "I can express attitudes precisely.",
+              "seed_text": "Ich bin stolz auf mein Team und zufrieden mit dem Ergebnis. Sie ist an neuen Technologien interessiert. Wir sind froh über den Erfolg und gespannt auf die Zukunft.",
+              "intro": "In this lesson you'll express attitudes precisely with adjectives that take a fixed preposition: stolz auf, zufrieden mit, interessiert an, froh über, gespannt auf. The preposition must be learned with the adjective.",
+              "story": "Am Ende eines Jahres denke ich gern über meine Gefühle und Einstellungen nach. Wofür bin ich dankbar? Worauf bin ich stolz? Womit bin ich zufrieden? Um solche Fragen zu beantworten, braucht man Adjektive mit festen Präpositionen. Jedes Adjektiv verlangt eine bestimmte Präposition, und die muss man einfach lernen.\n\nZuerst zu meiner Arbeit. Ich bin sehr stolz auf mein Team. Wir haben in diesem Jahr viel erreicht, und ich bin zufrieden mit dem Ergebnis. Natürlich war nicht alles perfekt, aber ich bin überzeugt von unserem Weg. Für die gute Zusammenarbeit bin ich meinen Kollegen sehr dankbar.\n\nIch bin auch sehr interessiert an neuen Technologien. Die Entwicklung geht schnell, und ich bin gespannt auf die Zukunft. Manchmal bin ich ein bisschen besorgt über die Risiken, aber insgesamt bin ich optimistisch. Ich bin fest davon überzeugt, dass wir viele Chancen haben, wenn wir offen bleiben.\n\nIn meinem Beruf bin ich verantwortlich für ein kleines Team. Das bedeutet viel Verantwortung, aber ich bin stolz darauf. Meine Kollegen sind auf meine Unterstützung angewiesen, und ich bin froh über ihr Vertrauen. Gleichzeitig bin ich abhängig von ihrer Arbeit, denn allein könnte ich nichts erreichen.\n\nAuch privat gibt es viel, wofür ich dankbar bin. Ich bin froh über meine Familie und meine Freunde. Ich bin sehr zufrieden mit meinem Leben, auch wenn nicht immer alles leicht ist. Manchmal bin ich traurig über Dinge, die ich nicht ändern kann. Aber ich versuche, das Positive zu sehen.\n\nMeine Freundin ist bekannt für ihre gute Laune. Ich bin wirklich verliebt in ihren Optimismus. Wir sind beide begeistert von Reisen und neugierig auf fremde Kulturen. Natürlich ärgere ich mich manchmal über Kleinigkeiten, aber am Ende sind wir stolz auf das, was wir zusammen aufgebaut haben.\n\nEs gibt auch Dinge, mit denen ich unzufrieden bin. Ich bin manchmal enttäuscht von mir selbst, wenn ich meine Ziele nicht erreiche. Ich bin auch nicht immer zufrieden mit meiner Disziplin. Aber ich bin überzeugt davon, dass man aus Fehlern lernen kann. Deshalb bleibe ich hoffnungsvoll.\n\nWenn ich in die Zukunft blicke, bin ich voller Erwartung. Ich bin gespannt auf neue Aufgaben und offen für Veränderungen. Ich bin bereit für neue Herausforderungen und interessiert an allem, was kommt. Und ich bin dankbar für jede Erfahrung, ob gut oder schlecht.\n\nAuch für meine Gesundheit bin ich dankbar. Ich achte auf meinen Körper und bin stolz auf meine Fortschritte beim Sport. Manchmal bin ich böse auf mich, wenn ich faul bin, aber meistens bin ich zufrieden mit meiner Routine. Ich bin überzeugt davon, dass ein gesundes Leben glücklich macht.\n\nSolche Adjektive mit Präpositionen brauche ich jeden Tag, um meine Einstellungen auszudrücken. Ich bin stolz auf etwas, zufrieden mit etwas, interessiert an etwas. Am Ende eines Jahres merke ich: Meine Gefühle sind vielfältig, aber vor allem bin ich dankbar für ein reiches und spannendes Leben.\n\nViele Adjektive haben eine feste Präposition. „Stolz“ steht mit „auf“, „zufrieden“ mit „mit“, „interessiert“ mit „an“, „froh“ und „begeistert“ mit „über“. Man kann die Präposition nicht raten, sondern muss sie zusammen mit dem Adjektiv lernen. Für Sachen benutzt man oft ein da-Wort: Ich bin stolz darauf. So drückt man Meinungen und Gefühle präzise aus.",
+              "questions": [
+                {
+                  "prompt": "Worauf ist der Erzähler bei der Arbeit stolz?",
+                  "translation": "What is the narrator proud of at work?",
+                  "reference": "Auf sein Team."
+                },
+                {
+                  "prompt": "Womit ist der Erzähler zufrieden?",
+                  "translation": "What is the narrator satisfied with?",
+                  "reference": "Mit dem Ergebnis der Arbeit."
+                },
+                {
+                  "prompt": "Wofür interessiert sich der Erzähler?",
+                  "translation": "What is the narrator interested in?",
+                  "reference": "Für neue Technologien."
+                },
+                {
+                  "prompt": "Wofür ist der Erzähler im Beruf verantwortlich?",
+                  "translation": "What is the narrator responsible for at work?",
+                  "reference": "Für ein kleines Team."
+                },
+                {
+                  "prompt": "Wofür ist die Freundin bekannt?",
+                  "translation": "What is the girlfriend known for?",
+                  "reference": "Für ihre gute Laune."
+                },
+                {
+                  "prompt": "Womit ist der Erzähler manchmal unzufrieden?",
+                  "translation": "What is the narrator sometimes dissatisfied with?",
+                  "reference": "Mit seiner Disziplin; er ist manchmal enttäuscht von sich selbst."
+                },
+                {
+                  "prompt": "Wie blickt der Erzähler in die Zukunft?",
+                  "translation": "How does the narrator look to the future?",
+                  "reference": "Voller Erwartung; er ist gespannt auf neue Aufgaben und offen für Veränderungen."
+                },
+                {
+                  "prompt": "Wie lernt man Adjektive mit Präpositionen?",
+                  "translation": "How do you learn adjectives with prepositions?",
+                  "reference": "Man kann die Präposition nicht raten, sondern muss sie zusammen mit dem Adjektiv lernen."
+                }
+              ],
+              "exercises": [
+                {
+                  "type": "fill-in-blank",
+                  "instructions": "Ergänze die Präposition (stolz ___).",
+                  "payload": {
+                    "items": [
+                      {
+                        "prompt": "Ich bin stolz ___ mein Team."
+                      }
+                    ],
+                    "hints": []
+                  },
+                  "answer_key": {
+                    "items": [
+                      {
+                        "answer": "auf"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "type": "fill-in-blank",
+                  "instructions": "Ergänze die Präposition (zufrieden ___).",
+                  "payload": {
+                    "items": [
+                      {
+                        "prompt": "Ich bin zufrieden ___ dem Ergebnis."
+                      }
+                    ],
+                    "hints": []
+                  },
+                  "answer_key": {
+                    "items": [
+                      {
+                        "answer": "mit"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "type": "multiple-choice",
+                  "instructions": "Wähle die Präposition (interessiert ___).",
+                  "payload": {
+                    "items": [
+                      {
+                        "prompt": "Sie ist interessiert ___ neuen Technologien.",
+                        "options": [
+                          "an",
+                          "auf",
+                          "für"
+                        ]
+                      }
+                    ],
+                    "hints": []
+                  },
+                  "answer_key": {
+                    "items": [
+                      {
+                        "answer": "an"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "type": "fill-in-blank",
+                  "instructions": "Ergänze die Präposition (gespannt ___).",
+                  "payload": {
+                    "items": [
+                      {
+                        "prompt": "Wir sind gespannt ___ die Zukunft."
+                      }
+                    ],
+                    "hints": []
+                  },
+                  "answer_key": {
+                    "items": [
+                      {
+                        "answer": "auf"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "type": "reorder",
+                  "instructions": "Bringe die Wörter in die richtige Reihenfolge.",
+                  "payload": {
+                    "items": [
+                      {
+                        "tokens": [
+                          "Ich",
+                          "bin",
+                          "stolz",
+                          "auf",
+                          "mein",
+                          "Team"
+                        ]
+                      }
+                    ],
+                    "hints": []
+                  },
+                  "answer_key": {
+                    "items": [
+                      {
+                        "answer": "Ich bin stolz auf mein Team"
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "code": "b2.word-order-emphasis",
+              "title": "Word order & emphasis",
+              "grammar_topics": [
+                "b2.word-order-emphasis"
+              ],
+              "can_do": "I can structure sentences for emphasis.",
+              "seed_text": "Diesen Fehler habe ich noch nie gesehen. Gestern erst wurde das Update veröffentlicht. Nicht das Team ist schuld, sondern der Zeitplan. Gerade jetzt brauchen wir Ruhe.",
+              "intro": "In this lesson you'll structure sentences for emphasis. The verb stays in second position, but you can front the most important element — object, time or a whole clause. nicht … sondern highlights a contrast.",
+              "story": "Im Deutschen ist die Wortstellung flexibler, als viele denken. Das Verb steht zwar meistens an zweiter Stelle, aber am Anfang kann fast jedes Satzglied stehen. Was am Anfang steht, wird betont. Mit dieser Technik kann man genau das hervorheben, was einem wichtig ist. Heute erzähle ich von einem Tag, an dem die Betonung eine große Rolle spielte.\n\nAm Morgen entdeckte ich ein Problem im Programm. „Diesen Fehler habe ich noch nie gesehen“, sagte ich erstaunt. Normalerweise würde man sagen: „Ich habe diesen Fehler noch nie gesehen.“ Aber indem ich „diesen Fehler“ an den Anfang stellte, betonte ich genau das Problem. So merkten alle sofort, wie ungewöhnlich die Situation war.\n\nMein Chef kam dazu und fragte, wann das passiert sei. „Gestern erst wurde das Update veröffentlicht“, erklärte ich. Das Wort „gestern“ stand am Anfang, weil die Zeit hier besonders wichtig war. Das Update war also ganz neu. Hätte ich gesagt „Das Update wurde gestern veröffentlicht“, wäre die Betonung schwächer gewesen.\n\nDann suchten wir nach der Ursache. Einige Kollegen dachten, das Team hätte einen Fehler gemacht. Doch ich widersprach: „Nicht das Team ist schuld, sondern der Zeitplan.“ Mit dieser Struktur stellte ich klar, wer wirklich verantwortlich war. „Nicht … sondern“ hebt den Gegensatz besonders deutlich hervor. Alle verstanden sofort meinen Punkt.\n\nDie Stimmung war ein bisschen angespannt. „Gerade jetzt brauchen wir Ruhe“, sagte ich. Indem ich „gerade jetzt“ betonte, machte ich klar, dass der Moment entscheidend war. In stressigen Situationen ist die richtige Betonung sehr wichtig, denn sie lenkt die Aufmerksamkeit auf das Wesentliche.\n\nAm Mittag präsentierte ich meine Lösung. „Diese Methode habe ich schon oft benutzt“, sagte ich selbstbewusst. Das Objekt am Anfang zeigte, dass ich Erfahrung hatte. Meine Kollegen waren überzeugt. „Genau so machen wir das“, sagte mein Chef. Auch er betonte das Wichtigste, indem er „genau so“ an den Anfang stellte.\n\nAm Nachmittag ging alles besser. „Ohne eure Hilfe hätte ich das nie geschafft“, sagte ich dankbar zu meinem Team. Indem ich „ohne eure Hilfe“ betonte, zeigte ich, wie wichtig die Zusammenarbeit war. Solche kleinen Umstellungen im Satz können viel Wärme und Bedeutung ausdrücken.\n\nAuch in Besprechungen ist die Betonung nützlich. „Diesen Vorschlag finde ich gut“, sagte eine Kollegin und stellte damit ihre Zustimmung an den Anfang. Ein anderer meinte: „Genau darüber müssen wir reden.“ So lenkt jeder die Aufmerksamkeit auf das, was ihm am wichtigsten ist.\n\nSogar in E-Mails achte ich auf die Betonung. „Bis Freitag brauche ich die Zahlen“, schreibe ich, wenn der Termin wichtig ist. So sieht der Leser sofort, worauf es ankommt.\n\nAm Abend dachte ich über den Tag nach. „Viel gelernt habe ich heute“, sagte ich mir. Die Betonung lag auf dem, was ich gewonnen hatte. Es war kein leichter Tag, aber gerade solche Tage machen einen besser. Am Ende war ich zufrieden mit mir und meinem Team.\n\nDie Wortstellung im Deutschen dient oft der Betonung. Das Verb bleibt an zweiter Stelle, aber davor kann man das wichtigste Satzglied stellen: das Objekt, eine Zeitangabe oder einen ganzen Nebensatz. „Diesen Fehler habe ich noch nie gesehen“ betont den Fehler. Mit „nicht … sondern“ hebt man einen Gegensatz hervor. So lenkt man die Aufmerksamkeit gezielt auf das, was zählt. Wer die Wortstellung bewusst einsetzt, wirkt sicher und überzeugend.",
+              "questions": [
+                {
+                  "prompt": "Wo steht das Verb im deutschen Aussagesatz meistens?",
+                  "translation": "Where does the verb usually stand in a German statement?",
+                  "reference": "An zweiter Stelle."
+                },
+                {
+                  "prompt": "Was wird betont, wenn man ein Satzglied an den Anfang stellt?",
+                  "translation": "What is emphasized when you put an element at the beginning?",
+                  "reference": "Das, was am Anfang steht."
+                },
+                {
+                  "prompt": "Wie betonte der Erzähler den ungewöhnlichen Fehler?",
+                  "translation": "How did the narrator emphasize the unusual bug?",
+                  "reference": "Er stellte „diesen Fehler“ an den Anfang: „Diesen Fehler habe ich noch nie gesehen.“"
+                },
+                {
+                  "prompt": "Warum stellte der Erzähler „gestern“ an den Satzanfang?",
+                  "translation": "Why did the narrator put gestern at the start of the sentence?",
+                  "reference": "Weil die Zeit wichtig war; das Update war ganz neu."
+                },
+                {
+                  "prompt": "Wer war laut dem Erzähler wirklich schuld?",
+                  "translation": "Who was really to blame according to the narrator?",
+                  "reference": "Nicht das Team, sondern der Zeitplan."
+                },
+                {
+                  "prompt": "Was drückt die Struktur „nicht … sondern“ aus?",
+                  "translation": "What does the structure nicht … sondern express?",
+                  "reference": "Sie hebt einen Gegensatz besonders deutlich hervor."
+                },
+                {
+                  "prompt": "Wie zeigte der Erzähler seinem Team seine Dankbarkeit?",
+                  "translation": "How did the narrator show his team his gratitude?",
+                  "reference": "Indem er sagte: „Ohne eure Hilfe hätte ich das nie geschafft.“"
+                },
+                {
+                  "prompt": "Wozu dient die flexible Wortstellung im Deutschen?",
+                  "translation": "What is the flexible word order in German used for?",
+                  "reference": "Zur Betonung; man stellt das wichtigste Satzglied vor das Verb, um die Aufmerksamkeit darauf zu lenken."
+                }
+              ],
+              "exercises": [
+                {
+                  "type": "reorder",
+                  "instructions": "Bringe die Wörter in die richtige Reihenfolge (Betonung auf das Objekt).",
+                  "payload": {
+                    "items": [
+                      {
+                        "tokens": [
+                          "Diesen",
+                          "Fehler",
+                          "habe",
+                          "ich",
+                          "noch",
+                          "nie",
+                          "gesehen"
+                        ]
+                      }
+                    ],
+                    "hints": []
+                  },
+                  "answer_key": {
+                    "items": [
+                      {
+                        "answer": "Diesen Fehler habe ich noch nie gesehen"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "type": "multiple-choice",
+                  "instructions": "Wähle die richtige Form (Verb an zweiter Stelle).",
+                  "payload": {
+                    "items": [
+                      {
+                        "prompt": "Gestern ___ das Update veröffentlicht.",
+                        "options": [
+                          "wurde",
+                          "es wurde",
+                          "wurde es"
+                        ]
+                      }
+                    ],
+                    "hints": []
+                  },
+                  "answer_key": {
+                    "items": [
+                      {
+                        "answer": "wurde"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "type": "fill-in-blank",
+                  "instructions": "Ergänze das Wort (nicht … ___).",
+                  "payload": {
+                    "items": [
+                      {
+                        "prompt": "Nicht das Team ist schuld, ___ der Zeitplan."
+                      }
+                    ],
+                    "hints": []
+                  },
+                  "answer_key": {
+                    "items": [
+                      {
+                        "answer": "sondern"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "type": "reorder",
+                  "instructions": "Bringe die Wörter in die richtige Reihenfolge.",
+                  "payload": {
+                    "items": [
+                      {
+                        "tokens": [
+                          "Gerade",
+                          "jetzt",
+                          "brauchen",
+                          "wir",
+                          "Ruhe"
+                        ]
+                      }
+                    ],
+                    "hints": []
+                  },
+                  "answer_key": {
+                    "items": [
+                      {
+                        "answer": "Gerade jetzt brauchen wir Ruhe"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "type": "fill-in-blank",
+                  "instructions": "Ergänze das Wort für die Betonung des Moments (___ jetzt).",
+                  "payload": {
+                    "items": [
+                      {
+                        "prompt": "___ jetzt brauchen wir Ruhe."
+                      }
+                    ],
+                    "hints": []
+                  },
+                  "answer_key": {
+                    "items": [
+                      {
+                        "answer": "Gerade"
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "code": "b2.collocations-idioms",
+              "title": "Collocations & idioms",
+              "grammar_topics": [
+                "b2.collocations-idioms"
+              ],
+              "can_do": "I can use idiomatic, natural expressions.",
+              "seed_text": "Wir müssen eine Entscheidung treffen und das Projekt in Angriff nehmen. Das kommt überhaupt nicht in Frage. Ich drücke dir die Daumen. Am Ende des Tages zählt das Ergebnis.",
+              "intro": "In this lesson you'll use natural collocations (eine Entscheidung treffen, in Angriff nehmen) and idioms (jemandem die Daumen drücken, den Nagel auf den Kopf treffen), which cannot be translated word for word.",
+              "story": "Die deutsche Sprache steckt voller fester Wendungen und Redewendungen. Manche kann man wörtlich verstehen, andere haben eine bildliche Bedeutung. Wer sie kennt, klingt viel natürlicher und drückt sich lebendiger aus. Heute erzähle ich von einer Woche im Büro, in der ich viele solcher Wendungen benutzt habe.\n\nAm Montag mussten wir eine wichtige Entscheidung treffen. Ein neues Projekt stand an, und wir wollten es sofort in Angriff nehmen. „Wir dürfen das nicht auf die lange Bank schieben“, sagte mein Chef. „Am Ende des Tages zählt nur das Ergebnis.“ Also machten wir uns gleich an die Arbeit.\n\nAm Dienstag gab es ein Problem. Ein Kollege verlor fast den Kopf, weil ein Termin näher rückte. „Bleib ruhig“, sagte ich. „Wir kriegen das hin.“ Gemeinsam behielten wir den Überblick. Zum Glück fiel unser Plan nicht ins Wasser, sondern wir fanden rechtzeitig eine Lösung.\n\nAm Mittwoch stellte jemand eine schlechte Idee vor. „Das kommt überhaupt nicht in Frage“, sagte mein Chef sofort. Er nahm kein Blatt vor den Mund. Trotzdem blieb die Stimmung gut, denn wir konnten offen miteinander reden. „Du hast den Nagel auf den Kopf getroffen“, sagte ich später zu einer Kollegin, die den Kern des Problems erkannt hatte.\n\nAm Donnerstag hatte eine Kollegin eine Prüfung. „Ich drücke dir die Daumen“, sagte ich ihr am Morgen. Sie war sehr nervös, aber am Ende lief alles gut. „Ich bin dir wirklich dankbar“, sagte sie später. „Deine Worte haben mir Mut gemacht.“ So halten wir im Team immer zusammen.\n\nAm Freitag zogen wir Bilanz. „Diese Woche haben wir viel geschafft“, sagte mein Chef. „Wir haben das Projekt gut in Gang gebracht.“ Ich hielt alle auf dem Laufenden, damit niemand den Überblick verlor. „Ende gut, alles gut“, sagte ein Kollege und lachte. Alle waren zufrieden.\n\nNatürlich sind solche Redewendungen für Lernende nicht leicht. Man kann sie nicht Wort für Wort übersetzen. „Jemandem die Daumen drücken“ bedeutet nicht wirklich, dass man die Daumen drückt, sondern dass man ihm Glück wünscht. Solche Bilder muss man einfach lernen und im richtigen Moment benutzen.\n\nManche Redewendungen haben interessante Geschichten. „Tomaten auf den Augen haben“ bedeutet, dass man etwas Offensichtliches nicht sieht. „Die Katze im Sack kaufen“ heißt, etwas zu kaufen, ohne es geprüft zu haben. Solche Bilder machen die Sprache bunt und machen beim Lernen richtig Spaß.\n\nIch sammle solche Ausdrücke in einem kleinen Heft. Wenn ich einen neuen höre, schreibe ich ihn sofort auf. „Übung macht den Meister“, sage ich mir immer. Und tatsächlich: Je mehr ich sie benutze, desto natürlicher klingen sie. Manchmal bringe ich sogar meine deutschen Kollegen zum Lachen, wenn ich eine passende Redewendung finde.\n\nAm Wochenende dachte ich über die Woche nach. Ich hatte viele Wendungen benutzt, ohne groß nachzudenken. Genau das ist das Ziel: dass die Redewendungen zur zweiten Natur werden. Wer sie sicher beherrscht, fühlt sich in der Sprache wirklich zu Hause. Und am Ende des Tages zählt genau das.\n\nKollokationen sind feste Wortverbindungen, die man so und nicht anders benutzt: „eine Entscheidung treffen“, „ein Projekt in Angriff nehmen“. Redewendungen sind bildliche Ausdrücke: „die Daumen drücken“, „den Nagel auf den Kopf treffen“. Beide gehören zu einer natürlichen Sprache. Man lernt sie am besten, indem man viel liest, zuhört und sie dann selbst ausprobiert. Mit der Zeit gehen sie einem in Fleisch und Blut über.",
+              "questions": [
+                {
+                  "prompt": "Was mussten die Kollegen am Montag machen?",
+                  "translation": "What did the colleagues have to do on Monday?",
+                  "reference": "Eine wichtige Entscheidung treffen und das neue Projekt in Angriff nehmen."
+                },
+                {
+                  "prompt": "Was sagte der Chef über das Aufschieben?",
+                  "translation": "What did the boss say about putting things off?",
+                  "reference": "Man dürfe das nicht auf die lange Bank schieben; am Ende des Tages zähle nur das Ergebnis."
+                },
+                {
+                  "prompt": "Was passierte am Dienstag mit dem Kollegen?",
+                  "translation": "What happened to the colleague on Tuesday?",
+                  "reference": "Er verlor fast den Kopf, weil ein Termin näher rückte."
+                },
+                {
+                  "prompt": "Wie reagierte der Chef auf die schlechte Idee am Mittwoch?",
+                  "translation": "How did the boss react to the bad idea on Wednesday?",
+                  "reference": "Er sagte: „Das kommt überhaupt nicht in Frage“ und nahm kein Blatt vor den Mund."
+                },
+                {
+                  "prompt": "Was sagte der Erzähler der Kollegin vor ihrer Prüfung?",
+                  "translation": "What did the narrator say to the colleague before her exam?",
+                  "reference": "„Ich drücke dir die Daumen.“"
+                },
+                {
+                  "prompt": "Wie hielt der Erzähler am Freitag das Team informiert?",
+                  "translation": "How did the narrator keep the team informed on Friday?",
+                  "reference": "Er hielt alle auf dem Laufenden, damit niemand den Überblick verlor."
+                },
+                {
+                  "prompt": "Was bedeutet „jemandem die Daumen drücken“?",
+                  "translation": "What does 'to press one's thumbs for someone' mean?",
+                  "reference": "Dass man ihm Glück wünscht (nicht wörtlich)."
+                },
+                {
+                  "prompt": "Was ist der Unterschied zwischen Kollokationen und Redewendungen?",
+                  "translation": "What is the difference between collocations and idioms?",
+                  "reference": "Kollokationen sind feste Wortverbindungen (eine Entscheidung treffen); Redewendungen sind bildliche Ausdrücke (die Daumen drücken)."
+                }
+              ],
+              "exercises": [
+                {
+                  "type": "fill-in-blank",
+                  "instructions": "Ergänze das Verb (eine Entscheidung ___).",
+                  "payload": {
+                    "items": [
+                      {
+                        "prompt": "Wir müssen eine Entscheidung ___."
+                      }
+                    ],
+                    "hints": []
+                  },
+                  "answer_key": {
+                    "items": [
+                      {
+                        "answer": "treffen"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "type": "fill-in-blank",
+                  "instructions": "Ergänze das Nomen (in ___ nehmen).",
+                  "payload": {
+                    "items": [
+                      {
+                        "prompt": "Wir nehmen das Projekt in ___."
+                      }
+                    ],
+                    "hints": []
+                  },
+                  "answer_key": {
+                    "items": [
+                      {
+                        "answer": "Angriff"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "type": "multiple-choice",
+                  "instructions": "Wähle das richtige Nomen (nicht in ___ kommen).",
+                  "payload": {
+                    "items": [
+                      {
+                        "prompt": "Das kommt überhaupt nicht in ___.",
+                        "options": [
+                          "Frage",
+                          "Angriff",
+                          "Gang"
+                        ]
+                      }
+                    ],
+                    "hints": []
+                  },
+                  "answer_key": {
+                    "items": [
+                      {
+                        "answer": "Frage"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "type": "fill-in-blank",
+                  "instructions": "Ergänze das Wort (die ___ drücken = Glück wünschen).",
+                  "payload": {
+                    "items": [
+                      {
+                        "prompt": "Ich drücke dir die ___."
+                      }
+                    ],
+                    "hints": []
+                  },
+                  "answer_key": {
+                    "items": [
+                      {
+                        "answer": "Daumen"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "type": "reorder",
+                  "instructions": "Bringe die Wörter in die richtige Reihenfolge.",
+                  "payload": {
+                    "items": [
+                      {
+                        "tokens": [
+                          "Wir",
+                          "müssen",
+                          "eine",
+                          "Entscheidung",
+                          "treffen"
+                        ]
+                      }
+                    ],
+                    "hints": []
+                  },
+                  "answer_key": {
+                    "items": [
+                      {
+                        "answer": "Wir müssen eine Entscheidung treffen"
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "code": "b2.cohesion-register",
+              "title": "Cohesion & register",
+              "grammar_topics": [
+                "b2.cohesion-register"
+              ],
+              "can_do": "I can write formal, well-structured texts.",
+              "seed_text": "Sehr geehrte Damen und Herren, hiermit teile ich Ihnen mit, dass das Projekt abgeschlossen ist. Zusammenfassend lässt sich sagen, dass die Zusammenarbeit reibungslos verlief.",
+              "intro": "In this lesson you'll write formal, well-structured texts. A formal letter uses a polite salutation (Sehr geehrte Damen und Herren), the Sie form, connectors (einerseits, dennoch, folglich) and a closing (Mit freundlichen Grüßen).",
+              "story": "Sehr geehrte Damen und Herren,\n\nhiermit möchte ich Ihnen einen Überblick über das abgeschlossene Projekt geben. Im Folgenden fasse ich die wichtigsten Ergebnisse zusammen und gehe auf einige offene Punkte ein. Ich hoffe, dass dieser Bericht alle Ihre Fragen beantwortet.\n\nZunächst freut es mich, Ihnen mitteilen zu können, dass das Projekt erfolgreich abgeschlossen wurde. Die Zusammenarbeit zwischen den Abteilungen verlief reibungslos. Einerseits konnten wir den Zeitplan einhalten, andererseits blieben wir sogar unter dem geplanten Budget. Insgesamt sind wir mit dem Ergebnis sehr zufrieden.\n\nIm Verlauf des Projekts gab es natürlich auch Herausforderungen. Zunächst mussten wir einige technische Probleme lösen. Zudem war die Abstimmung mit den externen Partnern anfangs schwierig. Dennoch fanden wir für jedes Problem eine Lösung. Folglich konnten wir alle Ziele erreichen.\n\nAn dieser Stelle möchte ich betonen, dass wir stets transparent gearbeitet haben. Einerseits haben wir Sie regelmäßig informiert, andererseits standen wir für Rückfragen zur Verfügung. Auf diese Weise blieb das Vertrauen jederzeit erhalten.\n\nBesonders hervorheben möchte ich das Engagement des Teams. Alle Mitarbeiter haben sich hervorragend eingesetzt. Darüber hinaus haben sie viele eigene Ideen eingebracht. Aus diesem Grund verlief das Projekt so erfolgreich. Ich möchte mich an dieser Stelle herzlich bei allen Beteiligten bedanken.\n\nWas die nächsten Schritte betrifft, so schlage ich ein weiteres Treffen vor. Dabei könnten wir die Ergebnisse im Detail besprechen. Außerdem wäre es sinnvoll, über zukünftige Projekte zu sprechen. Ich würde mich freuen, wenn wir einen Termin in den nächsten Wochen finden könnten.\n\nErlauben Sie mir außerdem einen Hinweis zur Dokumentation. Sämtliche Unterlagen wurden sorgfältig archiviert. Folglich können Sie jederzeit auf die Ergebnisse zugreifen. Bei Bedarf senden wir Ihnen gern eine vollständige Übersicht zu.\n\nZusammenfassend lässt sich sagen, dass das Projekt ein großer Erfolg war. Sowohl die Qualität als auch die Effizienz haben unsere Erwartungen übertroffen. Ich bin überzeugt, dass wir auf dieser Grundlage weiter erfolgreich zusammenarbeiten werden. Für Ihr Vertrauen möchte ich mich ausdrücklich bedanken.\n\nDarüber hinaus möchte ich einige Zahlen nennen. Zum einen konnten wir die Kosten um zehn Prozent senken. Zum anderen stieg die Zufriedenheit der Kunden deutlich. Diese Ergebnisse sprechen für sich. Aus diesem Grund bin ich zuversichtlich, dass sich die Investition gelohnt hat.\n\nSollten Sie noch Fragen haben, stehe ich Ihnen selbstverständlich jederzeit zur Verfügung. Sie erreichen mich unter der bekannten Telefonnummer oder per E-Mail. Ich würde mich über eine baldige Rückmeldung sehr freuen. Bis dahin wünsche ich Ihnen eine angenehme Zeit.\n\nIch bedanke mich noch einmal für die gute Zusammenarbeit und das entgegengebrachte Vertrauen. Es war mir eine große Freude, dieses Projekt zu begleiten. Ich blicke mit Zuversicht auf unsere weitere Zusammenarbeit und hoffe auf viele weitere gemeinsame Erfolge.\n\nAbschließend möchte ich betonen, wie sehr ich die offene Kommunikation geschätzt habe. Ihre klaren Rückmeldungen haben uns stets geholfen. Dank Ihrer Unterstützung konnten wir schwierige Situationen gut meistern. Ich bin zuversichtlich, dass unsere künftigen Projekte ebenso erfolgreich verlaufen werden.\n\nMit freundlichen Grüßen\nIhr Projektleiter\n\nEin formeller Brief hat feste Regeln. Man beginnt mit einer höflichen Anrede: „Sehr geehrte Damen und Herren“. Danach benutzt man einen sachlichen, höflichen Ton und die Höflichkeitsform „Sie“. Konnektoren wie „einerseits“, „andererseits“, „zudem“, „dennoch“ und „folglich“ verbinden die Gedanken zu einem klaren Text. Am Ende steht eine Grußformel: „Mit freundlichen Grüßen“. So entsteht ein zusammenhängender und professioneller Text.",
+              "questions": [
+                {
+                  "prompt": "Wie beginnt der formelle Brief?",
+                  "translation": "How does the formal letter begin?",
+                  "reference": "Mit der Anrede „Sehr geehrte Damen und Herren“."
+                },
+                {
+                  "prompt": "Was teilt der Verfasser zu Beginn mit?",
+                  "translation": "What does the writer announce at the start?",
+                  "reference": "Dass das Projekt erfolgreich abgeschlossen wurde."
+                },
+                {
+                  "prompt": "Wie verlief die Zusammenarbeit zwischen den Abteilungen?",
+                  "translation": "How did the cooperation between departments go?",
+                  "reference": "Reibungslos; man hielt den Zeitplan ein und blieb unter dem Budget."
+                },
+                {
+                  "prompt": "Welche Herausforderungen gab es im Projekt?",
+                  "translation": "What challenges were there in the project?",
+                  "reference": "Einige technische Probleme und die anfangs schwierige Abstimmung mit externen Partnern."
+                },
+                {
+                  "prompt": "Warum verlief das Projekt laut dem Brief so erfolgreich?",
+                  "translation": "Why did the project go so well according to the letter?",
+                  "reference": "Wegen des großen Engagements des Teams und der vielen eigenen Ideen."
+                },
+                {
+                  "prompt": "Was schlägt der Verfasser für die nächsten Schritte vor?",
+                  "translation": "What does the writer suggest for the next steps?",
+                  "reference": "Ein weiteres Treffen, um die Ergebnisse zu besprechen und über zukünftige Projekte zu sprechen."
+                },
+                {
+                  "prompt": "Mit welcher Grußformel endet der Brief?",
+                  "translation": "With which closing does the letter end?",
+                  "reference": "Mit „Mit freundlichen Grüßen“."
+                },
+                {
+                  "prompt": "Welche Merkmale hat ein formeller Brief?",
+                  "translation": "What features does a formal letter have?",
+                  "reference": "Eine höfliche Anrede, ein sachlicher Ton mit der Sie-Form, verbindende Konnektoren und eine Grußformel am Ende."
+                }
+              ],
+              "exercises": [
+                {
+                  "type": "fill-in-blank",
+                  "instructions": "Ergänze das Wort in der Anrede.",
+                  "payload": {
+                    "items": [
+                      {
+                        "prompt": "Sehr ___ Damen und Herren,"
+                      }
+                    ],
+                    "hints": []
+                  },
+                  "answer_key": {
+                    "items": [
+                      {
+                        "answer": "geehrte"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "type": "fill-in-blank",
+                  "instructions": "Ergänze das Wort in der Grußformel.",
+                  "payload": {
+                    "items": [
+                      {
+                        "prompt": "Mit freundlichen ___"
+                      }
+                    ],
+                    "hints": []
+                  },
+                  "answer_key": {
+                    "items": [
+                      {
+                        "answer": "Grüßen"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "type": "multiple-choice",
+                  "instructions": "Wähle den passenden Konnektor.",
+                  "payload": {
+                    "items": [
+                      {
+                        "prompt": "Einerseits war es teuer, ___ war es nützlich.",
+                        "options": [
+                          "andererseits",
+                          "folglich",
+                          "hiermit"
+                        ]
+                      }
+                    ],
+                    "hints": []
+                  },
+                  "answer_key": {
+                    "items": [
+                      {
+                        "answer": "andererseits"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "type": "fill-in-blank",
+                  "instructions": "Ergänze das Wort, das ein Fazit einleitet.",
+                  "payload": {
+                    "items": [
+                      {
+                        "prompt": "___ lässt sich sagen, dass das Projekt ein Erfolg war."
+                      }
+                    ],
+                    "hints": []
+                  },
+                  "answer_key": {
+                    "items": [
+                      {
+                        "answer": "Zusammenfassend"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "type": "reorder",
+                  "instructions": "Bringe die Wörter in die richtige Reihenfolge.",
+                  "payload": {
+                    "items": [
+                      {
+                        "tokens": [
+                          "Hiermit",
+                          "teile",
+                          "ich",
+                          "Ihnen",
+                          "mit",
+                          "dass",
+                          "das",
+                          "Projekt",
+                          "abgeschlossen",
+                          "ist"
+                        ]
+                      }
+                    ],
+                    "hints": []
+                  },
+                  "answer_key": {
+                    "items": [
+                      {
+                        "answer": "Hiermit teile ich Ihnen mit, dass das Projekt abgeschlossen ist"
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
           ]
         }
       ]

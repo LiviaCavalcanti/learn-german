@@ -6,7 +6,8 @@
     { "code": "A1", "title": "Foundations", "descriptor": "Understands and uses familiar everyday expressions and very basic phrases." },
     { "code": "A2", "title": "Everyday Fluency", "descriptor": "Communicates in simple routine tasks on familiar matters." },
     { "code": "B1", "title": "Independent User", "descriptor": "Deals with most situations while travelling; describes experiences, opinions, plans." },
-    { "code": "B2", "title": "Upper-Intermediate", "descriptor": "Interacts with fluency and spontaneity; produces clear, detailed text on many subjects." }
+    { "code": "B2", "title": "Upper-Intermediate", "descriptor": "Interacts with fluency and spontaneity; produces clear, detailed text on many subjects." },
+    { "code": "C1", "title": "Professional Mastery", "descriptor": "Uses German flexibly and effectively for professional and academic purposes; produces clear, well-structured, detailed text and expresses views with precision and diplomatic nuance." }
   ],
   "conventions": {
     "articleShorthand": { "r": "der", "e": "die", "s": "das" },
@@ -100,6 +101,17 @@
     { "code": "b2.comparison-irrealis", "cefr": "B2", "title": "Irreal comparison (als ob)", "description": "als ob / als wenn / als + Konjunktiv for how things seem." },
     { "code": "b2.adjective-prepositions", "cefr": "B2", "title": "Adjectives with prepositions", "description": "stolz auf, zufrieden mit, interessiert an and similar." },
     { "code": "b2.word-order-emphasis", "cefr": "B2", "title": "Word order & emphasis", "description": "Vorfeld choice, position of nicht, fronting for emphasis." },
-    { "code": "b2.collocations-idioms", "cefr": "B2", "title": "Collocations & idioms", "description": "Common collocations and idiomatic expressions." }
+    { "code": "b2.collocations-idioms", "cefr": "B2", "title": "Collocations & idioms", "description": "Common collocations and idiomatic expressions." },
+
+    { "code": "c1.nominalstil", "cefr": "C1", "title": "Nominalstil & Nominalisierung", "description": "Formal nominal register; turning verbal clauses into dense noun phrases (prüfen → die Prüfung der Unterlagen)." },
+    { "code": "c1.funktionsverbgefuege", "cefr": "C1", "title": "Funktionsverbgefüge (professionell)", "description": "Professional light-verb constructions: in Betracht ziehen, zur Verfügung stellen, Rücksprache halten, in Frage stellen, in Angriff nehmen." },
+    { "code": "c1.partizipialattribute", "cefr": "C1", "title": "Erweiterte Partizipialattribute", "description": "Partizip I/II as compact pre-nominal attributes that replace relative clauses (die zu prüfenden Unterlagen)." },
+    { "code": "c1.konjunktiv2-diplomatie", "cefr": "C1", "title": "Konjunktiv II (Diplomatie)", "description": "Hedging and diplomatic softening: Ich würde vorschlagen, es wäre denkbar, man könnte in Erwägung ziehen." },
+    { "code": "c1.konjunktiv1-indirekte-rede", "cefr": "C1", "title": "Konjunktiv I & indirekte Rede", "description": "Reported speech for minutes and relaying statements: er sagte, er habe/sei/werde; Ersatzformen with Konjunktiv II." },
+    { "code": "c1.subjektive-modalverben", "cefr": "C1", "title": "Subjektive Modalverben", "description": "dürfte/müsste/könnte for probability; will/soll for claims and hearsay." },
+    { "code": "c1.passiv-alternativen", "cefr": "C1", "title": "Passiv & Passiversatz", "description": "sich lassen, sein + zu + Infinitiv, -bar adjectives and man as alternatives to the passive." },
+    { "code": "c1.konnektoren-advanced", "cefr": "C1", "title": "Konnektoren & Konnektoradverbien (fortgeschritten)", "description": "dennoch, folglich, gleichwohl, zumal, insofern, andernfalls, demzufolge, hingegen, mithin." },
+    { "code": "c1.zweiteilige-konnektoren", "cefr": "C1", "title": "Zweiteilige Konnektoren", "description": "sowohl…als auch, weder…noch, je…desto, nicht nur…sondern auch, entweder…oder, zwar…aber." },
+    { "code": "c1.genitiv-praepositionen", "cefr": "C1", "title": "Genitivpräpositionen & Kohäsion", "description": "angesichts, aufgrund, hinsichtlich, mittels, seitens, ungeachtet, zwecks, infolge; cohesive executive style." }
   ]
 }

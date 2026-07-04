@@ -38,16 +38,8 @@ interface LanguageContextValue {
   ready: boolean
   /** Profile of the currently selected target, if any. */
   targetProfile: LanguageOption | undefined
-  /**
-   * True when the picker was reopened to switch an already-chosen language
-   * (via reset), so onboarding can jump straight to the language list instead
-   * of replaying the welcome intro.
-   */
-  reselecting: boolean
   /** Choose the target + native language. */
   choose: (target: string, native: string) => void
-  /** Reopen the picker to switch languages (keeps the current selection meanwhile). */
-  reset: () => void
 }
 
 const LanguageContext = createContext<LanguageContextValue | null>(null)
@@ -64,7 +56,6 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
   const [ready, setReady] = useState(false)
   const [target, setTarget] = useState<string | null>(() => readStored(TARGET_KEY))
   const [native, setNative] = useState<string>(() => readStored(NATIVE_KEY) || 'en')
-  const [reselecting, setReselecting] = useState(false)
 
   // Fetch the language registry once.
   useEffect(() => {
@@ -102,7 +93,6 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
   }, [target, native, targetProfile])
 
   function choose(nextTarget: string, nextNative: string) {
-    const changed = nextTarget !== target
     const voice =
       languages?.targets.find((t) => t.code === nextTarget)?.voice ||
       `${nextTarget}-${nextTarget.toUpperCase()}`
@@ -116,17 +106,8 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
     }
     setTarget(nextTarget)
     setNative(nextNative)
-    setReselecting(false)
-    // Switching to a *different* language opens its notebook at the dashboard;
-    // reopening the same language just closes the picker and leaves you where
-    // you were (the route was never unmounted from the URL).
-    if (changed) navigate('/')
-  }
-
-  function reset() {
-    // Keep the current selection active behind the picker so choose() can tell
-    // whether the learner switched languages or reopened the same one.
-    setReselecting(true)
+    // Selecting a language opens its notebook at the dashboard.
+    navigate('/')
   }
 
   const value: LanguageContextValue = {
@@ -135,9 +116,7 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
     languages,
     ready,
     targetProfile,
-    reselecting,
     choose,
-    reset,
   }
 
   // Ensure the module-level API language reflects the current selection even on

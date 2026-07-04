@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { NavLink, Outlet, useLocation } from 'react-router-dom'
+import { Link, NavLink, Outlet, useLocation } from 'react-router-dom'
 import { cx } from './ui'
 import { useLanguage } from '../contexts/LanguageContext'
 
@@ -19,7 +19,7 @@ export default function Layout() {
     () => typeof localStorage === 'undefined' || localStorage.getItem('nav-open') !== 'false',
   )
   const { pathname } = useLocation()
-  const { targetProfile, reset } = useLanguage()
+  const { targetProfile } = useLanguage()
   // Hide the Conjugation page for languages that don't have a verb-conjugation feature.
   const items = nav.filter(
     (n) => n.to !== '/conjugation' || (targetProfile?.has_conjugation ?? true),
@@ -44,12 +44,12 @@ export default function Layout() {
       {navOpen ? (
         <aside className="w-60 shrink-0 border-r border-line bg-card/60 px-4 py-6">
           <div className="mb-8 flex items-start justify-between px-2">
-            <div>
+            <Link to="/" className="block rounded-md transition hover:opacity-80" title="Home">
               <div className="font-serif text-2xl font-semibold">Sprachheft</div>
               <div className="text-xs text-muted">
                 {targetProfile ? `${targetProfile.name} learning notebook` : 'Language notebook'}
               </div>
-            </div>
+            </Link>
             <button
               onClick={toggleNav}
               title="Collapse sidebar"
@@ -79,17 +79,17 @@ export default function Layout() {
             ))}
           </nav>
           {targetProfile && (
-            <button
-              type="button"
-              onClick={reset}
-              title="Change language"
+            <Link
+              to="/welcome"
+              title="Open the start page to change your language"
               className="mt-6 flex w-full items-center justify-between rounded-lg border border-line px-3 py-2 text-left text-xs text-muted transition hover:bg-accent-soft/50"
             >
               <span>
                 Learning <span className="font-medium text-ink">{targetProfile.endonym}</span>
+                <span className="block text-[11px] text-muted">Change language</span>
               </span>
               <span aria-hidden>↺</span>
-            </button>
+            </Link>
           )}
         </aside>
       ) : (
@@ -103,15 +103,14 @@ export default function Layout() {
             ☰
           </button>
           {targetProfile && (
-            <button
-              type="button"
-              onClick={reset}
+            <Link
+              to="/welcome"
               title="Change language"
               aria-label="Change language"
               className="rounded-md border border-line bg-card p-2 text-muted shadow-sm transition hover:bg-accent-soft hover:text-ink"
             >
               ↺
-            </button>
+            </Link>
           )}
         </div>
       )}

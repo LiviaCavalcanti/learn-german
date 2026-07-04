@@ -46,526 +46,541 @@ def q(prompt, translation, reference):
     return {"prompt": prompt, "translation": translation, "reference": reference}
 
 
-story_konj1 = (
-    "Pressebericht: Neue Pläne der Firma TechNova\n\n"
-    "Gestern hat das Unternehmen TechNova auf einer Pressekonferenz seine Pläne für das "
-    "nächste Jahr vorgestellt. Der Vorstand erklärte, man wolle das Unternehmen "
-    "grundlegend verändern. In diesem Bericht wird zusammengefasst, was die "
-    "Verantwortlichen gesagt haben. Dabei wird die indirekte Rede benutzt, um die "
-    "Aussagen wiederzugeben.\n\n"
-    "Der Geschäftsführer sagte, die Firma stehe vor einer wichtigen Phase. Man habe im "
-    "letzten Jahr viel erreicht, aber es gebe noch viel zu tun. Die Umsätze seien "
-    "gestiegen, und die Zahl der Kunden habe sich verdoppelt. Er betonte, das "
-    "Unternehmen sei auf einem guten Weg.\n\n"
-    "Weiter erklärte er, man werde in neue Technologien investieren. Besonders im "
-    "Bereich der künstlichen Intelligenz sehe man großes Potenzial. Die Firma plane, "
-    "hundert neue Mitarbeiter einzustellen. Er sagte, man suche vor allem gut "
-    "ausgebildete Fachleute. Diese Fachleute könnten das Team entscheidend "
-    "verstärken.\n\n"
-    "Die Finanzchefin ergänzte, die Zahlen seien sehr positiv. Der Gewinn sei um zehn "
-    "Prozent gestiegen, und man habe kaum Schulden. Sie sagte, das Unternehmen könne "
-    "deshalb ohne Sorgen in die Zukunft blicken. Man wolle einen Teil des Gewinns in "
-    "die Forschung stecken.\n\n"
-    "Auch zu einem heiklen Thema äußerte sich der Vorstand. Es gab Gerüchte, die Firma "
-    "wolle einen Konkurrenten kaufen. Der Geschäftsführer sagte, dazu könne er im "
-    "Moment nichts sagen. Man prüfe verschiedene Möglichkeiten, aber es gebe noch keine "
-    "Entscheidung. Er bat um Verständnis, dass er nicht mehr verraten dürfe.\n\n"
-    "Ein Journalist fragte, ob die Preise steigen würden. Der Geschäftsführer "
-    "antwortete, das sei zurzeit nicht geplant. Die Kunden müssten sich keine Sorgen "
-    "machen. Man wolle fair bleiben und die Qualität weiter verbessern. Er versicherte, "
-    "die Zufriedenheit der Kunden stehe an erster Stelle.\n\n"
-    "Am Ende der Konferenz zeigte sich der Vorstand optimistisch. Man sei stolz auf das "
-    "Erreichte und blicke voller Zuversicht nach vorn. Die nächsten Monate würden "
-    "spannend, sagte der Geschäftsführer. Er dankte allen Mitarbeitern und meinte, ohne "
-    "ihr Engagement wäre der Erfolg nicht möglich gewesen.\n\n"
-    "Auch die Gewerkschaft nahm Stellung. Ihr Vertreter sagte, man begrüße die neuen "
-    "Stellen, doch man erwarte faire Löhne. Die Mitarbeiter dürften nicht vergessen "
-    "werden. Er betonte, die Belegschaft habe ein Recht auf Mitsprache. Das Unternehmen "
-    "solle diese Versprechen ernst nehmen.\n\n"
-    "Die Reaktionen auf die Pläne waren überwiegend positiv. Ein Experte sagte, die "
-    "Strategie sei mutig, aber sinnvoll. Andere meinten, man müsse abwarten, ob die "
-    "Firma ihre Versprechen halten könne. Insgesamt herrschte jedoch die Meinung, "
-    "TechNova habe eine klare Vision.\n\n"
-    "Der Konjunktiv I wird für die indirekte Rede benutzt. Man zeigt damit, dass man "
-    "etwas nur wiedergibt und nicht selbst behauptet. Typische Formen sind: er habe, "
-    "sie sei, man werde, es gebe, er könne. Wenn der Konjunktiv I wie der Indikativ "
-    "aussieht, benutzt man den Konjunktiv II: sie hätten statt sie haben. So bleibt die "
-    "Aussage klar als fremde Meinung erkennbar."
+story_adjprep = (
+    "Am Ende eines Jahres denke ich gern über meine Gefühle und Einstellungen nach. "
+    "Wofür bin ich dankbar? Worauf bin ich stolz? Womit bin ich zufrieden? Um solche "
+    "Fragen zu beantworten, braucht man Adjektive mit festen Präpositionen. Jedes "
+    "Adjektiv verlangt eine bestimmte Präposition, und die muss man einfach lernen.\n\n"
+    "Zuerst zu meiner Arbeit. Ich bin sehr stolz auf mein Team. Wir haben in diesem "
+    "Jahr viel erreicht, und ich bin zufrieden mit dem Ergebnis. Natürlich war nicht "
+    "alles perfekt, aber ich bin überzeugt von unserem Weg. Für die gute Zusammenarbeit "
+    "bin ich meinen Kollegen sehr dankbar.\n\n"
+    "Ich bin auch sehr interessiert an neuen Technologien. Die Entwicklung geht schnell, "
+    "und ich bin gespannt auf die Zukunft. Manchmal bin ich ein bisschen besorgt über "
+    "die Risiken, aber insgesamt bin ich optimistisch. Ich bin fest davon überzeugt, "
+    "dass wir viele Chancen haben, wenn wir offen bleiben.\n\n"
+    "In meinem Beruf bin ich verantwortlich für ein kleines Team. Das bedeutet viel "
+    "Verantwortung, aber ich bin stolz darauf. Meine Kollegen sind auf meine "
+    "Unterstützung angewiesen, und ich bin froh über ihr Vertrauen. Gleichzeitig bin "
+    "ich abhängig von ihrer Arbeit, denn allein könnte ich nichts erreichen.\n\n"
+    "Auch privat gibt es viel, wofür ich dankbar bin. Ich bin froh über meine Familie "
+    "und meine Freunde. Ich bin sehr zufrieden mit meinem Leben, auch wenn nicht immer "
+    "alles leicht ist. Manchmal bin ich traurig über Dinge, die ich nicht ändern kann. "
+    "Aber ich versuche, das Positive zu sehen.\n\n"
+    "Meine Freundin ist bekannt für ihre gute Laune. Ich bin wirklich verliebt in ihren "
+    "Optimismus. Wir sind beide begeistert von Reisen und neugierig auf fremde "
+    "Kulturen. Natürlich ärgere ich mich manchmal über Kleinigkeiten, aber am Ende sind "
+    "wir stolz auf das, was wir zusammen aufgebaut haben.\n\n"
+    "Es gibt auch Dinge, mit denen ich unzufrieden bin. Ich bin manchmal enttäuscht von "
+    "mir selbst, wenn ich meine Ziele nicht erreiche. Ich bin auch nicht immer "
+    "zufrieden mit meiner Disziplin. Aber ich bin überzeugt davon, dass man aus Fehlern "
+    "lernen kann. Deshalb bleibe ich hoffnungsvoll.\n\n"
+    "Wenn ich in die Zukunft blicke, bin ich voller Erwartung. Ich bin gespannt auf "
+    "neue Aufgaben und offen für Veränderungen. Ich bin bereit für neue "
+    "Herausforderungen und interessiert an allem, was kommt. Und ich bin dankbar für "
+    "jede Erfahrung, ob gut oder schlecht.\n\n"
+    "Auch für meine Gesundheit bin ich dankbar. Ich achte auf meinen Körper und bin "
+    "stolz auf meine Fortschritte beim Sport. Manchmal bin ich böse auf mich, wenn ich "
+    "faul bin, aber meistens bin ich zufrieden mit meiner Routine. Ich bin überzeugt "
+    "davon, dass ein gesundes Leben glücklich macht.\n\n"
+    "Solche Adjektive mit Präpositionen brauche ich jeden Tag, um meine Einstellungen "
+    "auszudrücken. Ich bin stolz auf etwas, zufrieden mit etwas, interessiert an etwas. "
+    "Am Ende eines Jahres merke ich: Meine Gefühle sind vielfältig, aber vor allem bin "
+    "ich dankbar für ein reiches und spannendes Leben.\n\n"
+    "Viele Adjektive haben eine feste Präposition. „Stolz“ steht mit „auf“, „zufrieden“ "
+    "mit „mit“, „interessiert“ mit „an“, „froh“ und „begeistert“ mit „über“. Man kann "
+    "die Präposition nicht raten, sondern muss sie zusammen mit dem Adjektiv lernen. "
+    "Für Sachen benutzt man oft ein da-Wort: Ich bin stolz darauf. So drückt man "
+    "Meinungen und Gefühle präzise aus."
 )
 
-story_subjmodals = (
-    "In jedem Büro gibt es Gerüchte und Vermutungen. Man hört etwas, ist sich aber "
-    "nicht sicher, ob es stimmt. Für solche Fälle gibt es im Deutschen die subjektiven "
-    "Modalverben. Mit ihnen kann man ausdrücken, was jemand behauptet, was man gehört "
-    "hat oder was wahrscheinlich ist. Heute erzähle ich euch von den Gerüchten über "
-    "meinen neuen Kollegen.\n\n"
-    "Seit einer Woche haben wir einen neuen Kollegen, und alle reden über ihn. Er soll "
-    "ein echtes Genie sein, sagt man. Angeblich hat er schon große Projekte geleitet. "
-    "Er will sogar eine berühmte App selbst programmiert haben. Ob das wirklich stimmt, "
-    "weiß niemand genau, aber die Geschichte klingt beeindruckend.\n\n"
-    "„Er soll früher bei einer sehr bekannten Firma gearbeitet haben“, erzählt eine "
-    "Kollegin. „Und er will dort das ganze System neu aufgebaut haben.“ Ich bin ein "
-    "bisschen skeptisch. So ein junger Mensch dürfte kaum so viel Erfahrung haben. Aber "
-    "vielleicht täusche ich mich ja auch.\n\n"
-    "Am Montag habe ich ihn zum ersten Mal richtig getroffen. Er müsste eigentlich sehr "
-    "stolz sein, dachte ich, aber er war ganz bescheiden. „Das kann nicht der große "
-    "Experte sein“, dachte ich zuerst. Doch als er anfing zu reden, merkte ich schnell: "
-    "Er versteht wirklich viel. Die Gerüchte könnten also doch wahr sein.\n\n"
-    "Später fragte ich einen anderen Kollegen. „Stimmt es, dass er so erfahren ist?“ "
-    "„Das mag sein“, antwortete er. „Aber man sollte nicht alles glauben. Er dürfte "
-    "einfach ein guter Programmierer sein, mehr nicht.“ Da hatte er wohl recht. Man "
-    "muss vorsichtig sein mit solchen Geschichten.\n\n"
-    "Es gab noch mehr Gerüchte. Er soll ein sehr hohes Gehalt bekommen, hieß es. "
-    "Angeblich will der Chef ihn unbedingt behalten. „Er muss dem Chef wirklich wichtig "
-    "sein“, sagte jemand. Aber auch das konnte niemand beweisen. Vielleicht wollte "
-    "einfach jemand die Geschichte interessanter machen.\n\n"
-    "Nach ein paar Tagen legte sich die Aufregung. Der neue Kollege erwies sich als "
-    "netter, normaler Mensch. Er ist gut in seinem Job, aber er ist kein Zauberer. Die "
-    "meisten Gerüchte dürften stark übertrieben gewesen sein. „So ist es immer“, sagte "
-    "meine Kollegin. „Am Anfang wird viel geredet.“\n\n"
-    "Manchmal frage ich mich, wie solche Gerüchte überhaupt entstehen. Jemand hört "
-    "etwas, erzählt es weiter, und am Ende klingt alles viel größer. „Die Hälfte davon "
-    "kann gar nicht stimmen“, sagt mein Chef. „Man müsste immer nachfragen, bevor man "
-    "etwas glaubt.“ Da hat er sicher recht.\n\n"
-    "Am Ende habe ich etwas gelernt. Man sollte Gerüchte nicht zu ernst nehmen. Vieles, "
-    "was erzählt wird, muss nicht stimmen. Der neue Kollege will vieles gemacht haben, "
-    "und manches davon mag wahr sein. Aber am wichtigsten ist, dass er ein guter Mensch "
-    "und ein guter Kollege ist.\n\n"
-    "Subjektive Modalverben drücken eine Vermutung oder eine fremde Behauptung aus. "
-    "„Sollen“ bedeutet, dass man es von anderen gehört hat: Er soll erfahren sein. "
-    "„Wollen“ bedeutet, dass jemand etwas über sich selbst behauptet: Er will es "
-    "programmiert haben. „Dürfte“, „müsste“ und „könnte“ zeigen, wie wahrscheinlich "
-    "etwas ist. So kann ich vorsichtig über Dinge sprechen, die ich nicht genau weiß."
+story_wordorder = (
+    "Im Deutschen ist die Wortstellung flexibler, als viele denken. Das Verb steht zwar "
+    "meistens an zweiter Stelle, aber am Anfang kann fast jedes Satzglied stehen. Was am "
+    "Anfang steht, wird betont. Mit dieser Technik kann man genau das hervorheben, was "
+    "einem wichtig ist. Heute erzähle ich von einem Tag, an dem die Betonung eine große "
+    "Rolle spielte.\n\n"
+    "Am Morgen entdeckte ich ein Problem im Programm. „Diesen Fehler habe ich noch nie "
+    "gesehen“, sagte ich erstaunt. Normalerweise würde man sagen: „Ich habe diesen "
+    "Fehler noch nie gesehen.“ Aber indem ich „diesen Fehler“ an den Anfang stellte, "
+    "betonte ich genau das Problem. So merkten alle sofort, wie ungewöhnlich die "
+    "Situation war.\n\n"
+    "Mein Chef kam dazu und fragte, wann das passiert sei. „Gestern erst wurde das "
+    "Update veröffentlicht“, erklärte ich. Das Wort „gestern“ stand am Anfang, weil die "
+    "Zeit hier besonders wichtig war. Das Update war also ganz neu. Hätte ich gesagt "
+    "„Das Update wurde gestern veröffentlicht“, wäre die Betonung schwächer gewesen.\n\n"
+    "Dann suchten wir nach der Ursache. Einige Kollegen dachten, das Team hätte einen "
+    "Fehler gemacht. Doch ich widersprach: „Nicht das Team ist schuld, sondern der "
+    "Zeitplan.“ Mit dieser Struktur stellte ich klar, wer wirklich verantwortlich war. "
+    "„Nicht … sondern“ hebt den Gegensatz besonders deutlich hervor. Alle verstanden "
+    "sofort meinen Punkt.\n\n"
+    "Die Stimmung war ein bisschen angespannt. „Gerade jetzt brauchen wir Ruhe“, sagte "
+    "ich. Indem ich „gerade jetzt“ betonte, machte ich klar, dass der Moment "
+    "entscheidend war. In stressigen Situationen ist die richtige Betonung sehr "
+    "wichtig, denn sie lenkt die Aufmerksamkeit auf das Wesentliche.\n\n"
+    "Am Mittag präsentierte ich meine Lösung. „Diese Methode habe ich schon oft "
+    "benutzt“, sagte ich selbstbewusst. Das Objekt am Anfang zeigte, dass ich Erfahrung "
+    "hatte. Meine Kollegen waren überzeugt. „Genau so machen wir das“, sagte mein Chef. "
+    "Auch er betonte das Wichtigste, indem er „genau so“ an den Anfang stellte.\n\n"
+    "Am Nachmittag ging alles besser. „Ohne eure Hilfe hätte ich das nie geschafft“, "
+    "sagte ich dankbar zu meinem Team. Indem ich „ohne eure Hilfe“ betonte, zeigte ich, "
+    "wie wichtig die Zusammenarbeit war. Solche kleinen Umstellungen im Satz können viel "
+    "Wärme und Bedeutung ausdrücken.\n\n"
+    "Auch in Besprechungen ist die Betonung nützlich. „Diesen Vorschlag finde ich gut“, "
+    "sagte eine Kollegin und stellte damit ihre Zustimmung an den Anfang. Ein anderer "
+    "meinte: „Genau darüber müssen wir reden.“ So lenkt jeder die Aufmerksamkeit auf "
+    "das, was ihm am wichtigsten ist.\n\n"
+    "Sogar in E-Mails achte ich auf die Betonung. „Bis Freitag brauche ich die Zahlen“, "
+    "schreibe ich, wenn der Termin wichtig ist. So sieht der Leser sofort, worauf es "
+    "ankommt.\n\n"
+    "Am Abend dachte ich über den Tag nach. „Viel gelernt habe ich heute“, sagte ich "
+    "mir. Die Betonung lag auf dem, was ich gewonnen hatte. Es war kein leichter Tag, "
+    "aber gerade solche Tage machen einen besser. Am Ende war ich zufrieden mit mir und "
+    "meinem Team.\n\n"
+    "Die Wortstellung im Deutschen dient oft der Betonung. Das Verb bleibt an zweiter "
+    "Stelle, aber davor kann man das wichtigste Satzglied stellen: das Objekt, eine "
+    "Zeitangabe oder einen ganzen Nebensatz. „Diesen Fehler habe ich noch nie gesehen“ "
+    "betont den Fehler. Mit „nicht … sondern“ hebt man einen Gegensatz hervor. So lenkt "
+    "man die Aufmerksamkeit gezielt auf das, was zählt. Wer die Wortstellung bewusst "
+    "einsetzt, wirkt sicher und überzeugend."
 )
 
-story_futur2 = (
-    "Am Ende eines großen Projekts denke ich oft über die Zukunft nach. Was werde ich "
-    "bis dann erreicht haben? Und was ist wohl gerade passiert, während ich hier sitze? "
-    "Für solche Gedanken benutzt man im Deutschen das Futur II. Damit kann man "
-    "ausdrücken, was in der Zukunft abgeschlossen sein wird, und Vermutungen über die "
-    "Vergangenheit anstellen.\n\n"
-    "Heute habe ich viel zu tun. Bis heute Abend werde ich den ganzen Bericht "
-    "fertiggestellt haben. Bis morgen früh werde ich auch die letzten E-Mails "
-    "beantwortet haben. Und bis zum Ende der Woche werden wir das komplette Projekt "
-    "abgeschlossen haben. Ich freue mich schon auf diesen Moment.\n\n"
-    "Mein Kollege ist heute nicht im Büro. „Wo ist er nur?“, frage ich mich. Er wird "
-    "wohl den Zug verpasst haben. Oder er wird verschlafen haben. Vielleicht ist er "
-    "auch krank geworden. „Er wird bestimmt einen guten Grund gehabt haben“, sagt meine "
-    "Chefin. Wir machen uns aber keine großen Sorgen.\n\n"
-    "Auch über andere Dinge stelle ich Vermutungen an. Die Kundin hat sich noch nicht "
-    "gemeldet. Sie wird die Nachricht wohl noch nicht gelesen haben. Oder sie wird zu "
-    "beschäftigt gewesen sein. „Sie wird sich schon melden“, denke ich. Manchmal muss "
-    "man einfach Geduld haben.\n\n"
-    "Ich plane auch weiter in die Zukunft. In fünf Jahren werde ich hoffentlich viel "
-    "erreicht haben. Bis dahin werde ich vielleicht befördert worden sein. Ich werde "
-    "neue Fähigkeiten gelernt und viele Projekte geleitet haben. Wenn ich zurückblicke, "
-    "werde ich stolz auf meinen Weg sein.\n\n"
-    "Meine Freundin und ich sprechen oft über solche Pläne. „Bis wir vierzig sind, "
-    "werden wir sicher ein Haus gekauft haben“, sagt sie. „Und wir werden bestimmt viel "
-    "gereist sein.“ Ich lächle. „Ja, und wir werden hoffentlich immer noch glücklich "
-    "sein.“ Solche Gedanken geben uns Kraft.\n\n"
-    "Am Abend denke ich an den vergangenen Tag. Ich habe fast alles geschafft. „Der "
-    "Chef wird zufrieden sein“, denke ich. Er wird meinen Bericht inzwischen gelesen "
-    "haben. Vielleicht wird er ihn sogar gelobt haben. Morgen werde ich es erfahren. "
-    "Bis dahin bleibt es eine Vermutung.\n\n"
-    "Auch meine Eltern rufe ich noch an. Sie sind nicht zu Hause. „Sie werden wohl "
-    "spazieren gegangen sein“, denke ich. Oder sie werden schon geschlafen haben, denn "
-    "es ist spät. Ich schreibe ihnen eine Nachricht. Bis morgen werden sie sie "
-    "bestimmt gelesen haben.\n\n"
-    "Bevor ich schlafe, mache ich noch eine kleine Liste. Bis zum nächsten Monat werde "
-    "ich viele Dinge erledigt haben. Ich bin sicher: Wenn ich fleißig bleibe, werde ich "
-    "meine Ziele erreicht haben. Das Gefühl, etwas geschafft zu haben, ist "
-    "wunderbar.\n\n"
-    "Das Futur II wird mit „werden“, dem Partizip II und „haben“ oder „sein“ gebildet: "
-    "Ich werde den Bericht fertiggestellt haben. Es hat zwei Bedeutungen. Erstens "
-    "beschreibt es eine Handlung, die in der Zukunft abgeschlossen sein wird. Zweitens "
-    "drückt es eine Vermutung über die Vergangenheit aus: Sie wird den Zug verpasst "
-    "haben. So kann man über abgeschlossene Zukunft und über wahrscheinliche "
-    "Vergangenheit sprechen."
+story_idioms = (
+    "Die deutsche Sprache steckt voller fester Wendungen und Redewendungen. Manche kann "
+    "man wörtlich verstehen, andere haben eine bildliche Bedeutung. Wer sie kennt, "
+    "klingt viel natürlicher und drückt sich lebendiger aus. Heute erzähle ich von "
+    "einer Woche im Büro, in der ich viele solcher Wendungen benutzt habe.\n\n"
+    "Am Montag mussten wir eine wichtige Entscheidung treffen. Ein neues Projekt stand "
+    "an, und wir wollten es sofort in Angriff nehmen. „Wir dürfen das nicht auf die "
+    "lange Bank schieben“, sagte mein Chef. „Am Ende des Tages zählt nur das "
+    "Ergebnis.“ Also machten wir uns gleich an die Arbeit.\n\n"
+    "Am Dienstag gab es ein Problem. Ein Kollege verlor fast den Kopf, weil ein Termin "
+    "näher rückte. „Bleib ruhig“, sagte ich. „Wir kriegen das hin.“ Gemeinsam behielten "
+    "wir den Überblick. Zum Glück fiel unser Plan nicht ins Wasser, sondern wir fanden "
+    "rechtzeitig eine Lösung.\n\n"
+    "Am Mittwoch stellte jemand eine schlechte Idee vor. „Das kommt überhaupt nicht in "
+    "Frage“, sagte mein Chef sofort. Er nahm kein Blatt vor den Mund. Trotzdem blieb "
+    "die Stimmung gut, denn wir konnten offen miteinander reden. „Du hast den Nagel auf "
+    "den Kopf getroffen“, sagte ich später zu einer Kollegin, die den Kern des Problems "
+    "erkannt hatte.\n\n"
+    "Am Donnerstag hatte eine Kollegin eine Prüfung. „Ich drücke dir die Daumen“, sagte "
+    "ich ihr am Morgen. Sie war sehr nervös, aber am Ende lief alles gut. „Ich bin dir "
+    "wirklich dankbar“, sagte sie später. „Deine Worte haben mir Mut gemacht.“ So "
+    "halten wir im Team immer zusammen.\n\n"
+    "Am Freitag zogen wir Bilanz. „Diese Woche haben wir viel geschafft“, sagte mein "
+    "Chef. „Wir haben das Projekt gut in Gang gebracht.“ Ich hielt alle auf dem "
+    "Laufenden, damit niemand den Überblick verlor. „Ende gut, alles gut“, sagte ein "
+    "Kollege und lachte. Alle waren zufrieden.\n\n"
+    "Natürlich sind solche Redewendungen für Lernende nicht leicht. Man kann sie nicht "
+    "Wort für Wort übersetzen. „Jemandem die Daumen drücken“ bedeutet nicht wirklich, "
+    "dass man die Daumen drückt, sondern dass man ihm Glück wünscht. Solche Bilder muss "
+    "man einfach lernen und im richtigen Moment benutzen.\n\n"
+    "Manche Redewendungen haben interessante Geschichten. „Tomaten auf den Augen haben“ "
+    "bedeutet, dass man etwas Offensichtliches nicht sieht. „Die Katze im Sack kaufen“ "
+    "heißt, etwas zu kaufen, ohne es geprüft zu haben. Solche Bilder machen die Sprache "
+    "bunt und machen beim Lernen richtig Spaß.\n\n"
+    "Ich sammle solche Ausdrücke in einem kleinen Heft. Wenn ich einen neuen höre, "
+    "schreibe ich ihn sofort auf. „Übung macht den Meister“, sage ich mir immer. Und "
+    "tatsächlich: Je mehr ich sie benutze, desto natürlicher klingen sie. Manchmal "
+    "bringe ich sogar meine deutschen Kollegen zum Lachen, wenn ich eine passende "
+    "Redewendung finde.\n\n"
+    "Am Wochenende dachte ich über die Woche nach. Ich hatte viele Wendungen benutzt, "
+    "ohne groß nachzudenken. Genau das ist das Ziel: dass die Redewendungen zur zweiten "
+    "Natur werden. Wer sie sicher beherrscht, fühlt sich in der Sprache wirklich zu "
+    "Hause. Und am Ende des Tages zählt genau das.\n\n"
+    "Kollokationen sind feste Wortverbindungen, die man so und nicht anders benutzt: "
+    "„eine Entscheidung treffen“, „ein Projekt in Angriff nehmen“. Redewendungen sind "
+    "bildliche Ausdrücke: „die Daumen drücken“, „den Nagel auf den Kopf treffen“. Beide "
+    "gehören zu einer natürlichen Sprache. Man lernt sie am besten, indem man viel "
+    "liest, zuhört und sie dann selbst ausprobiert. Mit der Zeit gehen sie einem in "
+    "Fleisch und Blut über."
 )
 
-story_particles = (
-    "Modalpartikeln sind kleine Wörter, die im Deutschen sehr wichtig sind. Sie ändern "
-    "nicht die Bedeutung eines Satzes, aber sie geben ihm eine bestimmte Färbung. Mit "
-    "ihnen klingt man natürlicher und drückt Gefühle wie Überraschung, Ungeduld oder "
-    "Freundlichkeit aus. Heute erzähle ich euch von einem ganz normalen Tag, an dem ich "
-    "viele solche Wörter benutzt habe.\n\n"
-    "Am Morgen rief mich mein Freund an. „Komm doch mal vorbei!“, sagte er. „Wir haben "
-    "uns ja schon lange nicht gesehen.“ „Das ist ja eine tolle Idee“, antwortete ich. "
-    "„Aber ich muss halt zuerst arbeiten. Wie heißt du noch mal deine neue Adresse?“ "
-    "Wir lachten, denn natürlich kannte ich seine Adresse.\n\n"
-    "Im Büro war viel los. „Wo ist denn der Bericht?“, fragte mein Chef. „Der liegt "
-    "doch auf Ihrem Tisch“, sagte ich. „Ach ja, stimmt“, sagte er. „Das habe ich wohl "
-    "übersehen.“ Solche kleinen Wörter machten das Gespräch gleich viel freundlicher. "
-    "Ohne sie hätte alles viel härter geklungen.\n\n"
-    "Am Mittag beschwerte sich eine Kollegin. „Das dauert eben seine Zeit“, sagte sie. "
-    "„Man kann halt nicht alles auf einmal machen.“ „Das ist schon richtig“, antwortete "
-    "ich. „Aber wir sollten uns trotzdem beeilen.“ „Na gut“, sagte sie, „dann machen "
-    "wir mal weiter.“ So kamen wir wieder gut voran.\n\n"
-    "Am Nachmittag hatte ich ein Problem mit dem Computer. „Was ist denn jetzt los?“, "
-    "dachte ich. „Das gibt es doch nicht!“ Ein Kollege half mir. „Probier es mal so“, "
-    "sagte er. „Das klappt schon.“ Und tatsächlich, es funktionierte. „Na also“, sagte "
-    "ich erleichtert. „Das war ja gar nicht so schwer.“\n\n"
-    "Später kam ein neuer Kollege zu mir. „Könntest du mir mal helfen?“, fragte er "
-    "höflich. „Klar, komm doch her“, sagte ich. „Das ist ja ganz einfach. Schau mal, du "
-    "musst hier eben klicken.“ Er bedankte sich. „Das ist wirklich nett von dir.“ „Kein "
-    "Problem“, sagte ich. „Das machen wir doch gern.“\n\n"
-    "Am Abend traf ich Freunde in einem Café. „Wie war denn dein Tag?“, fragten sie. "
-    "„Ach, ganz normal“, sagte ich. „Es war halt viel zu tun.“ „Trink doch erst mal "
-    "einen Kaffee“, sagte einer. „Dann geht es dir gleich besser.“ Wir redeten und "
-    "lachten, und der Stress war schnell vergessen.\n\n"
-    "Zu Hause rief mich meine Mutter an. „Du klingst ja müde“, sagte sie. „Ruh dich "
-    "doch ein bisschen aus.“ „Mach ich, Mama“, sagte ich. „Es war eben ein langer "
-    "Tag.“ „Das kenne ich doch“, sagte sie und lachte. So ein kurzes Gespräch tut immer "
-    "gut.\n\n"
-    "So ein Tag zeigt, wie oft man Modalpartikeln benutzt. Sie sind fast in jedem Satz "
-    "zu hören. „Komm doch mal“, „das ist ja toll“, „es dauert eben“ — ohne diese Wörter "
-    "klingt Deutsch steif und unnatürlich. Für Lernende sind sie schwierig, aber sie "
-    "sind der Schlüssel zu einer natürlichen Sprache.\n\n"
-    "Modalpartikeln haben je nach Situation eine andere Wirkung. „Doch“ kann eine Bitte "
-    "freundlicher machen oder Überraschung zeigen. „Ja“ drückt aus, dass etwas bekannt "
-    "oder offensichtlich ist. „Halt“ und „eben“ bedeuten, dass man etwas akzeptiert. "
-    "„Mal“ macht eine Aufforderung lockerer. Man lernt sie am besten, indem man viel "
-    "zuhört und dann selbst ausprobiert."
+story_cohesion = (
+    "Sehr geehrte Damen und Herren,\n\n"
+    "hiermit möchte ich Ihnen einen Überblick über das abgeschlossene Projekt geben. Im "
+    "Folgenden fasse ich die wichtigsten Ergebnisse zusammen und gehe auf einige offene "
+    "Punkte ein. Ich hoffe, dass dieser Bericht alle Ihre Fragen beantwortet.\n\n"
+    "Zunächst freut es mich, Ihnen mitteilen zu können, dass das Projekt erfolgreich "
+    "abgeschlossen wurde. Die Zusammenarbeit zwischen den Abteilungen verlief "
+    "reibungslos. Einerseits konnten wir den Zeitplan einhalten, andererseits blieben "
+    "wir sogar unter dem geplanten Budget. Insgesamt sind wir mit dem Ergebnis sehr "
+    "zufrieden.\n\n"
+    "Im Verlauf des Projekts gab es natürlich auch Herausforderungen. Zunächst mussten "
+    "wir einige technische Probleme lösen. Zudem war die Abstimmung mit den externen "
+    "Partnern anfangs schwierig. Dennoch fanden wir für jedes Problem eine Lösung. "
+    "Folglich konnten wir alle Ziele erreichen.\n\n"
+    "An dieser Stelle möchte ich betonen, dass wir stets transparent gearbeitet haben. "
+    "Einerseits haben wir Sie regelmäßig informiert, andererseits standen wir für "
+    "Rückfragen zur Verfügung. Auf diese Weise blieb das Vertrauen jederzeit "
+    "erhalten.\n\n"
+    "Besonders hervorheben möchte ich das Engagement des Teams. Alle Mitarbeiter haben "
+    "sich hervorragend eingesetzt. Darüber hinaus haben sie viele eigene Ideen "
+    "eingebracht. Aus diesem Grund verlief das Projekt so erfolgreich. Ich möchte mich "
+    "an dieser Stelle herzlich bei allen Beteiligten bedanken.\n\n"
+    "Was die nächsten Schritte betrifft, so schlage ich ein weiteres Treffen vor. Dabei "
+    "könnten wir die Ergebnisse im Detail besprechen. Außerdem wäre es sinnvoll, über "
+    "zukünftige Projekte zu sprechen. Ich würde mich freuen, wenn wir einen Termin in "
+    "den nächsten Wochen finden könnten.\n\n"
+    "Erlauben Sie mir außerdem einen Hinweis zur Dokumentation. Sämtliche Unterlagen "
+    "wurden sorgfältig archiviert. Folglich können Sie jederzeit auf die Ergebnisse "
+    "zugreifen. Bei Bedarf senden wir Ihnen gern eine vollständige Übersicht zu.\n\n"
+    "Zusammenfassend lässt sich sagen, dass das Projekt ein großer Erfolg war. Sowohl "
+    "die Qualität als auch die Effizienz haben unsere Erwartungen übertroffen. Ich bin "
+    "überzeugt, dass wir auf dieser Grundlage weiter erfolgreich zusammenarbeiten "
+    "werden. Für Ihr Vertrauen möchte ich mich ausdrücklich bedanken.\n\n"
+    "Darüber hinaus möchte ich einige Zahlen nennen. Zum einen konnten wir die Kosten um "
+    "zehn Prozent senken. Zum anderen stieg die Zufriedenheit der Kunden deutlich. Diese "
+    "Ergebnisse sprechen für sich. Aus diesem Grund bin ich zuversichtlich, dass sich "
+    "die Investition gelohnt hat.\n\n"
+    "Sollten Sie noch Fragen haben, stehe ich Ihnen selbstverständlich jederzeit zur "
+    "Verfügung. Sie erreichen mich unter der bekannten Telefonnummer oder per E-Mail. "
+    "Ich würde mich über eine baldige Rückmeldung sehr freuen. Bis dahin wünsche ich "
+    "Ihnen eine angenehme Zeit.\n\n"
+    "Ich bedanke mich noch einmal für die gute Zusammenarbeit und das entgegengebrachte "
+    "Vertrauen. Es war mir eine große Freude, dieses Projekt zu begleiten. Ich blicke "
+    "mit Zuversicht auf unsere weitere Zusammenarbeit und hoffe auf viele weitere "
+    "gemeinsame Erfolge.\n\n"
+    "Abschließend möchte ich betonen, wie sehr ich die offene Kommunikation geschätzt "
+    "habe. Ihre klaren Rückmeldungen haben uns stets geholfen. Dank Ihrer Unterstützung "
+    "konnten wir schwierige Situationen gut meistern. Ich bin zuversichtlich, dass "
+    "unsere künftigen Projekte ebenso erfolgreich verlaufen werden.\n\n"
+    "Mit freundlichen Grüßen\n"
+    "Ihr Projektleiter\n\n"
+    "Ein formeller Brief hat feste Regeln. Man beginnt mit einer höflichen Anrede: "
+    "„Sehr geehrte Damen und Herren“. Danach benutzt man einen sachlichen, höflichen "
+    "Ton und die Höflichkeitsform „Sie“. Konnektoren wie „einerseits“, „andererseits“, "
+    "„zudem“, „dennoch“ und „folglich“ verbinden die Gedanken zu einem klaren Text. Am "
+    "Ende steht eine Grußformel: „Mit freundlichen Grüßen“. So entsteht ein "
+    "zusammenhängender und professioneller Text."
 )
 
 BATCH = {
-    "b2.konjunktiv1": {
+    "b2.adjective-prepositions": {
         "intro": (
-            "In this lesson you'll report what others said with Konjunktiv I (indirect "
-            "speech): er habe, sie sei, man werde, es gebe. When Konjunktiv I looks like "
-            "the indicative, Konjunktiv II is used instead (sie hätten)."
+            "In this lesson you'll express attitudes precisely with adjectives that "
+            "take a fixed preposition: stolz auf, zufrieden mit, interessiert an, froh "
+            "über, gespannt auf. The preposition must be learned with the adjective."
         ),
-        "story": story_konj1,
+        "story": story_adjprep,
         "questions": [
             q(
-                "Was hat TechNova gestern vorgestellt?",
-                "What did TechNova present yesterday?",
-                "Seine Pläne für das nächste Jahr auf einer Pressekonferenz.",
+                "Worauf ist der Erzähler bei der Arbeit stolz?",
+                "What is the narrator proud of at work?",
+                "Auf sein Team.",
             ),
             q(
-                "Was sagte der Geschäftsführer über das letzte Jahr?",
-                "What did the CEO say about last year?",
-                "Man habe viel erreicht; die Umsätze seien gestiegen und die Zahl der "
-                "Kunden habe sich verdoppelt.",
+                "Womit ist der Erzähler zufrieden?",
+                "What is the narrator satisfied with?",
+                "Mit dem Ergebnis der Arbeit.",
             ),
             q(
-                "In welchen Bereich will die Firma investieren?",
-                "In which area does the company want to invest?",
-                "In neue Technologien, besonders in künstliche Intelligenz.",
+                "Wofür interessiert sich der Erzähler?",
+                "What is the narrator interested in?",
+                "Für neue Technologien.",
             ),
             q(
-                "Was sagte die Finanzchefin über die Zahlen?",
-                "What did the CFO say about the figures?",
-                "Sie seien sehr positiv; der Gewinn sei um zehn Prozent gestiegen und "
-                "man habe kaum Schulden.",
+                "Wofür ist der Erzähler im Beruf verantwortlich?",
+                "What is the narrator responsible for at work?",
+                "Für ein kleines Team.",
             ),
             q(
-                "Was sagte der Vorstand zu dem Gerücht über den Kauf eines "
-                "Konkurrenten?",
-                "What did the board say about the rumour of buying a competitor?",
-                "Dazu könne er nichts sagen; man prüfe Möglichkeiten, aber es gebe noch "
-                "keine Entscheidung.",
+                "Wofür ist die Freundin bekannt?",
+                "What is the girlfriend known for?",
+                "Für ihre gute Laune.",
             ),
             q(
-                "Was antwortete der Geschäftsführer auf die Frage nach steigenden "
-                "Preisen?",
-                "How did the CEO answer the question about rising prices?",
-                "Das sei nicht geplant; die Kunden müssten sich keine Sorgen machen.",
+                "Womit ist der Erzähler manchmal unzufrieden?",
+                "What is the narrator sometimes dissatisfied with?",
+                "Mit seiner Disziplin; er ist manchmal enttäuscht von sich selbst.",
             ),
             q(
-                "Wie waren die Reaktionen auf die Pläne?",
-                "How were the reactions to the plans?",
-                "Überwiegend positiv; ein Experte nannte die Strategie mutig, aber "
-                "sinnvoll.",
+                "Wie blickt der Erzähler in die Zukunft?",
+                "How does the narrator look to the future?",
+                "Voller Erwartung; er ist gespannt auf neue Aufgaben und offen für "
+                "Veränderungen.",
             ),
             q(
-                "Wozu benutzt man den Konjunktiv I?",
-                "What is Konjunktiv I used for?",
-                "Für die indirekte Rede, um zu zeigen, dass man etwas nur wiedergibt und "
-                "nicht selbst behauptet.",
+                "Wie lernt man Adjektive mit Präpositionen?",
+                "How do you learn adjectives with prepositions?",
+                "Man kann die Präposition nicht raten, sondern muss sie zusammen mit dem "
+                "Adjektiv lernen.",
             ),
         ],
         "exercises": [
             fib(
-                "Ergänze den Konjunktiv I von haben (3. Person Singular).",
-                "Der Kollege sagte, er ___ die Datei gesendet.",
-                "habe",
+                "Ergänze die Präposition (stolz ___).",
+                "Ich bin stolz ___ mein Team.",
+                "auf",
             ),
             fib(
-                "Ergänze den Konjunktiv I von sein (3. Person Singular).",
-                "Sie meinte, das Projekt ___ fast fertig.",
-                "sei",
+                "Ergänze die Präposition (zufrieden ___).",
+                "Ich bin zufrieden ___ dem Ergebnis.",
+                "mit",
             ),
             mc(
-                "Wähle den Konjunktiv I von werden.",
-                "Man berichtet, die Firma ___ bald wachsen.",
-                ["werde", "wird", "würde"],
-                "werde",
+                "Wähle die Präposition (interessiert ___).",
+                "Sie ist interessiert ___ neuen Technologien.",
+                ["an", "auf", "für"],
+                "an",
             ),
             fib(
-                "Ergänze den Konjunktiv I von geben (es ___).",
-                "Er sagte, es ___ noch viel zu tun.",
-                "gebe",
+                "Ergänze die Präposition (gespannt ___).",
+                "Wir sind gespannt ___ die Zukunft.",
+                "auf",
             ),
             reo(
                 "Bringe die Wörter in die richtige Reihenfolge.",
-                ["Er", "sagte", "er", "habe", "die", "Datei", "gesendet"],
-                "Er sagte, er habe die Datei gesendet",
+                ["Ich", "bin", "stolz", "auf", "mein", "Team"],
+                "Ich bin stolz auf mein Team",
             ),
         ],
     },
-    "b2.subjective-modals": {
+    "b2.word-order-emphasis": {
         "intro": (
-            "In this lesson you'll express probability and hearsay with subjective "
-            "modal verbs: sollen (I heard: er soll erfahren sein), wollen (he claims: "
-            "er will es programmiert haben), and dürfte/müsste/könnte for likelihood."
+            "In this lesson you'll structure sentences for emphasis. The verb stays in "
+            "second position, but you can front the most important element — object, "
+            "time or a whole clause. nicht … sondern highlights a contrast."
         ),
-        "story": story_subjmodals,
+        "story": story_wordorder,
         "questions": [
             q(
-                "Wofür benutzt man subjektive Modalverben?",
-                "What are subjective modal verbs used for?",
-                "Um auszudrücken, was jemand behauptet, was man gehört hat oder was "
-                "wahrscheinlich ist.",
+                "Wo steht das Verb im deutschen Aussagesatz meistens?",
+                "Where does the verb usually stand in a German statement?",
+                "An zweiter Stelle.",
             ),
             q(
-                "Was sagt man über den neuen Kollegen?",
-                "What do people say about the new colleague?",
-                "Er soll ein echtes Genie sein und angeblich große Projekte geleitet "
-                "haben.",
+                "Was wird betont, wenn man ein Satzglied an den Anfang stellt?",
+                "What is emphasized when you put an element at the beginning?",
+                "Das, was am Anfang steht.",
             ),
             q(
-                "Was behauptet der neue Kollege über sich selbst?",
-                "What does the new colleague claim about himself?",
-                "Er will eine berühmte App selbst programmiert haben.",
+                "Wie betonte der Erzähler den ungewöhnlichen Fehler?",
+                "How did the narrator emphasize the unusual bug?",
+                "Er stellte „diesen Fehler“ an den Anfang: „Diesen Fehler habe ich noch "
+                "nie gesehen.“",
             ),
             q(
-                "Warum war der Erzähler zuerst skeptisch?",
-                "Why was the narrator skeptical at first?",
-                "Weil so ein junger Mensch kaum so viel Erfahrung haben dürfte.",
+                "Warum stellte der Erzähler „gestern“ an den Satzanfang?",
+                "Why did the narrator put gestern at the start of the sentence?",
+                "Weil die Zeit wichtig war; das Update war ganz neu.",
             ),
             q(
-                "Was rät der andere Kollege über die Gerüchte?",
-                "What does the other colleague advise about the rumours?",
-                "Man solle nicht alles glauben; der neue Kollege dürfte einfach ein "
-                "guter Programmierer sein.",
+                "Wer war laut dem Erzähler wirklich schuld?",
+                "Who was really to blame according to the narrator?",
+                "Nicht das Team, sondern der Zeitplan.",
             ),
             q(
-                "Welches weitere Gerücht gab es über das Gehalt?",
-                "What other rumour was there about the salary?",
-                "Er solle ein sehr hohes Gehalt bekommen, und der Chef wolle ihn "
-                "unbedingt behalten.",
+                "Was drückt die Struktur „nicht … sondern“ aus?",
+                "What does the structure nicht … sondern express?",
+                "Sie hebt einen Gegensatz besonders deutlich hervor.",
             ),
             q(
-                "Wie erwies sich der neue Kollege am Ende?",
-                "How did the new colleague turn out in the end?",
-                "Als netter, normaler Mensch, gut in seinem Job, aber kein Zauberer; die "
-                "Gerüchte waren übertrieben.",
+                "Wie zeigte der Erzähler seinem Team seine Dankbarkeit?",
+                "How did the narrator show his team his gratitude?",
+                "Indem er sagte: „Ohne eure Hilfe hätte ich das nie geschafft.“",
             ),
             q(
-                "Was bedeuten „sollen“ und „wollen“ als subjektive Modalverben?",
-                "What do sollen and wollen mean as subjective modal verbs?",
-                "„sollen“ = man hat es von anderen gehört (er soll erfahren sein); "
-                "„wollen“ = jemand behauptet es über sich selbst (er will es "
-                "programmiert haben).",
+                "Wozu dient die flexible Wortstellung im Deutschen?",
+                "What is the flexible word order in German used for?",
+                "Zur Betonung; man stellt das wichtigste Satzglied vor das Verb, um die "
+                "Aufmerksamkeit darauf zu lenken.",
             ),
         ],
         "exercises": [
-            fib(
-                "Ergänze das subjektive Modalverb (er behauptet es selbst).",
-                "Er ___ alles selbst programmiert haben.",
-                "will",
+            reo(
+                "Bringe die Wörter in die richtige Reihenfolge (Betonung auf das "
+                "Objekt).",
+                ["Diesen", "Fehler", "habe", "ich", "noch", "nie", "gesehen"],
+                "Diesen Fehler habe ich noch nie gesehen",
             ),
             mc(
-                "Wähle das subjektive Modalverb (Hörensagen).",
-                "Sie ___ sehr erfahren sein.",
-                ["soll", "will", "muss"],
-                "soll",
+                "Wähle die richtige Form (Verb an zweiter Stelle).",
+                "Gestern ___ das Update veröffentlicht.",
+                ["wurde", "es wurde", "wurde es"],
+                "wurde",
             ),
             fib(
-                "Ergänze das subjektive Modalverb (wahrscheinlich).",
-                "Das Update ___ bald fertig sein.",
-                "dürfte",
-            ),
-            mc(
-                "Wähle das passende Modalverb (Möglichkeit).",
-                "Das ___ sein, aber sicher ist es nicht.",
-                ["mag", "will", "soll"],
-                "mag",
+                "Ergänze das Wort (nicht … ___).",
+                "Nicht das Team ist schuld, ___ der Zeitplan.",
+                "sondern",
             ),
             reo(
                 "Bringe die Wörter in die richtige Reihenfolge.",
-                ["Sie", "soll", "sehr", "erfahren", "sein"],
-                "Sie soll sehr erfahren sein",
+                ["Gerade", "jetzt", "brauchen", "wir", "Ruhe"],
+                "Gerade jetzt brauchen wir Ruhe",
+            ),
+            fib(
+                "Ergänze das Wort für die Betonung des Moments (___ jetzt).",
+                "___ jetzt brauchen wir Ruhe.",
+                "Gerade",
             ),
         ],
     },
-    "b2.futur2": {
+    "b2.collocations-idioms": {
         "intro": (
-            "In this lesson you'll use Futur II (werden + past participle + haben/sein) "
-            "for actions that will be completed in the future (Ich werde es beendet "
-            "haben) and for assumptions about the past (Sie wird den Zug verpasst "
-            "haben)."
+            "In this lesson you'll use natural collocations (eine Entscheidung treffen, "
+            "in Angriff nehmen) and idioms (jemandem die Daumen drücken, den Nagel auf "
+            "den Kopf treffen), which cannot be translated word for word."
         ),
-        "story": story_futur2,
+        "story": story_idioms,
         "questions": [
             q(
-                "Wozu benutzt man das Futur II?",
-                "What is Futur II used for?",
-                "Um auszudrücken, was in der Zukunft abgeschlossen sein wird, und um "
-                "Vermutungen über die Vergangenheit anzustellen.",
+                "Was mussten die Kollegen am Montag machen?",
+                "What did the colleagues have to do on Monday?",
+                "Eine wichtige Entscheidung treffen und das neue Projekt in Angriff "
+                "nehmen.",
             ),
             q(
-                "Was wird der Erzähler bis heute Abend erledigt haben?",
-                "What will the narrator have done by this evening?",
-                "Er wird den ganzen Bericht fertiggestellt haben.",
+                "Was sagte der Chef über das Aufschieben?",
+                "What did the boss say about putting things off?",
+                "Man dürfe das nicht auf die lange Bank schieben; am Ende des Tages "
+                "zähle nur das Ergebnis.",
             ),
             q(
-                "Warum ist der Kollege wohl nicht im Büro?",
-                "Why is the colleague probably not at the office?",
-                "Er wird wohl den Zug verpasst oder verschlafen haben, oder er ist krank "
-                "geworden.",
+                "Was passierte am Dienstag mit dem Kollegen?",
+                "What happened to the colleague on Tuesday?",
+                "Er verlor fast den Kopf, weil ein Termin näher rückte.",
             ),
             q(
-                "Warum hat sich die Kundin noch nicht gemeldet?",
-                "Why hasn't the customer been in touch yet?",
-                "Sie wird die Nachricht wohl noch nicht gelesen haben oder zu "
-                "beschäftigt gewesen sein.",
+                "Wie reagierte der Chef auf die schlechte Idee am Mittwoch?",
+                "How did the boss react to the bad idea on Wednesday?",
+                "Er sagte: „Das kommt überhaupt nicht in Frage“ und nahm kein Blatt vor "
+                "den Mund.",
             ),
             q(
-                "Was wird der Erzähler in fünf Jahren erreicht haben?",
-                "What will the narrator have achieved in five years?",
-                "Er wird vielleicht befördert worden sein, neue Fähigkeiten gelernt und "
-                "viele Projekte geleitet haben.",
+                "Was sagte der Erzähler der Kollegin vor ihrer Prüfung?",
+                "What did the narrator say to the colleague before her exam?",
+                "„Ich drücke dir die Daumen.“",
             ),
             q(
-                "Was sagt die Freundin über die Zukunft mit vierzig?",
-                "What does the girlfriend say about the future at forty?",
-                "Sie werden sicher ein Haus gekauft haben und viel gereist sein.",
+                "Wie hielt der Erzähler am Freitag das Team informiert?",
+                "How did the narrator keep the team informed on Friday?",
+                "Er hielt alle auf dem Laufenden, damit niemand den Überblick verlor.",
             ),
             q(
-                "Was vermutet der Erzähler am Abend über den Chef?",
-                "What does the narrator assume about the boss in the evening?",
-                "Der Chef wird seinen Bericht inzwischen gelesen und ihn vielleicht "
-                "gelobt haben.",
+                "Was bedeutet „jemandem die Daumen drücken“?",
+                "What does 'to press one's thumbs for someone' mean?",
+                "Dass man ihm Glück wünscht (nicht wörtlich).",
             ),
             q(
-                "Wie bildet man das Futur II?",
-                "How is Futur II formed?",
-                "Mit „werden“ + Partizip II + „haben“/„sein“ (ich werde den Bericht "
-                "fertiggestellt haben).",
+                "Was ist der Unterschied zwischen Kollokationen und Redewendungen?",
+                "What is the difference between collocations and idioms?",
+                "Kollokationen sind feste Wortverbindungen (eine Entscheidung treffen); "
+                "Redewendungen sind bildliche Ausdrücke (die Daumen drücken).",
             ),
         ],
         "exercises": [
             fib(
-                "Ergänze das Hilfsverb im Futur II (haben).",
-                "Bis morgen werde ich den Bericht fertiggestellt ___.",
-                "haben",
+                "Ergänze das Verb (eine Entscheidung ___).",
+                "Wir müssen eine Entscheidung ___.",
+                "treffen",
             ),
             fib(
-                "Ergänze „werden“ (Futur II, 3. Person Singular).",
-                "Sie ___ den Zug wohl verpasst haben.",
-                "wird",
+                "Ergänze das Nomen (in ___ nehmen).",
+                "Wir nehmen das Projekt in ___.",
+                "Angriff",
             ),
             mc(
-                "Wähle das Hilfsverb.",
-                "Bis Ende des Jahres werden wir das Projekt abgeschlossen ___.",
-                ["haben", "sein", "werden"],
-                "haben",
+                "Wähle das richtige Nomen (nicht in ___ kommen).",
+                "Das kommt überhaupt nicht in ___.",
+                ["Frage", "Angriff", "Gang"],
+                "Frage",
             ),
             fib(
-                "Ergänze das Partizip II von verpassen.",
-                "Er wird den Zug ___ haben.",
-                "verpasst",
+                "Ergänze das Wort (die ___ drücken = Glück wünschen).",
+                "Ich drücke dir die ___.",
+                "Daumen",
             ),
             reo(
                 "Bringe die Wörter in die richtige Reihenfolge.",
-                ["Sie", "wird", "den", "Zug", "verpasst", "haben"],
-                "Sie wird den Zug verpasst haben",
+                ["Wir", "müssen", "eine", "Entscheidung", "treffen"],
+                "Wir müssen eine Entscheidung treffen",
             ),
         ],
     },
-    "b2.modal-particles": {
+    "b2.cohesion-register": {
         "intro": (
-            "In this lesson you'll sound more natural with modal particles (doch, ja, "
-            "halt, mal, eben, denn, wohl). They don't change the meaning but add nuance "
-            "— friendliness, surprise, impatience or acceptance."
+            "In this lesson you'll write formal, well-structured texts. A formal letter "
+            "uses a polite salutation (Sehr geehrte Damen und Herren), the Sie form, "
+            "connectors (einerseits, dennoch, folglich) and a closing (Mit freundlichen "
+            "Grüßen)."
         ),
-        "story": story_particles,
+        "story": story_cohesion,
         "questions": [
             q(
-                "Was machen Modalpartikeln mit einem Satz?",
-                "What do modal particles do to a sentence?",
-                "Sie ändern nicht die Bedeutung, aber geben ihm eine bestimmte Färbung "
-                "(Überraschung, Ungeduld, Freundlichkeit).",
+                "Wie beginnt der formelle Brief?",
+                "How does the formal letter begin?",
+                "Mit der Anrede „Sehr geehrte Damen und Herren“.",
             ),
             q(
-                "Was sagte der Freund am Morgen am Telefon?",
-                "What did the friend say on the phone in the morning?",
-                "„Komm doch mal vorbei! Wir haben uns ja schon lange nicht gesehen.“",
+                "Was teilt der Verfasser zu Beginn mit?",
+                "What does the writer announce at the start?",
+                "Dass das Projekt erfolgreich abgeschlossen wurde.",
             ),
             q(
-                "Wo lag der Bericht, den der Chef suchte?",
-                "Where was the report the boss was looking for?",
-                "Er lag auf dem Tisch des Chefs; er hatte ihn wohl übersehen.",
+                "Wie verlief die Zusammenarbeit zwischen den Abteilungen?",
+                "How did the cooperation between departments go?",
+                "Reibungslos; man hielt den Zeitplan ein und blieb unter dem Budget.",
             ),
             q(
-                "Was sagte die Kollegin über die Arbeit am Mittag?",
-                "What did the colleague say about the work at midday?",
-                "„Das dauert eben seine Zeit; man kann halt nicht alles auf einmal "
-                "machen.“",
+                "Welche Herausforderungen gab es im Projekt?",
+                "What challenges were there in the project?",
+                "Einige technische Probleme und die anfangs schwierige Abstimmung mit "
+                "externen Partnern.",
             ),
             q(
-                "Wie half der Kollege beim Computerproblem?",
-                "How did the colleague help with the computer problem?",
-                "Er sagte „Probier es mal so“, und es funktionierte.",
+                "Warum verlief das Projekt laut dem Brief so erfolgreich?",
+                "Why did the project go so well according to the letter?",
+                "Wegen des großen Engagements des Teams und der vielen eigenen Ideen.",
             ),
             q(
-                "Wie reagierte der Erzähler, als der neue Kollege um Hilfe bat?",
-                "How did the narrator react when the new colleague asked for help?",
-                "Freundlich: „Klar, komm doch her, das ist ja ganz einfach.“",
+                "Was schlägt der Verfasser für die nächsten Schritte vor?",
+                "What does the writer suggest for the next steps?",
+                "Ein weiteres Treffen, um die Ergebnisse zu besprechen und über "
+                "zukünftige Projekte zu sprechen.",
             ),
             q(
-                "Warum sind Modalpartikeln für Lernende wichtig?",
-                "Why are modal particles important for learners?",
-                "Weil ohne sie Deutsch steif und unnatürlich klingt; sie sind der "
-                "Schlüssel zu einer natürlichen Sprache.",
+                "Mit welcher Grußformel endet der Brief?",
+                "With which closing does the letter end?",
+                "Mit „Mit freundlichen Grüßen“.",
             ),
             q(
-                "Welche Wirkung haben „doch“, „ja“ und „mal“?",
-                "What effect do doch, ja and mal have?",
-                "„doch“ macht eine Bitte freundlicher oder zeigt Überraschung; „ja“ "
-                "zeigt, dass etwas bekannt/offensichtlich ist; „mal“ macht eine "
-                "Aufforderung lockerer.",
+                "Welche Merkmale hat ein formeller Brief?",
+                "What features does a formal letter have?",
+                "Eine höfliche Anrede, ein sachlicher Ton mit der Sie-Form, verbindende "
+                "Konnektoren und eine Grußformel am Ende.",
             ),
         ],
         "exercises": [
             fib(
-                "Ergänze die Modalpartikel (freundliche Aufforderung).",
-                "Komm ___ mal vorbei!",
-                "doch",
+                "Ergänze das Wort in der Anrede.",
+                "Sehr ___ Damen und Herren,",
+                "geehrte",
+            ),
+            fib(
+                "Ergänze das Wort in der Grußformel.",
+                "Mit freundlichen ___",
+                "Grüßen",
             ),
             mc(
-                "Wähle die Modalpartikel (Überraschung / etwas Offensichtliches).",
-                "Das ist ___ interessant!",
-                ["ja", "mal", "denn"],
-                "ja",
+                "Wähle den passenden Konnektor.",
+                "Einerseits war es teuer, ___ war es nützlich.",
+                ["andererseits", "folglich", "hiermit"],
+                "andererseits",
             ),
             fib(
-                "Ergänze die Modalpartikel (man akzeptiert es).",
-                "Es ist ___ kompliziert.",
-                "halt",
-            ),
-            fib(
-                "Ergänze das Wort (höfliche Nachfrage: noch ___).",
-                "Wie heißt du ___ mal?",
-                "noch",
+                "Ergänze das Wort, das ein Fazit einleitet.",
+                "___ lässt sich sagen, dass das Projekt ein Erfolg war.",
+                "Zusammenfassend",
             ),
             reo(
                 "Bringe die Wörter in die richtige Reihenfolge.",
-                ["Komm", "doch", "mal", "vorbei"],
-                "Komm doch mal vorbei",
+                [
+                    "Hiermit", "teile", "ich", "Ihnen", "mit", "dass", "das",
+                    "Projekt", "abgeschlossen", "ist",
+                ],
+                "Hiermit teile ich Ihnen mit, dass das Projekt abgeschlossen ist",
             ),
         ],
     },

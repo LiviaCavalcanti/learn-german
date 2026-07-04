@@ -3,7 +3,7 @@ import { api } from '../../lib/api'
 import type { ChatContext } from '../../lib/types'
 import { Button, Card, Field, Input, Select, Spinner, Textarea } from '../../components/ui'
 
-const CEFR_LEVELS = ['A1', 'A2', 'B1', 'B2']
+const CEFR_LEVELS = ['A1', 'A2', 'B1', 'B2', 'C1']
 
 /** Modal to turn a teacher message into a review flashcard. Pre-filled with the
  *  teacher's answer as the back; the learner can edit both sides (and optionally

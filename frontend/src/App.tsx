@@ -13,10 +13,11 @@ import LanguagePicker from './features/onboarding/LanguagePicker'
 import { useLanguage } from './contexts/LanguageContext'
 
 export default function App() {
-  const { target, reselecting } = useLanguage()
-  if (!target || reselecting) return <LanguagePicker />
+  const { target } = useLanguage()
+  if (!target) return <LanguagePicker />
   return (
     <Routes>
+      <Route path="/welcome" element={<LanguagePicker />} />
       <Route element={<Layout />}>
         <Route index element={<Dashboard />} />
         <Route path="course" element={<Curriculum />} />

@@ -7,7 +7,7 @@ from typing import Literal
 
 from pydantic import BaseModel, ConfigDict, Field, computed_field
 
-Level = Literal["A1", "A2", "B1", "B2"]
+Level = Literal["A1", "A2", "B1", "B2", "C1"]
 MediaType = Literal["video", "podcast", "text"]
 ExerciseType = Literal[
     "fill-in-blank",

@@ -27,7 +27,7 @@ type WordEntry = {
 type Group = { key: string; label: string; items: WordEntry[] }
 
 const EMPTY_WORD = { word: '', meaning_en: '', cefr: 'A2', grammar_tags: '', example_de: '' }
-const LEVEL_ORDER: Record<string, number> = { A1: 1, A2: 2, B1: 3, B2: 4 }
+const LEVEL_ORDER: Record<string, number> = { A1: 1, A2: 2, B1: 3, B2: 4, C1: 5 }
 
 /** Collapse duplicate rows into one entry per lemma, unioning tags + ids. */
 function dedupe(words: VocabItem[]): WordEntry[] {
