@@ -47,6 +47,43 @@ def test_grade_updates_state_and_stats():
         assert client.get("/review/queue").status_code == 200
 
 
+def test_stats_are_scoped_per_language():
+    """Dashboard stats (vocab count, reviews today, …) count only the active language."""
+    with TestClient(app) as client:
+        de_before = client.get("/review/stats?lang=de").json()
+        es_before = client.get("/review/stats?lang=es").json()
+
+    with Session(engine) as session:
+        de_word = VocabItem(
+            word="r Baum", lemma="Baum", meaning_en="tree", cefr="A1", target_lang="de"
+        )
+        es_word = VocabItem(
+            word="el árbol", lemma="árbol", meaning_en="tree", cefr="A1", target_lang="es"
+        )
+        session.add(de_word)
+        session.add(es_word)
+        session.commit()
+        session.refresh(de_word)
+        session.refresh(es_word)
+        de_id, es_id = de_word.id, es_word.id
+
+    with TestClient(app) as client:
+        client.post(
+            "/review/grade", json={"item_type": "vocab", "item_id": de_id, "rating": "good"}
+        )
+        client.post(
+            "/review/grade", json={"item_type": "vocab", "item_id": es_id, "rating": "good"}
+        )
+        de_after = client.get("/review/stats?lang=de").json()
+        es_after = client.get("/review/stats?lang=es").json()
+
+    # Each language sees exactly its own new word + its own review — never the other's.
+    assert de_after["total_vocab"] - de_before["total_vocab"] == 1
+    assert es_after["total_vocab"] - es_before["total_vocab"] == 1
+    assert de_after["reviews_today"] - de_before["reviews_today"] == 1
+    assert es_after["reviews_today"] - es_before["reviews_today"] == 1
+
+
 def test_manage_cards_list_and_remove_from_review():
     with TestClient(app) as client:
         created = client.post(

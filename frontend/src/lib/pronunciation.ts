@@ -1,13 +1,20 @@
 /**
  * Pronunciation (text-to-speech) provider seam.
  *
- * Today this uses the browser's built-in Web Speech API — offline, free, and
- * backed by the German voices installed on the user's OS. The `SpeechProvider`
- * interface plus the `getSpeech()` factory keep call sites decoupled from the
- * implementation, so a higher-quality backend voice (e.g. a local Piper TTS
- * endpoint) can be swapped in later by setting `VITE_TTS_MODE=backend` and
- * implementing `BackendSpeechProvider` — with no changes at the call sites.
+ * By default the app now speaks via the backend (`BackendSpeechProvider`): the
+ * FastAPI service synthesizes each word with espeak-ng in the *target* language
+ * and returns WAV audio. This is OS-independent — it does not depend on which
+ * voices are installed on the learner's device — so a Spanish word is always
+ * pronounced in Spanish, never in whatever default voice the browser falls back
+ * to. When the backend audio is unavailable (the optional `phonetics` extra is
+ * not installed, or the request fails), it transparently falls back to the
+ * browser's Web Speech API.
+ *
+ * Set `VITE_TTS_MODE=webspeech` to force the browser-only Web Speech provider.
+ * The `SpeechProvider` interface plus the `getSpeech()` factory keep call sites
+ * decoupled from the implementation.
  */
+import { API_BASE } from './api'
 
 export interface SpeechProvider {
   /** Whether speech output is usable in the current environment. */
@@ -118,24 +125,76 @@ class WebSpeechProvider implements SpeechProvider {
 }
 
 /**
- * Placeholder for a future backend voice (e.g. Piper TTS served from FastAPI).
- * Prepared but intentionally not wired: selecting it means implementing `speak()`
- * to fetch `${VITE_API_BASE}/pronunciation/audio?word=…` and play the returned
- * audio, then enabling the `'backend'` branch in `getSpeech()` below.
+ * Speaks by fetching WAV audio from the backend (espeak-ng in the target
+ * language) and playing it. Falls back to the browser's Web Speech API when the
+ * backend audio endpoint is unavailable (e.g. the `phonetics` extra isn't
+ * installed) or a request fails — and remembers that so it stops retrying.
  */
-// class BackendSpeechProvider implements SpeechProvider { /* … */ }
+class BackendSpeechProvider implements SpeechProvider {
+  private fallback = new WebSpeechProvider()
+  // Cache object URLs by `${lang}|${text}` so repeated plays are instant.
+  private cache = new Map<string, string>()
+  private audio: HTMLAudioElement | null = null
+  // null = untried, true = backend works, false = backend down (use fallback).
+  private backendOk: boolean | null = null
+
+  get available(): boolean {
+    // Backend audio may work; the Web Speech fallback covers the rest.
+    return this.backendOk === true || this.fallback.available
+  }
+
+  speak(text: string, lang = currentSpeechLang): void {
+    const clean = text.trim()
+    if (!clean) return
+    if (this.backendOk === false) {
+      this.fallback.speak(clean, lang)
+      return
+    }
+    void this.playBackend(clean, lang)
+  }
+
+  private async playBackend(text: string, lang: string): Promise<void> {
+    const key = `${lang}|${text}`
+    try {
+      let url = this.cache.get(key)
+      if (!url) {
+        const params = new URLSearchParams({ word: text, lang: lang.slice(0, 2) })
+        const resp = await fetch(`${API_BASE}/pronunciation/audio?${params.toString()}`)
+        if (!resp.ok) throw new Error(`tts ${resp.status}`)
+        url = URL.createObjectURL(await resp.blob())
+        this.cache.set(key, url)
+      }
+      this.backendOk = true
+      this.cancel()
+      this.audio = new Audio(url)
+      await this.audio.play()
+    } catch {
+      // Backend TTS isn't usable here — switch to the browser voice from now on.
+      if (this.backendOk !== true) this.backendOk = false
+      this.fallback.speak(text, lang)
+    }
+  }
+
+  cancel(): void {
+    if (this.audio) {
+      this.audio.pause()
+      this.audio = null
+    }
+    this.fallback.cancel()
+  }
+}
 
 let instance: SpeechProvider | null = null
 
 export function getSpeech(): SpeechProvider {
   if (instance) return instance
-  const mode = (import.meta.env.VITE_TTS_MODE as string) || 'webspeech'
+  const mode = (import.meta.env.VITE_TTS_MODE as string) || 'backend'
   switch (mode) {
-    // case 'backend':
-    //   instance = new BackendSpeechProvider()
-    //   break
-    default:
+    case 'webspeech':
       instance = new WebSpeechProvider()
+      break
+    default:
+      instance = new BackendSpeechProvider()
   }
   return instance
 }

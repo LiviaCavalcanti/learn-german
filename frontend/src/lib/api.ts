@@ -28,14 +28,14 @@ import type {
 // When VITE_API_BASE isn't set, talk to the backend on the same host the page was
 // loaded from (port 8000). This works locally *and* from a phone that opened the app
 // via a LAN / Tailscale IP, without hard-coding any address.
-const BASE =
+export const API_BASE =
   (import.meta.env.VITE_API_BASE as string) ||
   (typeof window !== 'undefined'
     ? `${window.location.protocol}//${window.location.hostname}:8000`
     : 'http://127.0.0.1:8000')
 
 async function req<T>(path: string, opts: RequestInit = {}): Promise<T> {
-  const resp = await fetch(BASE + path, {
+  const resp = await fetch(API_BASE + path, {
     headers: { 'Content-Type': 'application/json' },
     ...opts,
   })
@@ -184,7 +184,7 @@ export const api = {
       body: JSON.stringify({ ...body, native_lang: apiNative }),
     }),
 
-  reviewStats: () => req<ReviewStats>('/review/stats'),
+  reviewStats: () => req<ReviewStats>(withLang('/review/stats')),
   reviewQueue: (limit = 20) => req<ReviewQueueItem[]>(withLang(`/review/queue?limit=${limit}`)),
   reviewGrade: (body: { item_type: string; item_id: number; rating: Rating }) =>
     req<{ due: string; reps: number }>('/review/grade', {

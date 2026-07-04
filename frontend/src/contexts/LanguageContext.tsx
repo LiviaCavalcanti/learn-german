@@ -7,6 +7,7 @@
  * router so the landing picker and every page can read/update the selection.
  */
 import { createContext, useContext, useEffect, useMemo, useState, type ReactNode } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { api, getApiLanguage, setApiLanguage } from '../lib/api'
 import { setSpeechLang } from '../lib/pronunciation'
 import type { LanguageOption, LanguagesResponse } from '../lib/types'
@@ -45,7 +46,7 @@ interface LanguageContextValue {
   reselecting: boolean
   /** Choose the target + native language. */
   choose: (target: string, native: string) => void
-  /** Clear the target selection to return to the picker. */
+  /** Reopen the picker to switch languages (keeps the current selection meanwhile). */
   reset: () => void
 }
 
@@ -58,6 +59,7 @@ export function useLanguage(): LanguageContextValue {
 }
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
+  const navigate = useNavigate()
   const [languages, setLanguages] = useState<LanguagesResponse | null>(null)
   const [ready, setReady] = useState(false)
   const [target, setTarget] = useState<string | null>(() => readStored(TARGET_KEY))
@@ -100,6 +102,7 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
   }, [target, native, targetProfile])
 
   function choose(nextTarget: string, nextNative: string) {
+    const changed = nextTarget !== target
     const voice =
       languages?.targets.find((t) => t.code === nextTarget)?.voice ||
       `${nextTarget}-${nextTarget.toUpperCase()}`
@@ -114,16 +117,16 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
     setTarget(nextTarget)
     setNative(nextNative)
     setReselecting(false)
+    // Switching to a *different* language opens its notebook at the dashboard;
+    // reopening the same language just closes the picker and leaves you where
+    // you were (the route was never unmounted from the URL).
+    if (changed) navigate('/')
   }
 
   function reset() {
-    try {
-      localStorage.removeItem(TARGET_KEY)
-    } catch {
-      /* ignore */
-    }
+    // Keep the current selection active behind the picker so choose() can tell
+    // whether the learner switched languages or reopened the same one.
     setReselecting(true)
-    setTarget(null)
   }
 
   const value: LanguageContextValue = {

@@ -224,3 +224,5 @@ entry in `components/Layout.tsx`, and any API method in `lib/api.ts` + type in `
 - Change the data model → `models.py` (+ `schemas.py`); remember: new table, not `ALTER`.
 - Dictionary issues → `dictionary/` and rebuild `data/dict.sqlite` via the loader.
 - Frontend behavior → `frontend/src/features/` + `lib/api.ts`.
+- Add a new language / course → `content/ADDING-A-LANGUAGE.md` (registry in
+  `languages.py` + `content/<code>/` JSON + flag in `Flag.tsx`).

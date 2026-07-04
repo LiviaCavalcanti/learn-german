@@ -65,12 +65,24 @@ const PREPARING_MESSAGES = [
 ]
 
 export default function LanguagePicker() {
-  const { languages, ready, native, choose, reselecting } = useLanguage()
+  const { languages, ready, native, choose, reselecting, target: currentTarget } = useLanguage()
   // When switching an already-chosen language, jump straight to the language
   // list; only first-time onboarding replays the welcome intro.
   const [step, setStep] = useState<Step>(reselecting ? 'choose' : 'welcome')
   const [target, setTarget] = useState<string | null>(null)
   const [nativeChoice, setNativeChoice] = useState(native || 'en')
+
+  // Picking the language you're already learning is a no-op switch: skip the
+  // "preparing" beat and let choose() drop you back where you left off. A
+  // different language gets the preparing screen on the way to its dashboard.
+  function handleContinue() {
+    if (!target) return
+    if (target === currentTarget) {
+      choose(target, nativeChoice)
+    } else {
+      setStep('preparing')
+    }
+  }
 
   // Default the native selection to the first native option once loaded.
   useEffect(() => {
@@ -105,7 +117,7 @@ export default function LanguagePicker() {
             onPickTarget={setTarget}
             onPickNative={setNativeChoice}
             onBack={() => setStep('welcome')}
-            onContinue={() => setStep('preparing')}
+            onContinue={handleContinue}
           />
         )}
         {step === 'preparing' && target && (

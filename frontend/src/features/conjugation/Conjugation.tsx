@@ -1,83 +1,46 @@
-import { useState, type FormEvent } from 'react'
-import { api } from '../../lib/api'
+import { useCallback, useEffect, useState, useSyncExternalStore, type FormEvent } from 'react'
 import { useLanguage } from '../../contexts/LanguageContext'
 import type { ConjugationTable, ConjugationTense } from '../../lib/types'
-import { Badge, Button, Card, Input, Spinner } from '../../components/ui'
-
-const SEEN_KEY = 'sprachheft.conjugation.seen'
-
-function loadSeen(): string[] {
-  try {
-    const parsed = JSON.parse(localStorage.getItem(SEEN_KEY) || '[]')
-    return Array.isArray(parsed) ? parsed.filter((v) => typeof v === 'string') : []
-  } catch {
-    return []
-  }
-}
-
-function saveSeen(verbs: string[]) {
-  try {
-    localStorage.setItem(SEEN_KEY, JSON.stringify(verbs))
-  } catch {
-    /* ignore storage errors */
-  }
-}
+import { Badge, Button, Card, Input, Spinner, cx } from '../../components/ui'
+import {
+  clearSeen,
+  conjugate,
+  getSnapshot,
+  preloadCommon,
+  select,
+  subscribe,
+  type ConjugationJob,
+} from './conjugationStore'
 
 export default function Conjugation() {
-  const { targetProfile } = useLanguage()
+  const { target, targetProfile } = useLanguage()
   const languageName = targetProfile?.name ?? 'target-language'
-  const [verb, setVerb] = useState('')
-  const [table, setTable] = useState<ConjugationTable | null>(null)
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState<string | null>(null)
-  const [seen, setSeen] = useState<string[]>(loadSeen)
-  const [vocabStatus, setVocabStatus] = useState<'added' | 'exists' | null>(null)
+  const lang = target ?? 'de'
+  const state = useSyncExternalStore(
+    subscribe,
+    useCallback(() => getSnapshot(lang), [lang]),
+  )
+  const activeJob = state.activeId ? (state.jobs[state.activeId] ?? null) : null
+  const [verb, setVerb] = useState(() => activeJob?.label ?? '')
 
-  async function run(input: string) {
-    const q = input.trim()
-    if (!q) return
-    setLoading(true)
-    setError(null)
-    setVocabStatus(null)
-    try {
-      const result = await api.conjugate(q)
-      setTable(result)
-      setVerb(result.infinitive)
-      setSeen((prev) => {
-        const next = [
-          result.infinitive,
-          ...prev.filter((v) => v.toLowerCase() !== result.infinitive.toLowerCase()),
-        ].slice(0, 40)
-        saveSeen(next)
-        return next
-      })
-      try {
-        const saved = await api.addVerb({
-          infinitive: result.infinitive,
-          english: result.english,
-          partizip_ii: result.partizip_ii,
-          auxiliary: result.auxiliary,
-        })
-        setVocabStatus(saved.created ? 'added' : 'exists')
-      } catch {
-        setVocabStatus(null)
-      }
-    } catch {
-      setError('Could not conjugate that verb. Check the spelling and try again.')
-      setTable(null)
-    } finally {
-      setLoading(false)
-    }
-  }
+  // Warm the cache with the language's most common verbs (fetched once, then cached).
+  useEffect(() => {
+    preloadCommon(lang)
+  }, [lang])
+
+  const loading = activeJob?.status === 'loading'
+  const table = activeJob?.status === 'done' ? activeJob.table : null
+  const error = activeJob?.status === 'error' ? activeJob.error : null
+  const vocabStatus = activeJob?.vocabStatus ?? null
 
   function onSubmit(e: FormEvent) {
     e.preventDefault()
-    run(verb)
+    conjugate(lang, verb)
   }
 
-  function clearSeen() {
-    setSeen([])
-    saveSeen([])
+  function onSelect(job: ConjugationJob) {
+    setVerb(job.label)
+    select(lang, job.id)
   }
 
   return (
@@ -104,31 +67,52 @@ export default function Conjugation() {
         </form>
       </Card>
 
-      {!table && seen.length > 0 && (
+      {state.order.length > 0 && (
         <Card className="p-4">
           <div className="mb-2 flex items-center justify-between">
             <div className="text-xs font-medium uppercase tracking-wide text-muted">Seen verbs</div>
-            <button type="button" onClick={clearSeen} className="text-xs text-muted hover:text-ink">
+            <button
+              type="button"
+              onClick={() => clearSeen(lang)}
+              className="text-xs text-muted hover:text-ink"
+            >
               Clear
             </button>
           </div>
           <div className="flex flex-wrap gap-2">
-            {seen.map((v) => (
-              <button
-                key={v}
-                type="button"
-                onClick={() => run(v)}
-                className="rounded-full border border-line bg-paper px-3 py-1 text-sm hover:bg-accent-soft"
-              >
-                {v}
-              </button>
-            ))}
+            {state.order.map((id) => {
+              const job = state.jobs[id]
+              if (!job) return null
+              return (
+                <button
+                  key={id}
+                  type="button"
+                  onClick={() => onSelect(job)}
+                  className={cx(
+                    'flex items-center gap-1.5 rounded-full border px-3 py-1 text-sm',
+                    id === state.activeId
+                      ? 'border-accent bg-accent-soft'
+                      : 'border-line bg-paper hover:bg-accent-soft',
+                  )}
+                >
+                  <span>{job.label}</span>
+                  {job.status === 'loading' && <ChipSpinner />}
+                  {job.status === 'error' && <span className="text-danger">!</span>}
+                </button>
+              )
+            })}
           </div>
         </Card>
       )}
 
       {error && <Card className="p-4 text-sm text-danger">{error}</Card>}
-      {table && !loading && (
+      {loading && !table && (
+        <Card className="flex items-center gap-3 p-4 text-sm text-muted">
+          <Spinner />
+          <span>Conjugating {activeJob?.label}…</span>
+        </Card>
+      )}
+      {table && (
         <div className="space-y-3">
           {vocabStatus && (
             <div className={vocabStatus === 'added' ? 'text-sm text-success' : 'text-sm text-muted'}>
@@ -139,6 +123,12 @@ export default function Conjugation() {
         </div>
       )}
     </div>
+  )
+}
+
+function ChipSpinner() {
+  return (
+    <span className="inline-block h-3 w-3 animate-spin rounded-full border-2 border-accent border-t-transparent" />
   )
 }
 

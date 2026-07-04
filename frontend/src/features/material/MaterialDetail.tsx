@@ -196,7 +196,7 @@ export default function MaterialDetail() {
 
       <VideoEmbed url={material.source_url} title={material.title} className="max-w-3xl" />
 
-      <div className="grid gap-4 lg:grid-cols-2">
+      <div className={cx('grid gap-4', material.translation ? 'lg:grid-cols-2' : 'lg:w-4/5')}>
         <Card className="p-5">
           <div className="mb-2 flex items-center justify-between gap-2">
             <div className="text-xs font-medium uppercase tracking-wide text-muted">

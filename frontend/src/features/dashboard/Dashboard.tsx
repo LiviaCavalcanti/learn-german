@@ -11,14 +11,15 @@ export default function Dashboard() {
   const [progress, setProgress] = useState<CourseProgress | null>(null)
   const [starting, setStarting] = useState(false)
   const navigate = useNavigate()
-  const { targetProfile } = useLanguage()
+  const { targetProfile, target } = useLanguage()
   const langName = targetProfile?.name ?? 'language'
 
+  // Re-fetch whenever the active language changes so the cards stay scoped to it.
   useEffect(() => {
     api.reviewStats().then(setStats).catch(() => {})
     api.dictStatus().then(setDict).catch(() => {})
     api.courseProgress().then(setProgress).catch(() => {})
-  }, [])
+  }, [target])
 
   async function startNext() {
     const next = progress?.next_lesson
