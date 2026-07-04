@@ -4,11 +4,26 @@ from __future__ import annotations
 
 from datetime import timedelta
 
-from sqlalchemy import func
+from sqlalchemy import and_, func, or_
 from sqlmodel import Session, select
 
 from sprachheft.models import Exercise, ReviewLog, SRState, VocabItem, utcnow
 from sprachheft.srs import review_card
+
+
+def _srstate_lang_condition(lang: str):
+    """Boolean filter selecting SRState rows whose underlying item is in ``lang``.
+
+    ``SRState`` links polymorphically (``item_type`` + ``item_id``) to either a
+    ``VocabItem`` or an ``Exercise``, so scope by matching the item's
+    ``target_lang`` for the right table.
+    """
+    vocab_ids = select(VocabItem.id).where(VocabItem.target_lang == lang)
+    exercise_ids = select(Exercise.id).where(Exercise.target_lang == lang)
+    return or_(
+        and_(SRState.item_type == "vocab", SRState.item_id.in_(vocab_ids)),
+        and_(SRState.item_type == "exercise", SRState.item_id.in_(exercise_ids)),
+    )
 
 
 def grade_item(
@@ -209,23 +224,42 @@ def purge_exercise_review_cards(session: Session) -> int:
     return removed
 
 
-def get_stats(session: Session) -> dict:
+def get_stats(session: Session, *, lang: str | None = None) -> dict:
     now = utcnow()
     start_today = now.replace(hour=0, minute=0, second=0, microsecond=0)
 
-    due_now = int(session.exec(select(func.count(SRState.id)).where(SRState.due <= now)).one())
-    total_vocab = int(session.exec(select(func.count(VocabItem.id))).one())
-    total_exercises = int(session.exec(select(func.count(Exercise.id))).one())
-    reviews_today = int(
-        session.exec(
-            select(func.count(ReviewLog.id)).where(ReviewLog.reviewed_at >= start_today)
-        ).one()
-    )
-    next_due = session.exec(
-        select(SRState.due).where(SRState.due > now).order_by(SRState.due).limit(1)
-    ).first()
+    # When a language is given, scope every figure to items in that language so the
+    # dashboard cards (due now, streak, vocabulary…) are per-language, not global.
+    sr_filter = _srstate_lang_condition(lang) if lang else None
 
-    review_dates = {dt.date() for dt in session.exec(select(ReviewLog.reviewed_at)).all()}
+    due_stmt = select(func.count(SRState.id)).where(SRState.due <= now)
+    if sr_filter is not None:
+        due_stmt = due_stmt.where(sr_filter)
+    due_now = int(session.exec(due_stmt).one())
+
+    vocab_stmt = select(func.count(VocabItem.id))
+    exercise_stmt = select(func.count(Exercise.id))
+    if lang:
+        vocab_stmt = vocab_stmt.where(VocabItem.target_lang == lang)
+        exercise_stmt = exercise_stmt.where(Exercise.target_lang == lang)
+    total_vocab = int(session.exec(vocab_stmt).one())
+    total_exercises = int(session.exec(exercise_stmt).one())
+
+    reviews_stmt = select(func.count(ReviewLog.id)).where(ReviewLog.reviewed_at >= start_today)
+    dates_stmt = select(ReviewLog.reviewed_at)
+    if sr_filter is not None:
+        reviews_stmt = reviews_stmt.join(
+            SRState, ReviewLog.srstate_id == SRState.id
+        ).where(sr_filter)
+        dates_stmt = dates_stmt.join(SRState, ReviewLog.srstate_id == SRState.id).where(sr_filter)
+    reviews_today = int(session.exec(reviews_stmt).one())
+
+    next_due_stmt = select(SRState.due).where(SRState.due > now)
+    if sr_filter is not None:
+        next_due_stmt = next_due_stmt.where(sr_filter)
+    next_due = session.exec(next_due_stmt.order_by(SRState.due).limit(1)).first()
+
+    review_dates = {dt.date() for dt in session.exec(dates_stmt).all()}
     today = now.date()
     streak = 0
     cursor = today if today in review_dates else today - timedelta(days=1)

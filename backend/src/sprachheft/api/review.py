@@ -50,8 +50,8 @@ def delete_review_cards(payload: ReviewCardsIn, session: SessionDep):
 
 
 @router.get("/stats")
-def review_stats(session: SessionDep):
-    return get_stats(session)
+def review_stats(session: SessionDep, lang: str | None = Query(None)):
+    return get_stats(session, lang=lang)
 
 
 @router.post("/grade")
