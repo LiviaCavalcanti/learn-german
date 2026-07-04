@@ -1,0 +1,40 @@
+{
+  "version": 1,
+  "title": "French A1–A2 taxonomy backbone",
+  "note": "Lightweight CEFR level + grammar-topic reference used to tag generated/imported French content. Proof-of-concept slice: A1 plus A2.",
+  "levels": [
+    { "code": "A1", "title": "Foundations", "descriptor": "Understands and uses familiar everyday expressions and very basic phrases." },
+    { "code": "A2", "title": "Everyday Fluency", "descriptor": "Communicates in simple routine tasks on familiar matters." },
+    { "code": "B1", "title": "Independent User", "descriptor": "Deals with most situations while travelling; describes experiences, opinions, plans." },
+    { "code": "B2", "title": "Upper-Intermediate", "descriptor": "Interacts with fluency and spontaneity; produces clear, detailed text on many subjects." }
+  ],
+  "conventions": {
+    "articleShorthand": { "m": "le", "f": "la" },
+    "exerciseTypes": ["fill-in-blank", "conjugation", "translation", "multiple-choice", "reorder", "reading", "interpretation", "writing"]
+  },
+  "grammarTopics": [
+    { "code": "fr.a1.etre-avoir", "cefr": "A1", "title": "être & avoir", "description": "The two core verbs 'to be' (être) and 'to have' (avoir)." },
+    { "code": "fr.a1.subject-pronouns", "cefr": "A1", "title": "Subject pronouns", "description": "je, tu, il/elle/on, nous, vous, ils/elles." },
+    { "code": "fr.a1.present-er", "cefr": "A1", "title": "Present tense (regular -er verbs)", "description": "Regular present-tense conjugation of -er verbs (parler, habiter)." },
+    { "code": "fr.a1.questions", "cefr": "A1", "title": "Questions & question words", "description": "est-ce que, qu'est-ce que, où, quand, comment, pourquoi; yes/no questions and intonation." },
+    { "code": "fr.a1.articles-gender", "cefr": "A1", "title": "Articles & noun gender", "description": "Definite le/la/les and indefinite un/une/des; noun gender." },
+    { "code": "fr.a1.present-ir-re", "cefr": "A1", "title": "Present tense (-ir/-re verbs)", "description": "Regular -ir (finir) and -re (vendre) present conjugation." },
+    { "code": "fr.a1.irregular-verbs", "cefr": "A1", "title": "Common irregular verbs", "description": "High-frequency irregulars: aller, faire, venir, pouvoir, vouloir." },
+    { "code": "fr.a1.plurals-numbers", "cefr": "A1", "title": "Plurals & numbers", "description": "Plural formation (-s/-x) and cardinal numbers." },
+    { "code": "fr.a1.negation", "cefr": "A1", "title": "Negation (ne … pas)", "description": "Basic negation with ne … pas / jamais / rien." },
+    { "code": "fr.a1.possessives", "cefr": "A1", "title": "Possessive adjectives", "description": "mon/ma/mes, ton/ta/tes, son/sa/ses, notre, votre, leur; agreement." },
+    { "code": "fr.a1.adjective-agreement", "cefr": "A1", "title": "Adjective agreement & position", "description": "Adjectives agree in gender and number; common position rules." },
+    { "code": "fr.a1.il-y-a", "cefr": "A1", "title": "il y a (there is / there are)", "description": "Impersonal 'il y a' to state existence and quantities." },
+    { "code": "fr.a1.prepositions-basic", "cefr": "A1", "title": "Basic prepositions", "description": "à, de, en, chez, avec; à + le = au, de + le = du." },
+    { "code": "fr.a1.aller-futur", "cefr": "A1", "title": "aller + infinitive (near future)", "description": "Talking about plans with the futur proche." },
+
+    { "code": "fr.a2.passe-compose", "cefr": "A2", "title": "Passé composé", "description": "Compound past with avoir/être + past participle; agreement with être." },
+    { "code": "fr.a2.imparfait", "cefr": "A2", "title": "Imparfait", "description": "Past habits, descriptions and background; regular and irregular forms." },
+    { "code": "fr.a2.reflexive", "cefr": "A2", "title": "Pronominal (reflexive) verbs", "description": "Reflexive pronouns (me, te, se…) and daily-routine verbs." },
+    { "code": "fr.a2.partitive", "cefr": "A2", "title": "Partitive articles", "description": "du, de la, de l', des; de after negation and quantities." },
+    { "code": "fr.a2.futur-simple", "cefr": "A2", "title": "Futur simple", "description": "Simple future; regular stems and key irregular stems (être, avoir, aller, faire)." },
+    { "code": "fr.a2.comparatives", "cefr": "A2", "title": "Comparative & superlative", "description": "plus/moins/aussi … que; le plus/le moins; meilleur and mieux." },
+    { "code": "fr.a2.cod-coi-pronouns", "cefr": "A2", "title": "Object pronouns (COD/COI)", "description": "Direct (le/la/les) and indirect (lui/leur) object pronouns." },
+    { "code": "fr.a2.prepositions-places", "cefr": "A2", "title": "Prepositions with places & countries", "description": "à/en/au/aux with cities and countries; venir de." }
+  ]
+}

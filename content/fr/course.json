@@ -1,0 +1,76 @@
+{
+  "title": "French A1–A2 Course",
+  "note": "Curriculum backbone (proof-of-concept slice). Each lesson references a grammar topic from taxonomy.json and carries a short French seed text; starting a lesson creates a Material from that text so the generation agent can build vocab + exercises.",
+  "levels": [
+    {
+      "level": "A1",
+      "title": "Foundations",
+      "units": [
+        {
+          "unit": 1,
+          "title": "Premiers pas",
+          "lessons": [
+            { "code": "fr.a1.etre-avoir", "title": "être & avoir", "grammar_topics": ["fr.a1.etre-avoir"], "can_do": "I can introduce myself and say how I am.", "seed_text": "Bonjour, je m'appelle Claire. Je suis étudiante et j'ai vingt ans. Aujourd'hui je suis fatiguée, mais je suis contente. Mon ami est sympathique et il a une voiture." },
+            { "code": "fr.a1.subject-pronouns", "title": "Subject pronouns", "grammar_topics": ["fr.a1.subject-pronouns"], "can_do": "I can say who does something.", "seed_text": "Je suis professeur et tu es étudiant. Il habite à Lyon, mais elle travaille à Paris. Nous apprenons ensemble et vous aidez beaucoup. Ils sont très gentils." },
+            { "code": "fr.a1.present-er", "title": "Present tense (regular -er verbs)", "grammar_topics": ["fr.a1.present-er"], "can_do": "I can talk about what I do every day.", "seed_text": "Chaque jour, je parle français et j'étudie beaucoup. Tu travailles au bureau et nous mangeons ensemble. Le soir, les enfants jouent et regardent la télé." },
+            { "code": "fr.a1.questions", "title": "Questions & question words", "grammar_topics": ["fr.a1.questions"], "can_do": "I can ask simple questions.", "seed_text": "Comment tu t'appelles ? D'où viens-tu ? Où est-ce que tu habites ? Qu'est-ce que tu étudies ? Est-ce que tu viens aussi en cours ?" }
+          ]
+        },
+        {
+          "unit": 2,
+          "title": "Personnes et verbes",
+          "lessons": [
+            { "code": "fr.a1.articles-gender", "title": "Articles & noun gender", "grammar_topics": ["fr.a1.articles-gender"], "can_do": "I can name people and things.", "seed_text": "Voici un homme. L'homme est mon collègue. Ici il y a une femme et là il y a un enfant. La femme est sympathique et les enfants sont petits." },
+            { "code": "fr.a1.present-ir-re", "title": "Present tense (-ir/-re verbs)", "grammar_topics": ["fr.a1.present-ir-re"], "can_do": "I can use -ir and -re verbs.", "seed_text": "Je finis mon travail à cinq heures. Nous choisissons un cadeau et tu attends le bus. Ils vendent des fruits au marché et elle répond à la question." },
+            { "code": "fr.a1.irregular-verbs", "title": "Common irregular verbs", "grammar_topics": ["fr.a1.irregular-verbs"], "can_do": "I can use common irregular verbs.", "seed_text": "J'ai deux frères et je fais du sport. Anne va au travail en métro. Est-ce que tu peux m'aider ? Je veux apprendre le français, mais aujourd'hui je n'ai pas le temps." },
+            { "code": "fr.a1.plurals-numbers", "title": "Plurals & numbers", "grammar_topics": ["fr.a1.plurals-numbers"], "can_do": "I can count and talk about several things.", "seed_text": "J'ai deux livres, trois stylos et quatre cahiers. Les enfants ont beaucoup d'amis. Combien de tasses est-ce qu'il te faut ? Il m'en faut cinq." }
+          ]
+        },
+        {
+          "unit": 3,
+          "title": "Décrire le quotidien",
+          "lessons": [
+            { "code": "fr.a1.negation", "title": "Negation (ne … pas)", "grammar_topics": ["fr.a1.negation"], "can_do": "I can say what I don't have or do.", "seed_text": "Je n'ai pas le temps et je n'ai pas faim. Ce n'est pas ma voiture. Aujourd'hui je ne travaille pas et je ne bois jamais de café le soir." },
+            { "code": "fr.a1.possessives", "title": "Possessive adjectives", "grammar_topics": ["fr.a1.possessives"], "can_do": "I can say what belongs to whom.", "seed_text": "C'est mon livre et c'est ta valise. Sa voiture est neuve. Notre maison est petite, mais elle est jolie. Où sont vos amis ?" },
+            { "code": "fr.a1.adjective-agreement", "title": "Adjective agreement & position", "grammar_topics": ["fr.a1.adjective-agreement"], "can_do": "I can describe people and things.", "seed_text": "La maison est blanche et la voiture est rouge. Les livres sont nouveaux et les chaises sont vieilles. Ma professeure est grande et sympathique." },
+            { "code": "fr.a1.il-y-a", "title": "il y a (there is / there are)", "grammar_topics": ["fr.a1.il-y-a"], "can_do": "I can describe what there is in a place.", "seed_text": "Dans ma ville, il y a un grand parc et beaucoup de cafés. Sur la table, il y a deux livres et une tasse. Est-ce qu'il y a une pharmacie près d'ici ?" }
+          ]
+        },
+        {
+          "unit": 4,
+          "title": "Projets et lieux",
+          "lessons": [
+            { "code": "fr.a1.prepositions-basic", "title": "Basic prepositions", "grammar_topics": ["fr.a1.prepositions-basic"], "can_do": "I can say where things and people are.", "seed_text": "J'habite à Paris, près du parc. Je vais au bureau avec mon amie. Le livre est à mon frère. Nous allons au cinéma et nous rentrons du travail tard." },
+            { "code": "fr.a1.aller-futur", "title": "aller + infinitive (near future)", "grammar_topics": ["fr.a1.aller-futur"], "can_do": "I can talk about my plans.", "seed_text": "Demain, je vais étudier le français. Anne va voyager au Canada. Qu'est-ce que vous allez faire ce week-end ? Nous allons nous reposer et regarder un film." }
+          ]
+        }
+      ]
+    },
+    {
+      "level": "A2",
+      "title": "Everyday Fluency",
+      "units": [
+        {
+          "unit": 1,
+          "title": "Parler du passé",
+          "lessons": [
+            { "code": "fr.a2.passe-compose", "title": "Passé composé", "grammar_topics": ["fr.a2.passe-compose"], "can_do": "I can talk about what I did.", "seed_text": "Hier, j'ai beaucoup travaillé et l'après-midi j'ai mangé avec ma famille. Anne est allée au cinéma et elle a vu un film. Nous avons parlé au téléphone, puis nous avons étudié le français." },
+            { "code": "fr.a2.imparfait", "title": "Imparfait", "grammar_topics": ["fr.a2.imparfait"], "can_do": "I can describe how things used to be.", "seed_text": "Quand j'étais enfant, j'habitais dans un petit village. Tous les jours, je jouais dans le parc et je lisais beaucoup de livres. Ma grand-mère cuisinait et nous étions toujours contents." },
+            { "code": "fr.a2.reflexive", "title": "Pronominal (reflexive) verbs", "grammar_topics": ["fr.a2.reflexive"], "can_do": "I can describe my daily routine.", "seed_text": "Je me lève à sept heures et je me douche vite. Ensuite, je m'habille et je prends le petit-déjeuner. Ma sœur se coiffe et se maquille. Le soir, nous nous couchons tôt." },
+            { "code": "fr.a2.partitive", "title": "Partitive articles (du / de la / des)", "grammar_topics": ["fr.a2.partitive"], "can_do": "I can talk about food and quantities.", "seed_text": "Le matin, je bois du café et je mange du pain. Elle prend de la soupe et des légumes. Nous n'achetons pas de viande, mais nous buvons de l'eau." }
+          ]
+        },
+        {
+          "unit": 2,
+          "title": "Projets, comparaisons et pronoms",
+          "lessons": [
+            { "code": "fr.a2.futur-simple", "title": "Futur simple", "grammar_topics": ["fr.a2.futur-simple"], "can_do": "I can talk about the future.", "seed_text": "L'année prochaine, je voyagerai en France. Tu parleras mieux le français. Nous habiterons dans une grande ville et les enfants iront à une nouvelle école." },
+            { "code": "fr.a2.comparatives", "title": "Comparative & superlative", "grammar_topics": ["fr.a2.comparatives"], "can_do": "I can compare people and things.", "seed_text": "Ma maison est plus grande que ton appartement, mais elle est moins moderne. Paul est aussi gentil que Marie. C'est le meilleur restaurant de la ville." },
+            { "code": "fr.a2.cod-coi-pronouns", "title": "Object pronouns (COD/COI)", "grammar_topics": ["fr.a2.cod-coi-pronouns"], "can_do": "I can avoid repetition with object pronouns.", "seed_text": "Tu vois ce livre ? Je le lis maintenant. J'aime bien mes voisins et je leur parle souvent. Marie nous invite et nous la remercions." },
+            { "code": "fr.a2.prepositions-places", "title": "Prepositions with places & countries", "grammar_topics": ["fr.a2.prepositions-places"], "can_do": "I can say where I go and where I live.", "seed_text": "J'habite en France, à Paris. L'été, je vais au Portugal et aux États-Unis. Elle vient du Canada et elle travaille en Allemagne." }
+          ]
+        }
+      ]
+    }
+  ]
+}
