@@ -37,6 +37,12 @@ interface LanguageContextValue {
   ready: boolean
   /** Profile of the currently selected target, if any. */
   targetProfile: LanguageOption | undefined
+  /**
+   * True when the picker was reopened to switch an already-chosen language
+   * (via reset), so onboarding can jump straight to the language list instead
+   * of replaying the welcome intro.
+   */
+  reselecting: boolean
   /** Choose the target + native language. */
   choose: (target: string, native: string) => void
   /** Clear the target selection to return to the picker. */
@@ -56,6 +62,7 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
   const [ready, setReady] = useState(false)
   const [target, setTarget] = useState<string | null>(() => readStored(TARGET_KEY))
   const [native, setNative] = useState<string>(() => readStored(NATIVE_KEY) || 'en')
+  const [reselecting, setReselecting] = useState(false)
 
   // Fetch the language registry once.
   useEffect(() => {
@@ -106,6 +113,7 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
     }
     setTarget(nextTarget)
     setNative(nextNative)
+    setReselecting(false)
   }
 
   function reset() {
@@ -114,6 +122,7 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
     } catch {
       /* ignore */
     }
+    setReselecting(true)
     setTarget(null)
   }
 
@@ -123,6 +132,7 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
     languages,
     ready,
     targetProfile,
+    reselecting,
     choose,
     reset,
   }

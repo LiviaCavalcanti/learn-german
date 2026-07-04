@@ -71,19 +71,97 @@ def start_lesson(
     lesson = get_lesson(code, target)
     if not lesson:
         return None
-    material = Material(
-        title=lesson["title"],
-        media_type="text",
-        source_lang=target,
-        native_lang=normalize_native(native),
-        level=lesson["level"],
-        transcript=lesson.get("seed_text", ""),
-        notes=f"{LESSON_NOTE_PREFIX}{code}",
-    )
-    session.add(material)
-    session.commit()
-    session.refresh(material)
+    note = f"{LESSON_NOTE_PREFIX}{code}"
+    # Idempotent: reuse the material already started for this lesson so re-opening a
+    # lesson never piles up duplicate copies in the library.
+    material = session.exec(
+        select(Material).where(Material.notes == note, Material.source_lang == target)
+    ).first()
+    if material is None:
+        material = Material(
+            title=lesson["title"],
+            media_type="text",
+            source_lang=target,
+            native_lang=normalize_native(native),
+            level=lesson["level"],
+            transcript=lesson.get("story") or lesson.get("seed_text", ""),
+            notes=note,
+        )
+        session.add(material)
+        session.commit()
+        session.refresh(material)
+    _ensure_lesson_exercises(session, material, lesson)
     return material
+
+
+def _ensure_lesson_exercises(session: Session, material: Material, lesson: dict) -> int:
+    """Create the lesson's authored grammar exercises as Exercise rows (once).
+
+    These fixed, auto-graded drills ship with the lesson, so a lesson has grammar
+    practice immediately without needing the LLM. Idempotent: it skips if the
+    lesson's course exercises already exist for this material.
+    """
+    authored = lesson.get("exercises")
+    if not isinstance(authored, list) or not authored:
+        return 0
+    already = session.exec(
+        select(Exercise).where(
+            Exercise.material_id == material.id, Exercise.source == "course"
+        )
+    ).first()
+    if already is not None:
+        return 0
+    added = 0
+    for item in authored:
+        if not isinstance(item, dict) or not item.get("type"):
+            continue
+        session.add(
+            Exercise(
+                material_id=material.id,
+                target_lang=material.source_lang,
+                source="course",
+                type=item["type"],
+                cefr=item.get("cefr") or material.level,
+                grammar_tags=item.get("grammar_tags") or [],
+                instructions=item.get("instructions", ""),
+                payload=item.get("payload") or {},
+                answer_key=item.get("answer_key") or {},
+            )
+        )
+        added += 1
+    if added:
+        session.commit()
+    return added
+
+
+def check_answer(
+    code: str, index: int, answer: str, lang: str = "de", native: str = "en"
+):
+    """Evaluate a learner's answer to a lesson comprehension question vs its reference.
+
+    Returns an ``AnswerFeedback`` (verdict + score + language notes), or ``None`` if the
+    lesson or question index is unknown. The authored reference answer stays server-side.
+    """
+    target = normalize_target(lang)
+    lesson = get_lesson(code, target)
+    if not lesson:
+        return None
+    questions = lesson.get("questions") or []
+    if not isinstance(questions, list) or not 0 <= index < len(questions):
+        return None
+    question = questions[index] or {}
+
+    from sprachheft.agents.feedback import evaluate_open
+
+    return evaluate_open(
+        question=str(question.get("prompt", "")),
+        reference=str(question.get("reference", "")),
+        answer=answer,
+        target_lang=target,
+        native_lang=normalize_native(native),
+        level=str(lesson.get("level", "A2")),
+        exercise_type="reading",
+    )
 
 
 def get_progress(session: Session, lang: str = "de") -> dict:

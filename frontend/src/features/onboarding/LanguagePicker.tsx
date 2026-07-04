@@ -65,8 +65,10 @@ const PREPARING_MESSAGES = [
 ]
 
 export default function LanguagePicker() {
-  const { languages, ready, native, choose } = useLanguage()
-  const [step, setStep] = useState<Step>('welcome')
+  const { languages, ready, native, choose, reselecting } = useLanguage()
+  // When switching an already-chosen language, jump straight to the language
+  // list; only first-time onboarding replays the welcome intro.
+  const [step, setStep] = useState<Step>(reselecting ? 'choose' : 'welcome')
   const [target, setTarget] = useState<string | null>(null)
   const [nativeChoice, setNativeChoice] = useState(native || 'en')
 

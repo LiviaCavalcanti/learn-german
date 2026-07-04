@@ -164,12 +164,20 @@ export interface CourseIndex {
   levels: { level: string; title: string; units: number; lessons: number }[]
 }
 
+export interface LessonQuestion {
+  prompt: string
+  translation?: string
+}
+
 export interface Lesson {
   code: string
   title: string
   grammar_topics: string[]
   can_do: string
   seed_text: string
+  intro?: string
+  story?: string
+  questions?: LessonQuestion[]
   level?: string
   unit_title?: string
 }

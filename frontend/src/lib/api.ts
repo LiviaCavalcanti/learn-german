@@ -13,6 +13,7 @@ import type {
   Exercise,
   LearnerProfile,
   LanguagesResponse,
+  Lesson,
   Material,
   MaterialSummary,
   Rating,
@@ -230,6 +231,13 @@ export const api = {
   course: () => req<CourseIndex>(withLang('/course')),
   courseProgress: () => req<CourseProgress>(withLang('/course/progress')),
   courseLevel: (level: string) => req<CourseLevelDetail>(withLang(`/course/${level}`)),
+  courseLesson: (code: string) =>
+    req<Lesson>(withLang(`/course/lessons/${encodeURIComponent(code)}`)),
+  courseCheckAnswer: (code: string, body: { index: number; answer: string }) =>
+    req<AnswerFeedback>(
+      withLang(`/course/lessons/${encodeURIComponent(code)}/check`),
+      { method: 'POST', body: JSON.stringify({ ...body, native_lang: apiNative }) },
+    ),
   startLesson: (code: string) =>
     req<Material>(
       withLang(`/course/lessons/${encodeURIComponent(code)}/start`, { native: apiNative }),

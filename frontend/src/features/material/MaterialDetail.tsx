@@ -1,10 +1,18 @@
 import { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { api } from '../../lib/api'
-import type { AnswerFeedback, Exercise, Material, VocabItem } from '../../lib/types'
+import type {
+  AnswerFeedback,
+  Exercise,
+  Lesson,
+  LessonQuestion,
+  Material,
+  VocabItem,
+} from '../../lib/types'
 import { Badge, Button, Card, Input, Select, Spinner, Textarea, cx } from '../../components/ui'
 import { TokenizedText } from '../../components/TokenizedText'
 import { SpeakButton } from '../../components/SpeakButton'
+import { VideoEmbed } from '../../components/VideoEmbed'
 
 const GRADABLE = ['fill-in-blank', 'conjugation', 'translation', 'multiple-choice', 'reorder']
 
@@ -14,6 +22,13 @@ const VERDICTS: Record<string, { label: string; className: string }> = {
   partial: { label: '~ Partly correct', className: 'text-accent' },
   incorrect: { label: '✗ Not quite', className: 'text-danger' },
   unanswered: { label: '', className: 'text-muted' },
+}
+
+// Course lessons store their code in Material.notes as "Course lesson: <code>".
+const LESSON_NOTE_PREFIX = 'Course lesson: '
+function courseCodeFromNotes(notes: string | null | undefined): string | null {
+  if (!notes || !notes.startsWith(LESSON_NOTE_PREFIX)) return null
+  return notes.slice(LESSON_NOTE_PREFIX.length).trim() || null
 }
 
 /** Group exercises that share a variant group into ordered lists (seed first). */
@@ -57,6 +72,7 @@ export default function MaterialDetail() {
   const [showRewrite, setShowRewrite] = useState(false)
   const [rewriteInstructions, setRewriteInstructions] = useState('')
   const [rewriting, setRewriting] = useState(false)
+  const [lesson, setLesson] = useState<Lesson | null>(null)
 
   function reload() {
     api.material(materialId).then(setMaterial).catch(() => {})
@@ -64,6 +80,16 @@ export default function MaterialDetail() {
     api.exercises(materialId).then(setExercises).catch(() => {})
   }
   useEffect(reload, [materialId])
+
+  // Course lessons carry an authored intro + story + comprehension questions.
+  useEffect(() => {
+    const code = courseCodeFromNotes(material?.notes)
+    if (!code) {
+      setLesson(null)
+      return
+    }
+    api.courseLesson(code).then(setLesson).catch(() => setLesson(null))
+  }, [material?.notes])
 
   async function generate() {
     setGenerating(true)
@@ -159,6 +185,17 @@ export default function MaterialDetail() {
         )}
       </div>
 
+      {lesson?.intro && (
+        <Card className="border-accent/30 bg-accent-soft/40 p-4">
+          <div className="text-xs font-medium uppercase tracking-wide text-muted">
+            In this lesson
+          </div>
+          <p className="mt-1 text-[15px] leading-7">{lesson.intro}</p>
+        </Card>
+      )}
+
+      <VideoEmbed url={material.source_url} title={material.title} className="max-w-3xl" />
+
       <div className="grid gap-4 lg:grid-cols-2">
         <Card className="p-5">
           <div className="mb-2 flex items-center justify-between gap-2">
@@ -196,7 +233,10 @@ export default function MaterialDetail() {
             </div>
           )}
           <div className="notebook-lines">
-            <TokenizedText text={material.transcript} className="block text-[15px] leading-7" />
+            <TokenizedText
+              text={material.transcript}
+              className="block whitespace-pre-line text-[15px] leading-7"
+            />
           </div>
         </Card>
         {material.translation && (
@@ -206,6 +246,10 @@ export default function MaterialDetail() {
           </Card>
         )}
       </div>
+
+      {lesson?.questions && lesson.questions.length > 0 && (
+        <LessonQuestions code={lesson.code} questions={lesson.questions} />
+      )}
 
       <Card className="flex flex-wrap items-center justify-between gap-3 p-4">
         <div>
@@ -645,6 +689,79 @@ function ExerciseView({ ex, loadHistory = true }: { ex: Exercise; loadHistory?: 
         </div>
       )}
     </div>
+  )
+}
+
+function LessonQuestions({ code, questions }: { code: string; questions: LessonQuestion[] }) {
+  return (
+    <section className="space-y-3">
+      <h2 className="text-xl">Comprehension questions</h2>
+      <div className="space-y-3">
+        {questions.map((q, i) => (
+          <LessonQuestionCard key={i} code={code} index={i} question={q} />
+        ))}
+      </div>
+    </section>
+  )
+}
+
+function LessonQuestionCard({
+  code,
+  index,
+  question,
+}: {
+  code: string
+  index: number
+  question: LessonQuestion
+}) {
+  const [answer, setAnswer] = useState('')
+  const [feedback, setFeedback] = useState<AnswerFeedback | null>(null)
+  const [checking, setChecking] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+
+  async function check() {
+    if (!answer.trim()) return
+    setChecking(true)
+    setError(null)
+    try {
+      setFeedback(await api.courseCheckAnswer(code, { index, answer }))
+    } catch (e) {
+      setError(e instanceof Error ? e.message : 'Could not check your answer')
+    } finally {
+      setChecking(false)
+    }
+  }
+
+  return (
+    <Card className="space-y-2 p-4">
+      <div className="flex items-baseline gap-2">
+        <span className="text-sm font-medium text-muted">{index + 1}.</span>
+        <div>
+          <TokenizedText text={question.prompt} className="text-sm font-medium" />
+          {question.translation && (
+            <div className="text-xs italic text-muted">{question.translation}</div>
+          )}
+        </div>
+      </div>
+      <Textarea
+        rows={3}
+        value={answer}
+        placeholder="Write your answer…"
+        onChange={(e) => setAnswer(e.target.value)}
+      />
+      <div className="flex items-center gap-3">
+        <Button variant="soft" onClick={check} disabled={checking || !answer.trim()}>
+          {checking ? <Spinner /> : 'Check my answer'}
+        </Button>
+        {feedback && !checking && (
+          <span className={cx('text-sm font-medium', VERDICTS[feedback.verdict]?.className)}>
+            {VERDICTS[feedback.verdict]?.label || 'Checked'}
+          </span>
+        )}
+        {error && <span className="text-sm text-danger">{error}</span>}
+      </div>
+      {feedback && <AnswerFeedbackView feedback={feedback} />}
+    </Card>
   )
 }
 

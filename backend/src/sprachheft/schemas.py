@@ -308,6 +308,14 @@ class AnswerFeedback(BaseModel):
     reference: str = ""
 
 
+class LessonAnswerIn(BaseModel):
+    """A learner's answer to a course-lesson comprehension question (by index)."""
+
+    index: int
+    answer: str = ""
+    native_lang: str = "en"
+
+
 class GradeIn(BaseModel):
     item_type: Literal["vocab", "exercise"]
     item_id: int
