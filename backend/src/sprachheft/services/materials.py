@@ -91,6 +91,22 @@ def delete_material(session: Session, material_id: int) -> bool:
     material = session.get(Material, material_id)
     if not material:
         return False
+    # Remove everything that hangs off this material so nothing is orphaned in the
+    # vocabulary list or review queue. These helpers also clear SR state, review
+    # logs, saved attempts, variant links, and embeddings.
+    from sprachheft.services import exercises as exercises_svc
+    from sprachheft.services import vocab as vocab_svc
+
+    exercise_ids = list(
+        session.exec(select(Exercise.id).where(Exercise.material_id == material_id)).all()
+    )
+    vocab_ids = list(
+        session.exec(select(VocabItem.id).where(VocabItem.material_id == material_id)).all()
+    )
+    if exercise_ids:
+        exercises_svc.delete_exercise_items(session, exercise_ids)
+    if vocab_ids:
+        vocab_svc.delete_vocab_items(session, vocab_ids)
     session.delete(material)
     session.commit()
     return True

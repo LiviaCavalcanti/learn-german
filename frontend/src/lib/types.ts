@@ -1,4 +1,4 @@
-export type Level = 'A1' | 'A2' | 'B1' | 'B2' | 'C1'
+export type Level = 'A1' | 'A2' | 'B1' | 'B2' | 'C1' | 'C2'
 
 export interface LanguageOption {
   code: string
@@ -42,6 +42,35 @@ export interface Material {
   translation: string | null
   notes: string | null
   created_at: string
+}
+
+export interface NewsSource {
+  key: string
+  label: string
+  level: string
+  kind: string
+}
+
+export interface NewsSourcesResponse {
+  available: boolean
+  sources: NewsSource[]
+}
+
+export interface NewsArticle {
+  source: string
+  title: string
+  url: string
+  level: string
+  summary: string
+}
+
+export interface NewsImportResult {
+  material_id: number
+  title: string
+  level: string
+  translated: boolean
+  vocab_added: number
+  exercises_added: number
 }
 
 export interface VocabItem {

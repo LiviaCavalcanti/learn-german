@@ -244,11 +244,11 @@ def generate_variant(session: Session, exercise: Exercise, *, stage: int = 2) ->
     return new_exercise
 
 
-LEVELS = ("A1", "A2", "B1", "B2", "C1")
+LEVELS = ("A1", "A2", "B1", "B2", "C1", "C2")
 
 
 def shift_level(level: str | None, direction: str | None) -> str:
-    """Shift a CEFR level one band easier/harder, clamped to A1..C1."""
+    """Shift a CEFR level one band easier/harder, clamped to A1..C2."""
     try:
         i = LEVELS.index((level or "A2").upper())
     except ValueError:

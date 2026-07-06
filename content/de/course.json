@@ -1,5 +1,5 @@
 {
-  "title": "German A1–B2 Course",
+  "title": "German A1–C1 Course",
   "note": "Curriculum backbone. Each lesson references a grammar topic from taxonomy.json and carries a short German seed text; starting a lesson creates a Material from that text so the generation agent can build vocab + exercises.",
   "levels": [
     {
@@ -12713,6 +12713,1844 @@
                     "items": [
                       {
                         "answer": "Hiermit teile ich Ihnen mit, dass das Projekt abgeschlossen ist"
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "level": "C1",
+      "title": "Professional Mastery",
+      "units": [
+        {
+          "unit": 1,
+          "title": "Die Sprache des Bueros",
+          "lessons": [
+            {
+              "code": "c1.nominalstil",
+              "title": "Nominal style & nominalisation",
+              "grammar_topics": [
+                "c1.nominalstil"
+              ],
+              "can_do": "I can write in the formal nominal register of reports and business e-mails.",
+              "seed_text": "Nach Abschluss der Analyse erfolgt die Umsetzung der Maßnahmen. Die Prüfung der Unterlagen dient der Vermeidung von Fehlern.",
+              "intro": "In this lesson you'll master the nominal style (Nominalstil) that dominates German reports, contracts and business e-mails - turning verbs into nouns (pruefen -> die Pruefung) and packing information densely with genitive chains and prepositions.",
+              "story": "Als ich meine erste Stelle in einem grossen Unternehmen antrat, war ich ueberrascht, wie anders die Sprache im Buero klang. In der Schule hatte ich gelernt, klar und einfach zu schreiben. Doch die Berichte, die auf meinem Schreibtisch landeten, steckten voller langer Substantive. Statt ‚Wir haben das Projekt geprueft und danach umgesetzt‘ hiess es dort: ‚Nach erfolgter Pruefung des Projekts erfolgte dessen Umsetzung.‘ Diesen Stil nennt man Nominalstil, und er ist die eigentliche Sprache des Berufslebens.\n\nMein Mentor, Herr Doktor Reinhardt, nahm sich meiner an. ‚Der Nominalstil wirkt sachlich und distanziert‘, erklaerte er. ‚Wir verwandeln Verben in Substantive. Aus pruefen wird die Pruefung, aus umsetzen die Umsetzung, aus entscheiden die Entscheidung. Auf diese Weise laesst sich viel Information auf engem Raum unterbringen.‘ Er zeigte mir, wie man mit Genitivketten und Praepositionen ganze Saetze verdichtet: ‚die Verbesserung der Qualitaet durch die Schulung der Mitarbeiter‘.\n\nAm Anfang fiel mir das schwer. Ich schrieb einen Satz wie ‚Wir muessen entscheiden, weil die Kunden sich beschweren.‘ Herr Reinhardt laechelte und formulierte um: ‚Aufgrund der Beschwerden der Kunden ist eine Entscheidung erforderlich.‘ Kein einziges Verb der Handlung mehr, nur noch Substantive. ‚Sehen Sie‘, sagte er, ‚das klingt nach Behoerde, nach Vertrag, nach Wissenschaft. Genau das erwartet man hier.‘\n\nDoch er warnte mich auch. ‚Uebertreiben Sie es nicht. Ein Text, der nur aus Substantiven besteht, wird schwer verstaendlich und kalt. Ein guter Autor beherrscht beide Register und wechselt bewusst zwischen ihnen.‘ Mit der Zeit lernte ich, das Werkzeug gezielt einzusetzen. Heute weiss ich: Die Beherrschung des Nominalstils ist keine Frage der Angeberei, sondern der Angemessenheit. Wer im deutschen Berufsleben bestehen will, muss die Faehigkeit zur Verdichtung ebenso besitzen wie den Mut zur Klarheit.",
+              "questions": [
+                {
+                  "prompt": "Was ueberraschte den Erzaehler an der Sprache im Buero?",
+                  "translation": "What surprised the narrator about the language in the office?",
+                  "reference": "Ihn ueberraschte, dass die Berichte voller langer Substantive steckten und im Nominalstil geschrieben waren."
+                },
+                {
+                  "prompt": "Wie entsteht laut Herrn Reinhardt der Nominalstil?",
+                  "translation": "How, according to Mr Reinhardt, does the nominal style come about?",
+                  "reference": "Er entsteht, indem man Verben in Substantive verwandelt, zum Beispiel pruefen in die Pruefung."
+                },
+                {
+                  "prompt": "Wie formulierte Herr Reinhardt den Satz ueber die Beschwerden der Kunden um?",
+                  "translation": "How did Mr Reinhardt rephrase the sentence about the customers' complaints?",
+                  "reference": "Er formulierte: ‚Aufgrund der Beschwerden der Kunden ist eine Entscheidung erforderlich.‘"
+                },
+                {
+                  "prompt": "Wovor warnte der Mentor?",
+                  "translation": "What did the mentor warn against?",
+                  "reference": "Er warnte davor, den Nominalstil zu uebertreiben, weil ein Text nur aus Substantiven schwer verstaendlich und kalt wird."
+                },
+                {
+                  "prompt": "Was hat der Erzaehler am Ende ueber den Nominalstil gelernt?",
+                  "translation": "What did the narrator finally learn about the nominal style?",
+                  "reference": "Dass es eine Frage der Angemessenheit ist und dass man bewusst zwischen den Registern wechseln sollte."
+                }
+              ],
+              "exercises": [
+                {
+                  "type": "fill-in-blank",
+                  "instructions": "Ergaenzen Sie im Dialog jeweils die passende Nominalisierung (das fehlende Substantiv).",
+                  "payload": {
+                    "items": [
+                      {
+                        "prompt": "Reinhardt: ‚Schreiben Sie nicht ‚wir pruefen die Daten‘, sondern sprechen Sie von der ___ der Daten.‘"
+                      },
+                      {
+                        "prompt": "Sie: ‚Verstanden. Und statt ‚wir setzen den Plan um‘ verwende ich die ___ des Plans.‘"
+                      },
+                      {
+                        "prompt": "Reinhardt: ‚Genau. Aus ‚wir entscheiden‘ wird die ___.‘"
+                      },
+                      {
+                        "prompt": "Sie: ‚Und aus ‚wir verbessern die Qualitaet‘ wird die ___ der Qualitaet.‘"
+                      },
+                      {
+                        "prompt": "Reinhardt: ‚Sehr gut. Zuletzt: aus ‚wir fuehren das System ein‘ wird die ___ des Systems.‘"
+                      }
+                    ],
+                    "hints": [],
+                    "text": "Herr Reinhardt bespricht mit Ihnen den Entwurf eines Berichts und bittet Sie, die Verben in den Nominalstil zu setzen."
+                  },
+                  "answer_key": {
+                    "items": [
+                      {
+                        "answer": "Pruefung"
+                      },
+                      {
+                        "answer": "Umsetzung"
+                      },
+                      {
+                        "answer": "Entscheidung"
+                      },
+                      {
+                        "answer": "Verbesserung"
+                      },
+                      {
+                        "answer": "Einfuehrung"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "type": "multiple-choice",
+                  "instructions": "Welches Substantiv gehoert zum Verb ‚durchfuehren‘?",
+                  "payload": {
+                    "items": [
+                      {
+                        "prompt": "Waehlen Sie die richtige Nominalisierung.",
+                        "options": [
+                          "die Durchfuehrung",
+                          "die Durchfahrt",
+                          "die Fuehrung"
+                        ]
+                      }
+                    ],
+                    "hints": []
+                  },
+                  "answer_key": {
+                    "items": [
+                      {
+                        "answer": "die Durchfuehrung"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "type": "reorder",
+                  "instructions": "Bringen Sie die Woerter in die richtige Reihenfolge (Nominalstil).",
+                  "payload": {
+                    "items": [
+                      {
+                        "tokens": [
+                          "Nach",
+                          "der",
+                          "Pruefung",
+                          "der",
+                          "Unterlagen",
+                          "erfolgt",
+                          "die",
+                          "Umsetzung"
+                        ]
+                      }
+                    ],
+                    "hints": []
+                  },
+                  "answer_key": {
+                    "items": [
+                      {
+                        "answer": "Nach der Pruefung der Unterlagen erfolgt die Umsetzung"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "type": "translation",
+                  "instructions": "Uebersetzen Sie ins Deutsche (Nominalstil).",
+                  "payload": {
+                    "items": [
+                      {
+                        "prompt": "After completion of the analysis, the implementation of the measures begins."
+                      }
+                    ],
+                    "hints": []
+                  },
+                  "answer_key": {
+                    "items": [
+                      {
+                        "answer": "Nach Abschluss der Analyse beginnt die Umsetzung der Massnahmen.",
+                        "accept": [
+                          "Nach Abschluss der Analyse beginnt die Umsetzung der Massnahmen",
+                          "Nach dem Abschluss der Analyse beginnt die Umsetzung der Massnahmen"
+                        ]
+                      }
+                    ]
+                  }
+                },
+                {
+                  "type": "fill-in-blank",
+                  "instructions": "Bilden Sie das Substantiv zum Verb.",
+                  "payload": {
+                    "items": [
+                      {
+                        "prompt": "entscheiden -> die ___"
+                      }
+                    ],
+                    "hints": []
+                  },
+                  "answer_key": {
+                    "items": [
+                      {
+                        "answer": "Entscheidung"
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "code": "c1.funktionsverbgefuege",
+              "title": "Funktionsverbgefuege (light-verb constructions)",
+              "grammar_topics": [
+                "c1.funktionsverbgefuege"
+              ],
+              "can_do": "I can use professional light-verb constructions like in Betracht ziehen.",
+              "seed_text": "Wir ziehen den Vorschlag in Betracht und stellen die Unterlagen zur Verfuegung. Bitte halten Sie mit der Abteilung Ruecksprache.",
+              "intro": "You'll learn Funktionsverbgefuege - fixed noun + verb combinations (in Betracht ziehen, zur Verfuegung stellen, in Frage stellen) that make German sound genuinely professional. They cannot be translated word for word, so learn them as whole units.",
+              "story": "In meinem Unternehmen gilt die woechentliche Projektbesprechung als das Herz der Zusammenarbeit. Als ich neu war, verstand ich zwar jedes einzelne Wort, und dennoch entging mir oft der eigentliche Sinn. Der Grund waren die Funktionsverbgefuege - feste Verbindungen aus einem Substantiv und einem eher blassen Verb, die im Berufsdeutsch allgegenwaertig sind. Niemand sagte einfach ‚Wir ueberlegen das‘; man sagte ‚Wir ziehen das in Betracht‘.\n\nMeine Teamleiterin, Frau Berger, beherrschte diese Wendungen meisterhaft. ‚Bitte stellen Sie mir die Unterlagen zur Verfuegung‘, sagte sie, oder ‚Halten Sie mit der Rechtsabteilung Ruecksprache‘. Statt ‚Wir fangen an‘ hiess es ‚Wir nehmen das Projekt in Angriff‘, und wenn ihr ein Vorschlag nicht gefiel, stellte sie ihn ‚grundsaetzlich in Frage‘. Anfangs schrieb ich mir jede dieser Verbindungen auf, denn man kann sie nicht woertlich uebersetzen.\n\nHerr Reinhardt, mein Mentor, erklaerte mir das Prinzip. ‚Bei einem Funktionsverbgefuege traegt das Substantiv die eigentliche Bedeutung‘, sagte er, ‚das Verb hat fast nur noch eine grammatische Funktion. Deshalb heisst es Funktionsverb. Sie muessen die feste Kombination als Ganzes lernen: eine Entscheidung trifft man, eine Frage stellt man, in Kraft tritt ein Gesetz.‘ Er riet mir, jeden Tag zwei oder drei neue Wendungen zu notieren und sie sofort in einem eigenen Satz zu verwenden.\n\nHeute faellt es mir leicht. Wenn ich eine Sitzung eroeffne, ziehe ich Vorschlaege in Betracht, stelle Ressourcen zur Verfuegung und bringe heikle Punkte zur Sprache. Die Funktionsverbgefuege geben meiner Sprache genau jene sachliche Eleganz, die im Berufsleben erwartet wird. Sie sind, wie Herr Reinhardt es nannte, die unsichtbaren Bausteine der professionellen Kommunikation.",
+              "questions": [
+                {
+                  "prompt": "Warum entging dem Erzaehler am Anfang oft der Sinn der Besprechung?",
+                  "translation": "Why did the narrator often miss the meaning of the meeting at first?",
+                  "reference": "Wegen der Funktionsverbgefuege, die man nicht woertlich verstehen kann."
+                },
+                {
+                  "prompt": "Wie sagte Frau Berger statt ‚Wir fangen an‘?",
+                  "translation": "How did Ms Berger say it instead of 'We are starting'?",
+                  "reference": "Sie sagte ‚Wir nehmen das Projekt in Angriff‘."
+                },
+                {
+                  "prompt": "Was traegt laut Herrn Reinhardt bei einem Funktionsverbgefuege die eigentliche Bedeutung?",
+                  "translation": "According to Mr Reinhardt, what carries the actual meaning?",
+                  "reference": "Das Substantiv traegt die eigentliche Bedeutung; das Verb hat fast nur eine grammatische Funktion."
+                },
+                {
+                  "prompt": "Welchen Rat gab Herr Reinhardt dem Erzaehler?",
+                  "translation": "What advice did Mr Reinhardt give the narrator?",
+                  "reference": "Er riet ihm, taeglich zwei oder drei neue Wendungen zu notieren und sofort in einem eigenen Satz zu verwenden."
+                },
+                {
+                  "prompt": "Welche Wirkung haben die Funktionsverbgefuege auf die Sprache des Erzaehlers?",
+                  "translation": "What effect do the light-verb constructions have on the narrator's language?",
+                  "reference": "Sie geben seiner Sprache eine sachliche Eleganz, die im Berufsleben erwartet wird."
+                }
+              ],
+              "exercises": [
+                {
+                  "type": "fill-in-blank",
+                  "instructions": "Ergaenzen Sie die fehlenden Funktionsverbgefuege im Dialog (jeweils ein Wort).",
+                  "payload": {
+                    "items": [
+                      {
+                        "prompt": "Frau Berger: ‚Bevor wir beginnen, moechte ich das neue Angebot in ___ ziehen.‘"
+                      },
+                      {
+                        "prompt": "Sie: ‚Gerne. Ich stelle Ihnen die aktuellen Zahlen zur ___.‘"
+                      },
+                      {
+                        "prompt": "Frau Berger: ‚Koennten Sie bitte mit der IT-Abteilung Ruecksprache ___?‘"
+                      },
+                      {
+                        "prompt": "Sie: ‚Selbstverstaendlich. Ich werde das Thema sofort in Angriff ___.‘"
+                      },
+                      {
+                        "prompt": "Frau Berger: ‚Gut. Den veralteten Zeitplan sollten wir allerdings grundsaetzlich in ___ stellen.‘"
+                      }
+                    ],
+                    "hints": [],
+                    "text": "Sie nehmen an einer Projektbesprechung teil. Ihre Teamleiterin, Frau Berger, leitet die Sitzung."
+                  },
+                  "answer_key": {
+                    "items": [
+                      {
+                        "answer": "Betracht"
+                      },
+                      {
+                        "answer": "Verfuegung"
+                      },
+                      {
+                        "answer": "halten"
+                      },
+                      {
+                        "answer": "nehmen"
+                      },
+                      {
+                        "answer": "Frage"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "type": "multiple-choice",
+                  "instructions": "Welche Ergaenzung bildet ein korrektes Funktionsverbgefuege?",
+                  "payload": {
+                    "items": [
+                      {
+                        "prompt": "eine Entscheidung ___",
+                        "options": [
+                          "treffen",
+                          "machen",
+                          "nehmen"
+                        ]
+                      }
+                    ],
+                    "hints": []
+                  },
+                  "answer_key": {
+                    "items": [
+                      {
+                        "answer": "treffen"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "type": "reorder",
+                  "instructions": "Bringen Sie die Woerter in die richtige Reihenfolge.",
+                  "payload": {
+                    "items": [
+                      {
+                        "tokens": [
+                          "Wir",
+                          "ziehen",
+                          "Ihren",
+                          "Vorschlag",
+                          "ernsthaft",
+                          "in",
+                          "Betracht"
+                        ]
+                      }
+                    ],
+                    "hints": []
+                  },
+                  "answer_key": {
+                    "items": [
+                      {
+                        "answer": "Wir ziehen Ihren Vorschlag ernsthaft in Betracht"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "type": "translation",
+                  "instructions": "Uebersetzen Sie ins Deutsche (Funktionsverbgefuege).",
+                  "payload": {
+                    "items": [
+                      {
+                        "prompt": "We are putting the proposal up for discussion."
+                      }
+                    ],
+                    "hints": []
+                  },
+                  "answer_key": {
+                    "items": [
+                      {
+                        "answer": "Wir stellen den Vorschlag zur Diskussion.",
+                        "accept": [
+                          "Wir stellen den Vorschlag zur Diskussion",
+                          "Wir stellen den Vorschlag zur Debatte"
+                        ]
+                      }
+                    ]
+                  }
+                },
+                {
+                  "type": "fill-in-blank",
+                  "instructions": "Ergaenzen Sie das Funktionsverbgefuege.",
+                  "payload": {
+                    "items": [
+                      {
+                        "prompt": "Der Chef stellt die Raeume zur ___."
+                      }
+                    ],
+                    "hints": []
+                  },
+                  "answer_key": {
+                    "items": [
+                      {
+                        "answer": "Verfuegung"
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "code": "c1.partizipialattribute",
+              "title": "Extended participial attributes",
+              "grammar_topics": [
+                "c1.partizipialattribute"
+              ],
+              "can_do": "I can compress a relative clause into a participial attribute.",
+              "seed_text": "Die zu pruefenden Unterlagen liegen vor. Der von allen erwartete Bericht wurde verschoben. Die steigenden Kosten bereiten uns Sorgen.",
+              "intro": "Extended participial attributes compress a whole relative clause into a pre-nominal phrase - a hallmark of technical and legal German. Partizip II is passive/completed (die geprueften Unterlagen), Partizip I is active/simultaneous (die steigenden Kosten), and 'zu' + Partizip I expresses necessity (die zu pruefenden Antraege).",
+              "story": "Als Projektleiterin bekomme ich taeglich Dokumente, die in einem sehr dichten Deutsch verfasst sind. Besonders die technischen Spezifikationen und die juristischen Vertraege enthalten lange Konstruktionen, die man erweiterte Partizipialattribute nennt. Ein ganzer Relativsatz wird dabei vor das Substantiv gezogen und zu einem einzigen Attribut verdichtet.\n\nEin Beispiel aus einem Bericht lautete: ‚Die von der Abteilung sorgfaeltig geprueften und rechtzeitig eingereichten Unterlagen liegen dem Vorstand vor.‘ Ausgeschrieben bedeutet das: die Unterlagen, die von der Abteilung sorgfaeltig geprueft und rechtzeitig eingereicht wurden. Das Partizip II (geprueft, eingereicht) drueckt hier etwas Passives und Abgeschlossenes aus.\n\nAuch das Partizip I begegnet mir oft. ‚Die stetig steigenden Kosten bereiten uns Sorgen‘, heisst es, oder ‚der alle Erwartungen uebertreffende Erfolg‘. Das Partizip I (steigend, uebertreffend) beschreibt etwas Aktives und Gleichzeitiges. Eine besondere Form ist das Gerundivum mit zu: ‚die noch zu pruefenden Antraege‘ bedeutet die Antraege, die noch geprueft werden muessen.\n\nMein Kollege Herr Wagner zeigte mir, wie man solche Attribute selbst bildet. ‚Beginnen Sie mit dem Relativsatz‘, riet er, ‚und schieben Sie ihn dann Schritt fuer Schritt vor das Nomen.‘ Anfangs wirkten meine Saetze umstaendlich, doch mit der Uebung gewann ich Sicherheit. Erweiterte Partizipialattribute sind schwer zu lesen und noch schwerer zu schreiben - aber wer sie beherrscht, versteht die anspruchsvollsten Texte des Berufslebens.",
+              "questions": [
+                {
+                  "prompt": "Wie nennt man die dichten Konstruktionen in den Dokumenten?",
+                  "translation": "What are the dense constructions in the documents called?",
+                  "reference": "Man nennt sie erweiterte Partizipialattribute."
+                },
+                {
+                  "prompt": "Was bedeutet ‚die von der Abteilung geprueften Unterlagen‘ ausgeschrieben?",
+                  "translation": "What does that phrase mean when written out in full?",
+                  "reference": "Die Unterlagen, die von der Abteilung geprueft wurden."
+                },
+                {
+                  "prompt": "Was drueckt das Partizip I aus?",
+                  "translation": "What does the present participle express?",
+                  "reference": "Es drueckt etwas Aktives und Gleichzeitiges aus, zum Beispiel die steigenden Kosten."
+                },
+                {
+                  "prompt": "Was bedeutet ‚die noch zu pruefenden Antraege‘?",
+                  "translation": "What does 'die noch zu pruefenden Antraege' mean?",
+                  "reference": "Die Antraege, die noch geprueft werden muessen."
+                },
+                {
+                  "prompt": "Welchen Rat gab Herr Wagner zum Bilden der Attribute?",
+                  "translation": "What advice did Mr Wagner give for forming the attributes?",
+                  "reference": "Man soll mit dem Relativsatz beginnen und ihn Schritt fuer Schritt vor das Nomen schieben."
+                }
+              ],
+              "exercises": [
+                {
+                  "type": "fill-in-blank",
+                  "instructions": "Ergaenzen Sie im Dialog jeweils das fehlende Partizip (ein Wort).",
+                  "payload": {
+                    "items": [
+                      {
+                        "prompt": "Wagner: ‚Die Unterlagen, die geprueft wurden - kuerzer: die ___ Unterlagen.‘"
+                      },
+                      {
+                        "prompt": "Sie: ‚Und die Kosten, die staendig steigen - also die staendig ___ Kosten.‘"
+                      },
+                      {
+                        "prompt": "Wagner: ‚Genau. Der Bericht, der von allen erwartet wird - der von allen ___ Bericht.‘"
+                      },
+                      {
+                        "prompt": "Sie: ‚Die Antraege, die noch geprueft werden muessen - die noch zu ___ Antraege.‘"
+                      },
+                      {
+                        "prompt": "Wagner: ‚Sehr gut. Das Projekt, das gerade laeuft - das gerade ___ Projekt.‘"
+                      }
+                    ],
+                    "hints": [],
+                    "text": "Herr Wagner hilft Ihnen, Relativsaetze in erweiterte Partizipialattribute umzuformen."
+                  },
+                  "answer_key": {
+                    "items": [
+                      {
+                        "answer": "geprueften"
+                      },
+                      {
+                        "answer": "steigenden"
+                      },
+                      {
+                        "answer": "erwartete"
+                      },
+                      {
+                        "answer": "pruefenden"
+                      },
+                      {
+                        "answer": "laufende"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "type": "multiple-choice",
+                  "instructions": "Was bedeutet ‚die zu erledigenden Aufgaben‘?",
+                  "payload": {
+                    "items": [
+                      {
+                        "prompt": "Waehlen Sie die richtige Bedeutung.",
+                        "options": [
+                          "Aufgaben, die erledigt werden muessen",
+                          "Aufgaben, die erledigt wurden",
+                          "Aufgaben, die sich erledigen"
+                        ]
+                      }
+                    ],
+                    "hints": []
+                  },
+                  "answer_key": {
+                    "items": [
+                      {
+                        "answer": "Aufgaben, die erledigt werden muessen"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "type": "reorder",
+                  "instructions": "Bringen Sie die Woerter in die richtige Reihenfolge.",
+                  "payload": {
+                    "items": [
+                      {
+                        "tokens": [
+                          "Die",
+                          "rechtzeitig",
+                          "eingereichten",
+                          "Unterlagen",
+                          "liegen",
+                          "vor"
+                        ]
+                      }
+                    ],
+                    "hints": []
+                  },
+                  "answer_key": {
+                    "items": [
+                      {
+                        "answer": "Die rechtzeitig eingereichten Unterlagen liegen vor"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "type": "translation",
+                  "instructions": "Uebersetzen Sie ins Deutsche (Partizip I als Attribut).",
+                  "payload": {
+                    "items": [
+                      {
+                        "prompt": "The steadily rising costs worry us."
+                      }
+                    ],
+                    "hints": []
+                  },
+                  "answer_key": {
+                    "items": [
+                      {
+                        "answer": "Die stetig steigenden Kosten bereiten uns Sorgen.",
+                        "accept": [
+                          "Die stetig steigenden Kosten bereiten uns Sorgen",
+                          "Die staendig steigenden Kosten bereiten uns Sorgen"
+                        ]
+                      }
+                    ]
+                  }
+                },
+                {
+                  "type": "fill-in-blank",
+                  "instructions": "Formen Sie in ein Partizipialattribut um.",
+                  "payload": {
+                    "items": [
+                      {
+                        "prompt": "die Antraege, die noch zu pruefen sind -> die noch zu ___ Antraege"
+                      }
+                    ],
+                    "hints": []
+                  },
+                  "answer_key": {
+                    "items": [
+                      {
+                        "answer": "pruefenden"
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "unit": 2,
+          "title": "Diplomatie & Wiedergabe",
+          "lessons": [
+            {
+              "code": "c1.konjunktiv2-diplomatie",
+              "title": "Konjunktiv II for diplomacy",
+              "grammar_topics": [
+                "c1.konjunktiv2-diplomatie"
+              ],
+              "can_do": "I can give criticism and make requests tactfully with Konjunktiv II.",
+              "seed_text": "Ich wuerde vorschlagen, den Termin zu verschieben. Es waere hilfreich, wenn Sie das pruefen koennten. Man koennte auch eine andere Loesung in Erwaegung ziehen.",
+              "intro": "Diplomatic German runs on Konjunktiv II. You'll learn to soften requests, disagreement and feedback (Ich wuerde vorschlagen ..., Es waere denkbar ..., Koennten Sie ...), so you stay clear on the matter but friendly in tone.",
+              "story": "In meiner Rolle als Abteilungsleiterin muss ich regelmaessig Kritik aeussern - und das ist im Deutschen eine Kunst fuer sich. Wer direkt sagt ‚Das ist falsch‘ oder ‚Machen Sie das anders‘, wirkt schroff und verletzt leicht das Gesicht des anderen. Deshalb greife ich fast immer zum Konjunktiv II, der einer Aussage sofort etwas Hoefliches und Vorsichtiges verleiht.\n\nGestern hatte ich ein Gespraech mit einem jungen Mitarbeiter, dessen Bericht noch nicht ueberzeugte. Statt ‚Der Bericht ist zu lang‘ sagte ich: ‚Ich wuerde vorschlagen, den Bericht etwas zu kuerzen.‘ Statt ‚Sie muessen die Zahlen pruefen‘ formulierte ich: ‚Es waere gut, wenn Sie die Zahlen noch einmal pruefen koennten.‘ Der Konjunktiv verwandelt einen Befehl in eine Bitte und eine Behauptung in einen Vorschlag.\n\nAuch beim Widersprechen hilft diese Form. ‚Da waere ich mir nicht so sicher‘, sage ich, oder ‚Das koennte man auch anders sehen‘. Wenn ich eine Idee ins Spiel bringen moechte, beginne ich mit ‚Man koennte in Erwaegung ziehen ...‘ oder ‚Es waere denkbar, dass ...‘. So bleibt der andere offen, statt sich angegriffen zu fuehlen.\n\nDer junge Mitarbeiter bedankte sich am Ende fuer das Gespraech. ‚Ich haette nicht gedacht, dass Kritik so angenehm sein kann‘, sagte er laechelnd. Genau darin liegt der Wert des diplomatischen Konjunktivs: Er erlaubt es, klar in der Sache und doch freundlich im Ton zu bleiben. Im Berufsleben entscheidet oft nicht, was man sagt, sondern wie man es sagt.",
+              "questions": [
+                {
+                  "prompt": "Warum benutzt die Erzaehlerin fast immer den Konjunktiv II?",
+                  "translation": "Why does the narrator almost always use Konjunktiv II?",
+                  "reference": "Weil er einer Aussage etwas Hoefliches und Vorsichtiges verleiht und man nicht schroff wirkt."
+                },
+                {
+                  "prompt": "Wie formulierte sie statt ‚Der Bericht ist zu lang‘?",
+                  "translation": "How did she phrase it instead of 'The report is too long'?",
+                  "reference": "Sie sagte ‚Ich wuerde vorschlagen, den Bericht etwas zu kuerzen‘."
+                },
+                {
+                  "prompt": "Welche Wendungen benutzt sie, um zu widersprechen?",
+                  "translation": "Which phrases does she use to disagree?",
+                  "reference": "Zum Beispiel ‚Da waere ich mir nicht so sicher‘ und ‚Das koennte man auch anders sehen‘."
+                },
+                {
+                  "prompt": "Wie bringt sie eine neue Idee ins Spiel?",
+                  "translation": "How does she introduce a new idea?",
+                  "reference": "Mit Wendungen wie ‚Man koennte in Erwaegung ziehen ...‘ oder ‚Es waere denkbar, dass ...‘."
+                },
+                {
+                  "prompt": "Was sagte der junge Mitarbeiter am Ende?",
+                  "translation": "What did the young employee say at the end?",
+                  "reference": "Er sagte, er haette nicht gedacht, dass Kritik so angenehm sein kann."
+                }
+              ],
+              "exercises": [
+                {
+                  "type": "fill-in-blank",
+                  "instructions": "Ergaenzen Sie im Feedback-Gespraech jeweils die fehlende Konjunktiv-II-Form (ein Wort).",
+                  "payload": {
+                    "items": [
+                      {
+                        "prompt": "Sie: ‚Ich ___ vorschlagen, die Einleitung etwas zu kuerzen.‘"
+                      },
+                      {
+                        "prompt": "Sie: ‚Es ___ hilfreich, wenn Sie ein Beispiel ergaenzen koennten.‘"
+                      },
+                      {
+                        "prompt": "Sie: ‚Bei den Zahlen ___ ich mir nicht ganz sicher - bitte pruefen Sie sie noch einmal.‘"
+                      },
+                      {
+                        "prompt": "Sie: ‚Man ___ die Reihenfolge der Folien auch aendern.‘"
+                      },
+                      {
+                        "prompt": "Sie: ‚___ Sie den Termin eventuell verschieben?‘"
+                      }
+                    ],
+                    "hints": [],
+                    "text": "Sie geben einem Kollegen hoefliches Feedback zu seiner Praesentation."
+                  },
+                  "answer_key": {
+                    "items": [
+                      {
+                        "answer": "wuerde"
+                      },
+                      {
+                        "answer": "waere"
+                      },
+                      {
+                        "answer": "waere"
+                      },
+                      {
+                        "answer": "koennte"
+                      },
+                      {
+                        "answer": "Koennten"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "type": "multiple-choice",
+                  "instructions": "Welche Formulierung ist am hoeflichsten?",
+                  "payload": {
+                    "items": [
+                      {
+                        "prompt": "Waehlen Sie die diplomatischste Variante.",
+                        "options": [
+                          "Koennten Sie mir bitte helfen?",
+                          "Sie muessen mir helfen.",
+                          "Helfen Sie mir!"
+                        ]
+                      }
+                    ],
+                    "hints": []
+                  },
+                  "answer_key": {
+                    "items": [
+                      {
+                        "answer": "Koennten Sie mir bitte helfen?"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "type": "reorder",
+                  "instructions": "Bringen Sie die Woerter in die richtige Reihenfolge.",
+                  "payload": {
+                    "items": [
+                      {
+                        "tokens": [
+                          "Es",
+                          "waere",
+                          "schoen",
+                          "wenn",
+                          "Sie",
+                          "das",
+                          "pruefen",
+                          "koennten"
+                        ]
+                      }
+                    ],
+                    "hints": []
+                  },
+                  "answer_key": {
+                    "items": [
+                      {
+                        "answer": "Es waere schoen wenn Sie das pruefen koennten"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "type": "translation",
+                  "instructions": "Uebersetzen Sie ins Deutsche (diplomatisch, Konjunktiv II).",
+                  "payload": {
+                    "items": [
+                      {
+                        "prompt": "I would suggest postponing the meeting."
+                      }
+                    ],
+                    "hints": []
+                  },
+                  "answer_key": {
+                    "items": [
+                      {
+                        "answer": "Ich wuerde vorschlagen, den Termin zu verschieben.",
+                        "accept": [
+                          "Ich wuerde vorschlagen, den Termin zu verschieben",
+                          "Ich wuerde vorschlagen, die Besprechung zu verschieben"
+                        ]
+                      }
+                    ]
+                  }
+                },
+                {
+                  "type": "fill-in-blank",
+                  "instructions": "Machen Sie die Bitte hoeflich (Konjunktiv II).",
+                  "payload": {
+                    "items": [
+                      {
+                        "prompt": "‚Koennen Sie das pruefen?‘ -> ‚___ Sie das pruefen?‘"
+                      }
+                    ],
+                    "hints": []
+                  },
+                  "answer_key": {
+                    "items": [
+                      {
+                        "answer": "Koennten"
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "code": "c1.konjunktiv1-indirekte-rede",
+              "title": "Konjunktiv I & reported speech",
+              "grammar_topics": [
+                "c1.konjunktiv1-indirekte-rede"
+              ],
+              "can_do": "I can relay what others said in minutes and reports using Konjunktiv I.",
+              "seed_text": "Der Kunde sagte, er sei zufrieden. Die Chefin betonte, das Projekt habe Prioritaet. Man teilte mit, die Lieferung werde sich verzoegern.",
+              "intro": "Minutes, reports and journalism use Konjunktiv I to report speech neutrally (er sagte, er habe/sei/werde). You'll learn the forms and when to switch to Konjunktiv II to keep the reported speech recognisable.",
+              "story": "Zu meinen Aufgaben gehoert es, das Protokoll unserer Sitzungen zu schreiben. Ein Protokoll gibt wieder, was die Teilnehmer gesagt haben - und zwar in der indirekten Rede mit dem Konjunktiv I. Diese Form klingt neutral und distanziert; sie zeigt, dass ich nur berichte und nicht selbst Stellung nehme.\n\nWenn der Geschaeftsfuehrer sagt ‚Ich bin mit dem Ergebnis zufrieden‘, schreibe ich: Der Geschaeftsfuehrer sagte, er sei mit dem Ergebnis zufrieden. Aus ‚Wir haben das Ziel erreicht‘ wird: Das Team betonte, es habe das Ziel erreicht. Und aus ‚Die Lieferung wird sich verzoegern‘ wird: Man teilte mit, die Lieferung werde sich verzoegern. Die Formen sei, habe und werde sind typisch fuer den Konjunktiv I.\n\nManchmal ist der Konjunktiv I nicht vom Indikativ zu unterscheiden. ‚Sie sagten, sie haben keine Zeit‘ klaenge wie eine normale Aussage. In diesem Fall weiche ich auf den Konjunktiv II aus: Sie sagten, sie haetten keine Zeit. So bleibt klar erkennbar, dass es sich um eine Wiedergabe handelt. Diese Regel ist im geschriebenen Berufsdeutsch besonders wichtig.\n\nEin gutes Protokoll ist knapp, sachlich und ueberpruefbar. Es haelt fest, wer was gesagt und wozu man sich verpflichtet hat. Dank des Konjunktivs I kann ich die Worte anderer getreu wiedergeben, ohne sie zu bewerten. So schafft die Grammatik eine erstaunliche Objektivitaet - ein Werkzeug, auf das man sich im Streitfall berufen kann.",
+              "questions": [
+                {
+                  "prompt": "Wozu dient das Protokoll, und welche Form benutzt man dafuer?",
+                  "translation": "What are minutes for, and which form is used?",
+                  "reference": "Es gibt wieder, was die Teilnehmer gesagt haben, in der indirekten Rede mit dem Konjunktiv I."
+                },
+                {
+                  "prompt": "Wie schreibt man ‚Ich bin zufrieden‘ in der indirekten Rede?",
+                  "translation": "How do you write 'I am satisfied' in reported speech?",
+                  "reference": "Der Geschaeftsfuehrer sagte, er sei zufrieden."
+                },
+                {
+                  "prompt": "Welche drei Formen sind typisch fuer den Konjunktiv I?",
+                  "translation": "Which three forms are typical of Konjunktiv I?",
+                  "reference": "Die Formen sei, habe und werde."
+                },
+                {
+                  "prompt": "Wann weicht die Erzaehlerin auf den Konjunktiv II aus?",
+                  "translation": "When does the narrator switch to Konjunktiv II?",
+                  "reference": "Wenn der Konjunktiv I nicht vom Indikativ zu unterscheiden ist, zum Beispiel bei ‚sie haben‘ -> ‚sie haetten‘."
+                },
+                {
+                  "prompt": "Welche Eigenschaft gibt der Konjunktiv I dem Protokoll?",
+                  "translation": "What quality does Konjunktiv I give the minutes?",
+                  "reference": "Er gibt ihm Objektivitaet, weil man die Worte anderer getreu und ohne Bewertung wiedergibt."
+                }
+              ],
+              "exercises": [
+                {
+                  "type": "fill-in-blank",
+                  "instructions": "Ergaenzen Sie im Protokoll jeweils die richtige Konjunktiv-I-Form (ein Wort).",
+                  "payload": {
+                    "items": [
+                      {
+                        "prompt": "Aussage: ‚Ich bin zufrieden.‘ - Protokoll: Der Chef sagte, er ___ zufrieden."
+                      },
+                      {
+                        "prompt": "Aussage: ‚Wir haben das Ziel erreicht.‘ - Protokoll: Das Team betonte, es ___ das Ziel erreicht."
+                      },
+                      {
+                        "prompt": "Aussage: ‚Die Lieferung wird sich verzoegern.‘ - Protokoll: Man teilte mit, die Lieferung ___ sich verzoegern."
+                      },
+                      {
+                        "prompt": "Aussage: ‚Der Kunde kann morgen kommen.‘ - Protokoll: Sie sagte, der Kunde ___ morgen kommen."
+                      },
+                      {
+                        "prompt": "Aussage: ‚Sie haben keine Zeit.‘ - Protokoll (Konjunktiv II zur Klarheit): Sie sagten, sie ___ keine Zeit."
+                      }
+                    ],
+                    "hints": [],
+                    "text": "Sie schreiben das Protokoll und geben die Aussagen der Sitzung in indirekter Rede wieder."
+                  },
+                  "answer_key": {
+                    "items": [
+                      {
+                        "answer": "sei"
+                      },
+                      {
+                        "answer": "habe"
+                      },
+                      {
+                        "answer": "werde"
+                      },
+                      {
+                        "answer": "koenne"
+                      },
+                      {
+                        "answer": "haetten"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "type": "multiple-choice",
+                  "instructions": "Waehlen Sie die korrekte indirekte Rede.",
+                  "payload": {
+                    "items": [
+                      {
+                        "prompt": "Er sagte, er ___",
+                        "options": [
+                          "sei krank",
+                          "ist krank",
+                          "waere sein krank"
+                        ]
+                      }
+                    ],
+                    "hints": []
+                  },
+                  "answer_key": {
+                    "items": [
+                      {
+                        "answer": "sei krank"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "type": "reorder",
+                  "instructions": "Bringen Sie die Woerter in die richtige Reihenfolge.",
+                  "payload": {
+                    "items": [
+                      {
+                        "tokens": [
+                          "Die",
+                          "Chefin",
+                          "betonte",
+                          "das",
+                          "Projekt",
+                          "habe",
+                          "Prioritaet"
+                        ]
+                      }
+                    ],
+                    "hints": []
+                  },
+                  "answer_key": {
+                    "items": [
+                      {
+                        "answer": "Die Chefin betonte das Projekt habe Prioritaet"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "type": "translation",
+                  "instructions": "Uebersetzen Sie ins Deutsche (indirekte Rede).",
+                  "payload": {
+                    "items": [
+                      {
+                        "prompt": "The customer said he was satisfied."
+                      }
+                    ],
+                    "hints": []
+                  },
+                  "answer_key": {
+                    "items": [
+                      {
+                        "answer": "Der Kunde sagte, er sei zufrieden.",
+                        "accept": [
+                          "Der Kunde sagte, er sei zufrieden",
+                          "Der Kunde sagte, dass er zufrieden sei"
+                        ]
+                      }
+                    ]
+                  }
+                },
+                {
+                  "type": "fill-in-blank",
+                  "instructions": "Setzen Sie in die indirekte Rede (Konjunktiv I).",
+                  "payload": {
+                    "items": [
+                      {
+                        "prompt": "‚Ich habe keine Zeit.‘ -> Er sagte, er ___ keine Zeit."
+                      }
+                    ],
+                    "hints": []
+                  },
+                  "answer_key": {
+                    "items": [
+                      {
+                        "answer": "habe"
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "code": "c1.subjektive-modalverben",
+              "title": "Subjective modal verbs",
+              "grammar_topics": [
+                "c1.subjektive-modalverben"
+              ],
+              "can_do": "I can express probability and report hearsay with modal verbs.",
+              "seed_text": "Die Zahlen duerften stimmen. Er muesste laengst angekommen sein. Die Firma soll expandieren. Er will von nichts gewusst haben.",
+              "intro": "Modal verbs have a second, 'subjective' meaning: duerfte/muesste/koennte express probability, soll reports rumour, and will reports a (doubtful) claim. This is crucial for careful professional talk about uncertain information.",
+              "story": "In letzter Zeit ging in unserer Firma ein Geruecht um: Die Abteilung solle umstrukturiert werden. Niemand wusste etwas Genaues, und so war die Kaffeekueche voller Vermutungen. Gerade in solchen Situationen zeigt sich der Nutzen der subjektiven Modalverben, mit denen man Wahrscheinlichkeit und Hoerensagen ausdruecken kann.\n\n‚Die neue Leitung soll sehr streng sein‘, sagte eine Kollegin. Das Wort soll zeigt: Sie gibt nur weiter, was sie gehoert hat, ohne es zu garantieren. ‚Das muesste eigentlich bald offiziell werden‘, meinte ein anderer - muesste drueckt eine begruendete Vermutung aus. Und als jemand behauptete, er habe von nichts gewusst, fluesterte mein Nachbar: ‚Er will von nichts gewusst haben‘, also: Er behauptet es, aber ich zweifle daran.\n\nMein Mentor erklaerte mir die feinen Unterschiede. ‚Mit duerfte druecken Sie eine hoefliche, vorsichtige Vermutung aus: Die Zahlen duerften stimmen. Mit muesste ist die Vermutung staerker begruendet: Er muesste laengst angekommen sein. Mit koennte halten Sie eine Moeglichkeit offen. Soll und will dagegen berichten fremde Aussagen - soll neutral, will eher zweifelnd.‘\n\nAm Ende stellte sich heraus, dass an dem Geruecht wenig dran war. Nur eine kleine Umstellung war geplant. Ich aber hatte etwas Wertvolles gelernt: Mit den subjektiven Modalverben kann ich genau anzeigen, wie sicher ich mir bin und woher meine Information stammt. In einer Welt voller halber Wahrheiten ist das eine unverzichtbare Faehigkeit.",
+              "questions": [
+                {
+                  "prompt": "Welches Geruecht ging in der Firma um?",
+                  "translation": "What rumour was going around the company?",
+                  "reference": "Das Geruecht, dass die Abteilung umstrukturiert werden solle."
+                },
+                {
+                  "prompt": "Was zeigt das Wort ‚soll‘ in ‚Die neue Leitung soll streng sein‘?",
+                  "translation": "What does 'soll' show in that sentence?",
+                  "reference": "Es zeigt, dass die Kollegin nur weitergibt, was sie gehoert hat, ohne es zu garantieren."
+                },
+                {
+                  "prompt": "Was bedeutet ‚Er will von nichts gewusst haben‘?",
+                  "translation": "What does 'Er will von nichts gewusst haben' mean?",
+                  "reference": "Er behauptet, von nichts gewusst zu haben, aber der Sprecher zweifelt daran."
+                },
+                {
+                  "prompt": "Worin liegt laut Mentor der Unterschied zwischen ‚duerfte‘ und ‚muesste‘?",
+                  "translation": "What is the difference between 'duerfte' and 'muesste'?",
+                  "reference": "‚Duerfte‘ ist eine vorsichtige Vermutung, ‚muesste‘ eine staerker begruendete Vermutung."
+                },
+                {
+                  "prompt": "Was hat der Erzaehler am Ende gelernt?",
+                  "translation": "What did the narrator finally learn?",
+                  "reference": "Dass man mit subjektiven Modalverben anzeigen kann, wie sicher man ist und woher die Information stammt."
+                }
+              ],
+              "exercises": [
+                {
+                  "type": "fill-in-blank",
+                  "instructions": "Ergaenzen Sie das passende subjektive Modalverb (ein Wort); die Bedeutung steht in Klammern.",
+                  "payload": {
+                    "items": [
+                      {
+                        "prompt": "Kollegin: ‚Ich habe gehoert, die Abteilung ___ umstrukturiert werden.‘ (Geruecht, neutrale Wiedergabe)"
+                      },
+                      {
+                        "prompt": "Kollege: ‚Das ___ eigentlich bald offiziell werden.‘ (stark begruendete Vermutung)"
+                      },
+                      {
+                        "prompt": "Sie: ‚Die Zahlen ___ stimmen, ganz sicher bin ich aber nicht.‘ (vorsichtige Vermutung)"
+                      },
+                      {
+                        "prompt": "Kollege: ‚Er ___ von nichts gewusst haben - das glaube ich ihm allerdings nicht.‘ (zweifelhafte Behauptung)"
+                      },
+                      {
+                        "prompt": "Sie: ‚Es ___ auch sein, dass sich gar nichts aendert.‘ (offene Moeglichkeit)"
+                      }
+                    ],
+                    "hints": [],
+                    "text": "In der Kaffeekueche wird ueber die Umstrukturierung spekuliert."
+                  },
+                  "answer_key": {
+                    "items": [
+                      {
+                        "answer": "soll"
+                      },
+                      {
+                        "answer": "muesste"
+                      },
+                      {
+                        "answer": "duerften"
+                      },
+                      {
+                        "answer": "will"
+                      },
+                      {
+                        "answer": "koennte",
+                        "accept": [
+                          "kann"
+                        ]
+                      }
+                    ]
+                  }
+                },
+                {
+                  "type": "multiple-choice",
+                  "instructions": "‚Die Firma soll expandieren.‘ Was bedeutet das?",
+                  "payload": {
+                    "items": [
+                      {
+                        "prompt": "Waehlen Sie die richtige Deutung.",
+                        "options": [
+                          "Man hat es gehoert (Geruecht).",
+                          "Die Firma ist verpflichtet zu expandieren.",
+                          "Die Firma moechte expandieren."
+                        ]
+                      }
+                    ],
+                    "hints": []
+                  },
+                  "answer_key": {
+                    "items": [
+                      {
+                        "answer": "Man hat es gehoert (Geruecht)."
+                      }
+                    ]
+                  }
+                },
+                {
+                  "type": "reorder",
+                  "instructions": "Bringen Sie die Woerter in die richtige Reihenfolge.",
+                  "payload": {
+                    "items": [
+                      {
+                        "tokens": [
+                          "Er",
+                          "muesste",
+                          "laengst",
+                          "angekommen",
+                          "sein"
+                        ]
+                      }
+                    ],
+                    "hints": []
+                  },
+                  "answer_key": {
+                    "items": [
+                      {
+                        "answer": "Er muesste laengst angekommen sein"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "type": "translation",
+                  "instructions": "Uebersetzen Sie ins Deutsche (Vermutung mit Modalverb).",
+                  "payload": {
+                    "items": [
+                      {
+                        "prompt": "The figures are probably correct."
+                      }
+                    ],
+                    "hints": []
+                  },
+                  "answer_key": {
+                    "items": [
+                      {
+                        "answer": "Die Zahlen duerften stimmen.",
+                        "accept": [
+                          "Die Zahlen duerften stimmen",
+                          "Die Zahlen duerften richtig sein"
+                        ]
+                      }
+                    ]
+                  }
+                },
+                {
+                  "type": "fill-in-blank",
+                  "instructions": "Druecken Sie ein Geruecht mit einem Modalverb aus.",
+                  "payload": {
+                    "items": [
+                      {
+                        "prompt": "Angeblich expandiert die Firma. -> Die Firma ___ expandieren."
+                      }
+                    ],
+                    "hints": []
+                  },
+                  "answer_key": {
+                    "items": [
+                      {
+                        "answer": "soll"
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "unit": 3,
+          "title": "Prozesse & Argumentation",
+          "lessons": [
+            {
+              "code": "c1.passiv-alternativen",
+              "title": "Passive & its alternatives",
+              "grammar_topics": [
+                "c1.passiv-alternativen"
+              ],
+              "can_do": "I can describe processes and vary the passive with sich lassen, sein+zu and -bar.",
+              "seed_text": "Das Problem laesst sich leicht loesen. Die Frist ist einzuhalten. Der Fehler ist behebbar. Man prueft die Daten sorgfaeltig.",
+              "intro": "Beyond the werden-passive, professional German uses elegant alternatives: sich lassen (can be done), sein + zu + Infinitiv (must/can be done), -bar adjectives, and man. You'll master all four to describe processes precisely and without monotony.",
+              "story": "Als ich meine Stelle an eine Nachfolgerin uebergab, musste ich saemtliche Ablaeufe genau beschreiben. Dabei merkte ich, wie oft man im Deutschen das Passiv braucht - und wie elegant man es umgehen kann. Denn neben dem klassischen Passiv mit werden gibt es mehrere Alternativen, die den gleichen Sinn ausdruecken, aber fluessiger klingen.\n\n‚Das Problem laesst sich leicht loesen‘, schrieb ich, statt ‚Das Problem kann leicht geloest werden‘. Die Konstruktion sich lassen bedeutet, dass etwas moeglich ist. An anderer Stelle notierte ich: ‚Die Frist ist unbedingt einzuhalten.‘ Das ist sein + zu + Infinitiv und bedeutet hier, dass die Frist eingehalten werden muss. Diese Form kann Notwendigkeit oder Moeglichkeit ausdruecken.\n\nAuch Adjektive auf -bar leisten gute Dienste. ‚Der Fehler ist behebbar‘ heisst: Der Fehler kann behoben werden. ‚Die Datei ist nicht lesbar‘ heisst: Sie kann nicht gelesen werden. Und wenn der Handelnde ohnehin unwichtig ist, greife ich zum schlichten man: ‚Man prueft die Daten am Monatsende‘ klingt oft natuerlicher als ‚Die Daten werden am Monatsende geprueft‘.\n\nMeine Nachfolgerin war dankbar fuer die klare Beschreibung. ‚Jetzt verstehe ich jeden Schritt‘, sagte sie. Ich hatte gelernt, dass ein guter Text nicht nur korrekt, sondern auch abwechslungsreich sein sollte. Wer die Alternativen zum Passiv beherrscht, vermeidet die eintoenige Haeufung von werden und schreibt zugleich praeziser und lebendiger.",
+              "questions": [
+                {
+                  "prompt": "Was fiel dem Erzaehler bei der Uebergabe auf?",
+                  "translation": "What did the narrator notice during the handover?",
+                  "reference": "Dass man im Deutschen oft das Passiv braucht und es zugleich elegant umgehen kann."
+                },
+                {
+                  "prompt": "Was bedeutet ‚Das Problem laesst sich leicht loesen‘?",
+                  "translation": "What does that sentence mean?",
+                  "reference": "Es bedeutet, dass das Problem leicht geloest werden kann."
+                },
+                {
+                  "prompt": "Was drueckt ‚Die Frist ist einzuhalten‘ aus?",
+                  "translation": "What does 'Die Frist ist einzuhalten' express?",
+                  "reference": "Dass die Frist eingehalten werden muss (sein + zu + Infinitiv)."
+                },
+                {
+                  "prompt": "Was bedeutet das Adjektiv ‚behebbar‘?",
+                  "translation": "What does the adjective 'behebbar' mean?",
+                  "reference": "Es bedeutet, dass der Fehler behoben werden kann."
+                },
+                {
+                  "prompt": "Warum ist es gut, die Alternativen zum Passiv zu beherrschen?",
+                  "translation": "Why is it good to master the alternatives to the passive?",
+                  "reference": "Weil man die eintoenige Haeufung von ‚werden‘ vermeidet und praeziser und lebendiger schreibt."
+                }
+              ],
+              "exercises": [
+                {
+                  "type": "fill-in-blank",
+                  "instructions": "Ergaenzen Sie jeweils das fehlende Wort des Passiversatzes (ein Wort).",
+                  "payload": {
+                    "items": [
+                      {
+                        "prompt": "Sie: ‚Das Problem kann man leicht loesen - eleganter: Das Problem ___ sich leicht loesen.‘"
+                      },
+                      {
+                        "prompt": "Nachfolgerin: ‚Und die Frist muss eingehalten werden?‘ - Sie: ‚Ja, die Frist ist unbedingt ___.‘"
+                      },
+                      {
+                        "prompt": "Sie: ‚Der Fehler kann behoben werden - kurz: Der Fehler ist ___.‘"
+                      },
+                      {
+                        "prompt": "Nachfolgerin: ‚Wer prueft die Daten?‘ - Sie: ‚Das ist unwichtig; ___ prueft sie am Monatsende.‘"
+                      },
+                      {
+                        "prompt": "Sie: ‚Diese Datei kann man nicht lesen - sie ist leider nicht ___.‘"
+                      }
+                    ],
+                    "hints": [],
+                    "text": "Sie erklaeren Ihrer Nachfolgerin einen Ablauf und formulieren das Passiv abwechslungsreich."
+                  },
+                  "answer_key": {
+                    "items": [
+                      {
+                        "answer": "laesst"
+                      },
+                      {
+                        "answer": "einzuhalten"
+                      },
+                      {
+                        "answer": "behebbar"
+                      },
+                      {
+                        "answer": "man"
+                      },
+                      {
+                        "answer": "lesbar"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "type": "multiple-choice",
+                  "instructions": "‚Der Antrag ist bis Freitag zu bearbeiten.‘ Was bedeutet das?",
+                  "payload": {
+                    "items": [
+                      {
+                        "prompt": "Waehlen Sie die richtige Bedeutung.",
+                        "options": [
+                          "Der Antrag muss bis Freitag bearbeitet werden.",
+                          "Der Antrag wurde am Freitag bearbeitet.",
+                          "Der Antrag bearbeitet sich bis Freitag."
+                        ]
+                      }
+                    ],
+                    "hints": []
+                  },
+                  "answer_key": {
+                    "items": [
+                      {
+                        "answer": "Der Antrag muss bis Freitag bearbeitet werden."
+                      }
+                    ]
+                  }
+                },
+                {
+                  "type": "reorder",
+                  "instructions": "Bringen Sie die Woerter in die richtige Reihenfolge.",
+                  "payload": {
+                    "items": [
+                      {
+                        "tokens": [
+                          "Das",
+                          "Problem",
+                          "laesst",
+                          "sich",
+                          "leicht",
+                          "loesen"
+                        ]
+                      }
+                    ],
+                    "hints": []
+                  },
+                  "answer_key": {
+                    "items": [
+                      {
+                        "answer": "Das Problem laesst sich leicht loesen"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "type": "translation",
+                  "instructions": "Uebersetzen Sie ins Deutsche (Passiversatz mit sich lassen).",
+                  "payload": {
+                    "items": [
+                      {
+                        "prompt": "The mistake can be corrected."
+                      }
+                    ],
+                    "hints": []
+                  },
+                  "answer_key": {
+                    "items": [
+                      {
+                        "answer": "Der Fehler laesst sich beheben.",
+                        "accept": [
+                          "Der Fehler laesst sich beheben",
+                          "Der Fehler ist behebbar",
+                          "Der Fehler kann behoben werden"
+                        ]
+                      }
+                    ]
+                  }
+                },
+                {
+                  "type": "fill-in-blank",
+                  "instructions": "Formen Sie in einen Passiversatz mit ‚sich lassen‘ um.",
+                  "payload": {
+                    "items": [
+                      {
+                        "prompt": "Die Aufgabe kann leicht erledigt werden. -> Die Aufgabe ___ sich leicht erledigen."
+                      }
+                    ],
+                    "hints": []
+                  },
+                  "answer_key": {
+                    "items": [
+                      {
+                        "answer": "laesst"
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "code": "c1.konnektoren-advanced",
+              "title": "Advanced connectors",
+              "grammar_topics": [
+                "c1.konnektoren-advanced"
+              ],
+              "can_do": "I can structure complex arguments with connectors like dennoch, folglich and zumal.",
+              "seed_text": "Die Kosten steigen; folglich muessen wir sparen. Der Plan ist gut, gleichwohl bleibt ein Risiko. Wir sollten warten, zumal die Lage unklar ist.",
+              "intro": "Sophisticated argumentation needs connector adverbs: folglich (therefore), dennoch/gleichwohl (nevertheless), zumal (especially since), insofern, andernfalls, hingegen. Note that many of them put the finite verb in second position.",
+              "story": "In den Entscheidungssitzungen unseres Unternehmens kommt es nicht nur darauf an, gute Argumente zu haben, sondern sie auch klar zu verknuepfen. Dafuer sind die fortgeschrittenen Konnektoren unerlaesslich. Sie zeigen an, ob ein Gedanke eine Folge, einen Gegensatz oder einen Grund darstellt - und viele von ihnen verlangen das Verb an zweiter Stelle.\n\nIn einer Sitzung ueber das Budget argumentierte ich: ‚Die Kosten steigen; folglich muessen wir an anderer Stelle sparen.‘ Das Wort folglich drueckt eine logische Folge aus. Ein Kollege widersprach: ‚Der Plan ist grundsaetzlich gut; gleichwohl bleibt ein erhebliches Risiko.‘ Gleichwohl bedeutet so viel wie trotzdem, klingt aber gehobener. Ich entgegnete: ‚Wir sollten die Entscheidung verschieben, zumal die Marktlage noch unklar ist.‘ Zumal nennt einen zusaetzlichen, besonders gewichtigen Grund.\n\nWeitere Konnektoren machten die Debatte praezise. ‚Insofern haben Sie recht‘, raeumte ich ein, ‚als der Zeitplan zu eng ist.‘ Mit andernfalls warnte der Geschaeftsfuehrer: ‚Wir muessen jetzt handeln, andernfalls verlieren wir den Auftrag.‘ Und wo ein Gegensatz betont werden sollte, half hingegen: ‚Die Technik ist ausgereift; der Vertrieb hingegen braucht mehr Zeit.‘\n\nAm Ende fanden wir einen Kompromiss. Mir wurde klar, dass diese kleinen Woerter das Geruest jeder ueberzeugenden Rede bilden. Sie fuehren den Zuhoerer Schritt fuer Schritt durch die Argumentation und lassen selbst komplexe Ueberlegungen geordnet erscheinen. Wer im Beruf ueberzeugen will, muss die Konnektoren so sicher beherrschen wie ein Baumeister seine Statik.",
+              "questions": [
+                {
+                  "prompt": "Worauf kommt es in den Entscheidungssitzungen an?",
+                  "translation": "What matters in the decision meetings?",
+                  "reference": "Nicht nur gute Argumente zu haben, sondern sie mit Konnektoren klar zu verknuepfen."
+                },
+                {
+                  "prompt": "Was drueckt das Wort ‚folglich‘ aus?",
+                  "translation": "What does the word 'folglich' express?",
+                  "reference": "Es drueckt eine logische Folge aus."
+                },
+                {
+                  "prompt": "Was bedeutet ‚gleichwohl‘?",
+                  "translation": "What does 'gleichwohl' mean?",
+                  "reference": "Es bedeutet so viel wie ‚trotzdem‘, klingt aber gehobener."
+                },
+                {
+                  "prompt": "Wozu benutzt man ‚zumal‘?",
+                  "translation": "What is 'zumal' used for?",
+                  "reference": "Um einen zusaetzlichen, besonders gewichtigen Grund zu nennen."
+                },
+                {
+                  "prompt": "Womit warnte der Geschaeftsfuehrer, und welches Wort benutzte er?",
+                  "translation": "How did the CEO warn, and which word did he use?",
+                  "reference": "Er warnte mit ‚andernfalls‘: ‚Wir muessen jetzt handeln, andernfalls verlieren wir den Auftrag‘."
+                }
+              ],
+              "exercises": [
+                {
+                  "type": "fill-in-blank",
+                  "instructions": "Ergaenzen Sie den passenden Konnektor (nur ein Wort); die Bedeutung steht in Klammern.",
+                  "payload": {
+                    "items": [
+                      {
+                        "prompt": "Sie: ‚Die Kosten steigen; ___ muessen wir sparen.‘ (logische Folge)"
+                      },
+                      {
+                        "prompt": "Kollege: ‚Der Plan ist gut; ___ bleibt ein Risiko.‘ (Gegensatz, gehoben)"
+                      },
+                      {
+                        "prompt": "Sie: ‚Wir sollten warten, ___ die Marktlage unklar ist.‘ (zusaetzlicher wichtiger Grund)"
+                      },
+                      {
+                        "prompt": "Geschaeftsfuehrer: ‚Wir muessen handeln, ___ verlieren wir den Auftrag.‘ (sonst)"
+                      },
+                      {
+                        "prompt": "Sie: ‚Die Technik ist fertig; der Vertrieb ___ braucht mehr Zeit.‘ (Gegensatz)"
+                      }
+                    ],
+                    "hints": [],
+                    "text": "In einer Budgetsitzung verknuepfen Sie Ihre Argumente mit Konnektoren."
+                  },
+                  "answer_key": {
+                    "items": [
+                      {
+                        "answer": "folglich",
+                        "accept": [
+                          "demzufolge",
+                          "mithin"
+                        ]
+                      },
+                      {
+                        "answer": "gleichwohl",
+                        "accept": [
+                          "dennoch",
+                          "trotzdem"
+                        ]
+                      },
+                      {
+                        "answer": "zumal"
+                      },
+                      {
+                        "answer": "andernfalls",
+                        "accept": [
+                          "sonst"
+                        ]
+                      },
+                      {
+                        "answer": "hingegen",
+                        "accept": [
+                          "dagegen"
+                        ]
+                      }
+                    ]
+                  }
+                },
+                {
+                  "type": "multiple-choice",
+                  "instructions": "Welcher Konnektor drueckt eine Folge aus?",
+                  "payload": {
+                    "items": [
+                      {
+                        "prompt": "Waehlen Sie den Konnektor der Folge.",
+                        "options": [
+                          "folglich",
+                          "obwohl",
+                          "zumal"
+                        ]
+                      }
+                    ],
+                    "hints": []
+                  },
+                  "answer_key": {
+                    "items": [
+                      {
+                        "answer": "folglich"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "type": "reorder",
+                  "instructions": "Bringen Sie die Woerter in die richtige Reihenfolge (Verb an Position 2).",
+                  "payload": {
+                    "items": [
+                      {
+                        "tokens": [
+                          "Die",
+                          "Lage",
+                          "ist",
+                          "unklar",
+                          "folglich",
+                          "warten",
+                          "wir"
+                        ]
+                      }
+                    ],
+                    "hints": []
+                  },
+                  "answer_key": {
+                    "items": [
+                      {
+                        "answer": "Die Lage ist unklar folglich warten wir"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "type": "translation",
+                  "instructions": "Uebersetzen Sie ins Deutsche (Konnektor der Folge).",
+                  "payload": {
+                    "items": [
+                      {
+                        "prompt": "The costs are rising; therefore we have to save."
+                      }
+                    ],
+                    "hints": []
+                  },
+                  "answer_key": {
+                    "items": [
+                      {
+                        "answer": "Die Kosten steigen; folglich muessen wir sparen.",
+                        "accept": [
+                          "Die Kosten steigen; folglich muessen wir sparen",
+                          "Die Kosten steigen, folglich muessen wir sparen"
+                        ]
+                      }
+                    ]
+                  }
+                },
+                {
+                  "type": "fill-in-blank",
+                  "instructions": "Ergaenzen Sie einen Konnektor der Folge (Verb an Position 2).",
+                  "payload": {
+                    "items": [
+                      {
+                        "prompt": "Es regnet; ___ bleiben wir zu Hause."
+                      }
+                    ],
+                    "hints": []
+                  },
+                  "answer_key": {
+                    "items": [
+                      {
+                        "answer": "folglich",
+                        "accept": [
+                          "deshalb",
+                          "daher",
+                          "deswegen",
+                          "somit"
+                        ]
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "unit": 4,
+          "title": "Verhandeln & Praesentieren",
+          "lessons": [
+            {
+              "code": "c1.zweiteilige-konnektoren",
+              "title": "Two-part connectors",
+              "grammar_topics": [
+                "c1.zweiteilige-konnektoren"
+              ],
+              "can_do": "I can weigh options in negotiations with sowohl...als auch, weder...noch, je...desto.",
+              "seed_text": "Wir bieten sowohl Qualitaet als auch einen fairen Preis. Weder die Frist noch das Budget sind verhandelbar. Je frueher wir starten, desto besser.",
+              "intro": "Negotiation language leans on paired connectors: sowohl...als auch, weder...noch, nicht nur...sondern auch, entweder...oder, zwar...aber, and je...desto. You'll use them to structure offers and concessions.",
+              "story": "Verhandlungen gehoeren zu den anspruchsvollsten Situationen im Berufsleben. Man muss Angebote abwaegen, Zugestaendnisse machen und Grenzen ziehen - und dabei helfen die zweiteiligen Konnektoren ganz besonders. Sie verbinden zwei Elemente zu einem klaren Gegensatz oder einer klaren Verbindung und geben der Rede Struktur.\n\nBei der letzten Verhandlung mit einem Lieferanten sagte ich: ‚Wir erwarten sowohl eine hohe Qualitaet als auch einen fairen Preis.‘ Die Formel sowohl ... als auch verbindet zwei gleichrangige Forderungen. Der Lieferant antwortete vorsichtig: ‚Weder den Preis noch die Menge kann ich sofort zusagen.‘ Weder ... noch verneint beide Teile zugleich. So wurde die Ausgangslage rasch deutlich.\n\nDann brachte ich Bewegung ins Gespraech: ‚Je frueher wir uns einigen, desto guenstiger wird es fuer beide Seiten.‘ Je ... desto verknuepft zwei Entwicklungen, die zusammen zunehmen. ‚Wir wollen nicht nur einen Rabatt, sondern auch eine laengere Garantie‘, fuegte ich hinzu. Und schliesslich stellte ich die Wahl klar: ‚Entweder Sie senken den Preis, oder wir suchen einen anderen Partner.‘\n\nAm Ende einigten wir uns. Zwar mussten beide Seiten nachgeben, aber das Ergebnis war fair. Genau das leistet die Wendung zwar ... aber: Sie raeumt einen Punkt ein und schraenkt ihn zugleich ein. Ich habe gelernt, dass zweiteilige Konnektoren in Verhandlungen wie ein Kompass wirken - sie ordnen die Interessen und fuehren zielsicher zu einer Loesung.",
+              "questions": [
+                {
+                  "prompt": "Warum helfen zweiteilige Konnektoren in Verhandlungen?",
+                  "translation": "Why do two-part connectors help in negotiations?",
+                  "reference": "Sie verbinden zwei Elemente zu einem klaren Gegensatz oder einer Verbindung und geben der Rede Struktur."
+                },
+                {
+                  "prompt": "Was verlangte der Erzaehler mit ‚sowohl ... als auch‘?",
+                  "translation": "What did the narrator demand with 'sowohl ... als auch'?",
+                  "reference": "Sowohl eine hohe Qualitaet als auch einen fairen Preis."
+                },
+                {
+                  "prompt": "Was bedeutet ‚Weder den Preis noch die Menge kann ich zusagen‘?",
+                  "translation": "What does that reply mean?",
+                  "reference": "Der Lieferant verneint beide Teile zugleich: weder den Preis noch die Menge."
+                },
+                {
+                  "prompt": "Was drueckt ‚Je frueher wir uns einigen, desto guenstiger wird es‘ aus?",
+                  "translation": "What does 'je ... desto' express here?",
+                  "reference": "Zwei Entwicklungen, die zusammen zunehmen (je ... desto)."
+                },
+                {
+                  "prompt": "Was leistet die Wendung ‚zwar ... aber‘?",
+                  "translation": "What does 'zwar ... aber' achieve?",
+                  "reference": "Sie raeumt einen Punkt ein und schraenkt ihn zugleich ein."
+                }
+              ],
+              "exercises": [
+                {
+                  "type": "fill-in-blank",
+                  "instructions": "Ergaenzen Sie im Verhandlungsdialog jeweils den fehlenden Teil des Konnektors (ein Wort).",
+                  "payload": {
+                    "items": [
+                      {
+                        "prompt": "Sie: ‚Wir erwarten sowohl eine hohe Qualitaet ___ auch einen fairen Preis.‘"
+                      },
+                      {
+                        "prompt": "Lieferant: ‚Weder den Preis ___ die Menge kann ich sofort zusagen.‘"
+                      },
+                      {
+                        "prompt": "Sie: ‚Je frueher wir uns einigen, ___ guenstiger wird es fuer beide.‘"
+                      },
+                      {
+                        "prompt": "Sie: ‚Wir wollen nicht nur einen Rabatt, ___ auch eine laengere Garantie.‘"
+                      },
+                      {
+                        "prompt": "Sie: ‚Entweder Sie senken den Preis, ___ wir suchen einen anderen Partner.‘"
+                      }
+                    ],
+                    "hints": [],
+                    "text": "Sie verhandeln mit einem Lieferanten und strukturieren Ihre Angebote mit zweiteiligen Konnektoren."
+                  },
+                  "answer_key": {
+                    "items": [
+                      {
+                        "answer": "als"
+                      },
+                      {
+                        "answer": "noch"
+                      },
+                      {
+                        "answer": "desto",
+                        "accept": [
+                          "umso"
+                        ]
+                      },
+                      {
+                        "answer": "sondern"
+                      },
+                      {
+                        "answer": "oder"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "type": "multiple-choice",
+                  "instructions": "Ergaenzen Sie den Konnektor.",
+                  "payload": {
+                    "items": [
+                      {
+                        "prompt": "Er spricht weder Englisch ___ Franzoesisch.",
+                        "options": [
+                          "noch",
+                          "oder",
+                          "als auch"
+                        ]
+                      }
+                    ],
+                    "hints": []
+                  },
+                  "answer_key": {
+                    "items": [
+                      {
+                        "answer": "noch"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "type": "reorder",
+                  "instructions": "Bringen Sie die Woerter in die richtige Reihenfolge.",
+                  "payload": {
+                    "items": [
+                      {
+                        "tokens": [
+                          "Je",
+                          "mehr",
+                          "wir",
+                          "ueben",
+                          "desto",
+                          "besser",
+                          "werden",
+                          "wir"
+                        ]
+                      }
+                    ],
+                    "hints": []
+                  },
+                  "answer_key": {
+                    "items": [
+                      {
+                        "answer": "Je mehr wir ueben desto besser werden wir"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "type": "translation",
+                  "instructions": "Uebersetzen Sie ins Deutsche (nicht nur ... sondern auch).",
+                  "payload": {
+                    "items": [
+                      {
+                        "prompt": "We want not only a discount but also a longer warranty."
+                      }
+                    ],
+                    "hints": []
+                  },
+                  "answer_key": {
+                    "items": [
+                      {
+                        "answer": "Wir wollen nicht nur einen Rabatt, sondern auch eine laengere Garantie.",
+                        "accept": [
+                          "Wir wollen nicht nur einen Rabatt, sondern auch eine laengere Garantie"
+                        ]
+                      }
+                    ]
+                  }
+                },
+                {
+                  "type": "fill-in-blank",
+                  "instructions": "Ergaenzen Sie den zweiten Teil des Konnektors.",
+                  "payload": {
+                    "items": [
+                      {
+                        "prompt": "sowohl der Chef ___ auch das Team sind zufrieden"
+                      }
+                    ],
+                    "hints": []
+                  },
+                  "answer_key": {
+                    "items": [
+                      {
+                        "answer": "als"
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "code": "c1.genitiv-praepositionen",
+              "title": "Genitive prepositions & executive style",
+              "grammar_topics": [
+                "c1.genitiv-praepositionen"
+              ],
+              "can_do": "I can write concise executive summaries using genitive prepositions.",
+              "seed_text": "Angesichts der Lage handeln wir jetzt. Aufgrund der Nachfrage erhoehen wir die Produktion. Hinsichtlich des Budgets gibt es offene Fragen. Mittels einer neuen Software sparen wir Zeit.",
+              "intro": "The capstone: genitive prepositions (angesichts, aufgrund, hinsichtlich, mittels, seitens, ungeachtet, zwecks, infolge) give writing a concise, executive tone. You'll combine everything from the C1 level - nominal style, connectors and these prepositions.",
+              "story": "Als ich zum ersten Mal eine Strategie vor dem Vorstand praesentieren durfte, wollte ich besonders ueberzeugend wirken. Ich hatte gelernt, dass die Sprache der Geschaeftsleitung knapp, sachlich und dicht ist. Ein wichtiges Mittel dafuer sind die Genitivpraepositionen, die einen ganzen Nebensatz in eine kurze Fuegung verwandeln und dem Text einen souveraenen Klang geben.\n\nStatt ‚Weil die Lage ernst ist, handeln wir jetzt‘ sagte ich: ‚Angesichts der ernsten Lage handeln wir jetzt.‘ Statt ‚Weil die Nachfrage gestiegen ist‘ formulierte ich: ‚Aufgrund der gestiegenen Nachfrage erhoehen wir die Produktion.‘ Und wo es um ein bestimmtes Thema ging, half hinsichtlich: ‚Hinsichtlich des Budgets bestehen noch offene Fragen.‘ Jede dieser Praepositionen verlangt den Genitiv.\n\nAuch die feineren Genitivpraepositionen setzte ich bewusst ein. ‚Mittels einer neuen Software sparen wir Zeit‘, erklaerte ich - mittels bezeichnet das Mittel. ‚Seitens der Kunden gibt es grosses Interesse‘, fuegte ich hinzu, wobei seitens ‚von Seiten‘ bedeutet. Und selbstbewusst schloss ich: ‚Ungeachtet einiger Risiken halte ich den Plan fuer richtig.‘ Ungeachtet bedeutet ‚trotz‘ und drueckt einen Gegensatz aus.\n\nDer Vorstand war beeindruckt von der Klarheit meiner Ausfuehrungen. Ich hatte alles zusammengefuehrt, was dieses Niveau ausmacht: den Nominalstil, die Funktionsverbgefuege, die Konnektoren und nun die Genitivpraepositionen. Infolge dieser Praesentation wurde mein Vorschlag angenommen. In diesem Moment verstand ich, dass sprachliche Praezision im Berufsleben nicht nur schmueckt, sondern ueber Erfolg und Misserfolg entscheiden kann.",
+              "questions": [
+                {
+                  "prompt": "Wie ist die Sprache der Geschaeftsleitung laut Erzaehler?",
+                  "translation": "How is the language of management, according to the narrator?",
+                  "reference": "Sie ist knapp, sachlich und dicht."
+                },
+                {
+                  "prompt": "Wie formulierte er ‚Weil die Lage ernst ist‘ mit einer Genitivpraeposition?",
+                  "translation": "How did he rephrase 'Because the situation is serious' with a genitive preposition?",
+                  "reference": "‚Angesichts der ernsten Lage handeln wir jetzt.‘"
+                },
+                {
+                  "prompt": "Was bedeutet die Praeposition ‚mittels‘, und welchen Fall verlangt sie?",
+                  "translation": "What does 'mittels' mean, and which case does it take?",
+                  "reference": "Sie bezeichnet das Mittel und verlangt den Genitiv (mittels einer neuen Software)."
+                },
+                {
+                  "prompt": "Was bedeutet ‚ungeachtet‘?",
+                  "translation": "What does 'ungeachtet' mean?",
+                  "reference": "Es bedeutet ‚trotz‘ und drueckt einen Gegensatz aus."
+                },
+                {
+                  "prompt": "Welche sprachlichen Mittel hat der Erzaehler in der Praesentation zusammengefuehrt?",
+                  "translation": "Which linguistic means did the narrator bring together in the presentation?",
+                  "reference": "Den Nominalstil, die Funktionsverbgefuege, die Konnektoren und die Genitivpraepositionen."
+                }
+              ],
+              "exercises": [
+                {
+                  "type": "fill-in-blank",
+                  "instructions": "Ergaenzen Sie die passende Genitivpraeposition (ein Wort); die Bedeutung steht in Klammern.",
+                  "payload": {
+                    "items": [
+                      {
+                        "prompt": "Sie: ‚___ der ernsten Lage handeln wir sofort.‘ (= in Anbetracht)"
+                      },
+                      {
+                        "prompt": "Sie: ‚___ der gestiegenen Nachfrage erhoehen wir die Produktion.‘ (= wegen)"
+                      },
+                      {
+                        "prompt": "Vorstand: ‚Und das Budget?‘ - Sie: ‚___ des Budgets bestehen noch offene Fragen.‘ (= in Bezug auf)"
+                      },
+                      {
+                        "prompt": "Sie: ‚___ einer neuen Software sparen wir Zeit.‘ (= mithilfe von)"
+                      },
+                      {
+                        "prompt": "Sie: ‚___ einiger Risiken halte ich den Plan fuer richtig.‘ (= trotz)"
+                      }
+                    ],
+                    "hints": [],
+                    "text": "Sie praesentieren dem Vorstand eine Zusammenfassung und verdichten Ihre Saetze mit Genitivpraepositionen."
+                  },
+                  "answer_key": {
+                    "items": [
+                      {
+                        "answer": "Angesichts"
+                      },
+                      {
+                        "answer": "Aufgrund",
+                        "accept": [
+                          "Wegen"
+                        ]
+                      },
+                      {
+                        "answer": "Hinsichtlich",
+                        "accept": [
+                          "Bezueglich"
+                        ]
+                      },
+                      {
+                        "answer": "Mittels"
+                      },
+                      {
+                        "answer": "Ungeachtet",
+                        "accept": [
+                          "Trotz"
+                        ]
+                      }
+                    ]
+                  }
+                },
+                {
+                  "type": "multiple-choice",
+                  "instructions": "Welche Praeposition verlangt den Genitiv?",
+                  "payload": {
+                    "items": [
+                      {
+                        "prompt": "Waehlen Sie die Genitivpraeposition.",
+                        "options": [
+                          "angesichts",
+                          "mit",
+                          "bei"
+                        ]
+                      }
+                    ],
+                    "hints": []
+                  },
+                  "answer_key": {
+                    "items": [
+                      {
+                        "answer": "angesichts"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "type": "reorder",
+                  "instructions": "Bringen Sie die Woerter in die richtige Reihenfolge.",
+                  "payload": {
+                    "items": [
+                      {
+                        "tokens": [
+                          "Aufgrund",
+                          "der",
+                          "hohen",
+                          "Nachfrage",
+                          "erhoehen",
+                          "wir",
+                          "die",
+                          "Produktion"
+                        ]
+                      }
+                    ],
+                    "hints": []
+                  },
+                  "answer_key": {
+                    "items": [
+                      {
+                        "answer": "Aufgrund der hohen Nachfrage erhoehen wir die Produktion"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "type": "translation",
+                  "instructions": "Uebersetzen Sie ins Deutsche (Genitivpraeposition).",
+                  "payload": {
+                    "items": [
+                      {
+                        "prompt": "In view of the situation, we are acting now."
+                      }
+                    ],
+                    "hints": []
+                  },
+                  "answer_key": {
+                    "items": [
+                      {
+                        "answer": "Angesichts der Lage handeln wir jetzt.",
+                        "accept": [
+                          "Angesichts der Lage handeln wir jetzt",
+                          "Angesichts der Situation handeln wir jetzt"
+                        ]
+                      }
+                    ]
+                  }
+                },
+                {
+                  "type": "fill-in-blank",
+                  "instructions": "Ergaenzen Sie die Genitivpraeposition (= wegen).",
+                  "payload": {
+                    "items": [
+                      {
+                        "prompt": "___ der Nachfrage erhoehen wir die Produktion."
+                      }
+                    ],
+                    "hints": []
+                  },
+                  "answer_key": {
+                    "items": [
+                      {
+                        "answer": "Aufgrund",
+                        "accept": [
+                          "Wegen"
+                        ]
                       }
                     ]
                   }

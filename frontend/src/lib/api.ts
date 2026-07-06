@@ -16,6 +16,9 @@ import type {
   Lesson,
   Material,
   MaterialSummary,
+  NewsArticle,
+  NewsImportResult,
+  NewsSourcesResponse,
   Rating,
   ReviewCard,
   ReviewQueueItem,
@@ -270,6 +273,23 @@ export const api = {
     req<{ transcript: string }>('/ingest/transcribe', {
       method: 'POST',
       body: JSON.stringify({ source_url, source_lang: apiTarget }),
+    }),
+
+  // --- News importer ---
+  newsSources: () => req<NewsSourcesResponse>('/news/sources'),
+  newsLatest: (source: string, limit = 12) =>
+    req<NewsArticle[]>(`/news/latest?source=${encodeURIComponent(source)}&limit=${limit}`),
+  newsImport: (body: {
+    source: string
+    url: string
+    title?: string
+    level?: string
+    generate?: boolean
+    translate?: boolean
+  }) =>
+    req<NewsImportResult>('/news/import', {
+      method: 'POST',
+      body: JSON.stringify({ ...body, article_lang: apiTarget, native_lang: apiNative }),
     }),
 
   // --- Tutor / teacher chat ---

@@ -92,6 +92,33 @@ def test_material_update_patches_only_sent_fields():
         assert client.patch("/materials/999999", json={"title": "x"}).status_code == 404
 
 
+def test_deleting_material_removes_its_vocab_and_exercises():
+    with TestClient(app) as client:
+        payload = {
+            "material": {"title": "Zum Löschen", "level": "A2"},
+            "vocabulary": [
+                {"word": "r Tisch", "lemma": "Tisch", "meaning_en": "table", "cefr": "A2"}
+            ],
+            "exercises": [
+                {
+                    "type": "fill-in-blank",
+                    "instructions": "Setze ein.",
+                    "payload": {"items": [{"prompt": "Der ___ ist groß."}]},
+                    "answer_key": {"items": [{"answer": "Tisch"}]},
+                }
+            ],
+        }
+        material_id = client.post("/imports/json", json=payload).json()["material_id"]
+        assert client.get("/vocab", params={"material_id": material_id}).json()
+        assert client.get("/exercises", params={"material_id": material_id}).json()
+
+        assert client.delete(f"/materials/{material_id}").status_code == 204
+
+        assert client.get(f"/materials/{material_id}").status_code == 404
+        assert client.get("/vocab", params={"material_id": material_id}).json() == []
+        assert client.get("/exercises", params={"material_id": material_id}).json() == []
+
+
 def test_manual_ingest_requires_transcript():
     with TestClient(app) as client:
         resp = client.post(

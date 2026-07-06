@@ -1,12 +1,14 @@
 {
   "version": 1,
-  "title": "French A1–A2 taxonomy backbone",
-  "note": "Lightweight CEFR level + grammar-topic reference used to tag generated/imported French content. Proof-of-concept slice: A1 plus A2.",
+  "title": "French A1–A2 + C1–C2 taxonomy backbone",
+  "note": "Lightweight CEFR level + grammar-topic reference used to tag generated/imported French content. Covers A1 and A2, plus an advanced C1–C2 track (expression, argumentation, politics, workplace, complex ideas). B1–B2 are declared as levels but not yet populated with topics.",
   "levels": [
     { "code": "A1", "title": "Foundations", "descriptor": "Understands and uses familiar everyday expressions and very basic phrases." },
     { "code": "A2", "title": "Everyday Fluency", "descriptor": "Communicates in simple routine tasks on familiar matters." },
     { "code": "B1", "title": "Independent User", "descriptor": "Deals with most situations while travelling; describes experiences, opinions, plans." },
-    { "code": "B2", "title": "Upper-Intermediate", "descriptor": "Interacts with fluency and spontaneity; produces clear, detailed text on many subjects." }
+    { "code": "B2", "title": "Upper-Intermediate", "descriptor": "Interacts with fluency and spontaneity; produces clear, detailed text on many subjects." },
+    { "code": "C1", "title": "Autonomous — Advanced Expression", "descriptor": "Expresses ideas fluently and spontaneously; uses language flexibly for social, academic and professional purposes; produces clear, well-structured, detailed text on complex subjects." },
+    { "code": "C2", "title": "Mastery — Expert Discourse", "descriptor": "Understands virtually everything with ease; expresses spontaneously, very fluently and precisely, differentiating finer shades of meaning even in the most complex situations." }
   ],
   "conventions": {
     "articleShorthand": { "m": "le", "f": "la" },
@@ -35,6 +37,40 @@
     { "code": "fr.a2.futur-simple", "cefr": "A2", "title": "Futur simple", "description": "Simple future; regular stems and key irregular stems (être, avoir, aller, faire)." },
     { "code": "fr.a2.comparatives", "cefr": "A2", "title": "Comparative & superlative", "description": "plus/moins/aussi … que; le plus/le moins; meilleur and mieux." },
     { "code": "fr.a2.cod-coi-pronouns", "cefr": "A2", "title": "Object pronouns (COD/COI)", "description": "Direct (le/la/les) and indirect (lui/leur) object pronouns." },
-    { "code": "fr.a2.prepositions-places", "cefr": "A2", "title": "Prepositions with places & countries", "description": "à/en/au/aux with cities and countries; venir de." }
+    { "code": "fr.a2.prepositions-places", "cefr": "A2", "title": "Prepositions with places & countries", "description": "à/en/au/aux with cities and countries; venir de." },
+
+    { "code": "fr.c1.subjonctif-present", "cefr": "C1", "title": "Le subjonctif présent", "description": "Present subjunctive after expressions of doubt, emotion, will and necessity (il faut que, vouloir que, bien que)." },
+    { "code": "fr.c1.subjonctif-vs-indicatif", "cefr": "C1", "title": "Subjonctif ou indicatif", "description": "Choosing mood: certainty/opinion (indicatif) vs doubt/subjectivity (subjonctif); penser que vs ne pas penser que." },
+    { "code": "fr.c1.registres", "cefr": "C1", "title": "Les registres de langue", "description": "Soutenu / courant / familier: lexical, syntactic and stylistic markers and when to shift register." },
+    { "code": "fr.c1.mise-en-relief", "cefr": "C1", "title": "La mise en relief", "description": "Emphasis and cleft structures: c'est … qui/que, ce qui/ce que … c'est, dislocation and focus." },
+    { "code": "fr.c1.connecteurs-logiques", "cefr": "C1", "title": "Les connecteurs logiques", "description": "Articulating discourse: addition, opposition, cause, consequence, illustration, conclusion (par ailleurs, en revanche, par conséquent)." },
+    { "code": "fr.c1.concession-opposition", "cefr": "C1", "title": "Concession et opposition", "description": "bien que/quoique (+ subjonctif), malgré, avoir beau, tandis que, or; conceding and contrasting." },
+    { "code": "fr.c1.cause-consequence", "cefr": "C1", "title": "Cause et conséquence", "description": "étant donné que, du fait que, si bien que, d'où, au point que; expressing reason and result." },
+    { "code": "fr.c1.hypothese", "cefr": "C1", "title": "L'hypothèse et la condition", "description": "si-clauses (three systems), conditionnel présent/passé, à condition que, au cas où." },
+    { "code": "fr.c1.discours-rapporte", "cefr": "C1", "title": "Le discours indirect", "description": "Reported speech and the concordance des temps; shifting tense, pronouns and time markers." },
+    { "code": "fr.c1.politesse-conditionnel", "cefr": "C1", "title": "Politesse et atténuation", "description": "Conditional for diplomacy and hedging (je voudrais, il faudrait, on pourrait envisager)." },
+    { "code": "fr.c1.voix-passive", "cefr": "C1", "title": "La voix passive et ses alternatives", "description": "Passive with être + participe; on, se faire + infinitif and pronominal passive as alternatives." },
+    { "code": "fr.c1.entretien-embauche", "cefr": "C1", "title": "L'entretien d'embauche", "description": "Presenting skills and experience: arguing strengths, answering competency questions, professional self-presentation." },
+    { "code": "fr.c1.pronoms-relatifs-complexes", "cefr": "C1", "title": "Les pronoms relatifs complexes", "description": "dont, lequel/duquel/auquel, ce qui/ce que/ce dont, où; combining clauses precisely." },
+    { "code": "fr.c1.gerondif-participe", "cefr": "C1", "title": "Le gérondif et le participe présent", "description": "en + participe (simultaneity/manner/condition) vs participe présent clause; contrast with the adjectif verbal." },
+    { "code": "fr.c1.nominalisation", "cefr": "C1", "title": "La nominalisation", "description": "Condensing information into noun phrases; deverbal nouns and headline/report style." },
+    { "code": "fr.c1.ecrit-professionnel", "cefr": "C1", "title": "L'écrit professionnel", "description": "Emails, reports and cover letters: structure, formules de politesse, cohesion and appropriate register." },
+
+    { "code": "fr.c2.discours-politique", "cefr": "C2", "title": "Le discours politique", "description": "Analysing and producing persuasive political discourse: ethos/pathos/logos, slogans, rhetorical questions." },
+    { "code": "fr.c2.figures-de-style", "cefr": "C2", "title": "Les figures de style", "description": "Rhetorical devices: anaphore, gradation, antithèse, métaphore, chiasme for persuasive effect." },
+    { "code": "fr.c2.implicite-nuance", "cefr": "C2", "title": "L'implicite et la nuance", "description": "Litote, euphémisme, ironie and sous-entendu; conveying meaning indirectly." },
+    { "code": "fr.c2.subjonctif-passe", "cefr": "C2", "title": "Le subjonctif passé", "description": "Past subjunctive for anteriority in subjective and concessive clauses; nuanced modality." },
+    { "code": "fr.c2.cohesion-textuelle", "cefr": "C2", "title": "La cohésion textuelle", "description": "Reference and progression: anaphore/cataphore, reprises pronominales/lexicales, thème–rhème, expert connectors." },
+    { "code": "fr.c2.precision-lexicale", "cefr": "C2", "title": "La précision lexicale", "description": "Collocations, near-synonyms and terminologie; choosing the exact word and avoiding répétition." },
+    { "code": "fr.c2.expliquer-vulgariser", "cefr": "C2", "title": "Expliquer et vulgariser", "description": "Making complex systems clear: definition, reformulation (c'est-à-dire), analogy, exemplification." },
+    { "code": "fr.c2.structures-impersonnelles", "cefr": "C2", "title": "Les structures impersonnelles", "description": "Objectivation: il s'avère que, il en résulte que, il convient de, on constate que." },
+    { "code": "fr.c2.essai-argumentatif", "cefr": "C2", "title": "L'essai argumentatif", "description": "Dissertation structure: problématique, thèse–antithèse–synthèse, plan and transitions." },
+    { "code": "fr.c2.concession-avancee", "cefr": "C2", "title": "Concession et réfutation", "description": "certes … mais, quand bien même, quitte à, n'en … pas moins; conceding then refuting." },
+    { "code": "fr.c2.hypothese-litteraire", "cefr": "C2", "title": "L'hypothèse et l'irréel", "description": "Plus-que-parfait du subjonctif and conditionnel passé 2e forme; literary counterfactuals." },
+    { "code": "fr.c2.modalisation", "cefr": "C2", "title": "La modalisation", "description": "Marking stance and certainty: modal verbs/adverbs, subjectivity vs objectivity, prise de position." },
+    { "code": "fr.c2.passe-simple", "cefr": "C2", "title": "Le passé simple", "description": "Literary narrative past (passé simple and passé antérieur): recognition and use in formal writing." },
+    { "code": "fr.c2.proposition-participiale", "cefr": "C2", "title": "La proposition participiale", "description": "Participial and absolute constructions (le travail terminé, …); condensing subordinate clauses." },
+    { "code": "fr.c2.inversion-stylistique", "cefr": "C2", "title": "L'inversion stylistique", "description": "Stylistic subject–verb inversion after adverbs and in soutenu syntax (peut-être, ainsi, aussi)." },
+    { "code": "fr.c2.locutions-idiomes", "cefr": "C2", "title": "Locutions et idiomes", "description": "Idioms, set phrases and learned expressions; figurative and cultural fluency." }
   ]
 }

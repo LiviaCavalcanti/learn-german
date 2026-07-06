@@ -22,6 +22,10 @@ you point it at a cloud LLM yourself.
 - **Library** — add German media (video / podcast / text) by pasting a transcript
   or a link. Each material stores its transcript, an optional translation, and
   your notes.
+- **Today's news** — one click fetches a current German article (easy-German
+  *nachrichtenleicht* or Deutsche Welle), translates it, and turns it into
+  vocabulary and exercises. Also available as a scheduled command-line script
+  (see [backend/README.md](backend/README.md#daily-news-importer)).
 - **AI generation** — from a material, an agent extracts high-frequency
   vocabulary (lemmatized, POS- and CEFR-tagged) and generates grammar, vocab, and
   interpretation exercises with answer keys.

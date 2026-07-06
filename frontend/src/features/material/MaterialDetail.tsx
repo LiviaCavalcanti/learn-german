@@ -208,11 +208,16 @@ export default function MaterialDetail() {
 
   if (!material) return <Spinner />
 
+  const courseCode = courseCodeFromNotes(material.notes)
+
   return (
     <div className="space-y-6">
       <div>
-        <Link to="/library" className="text-sm text-muted hover:text-ink">
-          ← Library
+        <Link
+          to={courseCode ? '/course' : '/library'}
+          className="text-sm text-muted hover:text-ink"
+        >
+          ← {courseCode ? 'Course' : 'Library'}
         </Link>
         <div className="mt-1 flex items-center gap-3">
           <h1 className="text-3xl">{material.title}</h1>
@@ -425,6 +430,17 @@ export default function MaterialDetail() {
             ))}
           </div>
         </section>
+      )}
+
+      {courseCode && (
+        <div className="flex justify-center pt-2">
+          <Link
+            to="/course"
+            className="rounded-lg bg-accent px-4 py-2 text-sm font-medium text-white hover:brightness-110"
+          >
+            ← Back to course
+          </Link>
+        </div>
       )}
     </div>
   )

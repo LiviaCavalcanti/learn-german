@@ -39,7 +39,7 @@ export default function Curriculum() {
     <div className="space-y-6">
       <header>
         <h1 className="text-3xl">Course</h1>
-        <p className="text-muted">A1–B2 curriculum. Start a lesson to generate its exercises.</p>
+        <p className="text-muted">A1–C1 curriculum. Start a lesson to generate its exercises.</p>
       </header>
 
       <div className="flex flex-wrap gap-2">
@@ -79,14 +79,11 @@ export default function Curriculum() {
                   <Card key={lesson.code} className="space-y-2 p-4">
                     <div className="flex items-center justify-between gap-2">
                       <div className="font-serif text-lg">{lesson.title}</div>
-                      <div className="flex shrink-0 items-center gap-1.5">
-                        {completed.has(lesson.code) && (
-                          <Badge className="border-success/40 bg-success/10 text-success">
-                            ✓ Done
-                          </Badge>
-                        )}
-                        {lesson.grammar_topics?.[0] && <Badge>{lesson.grammar_topics[0]}</Badge>}
-                      </div>
+                      {completed.has(lesson.code) && (
+                        <Badge className="shrink-0 border-success/40 bg-success/10 text-success">
+                          ✓ Done
+                        </Badge>
+                      )}
                     </div>
                     <div className="text-xs text-muted">{lesson.can_do}</div>
                     <div className="rounded-lg bg-paper/60 p-2 text-sm">

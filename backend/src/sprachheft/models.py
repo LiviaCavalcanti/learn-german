@@ -24,7 +24,7 @@ class Material(SQLModel, table=True):
     source_url: str | None = None
     source_lang: str = "de"  # target language being learned (ISO 639-1)
     native_lang: str = "en"  # native/explanation language (ISO 639-1)
-    level: str = "A2"  # A1 | A2 | B1 | B2
+    level: str = "A2"  # A1 | A2 | B1 | B2 | C1 | C2 (per language)
     transcript: str
     translation: str | None = None
     notes: str | None = None

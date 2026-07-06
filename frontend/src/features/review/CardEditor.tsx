@@ -9,7 +9,7 @@ export interface EditableCard {
   item: any
 }
 
-const CEFR_LEVELS = ['A1', 'A2', 'B1', 'B2']
+const CEFR_LEVELS = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2']
 
 /** Modal editor for a single review card. Vocab cards edit word/meaning/example/CEFR;
  *  exercise cards edit instructions and the answer key (as JSON). */

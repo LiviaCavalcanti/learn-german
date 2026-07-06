@@ -33,6 +33,13 @@ phonetics = [
     "phonemizer>=3.2",
     "espeakng-loader>=0.2",
 ]
+# Standalone daily-article importer (scripts/daily_article.py): RSS + main-text
+# extraction + free Google-Translate translation. Not needed by the app itself.
+daily = [
+    "feedparser>=6.0",
+    "deep-translator>=1.11",
+    "trafilatura>=1.8",
+]
 dev = [
     "pytest>=8.0",
     "ruff>=0.6",

@@ -7,7 +7,7 @@ from typing import Literal
 
 from pydantic import BaseModel, ConfigDict, Field, computed_field
 
-Level = Literal["A1", "A2", "B1", "B2", "C1"]
+Level = Literal["A1", "A2", "B1", "B2", "C1", "C2"]
 MediaType = Literal["video", "podcast", "text"]
 ExerciseType = Literal[
     "fill-in-blank",
@@ -70,6 +70,49 @@ class MaterialSummary(BaseModel):
     created_at: datetime
     vocab_count: int = 0
     exercise_count: int = 0
+
+
+# --- News importer -----------------------------------------------------------
+class NewsSourceOut(BaseModel):
+    key: str
+    label: str
+    level: str
+    kind: str  # "rss" | "html"
+
+
+class NewsSourcesOut(BaseModel):
+    available: bool  # whether the optional 'daily' extra is installed
+    sources: list[NewsSourceOut]
+
+
+class NewsArticleOut(BaseModel):
+    source: str
+    title: str
+    url: str
+    level: str
+    summary: str = ""
+
+
+class NewsImportIn(BaseModel):
+    source: str = "nachrichtenleicht"
+    url: str
+    title: str | None = None  # omit to derive the real headline from the article
+    level: Level | None = None
+    translate: bool = True
+    generate: bool = True
+    stage: int = Field(2, ge=1, le=4)
+    article_lang: str = "de"
+    native_lang: str = "en"
+    max_chars: int = Field(6000, ge=0)
+
+
+class NewsImportOut(BaseModel):
+    material_id: int
+    title: str
+    level: str
+    translated: bool = False
+    vocab_added: int = 0
+    exercises_added: int = 0
 
 
 # --- Vocabulary --------------------------------------------------------------

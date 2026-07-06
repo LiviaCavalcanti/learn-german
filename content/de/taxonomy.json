@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "title": "German A1–B2 taxonomy backbone",
+  "title": "German A1–C1 taxonomy backbone",
   "note": "Lightweight CEFR level + grammar-topic reference used to tag generated/imported content. The full day-by-day course wires in later (Phase 6).",
   "levels": [
     { "code": "A1", "title": "Foundations", "descriptor": "Understands and uses familiar everyday expressions and very basic phrases." },

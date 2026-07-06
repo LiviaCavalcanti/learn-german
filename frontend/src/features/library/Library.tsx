@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { api, type NewMaterial } from '../../lib/api'
 import type { MaterialSummary } from '../../lib/types'
 import { useLanguage } from '../../contexts/LanguageContext'
-import { Badge, Button, Card, Field, Input, Select, Spinner, Textarea } from '../../components/ui'
+import { Badge, Button, Card, Field, Input, Select, Spinner, Textarea, cx } from '../../components/ui'
 import { VideoEmbed } from '../../components/VideoEmbed'
 import {
   GOOGLE_TRANSLATE_MAX,
@@ -11,6 +11,7 @@ import {
   parseYouTubeId,
   stripTimestamps,
 } from '../../lib/importHelpers'
+import NewsPicker from './NewsPicker'
 
 const EMPTY = {
   title: '',
@@ -24,11 +25,14 @@ const EMPTY = {
 export default function Library() {
   const [items, setItems] = useState<MaterialSummary[] | null>(null)
   const [open, setOpen] = useState(false)
+  const [showNews, setShowNews] = useState(false)
   const [saving, setSaving] = useState(false)
   const [form, setForm] = useState(EMPTY)
   const [ingestOk, setIngestOk] = useState(false)
   const [transcribing, setTranscribing] = useState(false)
   const [clipMsg, setClipMsg] = useState<string | null>(null)
+  const [selected, setSelected] = useState<Set<number>>(new Set())
+  const [deleting, setDeleting] = useState(false)
   const { targetProfile, target, native } = useLanguage()
   const langName = targetProfile?.name ?? 'target language'
   const ytId = parseYouTubeId(form.source_url)
@@ -121,6 +125,35 @@ export default function Library() {
     }
   }
 
+  function toggleSelect(id: number) {
+    setSelected((prev) => {
+      const next = new Set(prev)
+      if (next.has(id)) next.delete(id)
+      else next.add(id)
+      return next
+    })
+  }
+
+  async function deleteSelected() {
+    const ids = [...selected]
+    if (!ids.length) return
+    if (
+      !window.confirm(
+        `Delete ${ids.length} material${ids.length === 1 ? '' : 's'}? ` +
+          'This also removes their vocabulary, exercises, and review progress.',
+      )
+    )
+      return
+    setDeleting(true)
+    try {
+      await Promise.all(ids.map((id) => api.deleteMaterial(id)))
+      setSelected(new Set())
+      load()
+    } finally {
+      setDeleting(false)
+    }
+  }
+
   return (
     <div className="space-y-6">
       <header className="flex items-center justify-between">
@@ -128,8 +161,17 @@ export default function Library() {
           <h1 className="text-3xl">Library</h1>
           <p className="text-muted">Your collected videos, podcasts, and texts.</p>
         </div>
-        <Button onClick={() => setOpen((v) => !v)}>{open ? 'Close' : '+ Add material'}</Button>
+        <div className="flex gap-2">
+          {target === 'de' && (
+            <Button variant="soft" onClick={() => setShowNews((v) => !v)}>
+              {showNews ? 'Close news' : `\u{1F4F0} Today\u2019s news`}
+            </Button>
+          )}
+          <Button onClick={() => setOpen((v) => !v)}>{open ? 'Close' : '+ Add material'}</Button>
+        </div>
       </header>
+
+      {showNews && target === 'de' && <NewsPicker onImported={load} />}
 
       {open && (
         <Card className="p-5">
@@ -280,27 +322,58 @@ export default function Library() {
         </Card>
       )}
 
+      {selected.size > 0 && (
+        <Card className="flex flex-wrap items-center justify-between gap-2 p-3">
+          <span className="text-sm text-muted">{selected.size} selected</span>
+          <div className="flex gap-2">
+            <Button variant="ghost" onClick={() => setSelected(new Set())}>
+              Clear
+            </Button>
+            <Button variant="danger" onClick={deleteSelected} disabled={deleting}>
+              {deleting ? <Spinner /> : `Delete selected (${selected.size})`}
+            </Button>
+          </div>
+        </Card>
+      )}
+
       {items === null ? (
         <Spinner />
       ) : items.length === 0 ? (
         <Card className="p-8 text-center text-muted">No materials yet. Add your first one above.</Card>
       ) : (
         <div className="grid gap-3 sm:grid-cols-2">
-          {items.map((m) => (
-            <Link key={m.id} to={`/materials/${m.id}`}>
-              <Card className="p-4 transition hover:-translate-y-0.5 hover:shadow-md">
-                <div className="flex items-center justify-between">
-                  <div className="font-serif text-lg">{m.title}</div>
-                  <Badge>{m.level}</Badge>
-                </div>
-                <div className="mt-2 flex gap-3 text-xs text-muted">
-                  <span>{m.media_type}</span>
-                  <span>{m.vocab_count} words</span>
-                  <span>{m.exercise_count} exercises</span>
-                </div>
-              </Card>
-            </Link>
-          ))}
+          {items.map((m) => {
+            const isSelected = selected.has(m.id)
+            return (
+              <div key={m.id} className="relative">
+                <Link to={`/materials/${m.id}`} className="block">
+                  <Card
+                    className={cx(
+                      'p-4 transition',
+                      isSelected
+                        ? 'border-accent ring-2 ring-accent/40'
+                        : 'hover:-translate-y-0.5 hover:shadow-md',
+                    )}
+                  >
+                    <div className="pr-8 font-serif text-lg">{m.title}</div>
+                    <div className="mt-2 flex flex-wrap items-center gap-3 text-xs text-muted">
+                      <Badge>{m.level}</Badge>
+                      <span>{m.media_type}</span>
+                      <span>{m.vocab_count} words</span>
+                      <span>{m.exercise_count} exercises</span>
+                    </div>
+                  </Card>
+                </Link>
+                <input
+                  type="checkbox"
+                  checked={isSelected}
+                  onChange={() => toggleSelect(m.id)}
+                  aria-label={`Select ${m.title}`}
+                  className="absolute right-3 top-3 h-4 w-4 cursor-pointer accent-accent"
+                />
+              </div>
+            )
+          })}
         </div>
       )}
     </div>

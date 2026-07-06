@@ -17,6 +17,7 @@ from sprachheft.api import (
     ingest,
     languages,
     materials,
+    news,
     practice,
     pronunciation,
     reference,
@@ -78,6 +79,7 @@ def create_app() -> FastAPI:
     app.include_router(imports.router)
     app.include_router(course.router)
     app.include_router(ingest.router)
+    app.include_router(news.router)
     app.include_router(conjugation.router)
     app.include_router(tutor.router)
     app.include_router(pronunciation.router)
